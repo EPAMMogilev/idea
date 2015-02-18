@@ -1,0 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+version = '1.0'
+
+// Uses JDK 8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// Get dependencies from Maven central repository
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.springframework:spring-core:4.0.6.RELEASE'
+    compile 'org.springframework:spring-web:4.0.6.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.0.6.RELEASE'
+    compile 'org.hibernate:hibernate-core:4.3.8.Final'
+    compile 'jstl:jstl:1.2'
+    //include in compile only, exclude in the war
+    providedCompile 'javax.servlet:servlet-api:2.5'
+}
+
+// The Gradle Wrapper is the preferred way of starting a Gradle build
+// Run the following command to download and initialize the wrapper scripts: gradle wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
