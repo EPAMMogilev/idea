@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 @Entity
 @Table(name = "TAG")
@@ -32,24 +35,13 @@ public class Tag implements Serializable {
 	private List<Idea> ideasWithTag;
 
 	public Tag() {
-		//empty
+		this.ideasWithTag = new ArrayList<>();
 	}
 
-	private Tag(final Builder builder) {
-		this.id =           builder.id;
-		this.name =         builder.name;
-		this.ideasWithTag = builder.ideasWithTag;
-	}
-
-	public static Builder getBuilder() {
-		return new Builder();
-	}
-
-	public static Builder getBuilderFrom(final Tag tag) {
-		return new Builder()
-				.withId(tag.id)
-				.withName(tag.name)
-				.withIdeas(tag.ideasWithTag);
+	public Tag(String name) {
+		requireNonNull(name, "name cannot be null");
+		this.name = name;
+		this.ideasWithTag = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -60,42 +52,20 @@ public class Tag implements Serializable {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<Idea> getIdeasWithTag() {
 		return ideasWithTag;
 	}
 
-	public static class Builder {
-		private long id;
-		private String name;
-		private List<Idea> ideasWithTag = new ArrayList<>();
+	public void setIdeasWithTag(List<Idea> ideasWithTag) {
+		this.ideasWithTag = ideasWithTag;
+	}
 
-		private Builder() {
-			//empty
-		}
-
-		private Builder withId(final long id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder withName(final String name) {
-			this.name = name;
-			return this;
-		}
-
-		public Builder withIdeas(final List<Idea> ideasWithTag) {
-			this.ideasWithTag = ideasWithTag;
-			return this;
-		}
-
-		public Builder addIdea(final Idea idea) {
-			this.ideasWithTag.add(idea);
-			return this;
-		}
-
-		public Tag build() {
-			return new Tag(this);
-		}
+	public void addIdea(Idea idea) {
+		this.ideasWithTag.add(idea);
 	}
 
 	@Override
@@ -107,22 +77,20 @@ public class Tag implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Tag tag = (Tag) o;
-
-		if (ideasWithTag != null ? !ideasWithTag.equals(tag.ideasWithTag) : tag.ideasWithTag != null) return false;
-		if (!name.equals(tag.name)) return false;
-
-		return true;
+	public int hashCode() {
+		return Objects.hash(name, ideasWithTag);
 	}
 
 	@Override
-	public int hashCode() {
-		int result = name.hashCode();
-		result = 31 * result + (ideasWithTag != null ? ideasWithTag.hashCode() : 0);
-		return result;
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		final Tag other = (Tag) obj;
+		return Objects.equals(this.name, other.name)
+				&& Objects.equals(this.ideasWithTag, other.ideasWithTag);
 	}
 }

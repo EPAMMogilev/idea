@@ -18,11 +18,14 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
 
+	public static final int MIN_LENGTH_USERNAME = 1;
+	public static final int MAX_LENGTH_USERNAME = 20;
 	public static final int MIN_LENGTH_EMAIL = 3;
 	public static final int MAX_LENGTH_EMAIL = 20;
 	public static final int MIN_LENGTH_PASSWORD = 6;
@@ -32,6 +35,9 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private long id;
+
+	@Column(name = "USERNAME", nullable = false)
+	private String username;
 
 	@Column(name = "EMAIL", nullable = false)
 	private String email;
@@ -56,49 +62,43 @@ public class User implements Serializable {
 	private List<Role> roles;
 
 	public User() {
-		//empty
-	}
-
-	private User(final Builder builder) {
-		this.id =           builder.id;
-		this.email =        builder.email;
-		this.password =     builder.password;
-		this.creationTime = builder.creationTime;
-		this.ideas =        builder.ideas;
-		this.comments =     builder.comments;
-		this.roles =        builder.roles;
-	}
-
-	public static Builder getBuilder() {
-		return new Builder();
-	}
-
-	public static Builder getBuilderFrom(final User user) {
-		return new Builder()
-				.withId(user.id)
-				.withEmail(user.email)
-				.withPassword(user.password)
-				.withCreationTime(user.creationTime)
-				.withIdeas(user.ideas)
-				.withComments(user.comments)
-				.withRoles(user.roles);
+		this.ideas = new ArrayList<>();
+		this.comments = new ArrayList<>();
+		this.roles = new ArrayList<>();
 	}
 
 	public void updateWith(final User source) {
 		this.email = source.email;
 		this.password = source.password;
+		this.username = source.username;
 	}
 
 	public long getId() {
 		return id;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPassword() {
 		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public ZonedDateTime getCreationTime() {
@@ -109,12 +109,36 @@ public class User implements Serializable {
 		return ideas;
 	}
 
+	public void setIdeas(List<Idea> ideas) {
+		this.ideas = ideas;
+	}
+
+	public void addIdea(Idea idea) {
+		this.ideas.add(idea);
+	}
+
 	public List<Comment> getComments() {
 		return comments;
 	}
 
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+
 	public List<Role> getRoles() {
 		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void addRole(Role role) {
+		this.roles.add(role);
 	}
 
 	@PrePersist
@@ -122,74 +146,12 @@ public class User implements Serializable {
 		this.creationTime = ZonedDateTime.now();
 	}
 
-	public static class Builder {
-		private long id;
-		private String email;
-		private String password;
-		private ZonedDateTime creationTime;
-		private List<Idea> ideas = new ArrayList<>();
-		private List<Comment> comments = new ArrayList<>();
-		private List<Role> roles = new ArrayList<>();
-
-		private Builder withId(final long id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder withEmail(final String email) {
-			this.email = email;
-			return this;
-		}
-
-		public Builder withPassword(final String password) {
-			this.password = password;
-			return this;
-		}
-
-		private Builder withCreationTime(final ZonedDateTime creationTime) {
-			this.creationTime = creationTime;
-			return this;
-		}
-
-		public Builder withIdeas(final List<Idea> ideas) {
-			this.ideas = ideas;
-			return this;
-		}
-
-		public Builder addIdea(final Idea idea) {
-			this.ideas.add(idea);
-			return this;
-		}
-
-		public Builder withComments(final List<Comment> comments) {
-			this.comments = comments;
-			return this;
-		}
-
-		public Builder addComment(final Comment comment) {
-			this.comments.add(comment);
-			return this;
-		}
-
-		public Builder withRoles(final List<Role> roles) {
-			this.roles = roles;
-			return this;
-		}
-
-		public Builder addRole(final Role role) {
-			this.roles.add(role);
-			return this;
-		}
-
-		public User build() {
-			return new User(this);
-		}
-	}
 
 	@Override
 	public String toString() {
 		return "User{" +
 				"id=" + id +
+				", username='" + username + '\'' +
 				", email='" + email + '\'' +
 				", password='" + password + '\'' +
 				", creationTime=" + creationTime +
@@ -200,29 +162,18 @@ public class User implements Serializable {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		User user = (User) o;
-
-		if (id != user.id) return false;
-		if (comments != null ? !comments.equals(user.comments) : user.comments != null) return false;
-		if (!creationTime.equals(user.creationTime)) return false;
-		if (!email.equals(user.email)) return false;
-		if (ideas != null ? !ideas.equals(user.ideas) : user.ideas != null) return false;
-		if (!password.equals(user.password)) return false;
-		if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
-
-		return true;
+		return Objects.equals(username, user.username) &&
+				Objects.equals(email, user.email) &&
+				Objects.equals(password, user.password) &&
+				Objects.equals(creationTime, user.creationTime) &&
+				Objects.equals(ideas, user.ideas) &&
+				Objects.equals(comments, user.comments) &&
+				Objects.equals(roles, user.roles);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (int) (id ^ (id >>> 32));
-		result = 31 * result + email.hashCode();
-		result = 31 * result + password.hashCode();
-		result = 31 * result + creationTime.hashCode();
-		result = 31 * result + (ideas != null ? ideas.hashCode() : 0);
-		result = 31 * result + (comments != null ? comments.hashCode() : 0);
-		result = 31 * result + (roles != null ? roles.hashCode() : 0);
-		return result;
+		return Objects.hash(username, email, password, creationTime, ideas, comments, roles);
 	}
 }

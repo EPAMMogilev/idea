@@ -15,7 +15,6 @@ targetCompatibility = 1.8
 httpPort = 9090
 war.archiveName = 'idea.war'
 
-
 repositories {
     jcenter()
     maven { url 'http://repo.spring.io/libs-snapshot' }
@@ -34,6 +33,9 @@ ext {
     sl4jVersion = '1.7.10'
     assertJVersion = '1.7.1'
     mockitoVersion = '1.10.19'
+    springTestDbUnitVersion = '1.2.1'
+    dbUnitVersion = '2.5.0'
+    guavaCollectionsVersion = 'r03'
 }
 
 dependencies {
@@ -41,6 +43,7 @@ dependencies {
     compile "org.springframework:spring-web"
     compile 'org.springframework:spring-webmvc'
     compile 'org.springframework.security:spring-security-core'
+    compile 'org.springframework.security:spring-security-web'
     compile 'org.springframework.hateoas:spring-hateoas'
     compile 'org.springframework.data:spring-data-jpa'
 
@@ -65,11 +68,17 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind'
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
 
+    // Guava
+    compile "com.google.guava:guava-collections:$guavaCollectionsVersion"
+
+
     // Test dependencies
     testCompile 'junit:junit'
     testCompile 'org.springframework:spring-test'
     testCompile "org.mockito:mockito-all:$mockitoVersion"
     testCompile "org.assertj:assertj-core:$assertJVersion"
+    testCompile "com.github.springtestdbunit:spring-test-dbunit:$springTestDbUnitVersion"
+    testCompile "org.dbunit:dbunit:$dbUnitVersion"
 
     // Adds a simple way to extract parts of a given document.
     testCompile "com.jayway.jsonpath:json-path:$jsonPathVesrion"
@@ -82,6 +91,34 @@ dependencies {
 
     providedCompile 'javax.servlet:javax.servlet-api'
 }
+
+test {
+    reports.html.destination = file("$reports.html.destination/unit")
+    reports.junitXml.destination = file("$reports.junitXml.destination/unit")
+}
+
+//---------------------------Integration tests setup-----------------------------------------//
+
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integration-test/java')
+        resources.srcDir file('src/integration-test/resources')
+        compileClasspath = sourceSets.main.output + configurations.testRuntime + sourceSets.test.output
+        runtimeClasspath = output + compileClasspath
+    }
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs the integration tests.'
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    reports.html.destination = file("$reports.html.destination/integration")
+    reports.junitXml.destination = file("$reports.junitXml.destination/integration")
+}
+
+//check.dependsOn integrationTest
+
+//---------------------------Gradle wrapper--------------------------------------------------//
 
 // The Gradle Wrapper is the preferred way of starting a Gradle build
 // Run the following command to download and initialize the wrapper scripts: gradle wrapper
