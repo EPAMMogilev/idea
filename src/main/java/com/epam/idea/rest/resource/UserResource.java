@@ -1,32 +1,55 @@
 package com.epam.idea.rest.resource;
 
-import com.epam.idea.core.model.Comment;
-import com.epam.idea.core.model.Idea;
-import com.epam.idea.core.model.Role;
 import com.epam.idea.core.model.User;
+import com.epam.idea.rest.resource.support.JsonPropertyName;
+import com.epam.idea.rest.resource.support.View;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.hateoas.ResourceSupport;
 
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserResource extends ResourceSupport {
+
+	@JsonProperty(JsonPropertyName.ID)
+	private long userId;
+
+	@Size(min = User.MIN_LENGTH_USERNAME, max = User.MAX_LENGTH_USERNAME)
+	private String username;
 
 	@Email
 	@Size(min = User.MIN_LENGTH_EMAIL, max = User.MAX_LENGTH_EMAIL)
 	private String email;
 
+	@JsonView(View.Admin.class)
+	@Transient
 	@Size(min = User.MIN_LENGTH_PASSWORD, max = User.MAX_LENGTH_PASSWORD)
 	private String password;
+
+	@JsonProperty(JsonPropertyName.CREATION_TIME)
 	private ZonedDateTime creationTime;
-	private List<Idea> ideas = new ArrayList<>();
-	private List<Comment> comments = new ArrayList<>();
-	private List<Role> roles = new ArrayList<>();
 
 	public UserResource() {
 		//empty
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 	public String getEmail() {
@@ -53,37 +76,11 @@ public class UserResource extends ResourceSupport {
 		this.creationTime = creationTime;
 	}
 
-	public List<Idea> getIdeas() {
-		return ideas;
-	}
-
-	public void setIdeas(List<Idea> ideas) {
-		this.ideas = ideas;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
 	public User toUser() {
-		return User.getBuilder()
-				.withEmail(email)
-				.withPassword(password)
-				.withComments(comments)
-				.withIdeas(ideas)
-				.withRoles(roles)
-				.build();
+		final User user = new User();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(password);
+		return user;
 	}
 }

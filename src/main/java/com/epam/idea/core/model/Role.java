@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 @Entity
 @Table(name = "ROLE")
@@ -35,23 +38,13 @@ public class Role implements Serializable {
 	private List<User> usersWithRole;
 
 	public Role() {
-		//empty
+		this.usersWithRole = new ArrayList<>();
 	}
 
-	private Role(final Builder builder) {
-		this.name =          builder.name;
-		this.usersWithRole = builder.usersWithRole;
-	}
-
-	public static Builder getBuilder() {
-		return new Builder();
-	}
-
-	public static Builder getBuilderFrom(final Role role) {
-		return new Builder()
-				.withId(role.id)
-				.withName(role.name)
-				.withUsers(role.usersWithRole);
+	public Role(Authority name) {
+		requireNonNull(name, "Name cannot be null");
+		this.name = name;
+		this.usersWithRole = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -62,42 +55,20 @@ public class Role implements Serializable {
 		return name;
 	}
 
+	public void setName(Authority name) {
+		this.name = name;
+	}
+
 	public List<User> getUsersWithRole() {
 		return usersWithRole;
 	}
 
-	public static class Builder {
-		private long id;
-		private Authority name;
-		private List<User> usersWithRole = new ArrayList<>();
+	public void setUsersWithRole(List<User> usersWithRole) {
+		this.usersWithRole = usersWithRole;
+	}
 
-		private Builder() {
-			//empty
-		}
-
-		private Builder withId(final long id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder withName(final Authority name) {
-			this.name = name;
-			return this;
-		}
-
-		public Builder withUsers(final List<User> usersWithRole) {
-			this.usersWithRole = usersWithRole;
-			return this;
-		}
-
-		public Builder addUser(final User user) {
-			this.usersWithRole.add(user);
-			return this;
-		}
-
-		public Role build() {
-			return new Role(this);
-		}
+	public void addUser(User user) {
+		this.usersWithRole.add(user);
 	}
 
 	@Override
@@ -109,23 +80,20 @@ public class Role implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Role role = (Role) o;
-
-		if (name != role.name) return false;
-		if (usersWithRole != null ? !usersWithRole.equals(role.usersWithRole) : role.usersWithRole != null)
-			return false;
-
-		return true;
+	public int hashCode() {
+		return Objects.hash(name, usersWithRole);
 	}
 
 	@Override
-	public int hashCode() {
-		int result = name.hashCode();
-		result = 31 * result + (usersWithRole != null ? usersWithRole.hashCode() : 0);
-		return result;
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		final Role other = (Role) obj;
+		return Objects.equals(this.name, other.name)
+				&& Objects.equals(this.usersWithRole, other.usersWithRole);
 	}
 }

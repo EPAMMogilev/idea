@@ -38,4 +38,9 @@ public class CommentServiceImpl implements CommentService {
 	public Comment save(Comment persisted) {
 		return commentRepository.save(persisted);
 	}
+
+	@Override
+	public List<Comment> findCommentsByUserId(Long userId) {
+		return commentRepository.findCommentsByUserId(userId);
+	}
 }

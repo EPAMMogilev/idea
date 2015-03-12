@@ -30,12 +30,12 @@ public class TagServiceImpl implements TagService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Tag findOne(Long id) {
+	public Tag findOne(final Long id) {
 		return tagRepository.findOne(id).orElseThrow(TagDoesNotExistException::new);
 	}
 
 	@Override
-	public Tag save(Tag persisted) {
+	public Tag save(final Tag persisted) {
 		return tagRepository.save(persisted);
 	}
 }

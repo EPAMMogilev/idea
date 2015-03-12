@@ -5,6 +5,7 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.Role;
 import com.epam.idea.core.model.User;
+import com.google.common.collect.Lists;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.ZoneOffset;
@@ -15,25 +16,31 @@ import java.util.List;
 
 public class TestUserBuilder {
 
+	public static final String DEFAULT_USERNAME = "Super user";
 	public static final String DEFAULT_EMAIL = "test@email.com";
 	public static final String DEFAULT_PASSWORD = "password";
 	public static final long DEFAULT_USER_ID = 1L;
 	public static final ZonedDateTime DEFAULT_CREATION_TIME = ZonedDateTime.of(2015, 1, 12, 0, 0, 0, 0, ZoneOffset.UTC);
 
-	private User.Builder userBuilder;
+	private long id;
+	private String username;
 	private String email;
 	private String password;
-	private List<Idea> ideas = new ArrayList<>(1);
-	private List<Comment> comments = new ArrayList<>(1);
-	private List<Role> roles = new ArrayList<>(1);
+	private ZonedDateTime creationTime;
+	private List<Idea> ideas;
+	private List<Comment> comments;
+	private List<Role> roles;
 
 	public TestUserBuilder() {
-		this.userBuilder = User.getBuilder();
+		this.ideas = new ArrayList<>(1);
+		this.comments = new ArrayList<>(1);
+		this.roles = new ArrayList<>(1);
 	}
 
 	private static TestUserBuilder aDefaultUser() {
 		return new TestUserBuilder()
 				.withId(DEFAULT_USER_ID)
+				.withUsername(DEFAULT_USERNAME)
 				.withEmail(DEFAULT_EMAIL)
 				.withPassword(DEFAULT_PASSWORD)
 				.withCreationTime(DEFAULT_CREATION_TIME);
@@ -41,7 +48,7 @@ public class TestUserBuilder {
 
 	public static TestUserBuilder aUser() {
 		return aDefaultUser()
-                .inUserRole();
+				.inUserRole();
 	}
 
 	public static TestUserBuilder anAdmin() {
@@ -50,7 +57,12 @@ public class TestUserBuilder {
 	}
 
 	public TestUserBuilder withId(final long id) {
-		ReflectionTestUtils.setField(userBuilder, "id", id);
+		this.id = id;
+		return this;
+	}
+
+	public TestUserBuilder withUsername(final String username) {
+		this.username = username;
 		return this;
 	}
 
@@ -65,7 +77,7 @@ public class TestUserBuilder {
 	}
 
 	public TestUserBuilder withCreationTime(final ZonedDateTime creationTime) {
-		ReflectionTestUtils.setField(userBuilder, "creationTime", creationTime);
+		this.creationTime = creationTime;
 		return this;
 	}
 
@@ -100,35 +112,37 @@ public class TestUserBuilder {
 	}
 
 	public TestUserBuilder inAdminRole() {
-		List<Role> roles = new ArrayList<>(1);
-		roles.add(Role.getBuilder().withName(Authority.ADMIN).build());
-		this.roles = roles;
+		this.roles = Lists.newArrayList(new Role(Authority.ADMIN));
 		return this;
 	}
 
 	public TestUserBuilder inUserRole() {
-		List<Role> roles = new ArrayList<>(1);
-		roles.add(Role.getBuilder().withName(Authority.USER).build());
-		this.roles = roles;
+		this.roles = Lists.newArrayList(new Role(Authority.USER));
 		return this;
 	}
 
 	public TestUserBuilder but() {
 		return aDefaultUser()
+				.withId(id)
+				.withUsername(username)
 				.withEmail(email)
 				.withPassword(password)
+				.withCreationTime(creationTime)
 				.withIdeas(ideas)
 				.withComments(comments)
 				.inRoles(roles);
 	}
 
 	public User build() {
-		return userBuilder
-				.withEmail(email)
-				.withPassword(password)
-				.withComments(comments)
-				.withIdeas(ideas)
-				.withRoles(roles)
-				.build();
+		final User user = new User();
+		ReflectionTestUtils.setField(user, "id", id);
+		ReflectionTestUtils.setField(user, "creationTime", creationTime);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setUsername(username);
+		user.setComments(comments);
+		user.setIdeas(ideas);
+		user.setRoles(roles);
+		return user;
 	}
 }

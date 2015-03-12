@@ -13,10 +13,11 @@ public class TestUtils {
 	private static final char CHARACTER = 'a';
 	private static final String EMAIL_SUFFIX = "@test.com";
 	public static final String EMPTY = "";
+	public static final String UTF_8 = "utf8";
 
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(),
-			Charset.forName("utf8")
+			Charset.forName(UTF_8)
 	);
 
 	public static String createStringWithLength(int length) {

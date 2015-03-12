@@ -1,24 +1,22 @@
 package com.epam.idea.rest.resource.builders;
 
-import com.epam.idea.core.model.Comment;
-import com.epam.idea.core.model.Tag;
-import com.epam.idea.core.model.User;
 import com.epam.idea.rest.resource.IdeaResource;
+import com.epam.idea.rest.resource.TagResource;
+import com.epam.idea.rest.resource.UserResource;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestIdeaResourceBuilder {
-	
+
 	private String title;
 	private String description;
 	private ZonedDateTime creationTime;
 	private ZonedDateTime modificationTime;
 	private int rating;
-	private User author;
-	private List<Tag> relatedTags = new ArrayList<>();
-	private List<Comment> comments = new ArrayList<>();
+	private UserResource author;
+	private List<TagResource> tags = new ArrayList<>();
 
 	private TestIdeaResourceBuilder() {
 	}
@@ -52,18 +50,13 @@ public class TestIdeaResourceBuilder {
 		return this;
 	}
 
-	public TestIdeaResourceBuilder withAuthor(final User author) {
+	public TestIdeaResourceBuilder withAuthor(final UserResource author) {
 		this.author = author;
 		return this;
 	}
 
-	public TestIdeaResourceBuilder withRelatedTags(final List<Tag> relatedTags) {
-		this.relatedTags = relatedTags;
-		return this;
-	}
-
-	public TestIdeaResourceBuilder withComments(final List<Comment> comments) {
-		this.comments = comments;
+	public TestIdeaResourceBuilder withRelatedTags(final List<TagResource> relatedTags) {
+		this.tags = relatedTags;
 		return this;
 	}
 
@@ -75,8 +68,7 @@ public class TestIdeaResourceBuilder {
 				.withModificationTime(modificationTime)
 				.withRating(rating)
 				.withAuthor(author)
-				.withRelatedTags(relatedTags)
-				.withComments(comments);
+				.withRelatedTags(tags);
 	}
 
 	public IdeaResource build() {
@@ -86,9 +78,10 @@ public class TestIdeaResourceBuilder {
 		ideaResource.setCreationTime(creationTime);
 		ideaResource.setModificationTime(modificationTime);
 		ideaResource.setRating(rating);
-		ideaResource.setAuthor(author);
-		ideaResource.setRelatedTags(relatedTags);
-		ideaResource.setComments(comments);
+//		if (author != null) {
+//			ideaResource.setAuthor(author);
+//		}
+		ideaResource.setTags(tags);
 		return ideaResource;
 	}
 }

@@ -27,7 +27,8 @@ public class IdeaController {
 	@RequestMapping(value = "/{ideaId}", method = RequestMethod.GET)
 	public HttpEntity<IdeaResource> show(@PathVariable final long ideaId) {
 		Idea foundIdea = ideaService.findOne(ideaId);
-		return new ResponseEntity<>(new IdeaResourceAsm().toResource(foundIdea), HttpStatus.OK);
+		IdeaResource ideaResource = new IdeaResourceAsm().toResource(foundIdea);
+		return new ResponseEntity<>(ideaResource, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -38,7 +39,8 @@ public class IdeaController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public HttpEntity<IdeaResource> create(@Valid @RequestBody final IdeaResource ideaRes) {
-		Idea createdIdea = ideaService.save(ideaRes.toIdea());
+		Idea idea = ideaRes.toIdea();
+		Idea createdIdea = ideaService.save(idea);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResource(createdIdea), HttpStatus.CREATED);
 	}
 

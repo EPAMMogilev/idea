@@ -1,7 +1,5 @@
 package com.epam.idea.rest.config;
 
-import com.epam.idea.rest.config.root.RootConfig;
-import com.epam.idea.rest.config.servlet.WebAppConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

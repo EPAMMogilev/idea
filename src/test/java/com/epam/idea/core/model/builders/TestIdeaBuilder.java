@@ -20,16 +20,19 @@ public class TestIdeaBuilder {
 	public static final ZonedDateTime DEFAULT_CREATION_TIME = ZonedDateTime.of(2014, 2, 12, 10, 0, 0, 0, ZoneOffset.UTC);
 	public static final ZonedDateTime DEFAULT_MODIFICATION_TIME = ZonedDateTime.of(2014, 10, 5, 0, 0, 0, 0, ZoneOffset.UTC);
 
-	private Idea.Builder ideaBuilder;
+	private long id;
 	private int rating;
 	private String title;
 	private String description;
+	private ZonedDateTime creationTime;
+	private ZonedDateTime modificationTime;
 	private User author;
-	private List<Tag> tags = new ArrayList<>(1);
-	private List<Comment> comments = new ArrayList<>(1);
+	private List<Tag> tags;
+	private List<Comment> comments;
 
 	public TestIdeaBuilder() {
-		this.ideaBuilder = Idea.getBuilder();
+		this.tags = new ArrayList<>(1);
+		this.comments = new ArrayList<>(1);
 	}
 
 	public static TestIdeaBuilder anIdea() {
@@ -43,7 +46,7 @@ public class TestIdeaBuilder {
 	}
 
 	public TestIdeaBuilder withId(final long id) {
-		ReflectionTestUtils.setField(ideaBuilder, "id", id);
+		this.id = id;
 		return this;
 	}
 
@@ -58,12 +61,12 @@ public class TestIdeaBuilder {
 	}
 
 	public TestIdeaBuilder withCreationTime(final ZonedDateTime creationTime) {
-		ReflectionTestUtils.setField(ideaBuilder, "creationTime", creationTime);
+		this.creationTime = creationTime;
 		return this;
 	}
 
 	public TestIdeaBuilder withModificationTime(final ZonedDateTime modificationTime) {
-		ReflectionTestUtils.setField(ideaBuilder, "modificationTime", modificationTime);
+		this.modificationTime = modificationTime;
 		return this;
 	}
 
@@ -99,8 +102,11 @@ public class TestIdeaBuilder {
 
 	public TestIdeaBuilder but() {
 		return anIdea()
+				.withId(id)
 				.withTitle(title)
 				.withDescription(description)
+				.withCreationTime(creationTime)
+				.withModificationTime(modificationTime)
 				.withRating(rating)
 				.withAuthor(author)
 				.withTags(tags)
@@ -108,13 +114,16 @@ public class TestIdeaBuilder {
 	}
 
 	public Idea build() {
-		return ideaBuilder
-				.withTitle(title)
-				.withDescription(description)
-				.withAuthor(author)
-				.withRating(rating)
-				.withComments(comments)
-				.withTags(tags)
-				.build();
+		final Idea idea = new Idea();
+		ReflectionTestUtils.setField(idea, "id", id);
+		ReflectionTestUtils.setField(idea, "creationTime", creationTime);
+		ReflectionTestUtils.setField(idea, "modificationTime", modificationTime);
+		idea.setTitle(title);
+		idea.setRelatedTags(tags);
+		idea.setAuthor(author);
+		idea.setRating(rating);
+		idea.setDescription(description);
+		idea.setComments(comments);
+		return idea;
 	}
 }
