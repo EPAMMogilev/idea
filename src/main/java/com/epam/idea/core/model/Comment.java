@@ -115,26 +115,4 @@ public class Comment implements Serializable {
 				", rating=" + rating +
 				'}';
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(body, creationTime, modificationTime, rating, author, subject);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-		final Comment other = (Comment) obj;
-		return Objects.equals(this.body, other.body)
-				&& Objects.equals(this.creationTime, other.creationTime)
-				&& Objects.equals(this.modificationTime, other.modificationTime)
-				&& Objects.equals(this.rating, other.rating)
-				&& Objects.equals(this.author, other.author)
-				&& Objects.equals(this.subject, other.subject);
-	}
 }

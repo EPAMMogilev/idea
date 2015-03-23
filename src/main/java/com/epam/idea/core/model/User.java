@@ -157,23 +157,4 @@ public class User implements Serializable {
 				", creationTime=" + creationTime +
 				'}';
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		User user = (User) o;
-		return Objects.equals(username, user.username) &&
-				Objects.equals(email, user.email) &&
-				Objects.equals(password, user.password) &&
-				Objects.equals(creationTime, user.creationTime) &&
-				Objects.equals(ideas, user.ideas) &&
-				Objects.equals(comments, user.comments) &&
-				Objects.equals(roles, user.roles);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(username, email, password, creationTime, ideas, comments, roles);
-	}
 }
