@@ -16,7 +16,7 @@ public interface UserService extends BaseService<User, Long> {
 	/**
 	 * Updates the information of a user.
 	 *
-	 * @param userId The id of the user to update.
+	 * @param userId The id of the user to updateUser.
 	 * @param source The information of the updated user.
 	 * @return The updated user.
 	 * @throws com.epam.idea.core.service.exception.UserNotFoundException If no user was found with the given id.

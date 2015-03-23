@@ -1,6 +1,7 @@
 package com.epam.idea.rest.controller;
 
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
+import com.epam.idea.core.service.exception.TagDoesNotExistException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class RestErrorHandler {
 
 	public static final String USER_NOT_FOUND_LOGREF = "error";
 	public static final String IDEA_NOT_FOUND_LOGREF = "error";
+    public static final String TAG_NOT_FOUND_LOGREF = "error";
 
 	@ResponseBody
 	@ExceptionHandler(UserNotFoundException.class)
@@ -33,6 +35,13 @@ public class RestErrorHandler {
 	public VndErrors ideaNotFoundExceptionHandler(final IdeaNotFoundException ex) {
 		return new VndErrors(IDEA_NOT_FOUND_LOGREF, ex.getMessage());
 	}
+
+    @ResponseBody
+    @ExceptionHandler(TagDoesNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public VndErrors tagNotFoundExceptionHandler(final TagDoesNotExistException ex) {
+        return new VndErrors(TAG_NOT_FOUND_LOGREF, ex.getMessage());
+    }
 
 	@ResponseBody
 	@ExceptionHandler(MethodArgumentNotValidException.class)

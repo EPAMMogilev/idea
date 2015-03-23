@@ -10,7 +10,7 @@ public class IdeaTest {
 	@Test
 	public void shouldAddCreationAndModificationTime() {
 		//Given:
-		Idea idea = Idea.getBuilder().build();
+		Idea idea = new Idea();
 
 		//When:
 		idea.prePersist();
@@ -30,7 +30,7 @@ public class IdeaTest {
 	@Test
 	public void modificationTimeShouldBeAfterCreation() {
 		//Given:
-		Idea idea = Idea.getBuilder().build();
+		Idea idea = new Idea();
 
 		//When:
 		idea.prePersist();

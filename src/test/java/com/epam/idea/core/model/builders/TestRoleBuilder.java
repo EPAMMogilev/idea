@@ -13,12 +13,12 @@ public class TestRoleBuilder {
 
 	public static final long DEFAULT_ID = 1L;
 
-	private Role.Builder roleBuilder;
+	private long id;
 	private Authority name;
-	private List<User> users = new ArrayList<>(1);
+	private List<User> users;
 
 	private TestRoleBuilder() {
-		this.roleBuilder = Role.getBuilder();
+		this.users = new ArrayList<>(1);
 	}
 
 	public static TestRoleBuilder aRole() {
@@ -27,17 +27,13 @@ public class TestRoleBuilder {
 				.withName(Authority.USER);
 	}
 
-	public static TestRoleBuilder anUserRole() {
-		return aRole();
-	}
-
 	public static TestRoleBuilder anAdminRole() {
-		return new TestRoleBuilder()
+		return aRole()
 				.withName(Authority.ADMIN);
 	}
 
 	public TestRoleBuilder withId(final long id) {
-		ReflectionTestUtils.setField(roleBuilder, "id", id);
+		this.id = id;
 		return this;
 	}
 
@@ -58,14 +54,16 @@ public class TestRoleBuilder {
 
 	public TestRoleBuilder but() {
 		return aRole()
+				.withId(id)
 				.withName(name)
 				.withUsers(users);
 	}
 
 	public Role build() {
-		return roleBuilder
-				.withName(name)
-				.withUsers(users)
-				.build();
+		final Role role = new Role();
+		ReflectionTestUtils.setField(role, "id", id);
+		role.setName(name);
+		role.setUsersWithRole(users);
+		return role;
 	}
 }

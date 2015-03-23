@@ -10,7 +10,7 @@ public class UserTest {
 	@Test
 	public void shouldAddCreationTime() {
 		//Given:
-		User user = User.getBuilder().build();
+		User user = new User();
 		
 		//When:
 		user.prePersist();

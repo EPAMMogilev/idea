@@ -1,4 +1,4 @@
-package com.epam.idea.rest.config.root;
+package com.epam.idea.rest.config;
 
 import com.epam.idea.core.repository.config.PersistenceConfig;
 import com.epam.idea.core.service.config.ServiceConfig;

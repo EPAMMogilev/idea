@@ -11,19 +11,21 @@ import java.time.ZonedDateTime;
 public class TestCommentBuilder {
 
 	public static final String DEFAULT_BODY = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet";
-	public static final int DEFAULT_RATING = 0;
+	public static final int DEFAULT_RATING = 3;
 	public static final long DEFAULT_ID = 1L;
 	public static final ZonedDateTime DEFAULT_CREATION_TIME = ZonedDateTime.of(2014, 5, 5, 0, 0, 0, 0, ZoneOffset.UTC);
 	public static final ZonedDateTime DEFAULT_MODIFICATION_TIME = ZonedDateTime.of(2014, 7, 8, 0, 0, 0, 0, ZoneOffset.UTC);
 
-	private Comment.Builder commentBuilder;
+	private long id;
 	private String body;
 	private int rating;
+	private ZonedDateTime creationTime;
+	private ZonedDateTime modificationTime;
 	private User author;
 	private Idea subject;
 
 	private TestCommentBuilder() {
-		this.commentBuilder = Comment.getBuilder();
+		//empty
 	}
 
 	public static TestCommentBuilder aComment() {
@@ -36,10 +38,10 @@ public class TestCommentBuilder {
 	}
 
 	public TestCommentBuilder withId(final long id) {
-		ReflectionTestUtils.setField(commentBuilder, "id", id);
+		this.id = id;
 		return this;
 	}
-	
+
 	public TestCommentBuilder withBody(final String body) {
 		this.body = body;
 		return this;
@@ -51,12 +53,12 @@ public class TestCommentBuilder {
 	}
 
 	public TestCommentBuilder withCreationTime(final ZonedDateTime creationTime) {
-		ReflectionTestUtils.setField(commentBuilder, "creationTime", creationTime);
+		this.creationTime = creationTime;
 		return this;
 	}
 
 	public TestCommentBuilder withModificationTime(final ZonedDateTime modificationTime) {
-		ReflectionTestUtils.setField(commentBuilder, "modificationTime", modificationTime);
+		this.modificationTime = modificationTime;
 		return this;
 	}
 
@@ -79,11 +81,14 @@ public class TestCommentBuilder {
 	}
 
 	public Comment build() {
-		return commentBuilder
-				.withBody(body)
-				.withRating(rating)
-				.withAuthor(author)
-				.withSubject(subject)
-				.build();
+		final Comment comment = new Comment();
+		ReflectionTestUtils.setField(comment, "id", id);
+		ReflectionTestUtils.setField(comment, "creationTime", creationTime);
+		ReflectionTestUtils.setField(comment, "modificationTime", modificationTime);
+		comment.setBody(body);
+		comment.setSubject(subject);
+		comment.setAuthor(author);
+		comment.setRating(rating);
+		return comment;
 	}
 }

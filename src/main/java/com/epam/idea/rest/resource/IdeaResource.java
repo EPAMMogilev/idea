@@ -1,43 +1,51 @@
 package com.epam.idea.rest.resource;
 
-import com.epam.idea.core.model.Comment;
+
 import com.epam.idea.core.model.Idea;
-import com.epam.idea.core.model.Tag;
-import com.epam.idea.core.model.User;
+import com.epam.idea.rest.resource.support.JsonPropertyName;
+import com.epam.idea.rest.resource.support.View;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IdeaResource extends ResourceSupport {
+
+	@JsonProperty(JsonPropertyName.ID)
+	private long ideaId;
 
 	@Size(min = Idea.MIN_LENGTH_TITLE, max = Idea.MAX_LENGTH_TITLE)
 	private String title;
 
 	@Size(max = Idea.MAX_LENGTH_DESCRIPTION)
 	private String description;
+
+	@JsonProperty(JsonPropertyName.CREATION_TIME)
 	private ZonedDateTime creationTime;
+
+	@JsonProperty(JsonPropertyName.MODIFICATION_TIME)
 	private ZonedDateTime modificationTime;
+
+	@JsonView({View.Basic.class})
 	private int rating;
-	private User author;
-	private List<Tag> relatedTags = new ArrayList<>();
-	private List<Comment> comments = new ArrayList<>();
+
+	private List<TagResource> tags;
 
 	public IdeaResource() {
-		//empty
+		this.tags = new ArrayList<>();
 	}
 
-	public IdeaResource(String title, String description, ZonedDateTime creationTime, ZonedDateTime modificationTime, int rating, User author, List<Tag> relatedTags, List<Comment> comments) {
-		this.title = title;
-		this.description = description;
-		this.creationTime = creationTime;
-		this.modificationTime = modificationTime;
-		this.rating = rating;
-		this.author = author;
-		this.relatedTags = relatedTags;
-		this.comments = comments;
+	public long getIdeaId() {
+		return ideaId;
+	}
+
+	public void setIdeaId(long ideaId) {
+		this.ideaId = ideaId;
 	}
 
 	public String getTitle() {
@@ -80,38 +88,22 @@ public class IdeaResource extends ResourceSupport {
 		this.rating = rating;
 	}
 
-	public User getAuthor() {
-		return author;
+	public List<TagResource> getTags() {
+		return tags;
 	}
 
-	public void setAuthor(User author) {
-		this.author = author;
+	public void setTags(List<TagResource> tags) {
+		this.tags = tags;
 	}
 
-	public List<Tag> getRelatedTags() {
-		return relatedTags;
-	}
-
-	public void setRelatedTags(List<Tag> relatedTags) {
-		this.relatedTags = relatedTags;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-	
 	public Idea toIdea() {
-		return Idea.getBuilder()
-				.withAuthor(author)
-				.withComments(comments)
-				.withDescription(description)
-				.withRating(rating)
-				.withTags(relatedTags)
-				.withTitle(title)
-				.build();
+		final Idea idea = new Idea();
+		idea.setTitle(title);
+		idea.setDescription(description);
+		idea.setRating(rating);
+		idea.setRelatedTags(tags.parallelStream()
+				.map(TagResource::toTag)
+				.collect(Collectors.toList()));
+		return idea;
 	}
 }

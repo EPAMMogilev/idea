@@ -1,6 +1,6 @@
-insert into USER (EMAIL, PASSWORD, CREATION_TIME) values ('Chris@test.com', '1234', '2015-05-03 00:00:00');
-insert into USER (EMAIL, PASSWORD, CREATION_TIME) values ('Scott@test.com', '12345', '2015-11-02 00:00:00');
-insert into USER (EMAIL, PASSWORD, CREATION_TIME) values ('John@test.com', '123456', '2015-02-28 00:00:00');
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Avocado', 'Chris@test.com', '1234', '2015-05-03 00:00:00');
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Apple', 'Scott@test.com', '12345', '2015-11-02 00:00:00');
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Orange', 'John@test.com', '123456', '2015-02-28 00:00:00');
 
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Nonlinear Optimization by Successive Linear Programming', 'F. Palacios-Gomez & L. Lasdon & M. Engquist', '2015-01-01 03:14:07', '2015-01-02 00:00:00', 2, 1);
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Interactive fuzzy goal programming approach for bilevel programming problem', 'Arora, S.R. & Gupta, Ritu', '2015-02-02 00:00:00', '2015-02-03 00:00:00', 3, 2);

@@ -4,6 +4,7 @@ build
 target
 classes
 out/
+bin/
 
 # IDEA artifacts and output dirs
 *.iml
