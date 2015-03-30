@@ -2,8 +2,6 @@
 .gradle
 build
 target
-gradle
-classes
 out/
 
 # IDEA artifacts and output dirs
@@ -16,3 +14,7 @@ out/
 .classpath
 .project
 .settings/
+
+# Node artifacts
+src/main/webapp/app/node_modules
+src/main/webapp/app/vendor
