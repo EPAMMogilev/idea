@@ -78,22 +78,4 @@ public class Role implements Serializable {
 				", name=" + name +
 				'}';
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(name, usersWithRole);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-		final Role other = (Role) obj;
-		return Objects.equals(this.name, other.name)
-				&& Objects.equals(this.usersWithRole, other.usersWithRole);
-	}
 }
