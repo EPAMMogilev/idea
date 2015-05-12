@@ -13,11 +13,12 @@ insert into USER_ROLE (USER_ID, ROLE_ID) values (1, 1);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (2, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (3, 2);
 
-insert into TAG (NAME) values ('Programming');
-insert into TAG (NAME) values ('Porn');
+insert into TAG (NAME) values ('Sport');
+insert into TAG (NAME) values ('Transport');
+insert into TAG (NAME) values ('Culture');
 
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 1);
-insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 1);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (3, 1);
 
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (1, 1, 'Awesome!', '2014-08-02 00:00:00', '2014-12-24 00:00:00', 5);

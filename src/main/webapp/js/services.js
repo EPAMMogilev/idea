@@ -2,16 +2,20 @@
 'use strict';
 
 angular.module('app.services')
-.service('IdeasSelectedByTag',  ['Data', IdeasSelectedByTag]); 
-function IdeasSelectedByTag (Data) { 
+.service('IdeasSelectedByTag',  ['ideasFactory', IdeasSelectedByTag]);
+function IdeasSelectedByTag (ideasFactory) {
        return {
         getIdeas:function (tag) {
-          var newData = Data.getIdeas();
+         var newData;
+         ideasFactory.getIdeas().then(function (ideas) {
+            newData = ideas;
+         });
+
           if(tag !== undefined) {
               newData = [];
-              for(var i=0;i<Data.getIdeas().length; i++)
-                if(tag.toLowerCase() ==Data.getIdeas()[i].tag.toLowerCase())
-                  newData.push(Data.getIdeas()[i]);
+              for(var i=0;i<ideasFactory.getIdeas().length; i++)
+                if(tag.toLowerCase() ==ideasFactory.getIdeas()[i].tag.toLowerCase())
+                  newData.push(ideasFactory.getIdeas()[i]);
             }
             return newData;
           }
@@ -20,11 +24,12 @@ function IdeasSelectedByTag (Data) {
 };
 
 angular.module('app.services')
-.service('Rate',  Rate); 
-function Rate() {
+.service('Rate',['ideasFactory'  ,Rate]);
+function Rate(ideasFactory) {
        return {
         changeRate:function (mark, idea) {
-          idea.rate= idea.rate + (+mark);
+          idea.rating= idea.rating + (+mark);
+          ideasFactory.updateIdea(idea);
           return idea;
           }
       };
