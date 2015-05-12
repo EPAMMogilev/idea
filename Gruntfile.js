@@ -138,7 +138,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
 
-    grunt.registerTask('copy1', ['copy:build_css']);
+
     grunt.registerTask('build', [ 'clean','removelogging', 'uglify',
     'clean:cssmin', 'cssmin', 'index:build', 'copy','bower']);
 //    grunt.registerTask('p:test', ['clean:e2etests','processhtml:e2eTests', 'connect', 'protractor', 'processhtml:production']);
