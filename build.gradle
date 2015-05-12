@@ -156,5 +156,51 @@ check.dependsOn integrationTest
 // The Gradle Wrapper is the preferred way of starting a Gradle build
 // Run the following command to download and initialize the wrapper scripts: gradle wrapper
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
+}
+
+//---------------------------Deploy in local Tomcat--------------------------------------------------//
+
+task tom << {
+    def tomcat_home = System.getenv('CATALINA_HOME')
+    def tomcat_bin = "$tomcat_home/bin"
+    def tomcat_base = System.getenv('CATALINA_BASE')
+    def tomcat_webapps = tomcat_base ? "$tomcat_base/webapps" : "$tomcat_home/webapps"
+    if (project.hasProperty('start')) {
+        startTom(tomcat_bin)
+    } else if (project.hasProperty('stop')) {
+        stopTom(tomcat_bin)
+    } else if (project.hasProperty('deployNstart')) {
+        stopTom(tomcat_bin)
+        webappsCopy(tomcat_webapps)
+        startTom(tomcat_bin)
+    } else {
+        throw new RuntimeException('unrecognized option')
+    }
+}
+
+def startTom(tomcat_bin) {
+    println 'Starting Tomcat...'
+    exec {
+        workingDir tomcat_bin
+        commandLine 'cmd', '/c', 'startup.bat'
+    }
+}
+
+def stopTom(tomcat_bin) {
+    println 'Stopping Tomcat...'
+    exec {
+        workingDir tomcat_bin
+        commandLine 'cmd', '/c', 'shutdown.bat'
+    }
+}
+
+def webappsCopy(tomcat_webapps) {
+    println "Start copying war into $tomcat_webapps"
+    copy {
+        from 'build/libs'
+        into tomcat_webapps
+        include '*.war'
+    }
+    println 'Finish copying war'
 }
