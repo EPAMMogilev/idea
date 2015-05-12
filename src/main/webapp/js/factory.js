@@ -3,11 +3,11 @@
     'use strict';
     angular
         .module('ideaFactories')
-        .factory('crudFactory', crudFactory);
+        .factory('appFactory', appFactory);
 
-    crudFactory.$inject = ['$resource'];
+    appFactory.$inject = ['$resource'];
 
-    function crudFactory($resource) {
+    function appFactory($resource) {
 
         var factory = {
             ideas: ideas,

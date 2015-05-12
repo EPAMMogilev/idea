@@ -166,7 +166,7 @@ grunt_build.dependsOn 'installGrunt'
 grunt_build.dependsOn 'npmInstall'
 
 // runs "grunt build" as part of your gradle build
-build.dependsOn grunt_build
+war.dependsOn grunt_build
 
 //---------------------------Deploy in local Tomcat--------------------------------------------------//
 

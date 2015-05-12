@@ -5,9 +5,9 @@
         .module('ideaFactories')
         .factory('tagsFactory', tagsFactory);
 
-    tagsFactory.$inject = ['crudFactory'];
+    tagsFactory.$inject = ['appFactory'];
 
-    function tagsFactory(crudFactory) {
+    function tagsFactory(appFactory) {
 
         var publicMethod = {
             getTopNTags: getTopNTags,
@@ -16,17 +16,18 @@
         return publicMethod;
 
         function getTopNTags() {
-            var tags = crudFactory.tags().get().$promise;
-            return tags;
+            var promise = appFactory.tags().get().$promise;
+            return promise;
         }
 
 
       function getIdeasByTag(tag) {
+      var promise;
         if( tag === undefined)
-           var ideas = crudFactory.ideas().get().$promise;
+           promise = appFactory.ideas().get().$promise;
         else
-            var ideas = crudFactory.tags().getIdeasByTag({id: tag}).$promise;
-        return ideas;
+           promise = appFactory.tags().getIdeasByTag({id: tag}).$promise;
+        return promise;
       }
     }
 })();
