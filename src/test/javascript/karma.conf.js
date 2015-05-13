@@ -27,12 +27,13 @@ module.exports = function (config) {
 
         plugins: [
             'karma-firefox-launcher',
+            'karma-htmlfile-reporter',
             'karma-jasmine',
             'karma-coverage'
         ],
 
         singleRun: true,
-        reporters: [/*'progress', */'coverage', 'dots'],
+        reporters: [/*'progress', */'coverage', 'dots', 'progress', 'html'],
 
         preprocessors: {
             '../main/webapp/js/**/*.js': ['coverage'],
@@ -42,9 +43,14 @@ module.exports = function (config) {
         coverageReporter: {
             reporters: [
                 {type: 'lcovonly', dir: '../../target/site/cobertura/'},
-                {type : 'cobertura', dir: '../../target/site/cobertura/'}/*,
+                {type : 'cobertura', dir: '../../target/site/cobertura/'},
+                {type : 'html', dir: '../../target/site/report/'}/*,
                 {type : 'html', dir : '../../target/site/coverage/', file : 'coverage.txt'}*/
             ]
+        },
+	
+	htmlReporter: {
+            outputFile: '../../target/site/report/units.html'
         }
 
     });
