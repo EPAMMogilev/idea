@@ -187,7 +187,7 @@ module.exports = function (grunt) {
       return file.replace( dirRE, '' );
     });
 
-    grunt.file.copy(grunt.config('resource_dir') + '/index.html', this.data.dir + '/index', {
+    grunt.file.copy(grunt.config('resource_dir') + '/index.html', this.data.dir + '/index.html', {
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
