@@ -5,9 +5,9 @@
         .module('ideaFactories')
         .factory('ideasFactory', ideasFactory);
 
-    ideasFactory.$inject = ['appFactory'];
+    ideasFactory.$inject = ['restFactory'];
 
-    function ideasFactory(appFactory) {
+    function ideasFactory(restFactory) {
 
         var publicMethod = {
             getIdeas: getIdeas,
@@ -16,12 +16,12 @@
         return publicMethod;
 
         function getIdeas() {
-            var promise = appFactory.ideas().get().$promise;
+            var promise = restFactory.ideas().get().$promise;
             return promise;
         };
 
         function updateIdea(idea) {
-            appFactory.ideas().update({id: idea.id}, idea).$promise;
+            restFactory.ideas().update({id: idea.id}, idea).$promise;
         };
 
     }
