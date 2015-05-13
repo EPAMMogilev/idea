@@ -3,9 +3,9 @@
 
 angular
 		.module('app.filters')
-		.filter('highlightTextInDescriptionOfIdea', highlightTextInDescriptionOfIdea);
+		.filter('highlightTextInDescriptionOfIdea', ['$sce',  highlightText]);
 
- function highlightTextInDescriptionOfIdea ($sce){
+ function highlightText ($sce){
     return function(text, criteria){
     if (criteria) text = text.replace(new RegExp('('+criteria+')', 'gi'),
             '<span class="highlight">$1</span>')

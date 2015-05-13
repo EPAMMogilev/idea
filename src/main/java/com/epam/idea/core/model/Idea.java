@@ -140,6 +140,7 @@ public class Idea implements Serializable {
 	public void updateWith(final Idea source) {
 		this.title = source.title;
 		this.description = source.description;
+		this.rating = source.rating;
 	}
 
 	@PreUpdate

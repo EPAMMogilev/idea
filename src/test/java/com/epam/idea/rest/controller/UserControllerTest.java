@@ -389,7 +389,7 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$[0].rating").value(idea.getRating()))
 				.andExpect(jsonPath("$[0]." + CREATION_TIME).value(EXPECTED_IDEA_CREATION_TIME))
 				.andExpect(jsonPath("$[0]." + MODIFICATION_TIME).value(EXPECTED_IDEA_MODIFICATION_TIME))
-				.andExpect(jsonPath("$[0].author").doesNotExist())
+//				.andExpect(jsonPath("$[0].author").doesNotExist())
 				.andExpect(jsonPath("$[0].links", hasSize(2)))
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + idea.getId())))

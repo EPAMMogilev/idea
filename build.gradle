@@ -1,10 +1,22 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
+    }
+}
+
 plugins {
     id 'io.spring.dependency-management' version '0.4.0.RELEASE'
     id 'com.github.kt3k.coveralls' version '2.0.1'
+    id "com.moowork.grunt" version "0.9"
 }
 
 apply plugin: 'war'
 apply plugin: 'jetty'
+apply plugin: 'com.moowork.grunt'
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/pmd.gradle"
 apply from: "$rootDir/gradle/findbugs.gradle"
@@ -146,6 +158,15 @@ check.dependsOn integrationTest
 task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
+
+// makes sure on each build that grunt is installed
+grunt_build.dependsOn 'installGrunt'
+
+// processes your package.json before running grunt build
+grunt_build.dependsOn 'npmInstall'
+
+// runs "grunt build" as part of your gradle build
+war.dependsOn grunt_build
 
 //---------------------------Deploy in local Tomcat--------------------------------------------------//
 

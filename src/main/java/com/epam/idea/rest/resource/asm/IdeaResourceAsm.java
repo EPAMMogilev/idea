@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.model.User;
 import com.epam.idea.rest.controller.IdeaController;
 import com.epam.idea.rest.controller.UserController;
 import com.epam.idea.rest.resource.IdeaResource;
@@ -31,6 +32,9 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
 		final IdeaResource ideaResource = new IdeaResource();
 		ideaResource.setIdeaId(original.getId());
 		ideaResource.setTitle(original.getTitle());
+		if (original.getAuthor() != null && isInitialized(original.getAuthor())) {
+			ideaResource.setAuthor(new UserResourceAsm().toResource(original.getAuthor()));
+		}
 		ideaResource.setDescription(original.getDescription());
 		ideaResource.setCreationTime(original.getCreationTime());
 		ideaResource.setModificationTime(original.getModificationTime());
