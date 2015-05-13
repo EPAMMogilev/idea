@@ -95,6 +95,14 @@ module.exports = function (grunt) {
                       expand: true
                     }
                   ]
+            },
+			
+            lcov: {
+                expand: true,
+                src: 'target/site/cobertura/**',
+                dest: 'target/',
+                flatten: true,
+                filter: 'isFile'
             }
         },
 
@@ -105,6 +113,14 @@ module.exports = function (grunt) {
                 }
             }
        },
+	   
+		karma: {
+			unit: {
+				configFile: 'src/test/javascript/karma.conf.js',
+				browsers: ['Firefox'],
+				singleRun: true
+			}
+		},
 
      bower: {
             install: {
@@ -140,7 +156,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask('build', [ 'clean','removelogging', 'uglify',
-    'clean:cssmin', 'cssmin', 'index:build', 'copy','bower']);
+    'clean:cssmin', 'cssmin', 'index:build', 'copy','bower', 'karma', 'copy:lcov']);
 //    grunt.registerTask('p:test', ['clean:e2etests','processhtml:e2eTests', 'connect', 'protractor', 'processhtml:production']);
 //    grunt.registerTask('k:test', ['processhtml:development', 'karma', 'copy:lcov']);
 
