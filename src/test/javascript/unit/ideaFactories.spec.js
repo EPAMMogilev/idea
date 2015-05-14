@@ -1,17 +1,17 @@
-describe('ideaFactories testing', function(){
+describe('rest factory testing', function(){
 
-	var ideaFactories;
+	var ideaFactory;
 
 	beforeEach(module('ideaFactories'));
 
 	beforeEach(inject(function(restFactory) {
 		//ideaFactories = $factory('restFactory', ideaFactories2);
-		ideaFactories = restFactory;
+		ideaFactory = restFactory;
 	}));
 
-	// Verify that the filters can be instantiated
+	// Verify that the factory can be instantiated
 	it('should be instantiable', function () {
-		expect(ideaFactories).toBeDefined();		
+		expect(ideaFactory).toBeDefined();		
 	});
 
 });
