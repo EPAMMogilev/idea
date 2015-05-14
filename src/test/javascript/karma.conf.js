@@ -7,6 +7,7 @@ module.exports = function (config) {
             '../main/webapp/build/bower_components/jquery/jquery.js',
             '../main/webapp/build/bower_components/bootstrap/bootstrap.js',
             '../main/webapp/build/bower_components/angular/angular.js',
+	        '../main/webapp/build/bower_components/angular-mocks/angular-mocks.js',
             '../main/webapp/build/bower_components/angular-animate/angular-animate.js',
             '../main/webapp/build/bower_components/angular-resource/angular-resource.js',
             '../main/webapp/build/bower_components/angular-ui-router/angular-ui-router.js',
