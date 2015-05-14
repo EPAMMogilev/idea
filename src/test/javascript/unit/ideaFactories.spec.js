@@ -1,4 +1,4 @@
-describe('factories unit testing', function(){
+describe('ideaFactories testing', function(){
 
 	var ideaFactories;
 
