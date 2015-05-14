@@ -37,6 +37,7 @@
     "karma-coverage": "~0.2.4",
     "karma-firefox-launcher": "^0.1.3",
     "karma-jasmine": "^0.1.5",
+    "karma-htmlfile-reporter":"~0.1",
     "protractor": "latest",
     "protractor-html-screenshot-reporter": "0.0.10",
     "grunt-bower-task": "latest"

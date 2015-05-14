@@ -7,6 +7,7 @@ module.exports = function (config) {
             '../main/webapp/build/bower_components/jquery/jquery.js',
             '../main/webapp/build/bower_components/bootstrap/bootstrap.js',
             '../main/webapp/build/bower_components/angular/angular.js',
+	        '../main/webapp/build/bower_components/angular-mocks/angular-mocks.js',
             '../main/webapp/build/bower_components/angular-animate/angular-animate.js',
             '../main/webapp/build/bower_components/angular-resource/angular-resource.js',
             '../main/webapp/build/bower_components/angular-ui-router/angular-ui-router.js',
@@ -27,12 +28,13 @@ module.exports = function (config) {
 
         plugins: [
             'karma-firefox-launcher',
+            'karma-htmlfile-reporter',
             'karma-jasmine',
             'karma-coverage'
         ],
 
         singleRun: true,
-        reporters: [/*'progress', */'coverage', 'dots'],
+        reporters: [/*'progress', */'coverage', 'dots', 'progress', 'html'],
 
         preprocessors: {
             '../main/webapp/js/**/*.js': ['coverage'],
@@ -42,9 +44,14 @@ module.exports = function (config) {
         coverageReporter: {
             reporters: [
                 {type: 'lcovonly', dir: '../../target/site/cobertura/'},
-                {type : 'cobertura', dir: '../../target/site/cobertura/'}/*,
+                {type : 'cobertura', dir: '../../target/site/cobertura/'},
+                {type : 'html', dir: '../../target/site/report/'}/*,
                 {type : 'html', dir : '../../target/site/coverage/', file : 'coverage.txt'}*/
             ]
+        },
+	
+	htmlReporter: {
+            outputFile: '../../target/site/report/units.html'
         }
 
     });
