@@ -30,23 +30,27 @@ module.exports = function (config) {
             'karma-firefox-launcher',
             'karma-htmlfile-reporter',
             'karma-jasmine',
-            'karma-coverage'
+            'karma-coverage',
+	    'karma-junit-reporter'
         ],
 
         singleRun: true,
-        reporters: [/*'progress', */'coverage', 'dots', 'progress', 'html'],
+        reporters: ['coverage', 'dots', 'progress', 'html', 'junit'],
 
         preprocessors: {
             '../main/webapp/js/**/*.js': ['coverage'],
             'client/*': ['browserify']
         },
+    
+	junitReporter: {
+	      outputFile: '../../target/site/report/XML/test-results.xml',
+	},
 
         coverageReporter: {
             reporters: [
                 {type: 'lcovonly', dir: '../../target/site/cobertura/'},
                 {type : 'cobertura', dir: '../../target/site/cobertura/'},
-                {type : 'html', dir: '../../target/site/report/'}/*,
-                {type : 'html', dir : '../../target/site/coverage/', file : 'coverage.txt'}*/
+                {type : 'html', dir: '../../target/site/report/'}
             ]
         },
 	
