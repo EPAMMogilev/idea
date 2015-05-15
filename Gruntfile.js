@@ -1,12 +1,13 @@
+'use strict';
+
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+
 module.exports = function (grunt) {
 
     var userConfig = require( './build.config.js' );
     var json = grunt.file.readJSON('package.json');
-
-    var protractorBrowserPort = grunt.option('p:port') || '8282';
-
-
-
 
     var taskConfig = {
 
@@ -121,6 +122,35 @@ module.exports = function (grunt) {
 				singleRun: true
 			}
 		},
+		
+		connect: {
+			options: {
+				port: 8282,
+				hostname: 'localhost'
+			},
+            livereload: {
+                options: {
+                    base: ['src/main/webapp/build'],
+                    middleware: function (connect, options) {
+                        return [
+                            mountFolder(connect, options.base[0])
+                        ];
+                    }
+                }
+            }
+		},
+		
+        protractor : {
+            options : {
+				configFile : 'src/test/javascript/protractor.conf.js',			
+                noColor : false,
+            },
+			e2e: {
+				options: {
+					keepAlive: false
+				}
+			}
+        },		
 
      bower: {
             install: {
@@ -157,6 +187,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [ 'clean','removelogging', 'uglify',
     'clean:cssmin', 'cssmin', 'index:build', 'copy','bower', 'karma', 'copy:lcov']);
+	grunt.registerTask('e2e', ['connect:livereload', 'protractor:e2e']);
 //    grunt.registerTask('p:test', ['clean:e2etests','processhtml:e2eTests', 'connect', 'protractor', 'processhtml:production']);
 //    grunt.registerTask('k:test', ['processhtml:development', 'karma', 'copy:lcov']);
 
