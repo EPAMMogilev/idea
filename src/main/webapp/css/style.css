@@ -1,0 +1,203 @@
+
+body {
+  margin: 0;
+  font: 14px Arial;
+}
+
+button:hover {
+    cursor:pointer;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+button:hover, button:active, button:focus {
+    background-color: #E6E6E6;
+}
+
+button {
+
+    background-color: #fff;
+    font-weight: 700;
+    border-radius: 2px;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-color: #ccc;
+    
+}
+
+.words
+{
+	font: 14px Arial;
+	line-height:22px;
+	text-decoration: none;
+}
+
+.head-container {
+    height: 150px;
+    width: 100%;
+    background: url(images/header.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding: 25px 0;
+    margin-bottom: 20px;
+}
+
+.body-container {
+   margin: 0 auto;
+   width: 1000px;
+   padding: 25px 0;
+}
+
+.head-title {
+   padding: 10px 50px;
+   float:left;
+}
+
+.title-font {
+  font-family: Lobster,"Helvetica Neue",Helvetica,Arial,cursive;
+  color: #337ab7;
+}
+
+.href-enter {
+   padding: 0 50px;
+   float:right;
+}
+.searcher input {
+  width : 100%;
+  height: auto;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.searcher {
+   padding: 20px 0;
+   
+}
+
+.ideas {
+    width: 50%;
+    height:auto;
+    float: left;
+   
+}
+.ideas ul{
+    list-style-type:none;
+    border-bottom: 1px solid #ddd;
+    overflow:hidden;
+    padding: 0;
+    margin-top: 0;
+    padding-right: 15px;
+}
+
+.idea {
+   padding: 10px; 
+   width:100%;
+   border-top: 1px solid #ddd;
+   overflow:hidden;
+   position: relative;
+}
+
+.idea .left {
+  margin-right: 20px;
+}
+
+
+.left {
+   float:left; 
+}
+
+.left img{
+  border-radius: 50px; 
+  -moz-border-radius: 50px; 
+  -webkit-border-radius: 50px;
+ }
+
+.right {
+   float:right; 
+  
+}
+
+.ideas .font-cenralbig {
+  text-align: center;
+  font-size: 30;
+}
+ 
+ .container >.right {
+   width:50%; 
+   float:right;
+   overflow:hidden;
+ }
+ 
+ .container >.right img {
+  padding-left: 15px;
+  box-sizing: border-box;
+ }
+ 
+ .head-text a {
+  color: #337ab7;
+  text-decoration: none;
+  font: 20px Arial;
+  }
+  
+ .body-text {
+  overflow: hidden;
+  max-height: 35px;
+ 
+ }
+ 
+  .head-text {
+  overflow: hidden;
+  max-height: 35px;
+ 
+ }
+ 
+ .end-text {
+   max-height: 20px;
+   overflow: hidden;
+   bottom: 10px;
+   position: absolute;
+   margin-left: 120px;
+ 
+ }
+ 
+ .small-area {
+   color: #777;
+   font-size: 90%;
+   margin: 0 5px;
+ }
+  
+
+.right .glyphicon  {
+  color: #337ab7;
+  font-size: 1.5em;
+
+}
+
+.small-area .glyphicon  {
+  margin-right: 5px;
+}
+
+
+.founding-letter {
+  color:red;
+}
+
+#tag-buttons {
+   display: inline-block;
+}
+
+#tag-buttons button {
+   float: left;
+}
+
+.idea .vote {
+  max-height: 45px;
+  text-align: right;
+}
+
+.highlight {
+  color: red;
+}
+
