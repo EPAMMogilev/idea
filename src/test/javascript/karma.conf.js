@@ -14,7 +14,7 @@ module.exports = function (config) {
             '../main/webapp/build/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             '../main/webapp/build/bower_components/ng-tags-input/ng-tags-input.min.js',
             '../main/webapp/build/bower_components/angular-mocks/angular-mocks.js',
-            '../main/webapp/js/**/*.js',
+            '../main/webapp/js/build/**/*.js',
             'javascript/unit/**/*.js'
         ],
 
@@ -38,7 +38,7 @@ module.exports = function (config) {
         reporters: ['coverage', 'dots', 'progress', 'html', 'junit'],
 
         preprocessors: {
-            '../main/webapp/js/**/*.js': ['coverage'],
+            '../main/webapp/js/build/**/*.js': ['coverage'],
             'client/*': ['browserify']
         },
     
