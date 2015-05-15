@@ -1,7 +1,7 @@
 ﻿describe('filters unit testing', function(){
 
 	var highlightFilter;
-	
+
 	beforeEach(module('app.filters'));
 	
 	beforeEach(inject(function($filter) {
@@ -14,5 +14,3 @@
 	});
 
 });
-
-	
