@@ -1,6 +1,6 @@
 describe('appIdea', function() {
 
-	browser.get('/');
+	browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea');
 
 	it('should filter results ideas list', function() {
 		// Find the all and get second (and only) button on the page and click it

@@ -6,7 +6,8 @@ exports.config = {
 	specs: ['e2e/*.js'],
 
 	capabilities: {
-		'browserName': 'firefox'
+		'browserName': 'firefox',
+		'firefox_binary': process.env.FF_PORTABLE
 	},
 
 	baseUrl: 'http://localhost:8282/',
