@@ -13,7 +13,7 @@ module.exports = function (config) {
             '../main/webapp/build/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             '../main/webapp/build/bower_components/ng-tags-input/ng-tags-input.min.js',
             '../main/webapp/build/bower_components/angular-mocks/angular-mocks.js',
-            '../main/webapp/build/js/**/*.js',
+            '../main/webapp/build/js/min/script.min.js',
             'javascript/unit/**/*.js'
         ],
 
