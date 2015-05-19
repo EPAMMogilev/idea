@@ -1,3 +1,0 @@
-dependencies {
-    compile "org.hibernate:hibernate-core:$hibernateVersion"
-}
