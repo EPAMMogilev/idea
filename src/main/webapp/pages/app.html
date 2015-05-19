@@ -10,7 +10,7 @@
     </div>
     <div class = "ideas">
         <ul>
-            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li">
+            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" ng-click="ideasCtrl.details(idea)">
                 <div class ="idea">
                     <div class="left">
                         <img src="images/photo.gif"/>
