@@ -13,7 +13,7 @@
 			scope: {
 				active: '=',
 				click: '&',
-				id: '@'
+				identifier: '@'
 			},
 			link: function(scope, element, attrs) {
 				if (scope.active==true) element.addClass('active');
@@ -29,7 +29,7 @@
 				}
 			},
 			template: [
-					'<a id="{{id}}" type="button" class="btn btn-default" ng-transclude></a>'
+					'<a id="{{identifier}}" type="button" class="btn btn-default" ng-transclude></a>'
 			].join('')
 		}
 	}
