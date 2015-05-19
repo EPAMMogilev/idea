@@ -96,6 +96,28 @@ module.exports = function (grunt) {
                     }
                   ]
             },
+
+             build_html: {
+                  files: [
+                    {
+                      src: [ '<%= app_files.templateHtml %>' ],
+                      dest: '<%= build_dir %>/',
+                      cwd: '<%= resource_dir %>/',
+                      expand: true
+                    }
+                  ]
+            },
+
+             build_font: {
+                  files: [
+                    {
+                      src: [ '<%= app_files.font %>' ],
+                      dest: '<%= build_dir %>/',
+                      cwd: '<%= resource_dir %>/',
+                      expand: true
+                    }
+                  ]
+            },
 			
             lcov: {
                 expand: true,

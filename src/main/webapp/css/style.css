@@ -44,6 +44,27 @@ button {
     margin-bottom: 20px;
 }
 
+.head-container a {
+   padding: 10px 15px;
+   display: block;
+}
+
+.head-container a:visited {
+   text-decoration: none;
+   color: #337ab7;
+}
+
+.head-container a:hover {
+   text-decoration: none;
+   background: rgb(255,255,255);
+   background: rgba(255,255,255,0.5);
+}
+
+.head-container a:link {
+   text-decoration: none;
+   color: #337ab7;
+}
+
 .body-container {
    margin: 0 auto;
    width: 1000px;
@@ -56,13 +77,16 @@ button {
 }
 
 .title-font {
-  font-family: Lobster,"Helvetica Neue",Helvetica,Arial,cursive;
+  font-family: Lobster,cursive;
   color: #337ab7;
+  text-decoration: none;
+  font-size: 2em;
 }
 
 .href-enter {
    padding: 0 50px;
    float:right;
+   text-transform: uppercase;
 }
 .searcher input {
   width : 100%;
@@ -80,7 +104,7 @@ button {
     width: 50%;
     height:auto;
     float: left;
-   
+    padding-right: 15px;
 }
 .ideas ul{
     list-style-type:none;
@@ -88,7 +112,6 @@ button {
     overflow:hidden;
     padding: 0;
     margin-top: 0;
-    padding-right: 15px;
 }
 
 .idea {
@@ -115,8 +138,7 @@ button {
  }
 
 .right {
-   float:right; 
-  
+   float:right;
 }
 
 .ideas .font-cenralbig {
@@ -124,17 +146,12 @@ button {
   font-size: 30;
 }
  
- .container >.right {
+ .ideas-container >.right {
    width:50%; 
    float:right;
    overflow:hidden;
  }
- 
- .container >.right img {
-  padding-left: 15px;
-  box-sizing: border-box;
- }
- 
+
  .head-text a {
   color: #337ab7;
   text-decoration: none;
@@ -197,7 +214,28 @@ button {
   text-align: right;
 }
 
+.vote:hover {
+  cursor: default
+}
+
 .highlight {
   color: red;
 }
 
+.login-center-form {
+  margin: 10% auto;
+  width: 330px;
+  border: 1px solid #cfd9d7;
+  border-radius: 2px;
+  box-shadow: 0 8px 17px rgba(0,0,0,.2);
+}
+
+.login-padding {
+  padding: 15px;
+}
+
+#map{
+width: 100%;
+height: 400px;
+display: block;
+}
