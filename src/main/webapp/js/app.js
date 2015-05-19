@@ -39,11 +39,20 @@ angular
     $stateProvider.
         state('root', {
             abstract: true
-
         }).
         state('home', {
             url: '/home',
-
+            views: {
+                'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
+            },
+            onEnter:  function(){ ymaps.ready(mapInit)},
+            parent: 'root'
+        }).
+        state('login', {
+            url: '/login',
+            views: {
+                'main@': { templateUrl: 'pages/login.html' }
+            },
             parent: 'root'
         });
         }
