@@ -1,9 +1,9 @@
 <div class = "ideas-container">
     <div id="tag-buttons" class="btn-group">
-        <tag-button click="ideasCtrl.selectByCategory()" active="true">Все</tag-button>
-        <tag-button click="ideasCtrl.selectByCategory('1')">Спорт</tag-button>
-        <tag-button click="ideasCtrl.selectByCategory('2')">Транспорт</tag-button>
-        <tag-button click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
+        <tag-button identifier="all" click="ideasCtrl.selectByCategory()" active="true">Все</tag-button>
+        <tag-button identifier="sport" click="ideasCtrl.selectByCategory('1')">Спорт</tag-button>
+        <tag-button identifier="transport" click="ideasCtrl.selectByCategory('2')">Транспорт</tag-button>
+        <tag-button identifier="culture" click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
     </div>
     <div class = "searcher">
         <input placeholder="Найти..." ng-model="ideaCtrl.criteria">
