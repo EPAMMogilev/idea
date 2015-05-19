@@ -54,6 +54,14 @@ angular
                 'main@': { templateUrl: 'pages/login.html' }
             },
             parent: 'root'
+        }).
+        state('ideaDetails', {
+            url: '/ideaDetails',
+            views: {
+                'main@': { templateUrl: 'pages/details.html' }
+            },
+            onEnter:  function(){ ymaps.ready(mapInit)},
+            parent: 'root'
         });
         }
 })();

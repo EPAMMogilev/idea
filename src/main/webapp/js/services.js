@@ -12,4 +12,20 @@ function Rate(ideasFactory) {
           }
       };
 };
+
+angular.module('app.services')
+.service('detailsService',[detailsService]);
+function detailsService() {
+       this._data = {};
+
+       return{
+            getData:function(){
+                return this._data;
+            },
+            setData:function(data){
+                this._data = data;
+            }
+       };
+};
+
 })();
