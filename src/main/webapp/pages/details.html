@@ -1,0 +1,57 @@
+<div id="mainDiv" ng-controller="detailsCtrl as detailsCtrl">
+    <div id="shadowBox">
+        <div id="topDiv">
+            <p id="p">{{ideaDetail.title}}</p>
+        </div>
+        <div id="dataDiv">
+            <div id="lineDivsLeft">
+                    <div id="divData">
+                        <div id="tdCaption">Идея</div>
+                        <div id="tdData">{{detailsCtrl.data.title}}</div>
+                    </div>
+                    <!-- descr -->
+                    <div id="divData">
+                        <div id="tdCaption">Описание</div>
+                        <div id="tdData">{{detailsCtrl.data.description}}</div>
+                    </div>
+                    <!-- created -->
+                    <div id="divData">
+                        <div id="tdCaption">Создано</div>
+                        <div id="tdData">{{detailsCtrl.data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+                    </div>
+            </div>
+            <div id="lineDivsRight">
+                <img id="imgDetails" src="images/300x300.png" class="img-rounded" id="imgBlock">
+            </div>
+        </div>
+        <div id="footerDiv">
+            <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Назад</button>
+        </div>
+    </div>
+
+    <!-- who like this idea -->
+    <div id="shadowBox">
+        <div id="likeDiv">
+            <p id="p">Кому понравилась эта идея</p>
+        </div>
+        <div id="likeDivList">
+            Some user
+        </div>
+    </div>
+
+
+    <!-- map for this idea -->
+    <div id="shadowBox">
+        <div id="map"></div>
+    </div>
+
+    <!-- suggestions for this idea -->
+    <div id="shadowBox">
+        <div id="likeDiv">
+            <p id="p">Комментарии</p>
+        </div>
+        <div id="commentsDiv">
+            <input type="text" id="searchLine" class="form-control" name="edtComment" width="100%" placeholder="Ваше предложение">
+        </div>
+    </div>
+</div>

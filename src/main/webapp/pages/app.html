@@ -1,0 +1,46 @@
+<div class = "ideas-container">
+    <div id="tag-buttons" class="btn-group">
+        <tag-button identifier="all" click="ideasCtrl.selectByCategory()" active="true">Все</tag-button>
+        <tag-button identifier="sport" click="ideasCtrl.selectByCategory('1')">Спорт</tag-button>
+        <tag-button identifier="transport" click="ideasCtrl.selectByCategory('2')">Транспорт</tag-button>
+        <tag-button identifier="culture" click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
+    </div>
+    <div class = "searcher">
+        <input placeholder="Найти..." ng-model="ideaCtrl.criteria">
+    </div>
+    <div class = "ideas">
+        <ul>
+            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" ng-click="ideasCtrl.details(idea)">
+                <div class ="idea">
+                    <div class="left">
+                        <img src="images/photo.gif"/>
+                    </div>
+                    <div class="right font-cenralbig" >
+                        <div ng-click="ideasCtrl.changeRate(1, idea)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>
+
+                        <div>{{idea.rating}}</div>
+                        <div ng-click="ideasCtrl.changeRate(-1, idea)" class="vote"><i class="glyphicon glyphicon-menu-down"></i></div>
+
+                    </div>
+                    <strong class ="head-text">
+                        <a href="{{idea.url}}.html">{{idea.title}}</a>
+                    </strong>
+                    <p class ="body-text">
+                        <span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ideaCtrl.criteria"></span>
+
+                    </p>
+                    <p class ="end-text">
+                        <span class ="small-area"><span class="glyphicon glyphicon-time"></span>{{ idea.createdAt | date:'dd.MM.yy'}}</span>
+                        <span class ="small-area"><span class="glyphicon glyphicon-user"></span>{{idea.author.username}}</span>
+                        <span class ="small-area"><span class="glyphicon glyphicon-tag"></span><span ng-repeat="tag in idea.tags">{{tag.name}}</span></span></p>
+                </div>
+
+            </li>
+
+        </ul>
+    </div>
+    <div class="right" >
+        <!--<img src="images/mockup.png" width="100%" />-->
+        <div id="map"></div>
+    </div>
+</div>
