@@ -13,7 +13,7 @@ function Rate(ideasFactory) {
       };
 };
 
-angular.module('app.services')
+/*angular.module('app.services')
 .service('detailsService',[detailsService]);
 function detailsService() {
        this._data = {};
@@ -26,6 +26,6 @@ function detailsService() {
                 this._data = data;
             }
        };
-};
+};*/
 
 })();

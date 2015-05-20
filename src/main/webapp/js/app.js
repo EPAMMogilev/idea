@@ -56,10 +56,21 @@ angular
             parent: 'root'
         }).
         state('ideaDetails', {
-            url: '/ideaDetails',
+            url: '/ideaDetails:idea',
             views: {
-                'main@': { templateUrl: 'pages/details.html' }
-            },
+				'main@': { 
+					templateUrl: 'pages/details.html',
+					controller: 'detailsCtrl as detailsCtrl',	
+					resolve: {
+						ideaDetails: ['$stateParams',
+						  function ($stateParams) {
+							console.log('Go to Details');
+							var idea = angular.fromJson($stateParams.idea);
+							return idea;
+						  }]
+					}
+				}
+			},
             onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
         });
