@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 /**
  * @name ideaApp
  *
@@ -67,11 +67,7 @@ angular
 							console.log('Go to Details');
 							var idea = angular.fromJson($stateParams.idea);
 							return idea;
-						  }],
-						  wndType: function() {
-						    //get idea info
-						    return 0;
-						  }
+						  }]
 					}
 				}
 			},
@@ -79,22 +75,10 @@ angular
             parent: 'root'
         }).
         state('ideaAddNew', {
-            url: '/ideaAddNew:idea',
+            url: '/ideaAddNew',
             views: {
-              'main@': {
-                  templateUrl: 'pages/details.html',
-                  controller: 'detailsCtrl as detailsCtrl',
-                  resolve: {
-                      ideaDetails:function () {
-                          return null;
-                        },
-                        wndType: function() {
-                          // add new idea
-                          return 1;
-                        }
-                  }
-              }
-          },
+                'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as addNewIdea'}
+            },
             onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
         });
