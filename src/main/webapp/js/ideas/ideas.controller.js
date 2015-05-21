@@ -9,6 +9,8 @@
     function ideasCtrl($scope, $window, ideasFactory, tagsFactory, Rate, $state) {
 
         var vm = this;
+		
+		vm.photo='images/photo.gif'
 
         vm.selectByCategory =function (tag) {
           tagsFactory.getIdeasByTag(tag).then(function (ideas) {

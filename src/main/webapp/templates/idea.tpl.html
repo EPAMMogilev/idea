@@ -1,0 +1,21 @@
+<div class ="idea">
+	<div class="left">
+		<a ng-click="details({idea:idea})"><img ng-src="{{photo}}"/></a>
+	</div>
+	<div class="right font-cenralbig" >
+		<div ng-click="rate({mark:1},{idea:idea})" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div> 
+		<div>{{rtng}}</div>
+		<div ng-click="rate({mark:-1},{idea:idea})" class="vote"><i class="glyphicon glyphicon-menu-down"></i></div> 
+	</div>
+	<strong class ="head-text">
+		<a ng-click="details({idea:idea})">{{title}}</a>
+	</strong>
+	<p class ="body-text">
+		<span ng-bind-html="description | highlightTextInDescriptionOfIdea:ngModel"></span>
+	</p>
+	<p class ="end-text">
+		<span class ="small-area"><span class="glyphicon glyphicon-time"></span>{{created}}</span>
+		<span class ="small-area"><span class="glyphicon glyphicon-user"></span>{{author}}</span>
+		<span class ="small-area"><span class="glyphicon glyphicon-tag"></span>{{tag}}</span>
+	</p>
+</div>
