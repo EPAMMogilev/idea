@@ -67,10 +67,34 @@ angular
 							console.log('Go to Details');
 							var idea = angular.fromJson($stateParams.idea);
 							return idea;
-						  }]
+						  }],
+						  wndType: function() {
+						    //get idea info
+						    return 0;
+						  }
 					}
 				}
 			},
+            onEnter:  function(){ ymaps.ready(mapInit)},
+            parent: 'root'
+        }).
+        state('ideaAddNew', {
+            url: '/ideaAddNew:idea',
+            views: {
+              'main@': {
+                  templateUrl: 'pages/details.html',
+                  controller: 'detailsCtrl as detailsCtrl',
+                  resolve: {
+                      ideaDetails:function () {
+                          return null;
+                        },
+                        wndType: function() {
+                          // add new idea
+                          return 1;
+                        }
+                  }
+              }
+          },
             onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
         });

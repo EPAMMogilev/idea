@@ -13,7 +13,7 @@
             <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
                 <div class ="idea">
                     <div class="left" >
-                        <img src="images/photo.gif"/>
+                        <img ng-click="ideasCtrl.details(idea)" src="images/photo.gif"/>
                     </div>
                     <div class="right font-cenralbig" >
                         <div ng-click="ideasCtrl.changeRate(1, idea)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>

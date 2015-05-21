@@ -13,19 +13,27 @@ function Rate(ideasFactory) {
       };
 };
 
-/*angular.module('app.services')
-.service('detailsService',[detailsService]);
+angular.module('app.services')
+.service('detailsService', detailsService);
 function detailsService() {
-       this._data = {};
 
        return{
-            getData:function(){
-                return this._data;
-            },
-            setData:function(data){
-                this._data = data;
-            }
+            getCategories:function(){
+                return [
+                    {
+                        id:0,
+                        descr:'Спорт'
+                    },
+                    {
+                        id:1,
+                        descr:'Транспорт'
+                    },
+                    {
+                        id:2,
+                        descr:'Культура'
+                    }
+                    ];
+            }//getCategories
        };
-};*/
-
+};
 })();
