@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 /**
  * @name ideaApp
  *
@@ -71,6 +71,14 @@ angular
 					}
 				}
 			},
+            onEnter:  function(){ ymaps.ready(mapInit)},
+            parent: 'root'
+        }).
+        state('ideaAddNew', {
+            url: '/ideaAddNew',
+            views: {
+                'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as addNewIdea'}
+            },
             onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
         });
