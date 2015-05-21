@@ -1,4 +1,4 @@
-(function() {
+п»ї(function() {
 'use strict';
 
 angular.module('app.services')
@@ -22,15 +22,15 @@ function detailsService() {
                 return [
                     {
                         id:0,
-                        descr:'Спорт'
+                        descr:'РЎРїРѕСЂС‚'
                     },
                     {
                         id:1,
-                        descr:'Транспорт'
+                        descr:'РўСЂР°РЅСЃРїРѕСЂС‚'
                     },
                     {
                         id:2,
-                        descr:'Культура'
+                        descr:'РљСѓР»СЊС‚СѓСЂР°'
                     }
                     ];
             }//getCategories
