@@ -10,10 +10,10 @@
     </div>
     <div class = "ideas">
         <ul>
-            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" ng-click="ideasCtrl.details(idea)">
+            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
                 <div class ="idea">
-                    <div class="left">
-                        <img src="images/photo.gif"/>
+                    <div class="left" >
+                        <img ng-click="ideasCtrl.details(idea)" src="images/photo.gif"/>
                     </div>
                     <div class="right font-cenralbig" >
                         <div ng-click="ideasCtrl.changeRate(1, idea)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>
@@ -23,7 +23,7 @@
 
                     </div>
                     <strong class ="head-text">
-                        <a href="{{idea.url}}.html">{{idea.title}}</a>
+                        <a ng-click="ideasCtrl.details(idea)">{{idea.title}}</a>
                     </strong>
                     <p class ="body-text">
                         <span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ideaCtrl.criteria"></span>

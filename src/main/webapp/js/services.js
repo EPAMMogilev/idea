@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
 'use strict';
 
 angular.module('app.services')
@@ -14,18 +14,26 @@ function Rate(ideasFactory) {
 };
 
 angular.module('app.services')
-.service('detailsService',[detailsService]);
+.service('detailsService', detailsService);
 function detailsService() {
-       this._data = {};
 
        return{
-            getData:function(){
-                return this._data;
-            },
-            setData:function(data){
-                this._data = data;
-            }
+            getCategories:function(){
+                return [
+                    {
+                        id:0,
+                        descr:'Спорт'
+                    },
+                    {
+                        id:1,
+                        descr:'Транспорт'
+                    },
+                    {
+                        id:2,
+                        descr:'Культура'
+                    }
+                    ];
+            }//getCategories
        };
 };
-
 })();

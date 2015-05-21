@@ -15,8 +15,7 @@
 	padding-left: 5px;
 	padding-top: 5px;
 	padding-bottom: 4px;
-
-	border: 2px solid #337AB7;
+                                      
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
 }
@@ -26,7 +25,6 @@
 	width: 100% auto;
 	height: 35%;
 	margin: 0 auto;
-	border: black solid thin;
 	background-color: #FFFFFF;
 	vertical-align: top;
 	overflow: auto;
@@ -37,7 +35,6 @@
 	width: 100%;
 	height: 12% auto;
 	margin: 0 auto;
-	border: black solid thin;
 	background-color: #F5F5F5;
 	padding-left: 5px;
 	padding-top: 5px;
@@ -49,7 +46,6 @@
 	width: 100%;
 	height: 3% auto;
 	margin: 0 auto;
-	border: black solid thin;
 	background-color: #337AB7;
 	color: #FFFFFF;
 	padding-left: 5px;
@@ -67,7 +63,6 @@
 	width: 100%;
 	height: 5% auto;
 	margin: 0 auto;
-	border: black solid thin;
 	background-color: #FFFFFF;
 	padding-left: 5px;
 	padding-top: 5px;
@@ -135,6 +130,17 @@ table
 	padding-right: 15px;
 }
 
+#footerAddDiv
+{
+	width: 100%;
+	height: 5%;
+	margin: 0 auto;
+	background-color: #F5F5F5;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 4px;
+}
+
 #tdCaption
 {
 	width: 10% auto;
@@ -155,6 +161,37 @@ table
 	padding-left: 15px;
 	padding-right: 15px;
 	float: left;
+}
+
+#tdDataInsert
+{
+	width: 90%;
+	min-width: 200px;
+	text-align: left;
+	padding-left: 15px;
+	padding-right: 15px;
+	float: left;
+}
+
+#mainDivInsert
+{
+	width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#dataDivInsert
+{
+	width: 100% auto;
+	height: 35%;
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	vertical-align: top;
+	overflow: auto;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 #lineDivsLeft
@@ -192,4 +229,20 @@ table
 {
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+#divLeft
+{
+	height: 100%;
+	width: 45%;
+	float: left;
+	text-align: left;
+}
+
+#divRight
+{
+	height: 100%;
+	width: 55%;
+	float: right;
+	text-align: left;
 }

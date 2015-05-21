@@ -1,15 +1,15 @@
-(function(){
+﻿(function(){
     'use strict';
 
     angular
         .module('app.controllers')
         .controller('detailsCtrl', detailsCtrl);
 
-    detailsCtrl.$inject = ['$scope', '$window', 'detailsService'];
+    detailsCtrl.$inject = ['$scope', '$window', 'ideaDetails'];
 
-    function detailsCtrl($scope, $window, detailsService) {
+    function detailsCtrl($scope, $window, ideaDetails) {
 
-        this.data = detailsService.getData();
+        this.data = ideaDetails;
 
 		$scope.back = function(){
             $window.location.href = '#home';
