@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
 		target.updateWith(source);
 		return target;
 	}
+
+	@Override
+	public User getUserByEmailAndPassword(String email, String password) {
+		return userRepository.getUserByEmailAndPassword(email, password).orElseThrow(()-> new UserNotFoundException("This user does not exist " + email));
+	}
 }

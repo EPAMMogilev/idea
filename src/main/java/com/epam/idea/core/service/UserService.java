@@ -22,4 +22,6 @@ public interface UserService extends BaseService<User, Long> {
 	 * @throws com.epam.idea.core.service.exception.UserNotFoundException If no user was found with the given id.
 	 */
 	User update(long userId, User source);
+
+	User getUserByEmailAndPassword(String email, String password);
 }
