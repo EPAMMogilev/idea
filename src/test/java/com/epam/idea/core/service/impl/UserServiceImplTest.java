@@ -195,4 +195,40 @@ public class UserServiceImplTest {
 		verify(this.userRepositoryMock, times(1)).findAll();
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
+
+	@Test
+	public void shouldReturnFoundUserByEmailAndPassword() throws Exception {
+		//Given:
+		User found = TestUserBuilder.aUser().build();
+		given(this.userRepositoryMock.findUserByEmailAndPassword(eq(found.getEmail()),eq(found.getPassword()))).willReturn(Optional.of(found));
+
+		//When:
+		User actual = this.sut.findUserByEmailAndPassword(found.getEmail(), found.getPassword());
+
+		//Then:
+		assertThat(actual).isEqualTo(found);
+		verify(this.userRepositoryMock, times(1)).findUserByEmailAndPassword(found.getEmail(), found.getPassword());
+		verifyNoMoreInteractions(this.userRepositoryMock);
+	}
+
+	@Test
+	public void shouldThrowExceptionWhenTryFindUserByEmailAndPasswordWhichDoesNotExist() throws Exception {
+		//Given:
+		String fakeUserEmail = "fake@fake.fake";
+		String fakeUserPassword = "fake";
+		given(this.userRepositoryMock.findUserByEmailAndPassword(eq(fakeUserEmail), eq(fakeUserPassword))).willReturn(Optional.empty());
+
+		//When:
+		try {
+			this.sut.findUserByEmailAndPassword(fakeUserEmail, fakeUserPassword);
+			fail("UserNotFoundException expected because we try to find the user which does not exist");
+
+			//Then:
+		} catch (UserNotFoundException e) {
+			verify(this.userRepositoryMock, times(1)).findUserByEmailAndPassword(fakeUserEmail, fakeUserPassword);
+			verifyNoMoreInteractions(this.userRepositoryMock);
+		}
+	}
+
+
 }

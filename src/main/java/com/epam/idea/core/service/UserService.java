@@ -23,5 +23,5 @@ public interface UserService extends BaseService<User, Long> {
 	 */
 	User update(long userId, User source);
 
-	User getUserByEmailAndPassword(String email, String password);
+	User findUserByEmailAndPassword(String email, String password);
 }

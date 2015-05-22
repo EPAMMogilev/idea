@@ -96,7 +96,7 @@ public class UserController {
 
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
 	public HttpEntity<UserResource> getUserByEmailAndPassword1(@RequestParam final String email,@RequestParam final String password) {
-		final User user = this.userService.getUserByEmailAndPassword(email, password);
+		final User user = this.userService.findUserByEmailAndPassword(email, password);
 		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
 	}
 }

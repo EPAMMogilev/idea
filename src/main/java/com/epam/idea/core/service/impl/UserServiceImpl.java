@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByEmailAndPassword(String email, String password) {
-		return userRepository.getUserByEmailAndPassword(email, password).orElseThrow(()-> new UserNotFoundException("This user does not exist " + email));
+	public User findUserByEmailAndPassword(String email, String password) {
+		return userRepository.findUserByEmailAndPassword(email, password).orElseThrow(()-> new UserNotFoundException("This user does not exist"));
 	}
 }
