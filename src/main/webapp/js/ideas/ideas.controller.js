@@ -4,9 +4,9 @@
         .module('app.controllers')
         .controller('ideasCtrl', ideasCtrl);
 
-    ideasCtrl.$inject = ['$scope', 'ideasFactory', 'tagsFactory', 'Rate'];
+    ideasCtrl.$inject = ['$scope', '$window', 'ideasFactory', 'tagsFactory', 'Rate', '$state'];
 
-    function ideasCtrl($scope, ideasFactory, tagsFactory, Rate) {
+    function ideasCtrl($scope, $window, ideasFactory, tagsFactory, Rate, $state) {
 
         var vm = this;
 
@@ -30,6 +30,18 @@
                 vm.ideas = ideas;
             });
         });
+
+        vm.details = function(idea){
+            var ideaDetail = {
+                title:idea.title,
+                description:idea.description,
+                createdAt:idea.createdAt
+            };
+            //detailsService.setData($scope.ideaDetail);
+            //$window.location.href = '#ideaDetails';
+			console.log('Go to Details');
+			$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
+        };
     }
 
 

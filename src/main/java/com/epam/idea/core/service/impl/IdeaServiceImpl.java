@@ -1,5 +1,6 @@
 package com.epam.idea.core.service.impl;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,18 @@ public class IdeaServiceImpl implements IdeaService {
 //				.map(TagResource::toTag)
 //				.collect(Collectors.toList());
 //		//Tag.getBuilder().withName(persisted.)
+		author = new User();
+
+		try{
+			Field fld = author.getClass().getDeclaredField("id");
+			fld.setAccessible(true);
+			fld.setLong(author, 1L);
+			fld.setAccessible(false);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+		persisted.setAuthor(author);
 		return ideaRepository.save(persisted);
 	}
 

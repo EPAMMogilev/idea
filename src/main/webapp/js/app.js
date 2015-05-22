@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 /**
  * @name ideaApp
  *
@@ -56,6 +56,33 @@ angular
             views: {
                 'main@': { templateUrl: 'pages/login.html', controller:'LoginController as vm' }
             },
+            parent: 'root'
+        }).
+        state('ideaDetails', {
+            url: '/ideaDetails:idea',
+            views: {
+				'main@': { 
+					templateUrl: 'pages/details.html',
+					controller: 'detailsCtrl as detailsCtrl',	
+					resolve: {
+						ideaDetails: ['$stateParams',
+						  function ($stateParams) {
+							console.log('Go to Details');
+							var idea = angular.fromJson($stateParams.idea);
+							return idea;
+						  }]
+					}
+				}
+			},
+            onEnter:  function(){ ymaps.ready(mapInit)},
+            parent: 'root'
+        }).
+        state('ideaAddNew', {
+            url: '/ideaAddNew',
+            views: {
+                'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as addNewIdea'}
+            },
+            onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
         });
         }

@@ -1,19 +1,19 @@
 <div class = "ideas-container">
     <div id="tag-buttons" class="btn-group">
-        <tag-button click="ideasCtrl.selectByCategory()" active="true">Все</tag-button>
-        <tag-button click="ideasCtrl.selectByCategory('1')">Спорт</tag-button>
-        <tag-button click="ideasCtrl.selectByCategory('2')">Транспорт</tag-button>
-        <tag-button click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
+        <tag-button identifier="all" click="ideasCtrl.selectByCategory()" active="true">Все</tag-button>
+        <tag-button identifier="sport" click="ideasCtrl.selectByCategory('1')">Спорт</tag-button>
+        <tag-button identifier="transport" click="ideasCtrl.selectByCategory('2')">Транспорт</tag-button>
+        <tag-button identifier="culture" click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
     </div>
     <div class = "searcher">
         <input placeholder="Найти..." ng-model="ideaCtrl.criteria">
     </div>
     <div class = "ideas">
         <ul>
-            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li">
+            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
                 <div class ="idea">
-                    <div class="left">
-                        <img src="images/photo.gif"/>
+                    <div class="left" >
+                        <img ng-click="ideasCtrl.details(idea)" src="images/photo.gif"/>
                     </div>
                     <div class="right font-cenralbig" >
                         <div ng-click="ideasCtrl.changeRate(1, idea)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>
@@ -23,7 +23,7 @@
 
                     </div>
                     <strong class ="head-text">
-                        <a href="{{idea.url}}.html">{{idea.title}}</a>
+                        <a ng-click="ideasCtrl.details(idea)">{{idea.title}}</a>
                     </strong>
                     <p class ="body-text">
                         <span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ideaCtrl.criteria"></span>
