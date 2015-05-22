@@ -3,6 +3,7 @@ package com.epam.idea.rest.controller;
 import com.epam.idea.builder.model.TestCommentBuilder;
 import com.epam.idea.builder.model.TestIdeaBuilder;
 import com.epam.idea.builder.model.TestUserBuilder;
+import com.epam.idea.builder.resource.TestIdeaResourceBuilder;
 import com.epam.idea.builder.resource.TestUserResourceBuilder;
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
@@ -13,6 +14,7 @@ import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
 import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
+import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.UserResource;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
 import com.epam.idea.rest.resource.asm.TagResourceAsm;
@@ -32,6 +34,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static com.epam.idea.builder.model.TestTagBuilder.aTag;
 import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_CREATION_TIME;
+import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_EMAIL;
+import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_PASSWORD;
 import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_USER_ID;
 import static com.epam.idea.builder.model.TestUserBuilder.aUser;
 import static com.epam.idea.core.model.User.MAX_LENGTH_EMAIL;
@@ -436,5 +440,123 @@ public class UserControllerTest {
 
 		verify(this.commentServiceMock, times(1)).findCommentsByUserId(userId);
 		verifyNoMoreInteractions(this.commentServiceMock);
+	}
+
+	@Test
+	public void shouldCreateIdeaWithAuthorUserAndReturnItWithHttpCode201() throws Exception {
+		long userId = 1L;
+		String username = "username";
+		String email = "email@test.com";
+		String password = "password";
+		UserResource userResource = TestUserResourceBuilder.aUserResource()
+				.withUsername(username)
+				.withEmail(email)
+				.withPassword(password)
+				.build();
+		User author = new TestUserBuilder()
+				.withId(userId)
+				.withUsername(username)
+				.withEmail(email)
+				.withPassword(password)
+				.withCreationTime(DEFAULT_CREATION_TIME)
+				.build();
+
+		long ideaId = 2L;
+		int rating = 3;
+		String title = "title";
+		String description = "description";
+		IdeaResource ideaResource = TestIdeaResourceBuilder.anIdeaResource()
+				.withTitle(title)
+				.withDescription(description)
+				.withRating(rating)
+				.withAuthor(userResource)
+				.build();
+		Idea createdIdea = new TestIdeaBuilder()
+				.withId(ideaId)
+				.withTitle(title)
+				.withDescription(description)
+				.withAuthor(author)
+				.withRating(rating)
+				.build();
+
+		when(this.ideaServiceMock.saveForUser(any(Long.class), any(Idea.class))).thenReturn(createdIdea);
+
+		this.mockMvc.perform(post("/api/v1/users/{userId}/ideas", userId)
+				.contentType(APPLICATION_JSON_UTF8)
+				.accept(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(ideaResource))).andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$." + ID).value((int) createdIdea.getId()))
+				.andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
+				.andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
+				.andExpect(jsonPath("$.rating").value(createdIdea.getRating()))
+				.andExpect(jsonPath("$.links", hasSize(2)))
+				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())))
+				.andExpect(jsonPath("$.links[1].rel").value(IdeaResourceAsm.REL_AUTHOR))
+				.andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/users/" + author.getId())))
+				.andExpect(jsonPath("$.author." + ID).value((int) author.getId()))
+				.andExpect(jsonPath("$.author.username").value(author.getUsername()))
+				.andExpect(jsonPath("$.author.email").value(author.getEmail()))
+				.andExpect(jsonPath("$.author.links", hasSize(3)))
+				.andExpect(jsonPath("$.author.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.author.links[0].href").value(containsString("/api/v1/users/" + author.getId())))
+				.andExpect(jsonPath("$.author.links[1].rel").value(UserResourceAsm.IDEAS_REL))
+				.andExpect(jsonPath("$.author.links[1].href").value(containsString("/api/v1/users/" + author.getId() + "/ideas")))
+				.andExpect(jsonPath("$.author.links[2].rel").value(UserResourceAsm.COMMENTS_REL))
+				.andExpect(jsonPath("$.author.links[2].href").value(containsString("/api/v1/users/" + author.getId() + "/comments")));
+
+		ArgumentCaptor<Idea> ideaCaptor = ArgumentCaptor.forClass(Idea.class);
+		verify(this.ideaServiceMock, times(1)).saveForUser(eq(userId), ideaCaptor.capture());
+		verifyNoMoreInteractions(this.userServiceMock);
+
+		Idea ideaArgument = ideaCaptor.getValue();
+		assertThat(ideaArgument.getDescription()).isEqualTo(ideaResource.getDescription());
+		assertThat(ideaArgument.getTitle()).isEqualTo(ideaResource.getTitle());
+		assertThat(ideaArgument.getRating()).isEqualTo(ideaResource.getRating());
+	}
+
+	@Test
+	public void shouldReturnFoundUserByEmailAndPasswordWithHttpCode200() throws Exception {
+		User user = aUser().build();
+
+		when(this.userServiceMock.findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD)).thenReturn(user);
+
+		this.mockMvc.perform(post("/api/v1/users/authentication/").param("email", DEFAULT_EMAIL).param("password", DEFAULT_PASSWORD)
+				.accept(APPLICATION_JSON_UTF8)).andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$." + ID).value(((int) user.getId())))
+				.andExpect(jsonPath("$.username").value(user.getUsername()))
+				.andExpect(jsonPath("$.email").value(user.getEmail()))
+				.andExpect(jsonPath("$.password").doesNotExist())
+				.andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
+				.andExpect(jsonPath("$.links", hasSize(3)))
+				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + user.getId())))
+				.andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
+				.andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/users/" + user.getId() + "/ideas")))
+				.andExpect(jsonPath("$.links[2].rel").value(UserResourceAsm.COMMENTS_REL))
+				.andExpect(jsonPath("$.links[2].href").value(containsString("/api/v1/users/" + user.getId() + "/comments")));
+
+		verify(this.userServiceMock, times(1)).findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD);
+		verifyNoMoreInteractions(this.userServiceMock);
+	}
+
+	@Test
+	public void shouldReturnErrorWithHttpStatus404WhenUserNotFoundByEmailAndPassword() throws Exception {
+		when(this.userServiceMock.findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD)).thenThrow(new UserNotFoundException("This user does not exist"));
+
+		this.mockMvc.perform(post("/api/v1/users/authentication/").param("email", DEFAULT_EMAIL).param("password", DEFAULT_PASSWORD)
+				.accept(APPLICATION_JSON_UTF8))
+				.andExpect(status().isNotFound())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
+				.andExpect(jsonPath("$[0].message").value("This user does not exist"));
+
+		verify(this.userServiceMock, times(1)).findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD);
+		verifyNoMoreInteractions(this.userServiceMock);
 	}
 }

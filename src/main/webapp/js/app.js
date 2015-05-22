@@ -11,6 +11,8 @@ angular
 	    'ngResource',
 	    'ui.router',
         'ui.bootstrap',
+        'ngCookies',
+        'angular-md5',
 		'app.directives',
 		'app.services',
 		'app.filters',
@@ -28,7 +30,8 @@ angular
 (function() {
      angular
          .module('ideaApp')
-         .config(config);
+         .config(config)
+         .run(run);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
     function config($stateProvider, $urlRouterProvider) {
@@ -51,7 +54,7 @@ angular
         state('login', {
             url: '/login',
             views: {
-                'main@': { templateUrl: 'pages/login.html' }
+                'main@': { templateUrl: 'pages/login.html', controller:'LoginController as vm' }
             },
             parent: 'root'
         }).
@@ -83,4 +86,25 @@ angular
             parent: 'root'
         });
         }
+
+       run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
+            function run($rootScope, $location, $cookieStore, $http) {
+                $rootScope.globals = $cookieStore.get('globals') || {};
+                if ($rootScope.globals.currentUser) {
+                    $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+                }
+
+                $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                    var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/home', '']) === -1;
+                    var loggedIn = $rootScope.globals.currentUser;
+                    if (restrictedPage && !loggedIn) {
+                        $location.path('/login');
+                    }
+                    var loginPage = $.inArray($location.path(), ['/login']) !== -1;
+                    if (loginPage && loggedIn) {
+                        $location.path('/home');
+                    }
+                });
+            }
 })();
+

@@ -23,7 +23,11 @@
 
     <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-    <script src="js/min/script.min.js"> </script>
+    <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-md5/angular-md5.js"></script>
+
+    <script src="js/min/script.clean.js"> </script>
 
     <!-- Yandex maps scripts -->
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
@@ -35,12 +39,14 @@
 <body>
 
 <div class = "head-container">
-    <div class = "container">
+    <div class = "container" ng-controller="authenticationCtrl as authenticationCtrl">
         <div class = "head-title title-font">
             <p> <a href="#ideaAddNew"><i class="fa fa-child"></i> У меня есть идея!</a></p>
         </div>
         <div	 class = "href-enter">
-            <p><a class = "words" href="#login">Enter</a></p>
+            <p ng-if="!authenticationCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
+            {{authenticationCtrl.currentUser.email}}
+            <p ng-if="authenticationCtrl.authenticated"><a href="#" ng-click="authenticationCtrl.logout()">Logout</a></p>
         </div>
     </div>
 </div>

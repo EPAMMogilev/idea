@@ -11,7 +11,8 @@
 
         var factory = {
             ideas: ideas,
-            tags: tags
+            tags: tags,
+            users: users
         };
 
         return factory;
@@ -30,5 +31,13 @@
                 create: {method: 'POST', url: 'api/v1/ideas/'},
                 });
         }
+
+         function users() {
+            return $resource('api/v1/users/', {}, {
+                get: {method: 'GET', isArray: true},
+                getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
+                getUserByEmailAndPassword: {method: 'POST', params: {email: '@email', password: '@password'}, url: 'api/v1/users/authentication/'},
+            });
+         }
     }
 })();
