@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -91,5 +92,11 @@ public class UserController {
 	public HttpEntity<List<CommentResource>> getUserComments(@PathVariable final long userId) {
 		final List<Comment> comments = this.commentService.findCommentsByUserId(userId);
 		return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
+	public HttpEntity<UserResource> getUserByEmailAndPassword1(@RequestParam final String email,@RequestParam final String password) {
+		final User user = this.userService.findUserByEmailAndPassword(email, password);
+		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
 	}
 }
