@@ -46,7 +46,7 @@
         <div	 class = "href-enter">
             <p ng-if="!authenticationCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
             {{authenticationCtrl.currentUser.email}}
-            <p ng-if="authenticationCtrl.authenticated"><a href="" ng-click="authenticationCtrl.logout()">Logout</a></p>
+            <p ng-if="authenticationCtrl.authenticated"><a href="#" ng-click="authenticationCtrl.logout()">Logout</a></p>
         </div>
     </div>
 </div>
