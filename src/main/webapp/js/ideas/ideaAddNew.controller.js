@@ -10,18 +10,44 @@
     function addNewIdea($scope, $window, restFactory, detailsService) {
 
         this.categories =  detailsService.getCategories();
+        $scope.bottomButtonName = 'Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ';
+        $scope.data = null;
 
 		$scope.back = function(){
             $window.location.href = '#home';
 		};
 
-		$scope.addIdea = function(idea){
+		$scope.doWork = function(data){
+		    //find tag name
+		    /*
+		    var categories = detailsService.getCategories();
+		    var tagName = '';
+		    for(var i=0; i<categories.length; i++){
+		    	var tmp = categories[i];
+		        if(tmp.id == data.tagId){
+		            tagName = tmp.descr;
+		            break;
+		        }//if
+		    }//for*/
+
+			//todo:make more input fields for more tags and use this for
+			var tags = new Array();
+			for(var i=0; i<1; i++){
+				tags.push(
+					{
+						id:i,
+						name:data.tagName
+					}
+				);
+			}//for
+
 		    var request = {
 		        id:null,
-		        description:idea.descr,
-		        title:idea.caption,
+		        description:data.description,
+		        title:data.title,
 		        createdAt:new Date().getTime(),
-		        lastModifiedAt:new Date().getTime()
+		        lastModifiedAt:new Date().getTime(),
+		        tags: tags
 		    };
 
 		    var response = restFactory.ideas().create(request).$promise
@@ -33,7 +59,7 @@
                    },
                    //error
                    function( error ){
-                    alert("Îøèáêà ñîçäàíèÿ èäåèè: " + error);
+                    alert("ÐžÑˆÐ¸Ð±ÐºÐ° ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ Ð¸Ð´ÐµÐ¸Ð¸: " + error.statusText);
                    }
                  );
 		};
