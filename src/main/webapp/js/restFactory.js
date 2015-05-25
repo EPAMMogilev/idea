@@ -27,6 +27,7 @@
         function ideas() {
             return $resource('api/v1/ideas/', {}, {
                 get: {method: 'GET', isArray: true},
+                show: {method: 'GET', params: {ideaId: '@id'}, isArray: true},
                 update: {method: 'PUT', params: {id: '@id'}, url: 'api/v1/ideas/:id/'},
                 create: {method: 'POST', url: 'api/v1/ideas/'},
                 });

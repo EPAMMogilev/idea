@@ -26,6 +26,20 @@
             });
         });
 
+        vm.details = function(idea){
+            var ideaDetail = {
+                id:idea.id,
+                title:idea.title,
+                description:idea.description,
+                createdAt:idea.createdAt,
+                tagName:idea.tags[0].name,
+                tagId:idea.tags[0].id,
+            };
+            //detailsService.setData($scope.ideaDetail);
+            //$window.location.href = '#ideaDetails';
+			console.log('Go to Details');
+			$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
+        };
     }
 
 })();
