@@ -43,6 +43,7 @@
     "karma-htmlfile-reporter": "~0.1",
     "karma-jasmine": "^0.1.5",
     "karma-junit-reporter": "~0.2",
+    "karma-ng-html2js-preprocessor": "^0.1.2",
     "protractor": "latest",
     "protractor-html-screenshot-reporter": "0.0.10",
     "protractor-jasmine2-screenshot-reporter": "^0.1.4"
