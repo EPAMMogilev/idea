@@ -64,8 +64,19 @@
                 author:idea.author,
 		    };
 
-            //restFactory.ideas().update({id: request.id}, request).$promise;
-            ideasFactory.updateIdea(request);
+            //ideasFactory.updateIdea(request);
+
+			ideasFactory.updateIdea(request).then(
+			   //success
+			   function( value )
+			   {
+				$window.location.href = '#home';
+			   },
+			   //error
+			   function( error ){
+				alert("Ошибка обновления идеии: " + error.statusText);
+			   }
+			 );
 		};
     }
 

@@ -5,9 +5,9 @@
         .module('app.controllers')
         .controller('addNewIdea', addNewIdea);
 
-    addNewIdea.$inject = ['$scope', '$window', 'restFactory', 'detailsService'];
+    addNewIdea.$inject = ['$scope', '$window', /*'restFactory', */'detailsService', 'ideasFactory'];
 
-    function addNewIdea($scope, $window, restFactory, detailsService) {
+    function addNewIdea($scope, $window, /*restFactory, */detailsService, ideasFactory) {
 
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'Добавить';
@@ -49,7 +49,7 @@
 		        lastModifiedAt:new Date().getTime(),
 		        tags: tags
 		    };
-
+			/*
 		    var response = restFactory.ideas().create(request).$promise
 		        .then(
                    //success
@@ -62,6 +62,18 @@
                     alert("Ошибка создания идеии: " + error.statusText);
                    }
                  );
+            */
+            ideasFactory.insertIdea(request).then(
+			   //success
+			   function( value )
+			   {
+				$window.location.href = '#home';
+			   },
+			   //error
+			   function( error ){
+				alert("Ошибка создания идеии: " + error.statusText);
+			   }
+			 );
 		};
     }
 

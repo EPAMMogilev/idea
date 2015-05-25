@@ -28,11 +28,12 @@
         };
 
         function updateIdea(idea) {
-            restFactory.ideas().update({id: idea.id}, idea).$promise;
+            var promise = restFactory.ideas().update({id: idea.id}, idea).$promise;
+            return promise;
         };
 
         function insertIdea(idea){
-            var promise = restFactory.ideas().create(request).$promise;
+            var promise = restFactory.ideas().create(idea).$promise;
             return promise;
         };
 
