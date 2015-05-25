@@ -11,11 +11,7 @@
     <div class = "ideas">
         <ul>
             <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
-                <show-idea idea="{{idea}}" photo="{{ideasCtrl.photo}}" title="{{idea.title}}" details="ideasCtrl.details(idea)"
-								description="{{idea.description}}" created="{{ idea.createdAt | date:'dd.MM.yy'}}"
-								author="{{idea.author.username}}" tag="{{idea.tags[0].name}}" rtng="{{idea.rating}}"
-								ng-model="ideasCtrl.criteria" rate="ideasCtrl.changeRate(mark, idea)">
-                </show-idea>
+                <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
             </li>
         </ul>
     </div>

@@ -26,7 +26,7 @@ module.exports = {
     jsunit: [ 'js/**/*.spec.js' ],
 
     html: [ 'index.html' ],
-    templateHtml: [ 'pages/**/*.html', 'template/**/*.html', 'templates/**/*.html'],
+    templateHtml: [ 'pages/**/*.html', 'templates/**/*.html'],
     font: [ 'fonts/**/*' ],
     less: 'src/less/main.less',
     css: 'css/*.css',

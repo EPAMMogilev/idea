@@ -4,23 +4,34 @@
 	angular
 		.module('app.directives')
 		.directive('showIdea', showIdea);
+		
+	showIdea.$inject = ['ideasFactory', '$state'];
 
-	function showIdea() {
+	function showIdea(ideasFactory, $state) {
 		return {
 			restrict: 'E',
 			replace: true,
 			scope: {
-				idea: '@',
-				photo: '@',				
-				title: '@',
-				description: '@',
-				created: '@',
-				author: '@',			
-				tag: '@',
-				rtng: '@',
+				photo: '@',
+				idea: '=',			
 				ngModel: '=',
 				details: '&',				
-				rate: '&'				
+				changeRating: '&'				
+			},
+			link: function(scope, element, attrs) {
+				scope.photo = 'images/photo.gif';
+				scope.details = function() {
+					var ideaDetail = {
+						title:scope.idea.title,
+						description:scope.idea.description,
+						createdAt:scope.idea.createdAt
+					};
+					$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
+				};
+				scope.changeRating = function (mark) {
+					scope.idea.rating += mark;
+					ideasFactory.updateIdea(scope.idea);
+				};
 			},
 			templateUrl:'templates/idea.tpl.html'
 		}
