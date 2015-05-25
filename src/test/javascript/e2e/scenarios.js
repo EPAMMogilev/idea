@@ -1,6 +1,6 @@
 describe('appIdea', function() {
 
-	browser.get('http://localhost:8080/idea');
+	browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea');
 
 	it('should filter results ideas list after press button - SPORT', function() {
 		element(by.id('sport')).click();
@@ -37,7 +37,7 @@ describe('appIdea', function() {
 	});
 	
 	it('should redirect  to ideaDetails page', function() {
-		browser.get('http://localhost:8080/idea');
+		browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea');
 		//get first element by attribute ng-click="details()" (photo)
 		element.all(by.css('a[ng-click="details()"]')).first().click();
 		browser.getLocationAbsUrl().then(function(url) {
@@ -46,7 +46,7 @@ describe('appIdea', function() {
 	});
 	
 	it('should redirect  to ideaDetails page', function() {
-		browser.get('http://localhost:8080/idea');
+		browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea');
 		//get second element by attribute ng-click="details()" (title)
 		element.all(by.css('a[ng-click="details()"]')).get(1).click();
 		browser.getLocationAbsUrl().then(function(url) {
