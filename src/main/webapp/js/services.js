@@ -24,11 +24,11 @@ function detailsService() {
                 return [
                     {
                         id:0,
-                        descr:'Спорт'
+                        descr:'Sport'
                     },
                     {
                         id:1,
-                        descr:'Транспорт'
+                        descr:'Transport'
                     },
                     {
                         id:2,

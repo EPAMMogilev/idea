@@ -11,6 +11,8 @@
 
         var publicMethod = {
             getIdeas: getIdeas,
+            getIdeaById: getIdeaById,
+            insertIdea: insertIdea,
             updateIdea: updateIdea
         };
         return publicMethod;
@@ -20,8 +22,19 @@
             return promise;
         };
 
+        function getIdeaById(ideaId) {
+            var promise = restFactory.ideas().show({id: ideaId}).$promise;
+            return promise;
+        };
+
         function updateIdea(idea) {
-            restFactory.ideas().update({id: idea.id}, idea).$promise;
+            var promise = restFactory.ideas().update({id: idea.id}, idea).$promise;
+            return promise;
+        };
+
+        function insertIdea(idea){
+            var promise = restFactory.ideas().create(idea).$promise;
+            return promise;
         };
 
     }

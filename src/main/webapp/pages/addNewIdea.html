@@ -1,4 +1,4 @@
-﻿??<div id="mainDiv">
+<div id="mainDiv">
     <div id="shadowBox">
         <div id="topDiv">
             <p id="p">Добавить Идею</p>
@@ -8,28 +8,29 @@
             <div id="divData">
                 <div id="tdCaption">Категория</div>
                 <div id="tdDataInsert">
-                    <select class="form-control"  ng-model="idea.category" convert-to-number>
-                        <option ng-repeat="cat in addNewIdea.categories" value="{{cat.id}}" >{{cat.descr}}</option>
-                    </select>
+                    <!--select class="form-control" ng-model="data.tagId" >
+                        <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
+                    </select-->
+                    <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Категория" ng-model="data.tagName">
                 </div>
             </div>
             <!-- descr -->
             <div id="divData">
                 <div id="tdCaption">Идея</div>
                 <div id="tdDataInsert">
-                    <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Идея" ng-model="idea.caption">
+                    <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Идея" ng-model="data.title">
                 </div>
             </div>
             <!-- created -->
             <div id="divData">
                 <div id="tdCaption">Описание</div>
                 <div id="tdDataInsert">
-                    <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="Описание" rows="5" ng-model="idea.descr"> </textarea>
+                    <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="Описание" rows="5" ng-model="data.description"></textarea>
                 </div>
             </div>
         </div>
 
-        <div id="footerDiv">
+        <div id="bottomButtonsBar">
             <button class="btn btn-default">Загрузить файл</button> <b>или</b> Перетянуть свой файл
         </div>
     </div>
@@ -40,12 +41,12 @@
     </div>
 
     <div id="shadowBox">
-        <div id="footerAddDiv">
+        <div id="bottomButtonsBar">
             <div id="divLeft">
                 <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Назад</button>
             </div>
             <div id="divRight">
-                <button class="btn btn-primary" ng-click="addIdea(idea)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Добавить</button>
+                <button class="btn btn-primary" ng-click="doWork(data)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{bottomButtonName}}</button>
             </div>
         </div>
     </div>
