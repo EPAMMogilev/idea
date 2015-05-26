@@ -5,7 +5,10 @@ import javax.validation.Valid;
 
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.security.LoginRequest;
+import com.epam.idea.core.security.LoginResponse;
 import com.epam.idea.core.model.User;
+import com.epam.idea.core.security.PasswordHasher;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -99,4 +103,23 @@ public class UserController {
 		final User user = this.userService.findUserByEmailAndPassword(email, password);
 		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
 	}
+
+
+
+		@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+		public @ResponseBody
+		LoginResponse login(@RequestBody LoginRequest loginRequest) {
+			if (userService.findUserByEmailAndPassword(loginRequest.getEmail(), PasswordHasher.md5(loginRequest.getPassword())) != null) {
+				LoginResponse response = new LoginResponse();
+				response.setSessionId(PasswordHasher.md5("session" + loginRequest.getPassword()));
+				response.setStatus("OK");
+
+				return response;
+			}
+
+			LoginResponse response = new LoginResponse();
+			response.setSessionId(null);
+			response.setStatus("Email or password is incorrect");
+			return response;
+		}
 }

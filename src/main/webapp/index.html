@@ -39,14 +39,14 @@
 <body>
 
 <div class = "head-container">
-    <div class = "container" ng-controller="authenticationCtrl as authenticationCtrl">
+    <div class = "container" ng-controller="sessionCtrl as sessionCtrl">
         <div class = "head-title title-font">
             <p> <a href="#ideaAddNew"><i class="fa fa-child"></i> У меня есть идея!</a></p>
         </div>
         <div	 class = "href-enter">
-            <p ng-if="!authenticationCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
-            {{authenticationCtrl.currentUser.email}}
-            <p ng-if="authenticationCtrl.authenticated"><a href="#" ng-click="authenticationCtrl.logout()">Logout</a></p>
+            <p ng-if="!sessionCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
+            {{sessionCtrl.email}}
+            <p ng-if="sessionCtrl.authenticated"><a href="#" ng-click="sessionCtrl.logout()">Logout</a></p>
         </div>
     </div>
 </div>
