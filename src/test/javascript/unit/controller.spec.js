@@ -1,19 +1,16 @@
-﻿describe('Idea controllers testing', function(){
+﻿//------------------------------------------------------------------------------------------------
+// addNewIdea
+//------------------------------------------------------------------------------------------------
+describe('Add Idea controllers testing', function(){
 
 	var scope;
 	var state;
 
 	//controllers;
 	var addNewIdeaTest;
-	var updateIdeaTest;
-	var detailsIdeaTest;
-	var ideasCtrlTest;
 
 	//scopes
 	var addNewIdeaScope;
-	var detailsIdeaScope;
-	var ideasCtrlIdeaScope;
-	var updateIdeaScope;
 
 	//state
 	var state;
@@ -27,9 +24,6 @@
 
 	beforeEach(inject(function($state, $rootScope, $controller) {
 		addNewIdeaScope = $rootScope.$new();
-		detailsIdeaScope = $rootScope.$new();
-		ideasCtrlIdeaScope = $rootScope.$new();
-		updateIdeaScope = $rootScope.$new();
 
 		state = $state;
 
@@ -43,21 +37,63 @@
 					$scope:addNewIdeaScope
 				});
 		};
+	}));
 
-		//detailsCtrl
-		detailsIdeaTest  = function(){
-				return $controller('detailsCtrl', {
-					$scope:detailsIdeaScope,
-					$state:state,
-					ideaDetails: vIdeaDetails
-				});
-		};
-		//ideasCtrl
-		ideasCtrlTest  = function(){
-				return $controller('ideasCtrl', {
-					$scope:ideasCtrlIdeaScope
-				});
-		};
+	// Verify that the factory can be instantiated
+	it('add new idea controller should be instantiable', function () {
+		expect(addNewIdeaTest).toBeDefined();
+	});
+
+	//look at scope variable in controller
+	it('add new idea controller check scope', function () {
+		// Make our assertions
+		expect(addNewIdeaScope).toBeDefined();
+		//addNewIdeaTest
+		var ctrl = addNewIdeaTest();
+		expect(ctrl).toBeDefined();
+
+		expect(addNewIdeaScope.bottomButtonName).toBeDefined();
+		expect(addNewIdeaScope.bottomButtonName).toEqual('Добавить');
+		expect(addNewIdeaScope.data).toBeNull();
+	});
+
+});
+
+
+//------------------------------------------------------------------------------------------------
+// updateIdeaTest
+//------------------------------------------------------------------------------------------------
+describe('Update Idea controllers testing', function(){
+
+	var scope;
+	var state;
+
+	//controllers;
+	var updateIdeaTest;
+
+	//scopes
+	var updateIdeaScope;
+
+	//state
+	var state;
+
+	beforeEach(angular.mock.module('ui.router'));
+	beforeEach(angular.mock.module('app.controllers'));
+	beforeEach(angular.mock.module('app.services'));
+	beforeEach(angular.mock.module('ideaFactories'));
+	//beforeEach(angular.mock.module('ideaApp'));
+
+
+	beforeEach(inject(function($state, $rootScope, $controller) {
+		updateIdeaScope = $rootScope.$new();
+
+		state = $state;
+
+		//details
+		var vIdeaDetails = {
+				description: 'Some text'
+			};
+
 		//updateIdea
 		updateIdeaTest = function(){
 				return $controller('updateIdea', {
@@ -69,47 +105,72 @@
 	}));
 
 	// Verify that the factory can be instantiated
-	it('add new idea controller should be instantiable', function () {
-		expect(addNewIdeaTest).toBeDefined();
-	});
 	it('update idea details controller should be instantiable', function () {
 		expect(updateIdeaTest).toBeDefined();
 	});
-	it('idea details controller should be instantiable', function () {
-		expect(detailsIdeaTest).toBeDefined();
-	});
-	it('idea details controller should be instantiable', function () {
-		expect(detailsIdeaTest).toBeDefined();
-	});
 
-	//look at scope variable in controller	
-	it('add new idea controller check scope', function () {
-		// Make our assertions
-		expect(addNewIdeaScope).toBeDefined();
-		//addNewIdeaTest
-		var ctrl = addNewIdeaTest();
-		expect(ctrl).toBeDefined();
-		
-		expect(addNewIdeaScope.bottomButtonName).toBeDefined();
-		expect(addNewIdeaScope.bottomButtonName).toEqual('Добавить');
-		expect(addNewIdeaScope.data).toBeNull();
-	});
-
-	//look at scope variable in controller	
+	//look at scope variable in controller
 	it('update new idea controller check scope', function () {
 		expect(updateIdeaScope).toBeDefined();
 
 		var ctrl = updateIdeaTest();
 		expect(ctrl).toBeDefined();
 
-		// Make our assertions		
+		// Make our assertions
 		expect(updateIdeaScope.bottomButtonName).toBeDefined();
 		expect(updateIdeaScope.bottomButtonName).toBe('Обновить');
 		expect(updateIdeaScope.data).toBeDefined();
 	});
+});
+
+//------------------------------------------------------------------------------------------------
+// detailsIdeaTest
+//------------------------------------------------------------------------------------------------
+describe('Idea controllers testing', function(){
+
+	var scope;
+	var state;
+
+	//controllers;
+	var detailsIdeaTest;
+
+	//scopes
+	var detailsIdeaScope;
+
+	//state
+	var state;
+
+	beforeEach(angular.mock.module('ui.router'));
+	beforeEach(angular.mock.module('app.controllers'));
+	beforeEach(angular.mock.module('app.services'));
+	beforeEach(angular.mock.module('ideaFactories'));
+	//beforeEach(angular.mock.module('ideaApp'));
 
 
-	//look at scope variable in controller	
+	beforeEach(inject(function($state, $rootScope, $controller) {
+		detailsIdeaScope = $rootScope.$new();
+
+		state = $state;
+		
+		var vIdeaDetails = {
+				description: 'Some text'
+			};
+		//detailsCtrl
+		detailsIdeaTest  = function(){
+				return $controller('detailsCtrl', {
+					$scope:detailsIdeaScope,
+					$state:state,
+					ideaDetails: vIdeaDetails
+				});
+		};
+	}));
+
+	// Verify that the factory can be instantiated
+	it('idea details controller should be instantiable', function () {
+		expect(detailsIdeaTest).toBeDefined();
+	});
+
+	//look at scope variable in controller
 	it('idea details controller check scope', function () {
 		expect(detailsIdeaScope).toBeDefined();
 
@@ -119,7 +180,53 @@
 		expect(ctrl.data).toBeDefined();
 	});
 
-	//look at scope variable in controller	
+});
+
+
+//------------------------------------------------------------------------------------------------
+// ideasCtrlTest
+//------------------------------------------------------------------------------------------------
+
+describe('Idea controllers testing', function(){
+
+	var scope;
+	var state;
+
+	//controllers;
+	var ideasCtrlTest;
+
+	//scopes
+	var ideasCtrlIdeaScope;
+
+	//state
+	var state;
+
+	beforeEach(angular.mock.module('ui.router'));
+	beforeEach(angular.mock.module('app.controllers'));
+	beforeEach(angular.mock.module('app.services'));
+	beforeEach(angular.mock.module('ideaFactories'));
+	//beforeEach(angular.mock.module('ideaApp'));
+
+
+	beforeEach(inject(function($state, $rootScope, $controller) {
+		ideasCtrlIdeaScope = $rootScope.$new();
+
+		state = $state;
+
+		//ideasCtrl
+		ideasCtrlTest  = function(){
+				return $controller('ideasCtrl', {
+					$scope:ideasCtrlIdeaScope
+				});
+		};
+	}));
+
+	// Verify that the factory can be instantiated
+	it('idea details controller should be instantiable', function () {
+		expect(ideasCtrlTest).toBeDefined();
+	});
+
+	//look at scope variable in controller
 	it('idea controller check scope', function () {
 
 		var ctrl = ideasCtrlTest();
@@ -128,4 +235,3 @@
 
 
 });
-
