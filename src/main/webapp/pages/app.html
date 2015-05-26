@@ -6,37 +6,13 @@
         <tag-button identifier="culture" click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
     </div>
     <div class = "searcher">
-        <input placeholder="Найти..." ng-model="ideaCtrl.criteria">
+        <input placeholder="Найти..." ng-model="ideasCtrl.criteria">
     </div>
     <div class = "ideas">
         <ul>
             <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
-                <div class ="idea">
-                    <div class="left" >
-                        <img ng-click="ideasCtrl.details(idea)" src="images/photo.gif"/>
-                    </div>
-                    <div class="right font-cenralbig" >
-                        <div ng-click="ideasCtrl.changeRate(1, idea)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>
-
-                        <div>{{idea.rating}}</div>
-                        <div ng-click="ideasCtrl.changeRate(-1, idea)" class="vote"><i class="glyphicon glyphicon-menu-down"></i></div>
-
-                    </div>
-                    <strong class ="head-text">
-                        <a ng-click="ideasCtrl.details(idea)">{{idea.title}}</a>
-                    </strong>
-                    <p class ="body-text">
-                        <span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ideaCtrl.criteria"></span>
-
-                    </p>
-                    <p class ="end-text">
-                        <span class ="small-area"><span class="glyphicon glyphicon-time"></span>{{ idea.createdAt | date:'dd.MM.yy'}}</span>
-                        <span class ="small-area"><span class="glyphicon glyphicon-user"></span>{{idea.author.username}}</span>
-                        <span class ="small-area"><span class="glyphicon glyphicon-tag"></span><span ng-repeat="tag in idea.tags">{{tag.name}}</span></span></p>
-                </div>
-
+                <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
             </li>
-
         </ul>
     </div>
     <div class="right" >

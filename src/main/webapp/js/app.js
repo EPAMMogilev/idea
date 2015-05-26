@@ -80,7 +80,27 @@ angular
         state('ideaAddNew', {
             url: '/ideaAddNew',
             views: {
-                'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as addNewIdea'}
+                'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as ctrl'}
+            },
+            onEnter:  function(){ ymaps.ready(mapInit)},
+            parent: 'root'
+        }).
+        state('ideaUpdate', {
+            url: '/ideaUpdate:idea',
+            views: {
+                'main@': {
+                    templateUrl: 'pages/addNewIdea.html',
+                    controller: 'updateIdea as ctrl',
+                    resolve: {
+                        ideaDetails: ['$stateParams',
+                          function ($stateParams) {
+                            console.log('Go to Update');
+                            console.log('update param: ' + $stateParams.idea);
+                            var idea = angular.fromJson($stateParams.idea);
+                            return idea;
+                          }]
+                    }
+                }
             },
             onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
