@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------------------------
 describe('Add Idea controllers testing', function(){
 
-	var scope;
 	var state;
 
 	//controllers;
@@ -11,9 +10,6 @@ describe('Add Idea controllers testing', function(){
 
 	//scopes
 	var addNewIdeaScope;
-
-	//state
-	var state;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
@@ -65,7 +61,6 @@ describe('Add Idea controllers testing', function(){
 //------------------------------------------------------------------------------------------------
 describe('Update Idea controllers testing', function(){
 
-	var scope;
 	var state;
 
 	//controllers;
@@ -73,9 +68,6 @@ describe('Update Idea controllers testing', function(){
 
 	//scopes
 	var updateIdeaScope;
-
-	//state
-	var state;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
@@ -126,9 +118,8 @@ describe('Update Idea controllers testing', function(){
 //------------------------------------------------------------------------------------------------
 // detailsIdeaTest
 //------------------------------------------------------------------------------------------------
-describe('Idea controllers testing', function(){
+describe('Idea details controllers testing', function(){
 
-	var scope;
 	var state;
 
 	//controllers;
@@ -136,9 +127,6 @@ describe('Idea controllers testing', function(){
 
 	//scopes
 	var detailsIdeaScope;
-
-	//state
-	var state;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
@@ -151,7 +139,7 @@ describe('Idea controllers testing', function(){
 		detailsIdeaScope = $rootScope.$new();
 
 		state = $state;
-		
+
 		var vIdeaDetails = {
 				description: 'Some text'
 			};
@@ -189,7 +177,6 @@ describe('Idea controllers testing', function(){
 
 describe('Idea controllers testing', function(){
 
-	var scope;
 	var state;
 
 	//controllers;
@@ -197,9 +184,6 @@ describe('Idea controllers testing', function(){
 
 	//scopes
 	var ideasCtrlIdeaScope;
-
-	//state
-	var state;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
