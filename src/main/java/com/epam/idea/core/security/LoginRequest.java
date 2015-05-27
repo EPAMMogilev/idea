@@ -1,7 +1,9 @@
 package com.epam.idea.core.security;
 
 public class LoginRequest {
+
 	private String email;
+
 	private String password;
 
 	public String getEmail() {

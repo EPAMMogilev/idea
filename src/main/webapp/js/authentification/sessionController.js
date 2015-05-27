@@ -4,9 +4,9 @@
         .module('app.controllers')
         .controller('sessionCtrl', sessionCtrl);
 
-    sessionCtrl.$inject = ['sessionService'];
+    sessionCtrl.$inject = ['sessionService', 'sessionFactory', '$location'];
 
-    function sessionCtrl(sessionService) {
+    function sessionCtrl(sessionService, sessionFactory, $location) {
 
          var vm = this;
 //      vm.currentUser= $rootScope.globals.currentUser;
@@ -16,16 +16,22 @@
 
      
          if(sessionService.getSessionId() && sessionService.getSessionId() != ''){
-             vm.email =  sessionService.getUser();
+             vm.email =  sessionService.getUser().email;
              vm.authenticated = true;
          }
 
 
          vm.logout = function () {
-            sessionService.setSessionId('');
-            sessionService.setUser('');
-            vm.authenticated = false;
-            document.location.reload(true);
+            sessionFactory.deleteSession(sessionService.getSessionId()).then(function (value) {
+                sessionService.setSessionId('');
+                sessionService.setUser('');
+                vm.authenticated = false;
+                $location.path("home");
+            }, function(error) {
+                console.log(error); alert(error);
+                vm.authenticated = false;
+                $location.path("home");
+           });
          };
 
     }

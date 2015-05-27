@@ -5,8 +5,8 @@
         .module('app.controllers')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$http', '$location', 'sessionService'];
-    function LoginController($scope, $http, $location, sessionService) {
+    LoginController.$inject = ['$scope', 'sessionFactory', '$location', 'sessionService'];
+    function LoginController($scope, sessionFactory, $location, sessionService) {
         var vm = this;
 
         vm.user = {};
@@ -18,15 +18,16 @@
         function loginUser(user) {
             vm.resetError();
 
-           $http.post('api/v1/users/authenticate', vm.user).success(function(login) {
-                if(login.sessionId===null) {
-                    vm.setError(login.status);
+           sessionFactory.createSession(vm.user).then(function (session) {
+
+                if(session.id===null) {
+//                    vm.setError(login.status);
 
                     return;
                 }
 
-                sessionService.setSessionId(login.sessionId);
-                sessionService.setUser(vm.user.email);
+                sessionService.setSessionId(session.id);
+                sessionService.setUser(session.user);
 
                 vm.user.email = '';
                 vm.user.password = '';
@@ -35,7 +36,7 @@
 
                 document.location.reload(true);
 
-           }).error(function() {
+           }, function(error) {
                 vm.setError('Invalid user/password combination');
            });
         }

@@ -9,9 +9,13 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.Tag;
 import com.epam.idea.core.model.User;
+import com.epam.idea.core.model.UserSession;
+import com.epam.idea.core.security.LoginRequest;
+import com.epam.idea.core.security.PasswordHasher;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
+import com.epam.idea.core.service.UserSessionService;
 import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
@@ -89,6 +93,9 @@ public class UserControllerTest {
 
 	@Autowired
 	private CommentService commentServiceMock;
+
+	@Autowired
+	private UserSessionService userSessionService;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -557,6 +564,31 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$[0].message").value("This user does not exist"));
 
 		verify(this.userServiceMock, times(1)).findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD);
+		verifyNoMoreInteractions(this.userServiceMock);
+	}
+
+	@Test
+	public void shouldReturnSessionId() throws Exception {
+		User user = aUser().build();
+		LoginRequest loginRequest = new LoginRequest();
+		loginRequest.setEmail(DEFAULT_EMAIL);
+		loginRequest.setPassword(DEFAULT_PASSWORD);
+		UserSession userSession = new UserSession();
+		userSession.setSessionId("1");
+		userSession.setUser(user);
+		when(this.userServiceMock.findUserByEmailAndPassword(any(String.class), any(String.class))).thenReturn(user);
+		when(this.userSessionService.save(any(UserSession.class))).thenReturn(userSession);
+
+		this.mockMvc.perform(post("/api/v1/users/authenticate/")
+				.contentType(APPLICATION_JSON_UTF8)
+				.accept(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(loginRequest)))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+;
+
+		verify(this.userServiceMock, times(1)).findUserByEmailAndPassword(DEFAULT_EMAIL, PasswordHasher.md5(DEFAULT_PASSWORD));
 		verifyNoMoreInteractions(this.userServiceMock);
 	}
 }

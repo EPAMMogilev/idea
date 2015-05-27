@@ -7,7 +7,7 @@
 
         function sessionService() {
             var sessionID = '';
-            var user = '';
+            var user = {};
             return {
                 getSessionId: function() {
                     if(sessionID=='' || sessionID==null)
