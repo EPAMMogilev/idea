@@ -40,10 +40,15 @@
 
 <div class = "head-container">
     <div class = "container" ng-controller="authenticationCtrl as authenticationCtrl">
-        <div class = "head-title title-font">
-            <p> <a href="#ideaAddNew"><i class="fa fa-child"></i> У меня есть идея!</a></p>
+        <div class = "head-title title-font" id="IHaveIdeaDiv">
+            <p> <!--a href="#ideaAddNew"--><i class="fa fa-child"></i> У меня есть идея!<!--/a--></p>
         </div>
-        <div	 class = "href-enter">
+
+       <div style="vertical-align: middle;" id="AddIdeaDiv">
+           <a href="#ideaAddNew" class="addIdeaButton" style="color:#ffffff">Добавить идею</a>
+       </div>
+
+        <div	 class = "href-enter" id="LoginIdeaDiv" >
             <p ng-if="!authenticationCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
             {{authenticationCtrl.currentUser.email}}
             <p ng-if="authenticationCtrl.authenticated"><a href="#" ng-click="authenticationCtrl.logout()">Logout</a></p>
