@@ -11,8 +11,7 @@
 
         var publicMethod = {
             get: get,
-            getOne: getOne,
-            getUserByEmailAndPassword: getUserByEmailAndPassword
+            getOne: getOne
         };
         return publicMethod;
 
@@ -22,13 +21,6 @@
 
         function getOne(id) {
             restFactory.ideas().getOne({id: id}).$promise;
-        };
-
-        function getUserByEmailAndPassword(email, password) {
-            var promise = restFactory.users().getUserByEmailAndPassword({email: email, password: password}).$promise;
-              promise.then(undefined, function (error) {
-                });
-            return promise;
         };
     }
 })();
