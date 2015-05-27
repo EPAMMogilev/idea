@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.core.service.exception.TagDoesNotExistException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
+import com.epam.idea.core.service.exception.UserSessionNotFoundException;
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,13 @@ public class RestErrorHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public VndErrors tagNotFoundExceptionHandler(final TagDoesNotExistException ex) {
 		return new VndErrors(TAG_NOT_FOUND_LOGREF, ex.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(UserSessionNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public VndErrors userSessionNotFoundExceptionHandler(final UserSessionNotFoundException ex) {
+		return new VndErrors(USER_NOT_FOUND_LOGREF, ex.getMessage());
 	}
 
 	@ResponseBody

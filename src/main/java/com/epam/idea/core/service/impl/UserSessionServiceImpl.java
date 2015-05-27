@@ -28,15 +28,14 @@ public class UserSessionServiceImpl implements UserSessionService {
 
 	@Override
 	public void delete(UserSession deleted) {
-
+		userSessionRepository.delete(deleted);
 	}
 
 	@Override
 	public List<UserSession> findAll() {
-		final List<UserSession> userList = userSessionRepository.findAll();
-		//userList.forEach(user -> Hibernate.initialize(user.getIdeas()));
-		userList.forEach(Hibernate::initialize);
-		return userList;
+		final List<UserSession> userSessionList = userSessionRepository.findAll();
+		userSessionList.forEach(Hibernate::initialize);
+		return userSessionList;
 
 
 //		return null;

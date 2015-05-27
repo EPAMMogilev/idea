@@ -29,6 +29,8 @@
                 $location.path("home");
             }, function(error) {
                 console.log(error); alert(error);
+                sessionService.setSessionId('');
+                sessionService.setUser('');
                 vm.authenticated = false;
                 $location.path("home");
            });
