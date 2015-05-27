@@ -283,8 +283,7 @@ display: block;
 /* new button */
 #addIdeaButton
 {
-	line-height: 100px;
-	color: white;
+	color: #ffffff;
 }
 #addIdeaButton a
 {
