@@ -62,7 +62,7 @@ button {
 
 .head-container a:link {
    text-decoration: none;
-   color: #337ab7;
+//   color: #337ab7;
 }
 
 .body-container {
@@ -283,7 +283,7 @@ display: block;
 /* new button */
 #addIdeaButton
 {
-	color: #ffffff;
+	/*color: #ffffff;*/
 }
 #addIdeaButton a
 {
@@ -319,7 +319,8 @@ display: block;
 	width: 150px;
 }
 .addIdeaButton:hover {
-	background-color:#378de5;
+	/*background-color:#378de5;*/
+	background-color:#528fcc;
 }
 .addIdeaButton:active {
 	position:relative;
