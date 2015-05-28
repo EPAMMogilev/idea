@@ -34,6 +34,8 @@
                 createdAt:idea.createdAt,
                 tagName:idea.tags[0].name,
                 tagId:idea.tags[0].id,
+                latitude:idea.latitude,
+                longitude:idea.longitude
             };
             //detailsService.setData($scope.ideaDetail);
             //$window.location.href = '#ideaDetails';
