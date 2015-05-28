@@ -24,7 +24,10 @@
 					var ideaDetail = {
 						title:scope.idea.title,
 						description:scope.idea.description,
-						createdAt:scope.idea.createdAt
+						createdAt:scope.idea.createdAt,
+					    latitude:scope.idea.latitude,
+					    longitude:scope.idea.longitude
+
 					};
 					$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
 				};
