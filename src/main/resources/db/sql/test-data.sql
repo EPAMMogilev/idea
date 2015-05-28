@@ -4,7 +4,7 @@ insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Orange', 'J
 
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Nonlinear Optimization by Successive Linear Programming', 'F. Palacios-Gomez & L. Lasdon & M. Engquist', '2015-01-01 03:14:07', '2015-01-02 00:00:00', 2, 1);
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Interactive fuzzy goal programming approach for bilevel programming problem', 'Arora, S.R. & Gupta, Ritu', '2015-02-02 00:00:00', '2015-02-03 00:00:00', 3, 2);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Two-Segment Separable Programming', 'R. R. Meyer', '2014-12-01', '2014-12-12', -2, 3);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Two-Segment Separable Programming', 'R. R. Meyer', '2014-12-01', '2014-12-12', -2, 3, 53.945630, 30.369226);
 
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
