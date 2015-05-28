@@ -39,6 +39,8 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
 		ideaResource.setCreationTime(original.getCreationTime());
 		ideaResource.setModificationTime(original.getModificationTime());
 		ideaResource.setRating(original.getRating());
+		ideaResource.setLatitude(original.getLatitude());
+		ideaResource.setLongitude(original.getLongitude());
 		if (isInitialized(original.getRelatedTags())) {
 			List<TagResource> tagResources = original.getRelatedTags().parallelStream()
 					.map(tag -> new TagResourceAsm().toResource(tag))
