@@ -11,7 +11,8 @@ public class PasswordHasher {
 		try {
 			m = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+				e.printStackTrace(); //use logger instead
+				throw new RuntimeException("No Such Algorithm: MD5");
 		}
 		m.update(str.getBytes(),0,str.length());
 		return new BigInteger(1,m.digest()).toString(16);
