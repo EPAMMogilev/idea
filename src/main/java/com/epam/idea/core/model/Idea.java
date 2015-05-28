@@ -1,6 +1,7 @@
 package com.epam.idea.core.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,12 @@ public class Idea implements Serializable {
 
 	@Column(name = "RATING", nullable = false)
 	private int rating;
+
+	@Column(name = "LATITUDE", nullable = true)
+	private BigDecimal latitude;
+
+	@Column(name = "LONGITUDE", nullable = true)
+	private BigDecimal longitude;
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -143,6 +150,22 @@ public class Idea implements Serializable {
 		this.rating = source.rating;
 	}
 
+	public BigDecimal getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
+
 	@PreUpdate
 	public void preUpdate() {
 		this.modificationTime = ZonedDateTime.now();
@@ -162,6 +185,7 @@ public class Idea implements Serializable {
 				", title='" + title + '\'' +
 				", description='" + description + '\'' +
 				", rating=" + rating +
+				", GPS [" + latitude + "; " + longitude + "]" +
 				'}';
 	}
 }

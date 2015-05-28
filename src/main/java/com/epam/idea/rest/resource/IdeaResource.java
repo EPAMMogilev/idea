@@ -1,6 +1,7 @@
 package com.epam.idea.rest.resource;
 
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class IdeaResource extends ResourceSupport {
 
 	@JsonProperty(JsonPropertyName.MODIFICATION_TIME)
 	private ZonedDateTime modificationTime;
+
+	private BigDecimal latitude;
+	private BigDecimal longitude;
 
 	//@JsonView({View.Basic.class})
 	private int rating;
@@ -104,6 +108,22 @@ public class IdeaResource extends ResourceSupport {
 		this.tags = tags;
 	}
 
+	public BigDecimal getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
+
 	public Idea toIdea() {
 		final Idea idea = new Idea();
 		idea.setTitle(title);
@@ -112,6 +132,8 @@ public class IdeaResource extends ResourceSupport {
 		idea.setRelatedTags(tags.parallelStream()
 				.map(TagResource::toTag)
 				.collect(Collectors.toList()));
+		idea.setLatitude(latitude);
+		idea.setLongitude(longitude);
 		return idea;
 	}
 }
