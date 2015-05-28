@@ -17,6 +17,7 @@ plugins {
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'com.moowork.grunt'
+apply plugin: 'com.bmuschko.tomcat'
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/pmd.gradle"
 apply from: "$rootDir/gradle/findbugs.gradle"
@@ -111,6 +112,12 @@ dependencies {
     testCompile 'org.glassfish:javax.el'
 
     providedCompile 'javax.servlet:javax.servlet-api'
+
+
+    def tomcatVersion = '7.0.59'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
 
 test {
@@ -212,4 +219,8 @@ def webappsCopy(tomcat_webapps) {
         include '*.war'
     }
     println 'Finish copying war'
+}
+
+tomcat {
+    httpPort = 9090
 }

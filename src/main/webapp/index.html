@@ -32,26 +32,27 @@
     <!-- Yandex maps scripts -->
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <!--<script>-->
-			<!--ymaps.ready(mapInit);-->
-	<!--</script>-->
+    <!--ymaps.ready(mapInit);-->
+    <!--</script>-->
 </head>
 
 <body>
 
 <div class = "head-container">
-    <div class = "container" ng-controller="authenticationCtrl as authenticationCtrl">
+
+    <div class = "container" ng-controller="sessionCtrl as sessionCtrl">
         <div class = "head-title title-font" id="IHaveIdeaDiv">
             <p> <!--a href="#ideaAddNew"--><i class="fa fa-child"></i> У меня есть идея!<!--/a--></p>
         </div>
 
-       <div id="AddIdeaDiv">
-           <a href="#ideaAddNew" class="addIdeaButton" id="addIdeaButton">Добавить идею</a>
-       </div>
+        <div id="AddIdeaDiv">
+            <a href="#ideaAddNew" class="addIdeaButton" id="addIdeaButton">Добавить идею</a>
+        </div>
 
         <div	 class = "href-enter" id="LoginIdeaDiv" >
-            <p ng-if="!authenticationCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
-            {{authenticationCtrl.currentUser.email}}
-            <p ng-if="authenticationCtrl.authenticated"><a href="#" ng-click="authenticationCtrl.logout()">Logout</a></p>
+            <p ng-if="!sessionCtrl.authenticated"><a class = "words" href="#login">Login</a></p>
+            {{sessionCtrl.email}}
+            <p ng-if="sessionCtrl.authenticated"><a href ng-click="sessionCtrl.logout()">Logout</a></p>
         </div>
     </div>
 </div>

@@ -107,24 +107,42 @@ angular
         });
         }
 
-       run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
-            function run($rootScope, $location, $cookieStore, $http) {
-                $rootScope.globals = $cookieStore.get('globals') || {};
-                if ($rootScope.globals.currentUser) {
-                    $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-                }
+       run.$inject = ['$rootScope', '$location', 'sessionService'];
+           function run($rootScope, $location, sessionService) {
 
-                $rootScope.$on('$locationChangeStart', function (event, next, current) {
-                    var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/home', '']) === -1;
-                    var loggedIn = $rootScope.globals.currentUser;
-                    if (restrictedPage && !loggedIn) {
-                        $location.path('/login');
-                    }
-                    var loginPage = $.inArray($location.path(), ['/login']) !== -1;
-                    if (loginPage && loggedIn) {
-                        $location.path('/home');
-                    }
-                });
-            }
+               $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                   var restrictedPage;
+                   if (sessionService.getSessionId() == '' || sessionService.getSessionId() == null) {
+                       restrictedPage =  $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
+                       if (restrictedPage) {
+                           $location.path("/login");
+                       }
+                   }
+                   else {
+                       restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+                       if (restrictedPage) {
+                           $location.path("/home");
+                       }
+                   }
+
+//                    if (restrictedPage && !loggedIn) {
+//                        $location.path('/login');
+//                    }
+//                    var loginPage = $.inArray($location.path(), ['/login']) !== -1;
+//                    if (loginPage && loggedIn) {
+//                        $location.path('/home');
+               });
+           }
+
+           $.inArrayRegEx = function(address, array) {
+               for (var i = 0; i < array.length; i++) {
+                   if (RegExp(array[i]).test(address)) {
+                       return i;
+                   }
+               }
+               return -1;
+           }
+
+
 })();
 

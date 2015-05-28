@@ -4,6 +4,7 @@ import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.TagService;
 import com.epam.idea.core.service.UserService;
+import com.epam.idea.core.service.UserSessionService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,5 +30,10 @@ public class TestRootConfig {
 	@Bean
 	public CommentService commentServiceMock() {
 		return Mockito.mock(CommentService.class);
+	}
+
+	@Bean
+	public UserSessionService userSessionService() {
+		return Mockito.mock(UserSessionService.class);
 	}
 }

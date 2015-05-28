@@ -5,15 +5,20 @@ import javax.validation.Valid;
 
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.security.LoginRequest;
+import com.epam.idea.core.model.UserSession;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
+import com.epam.idea.core.service.UserSessionService;
 import com.epam.idea.rest.resource.CommentResource;
 import com.epam.idea.rest.resource.IdeaResource;
+import com.epam.idea.rest.resource.UserSessionResource;
 import com.epam.idea.rest.resource.UserResource;
 import com.epam.idea.rest.resource.asm.CommentResourceAsm;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
+import com.epam.idea.rest.resource.asm.UserSessionResourceAsm;
 import com.epam.idea.rest.resource.asm.UserResourceAsm;
 import com.epam.idea.rest.resource.support.View;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -25,7 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -40,6 +45,9 @@ public class UserController {
 
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private UserSessionService userSessionService;
 
 	@JsonView(View.Basic.class)
 	@RequestMapping(method = RequestMethod.POST)
@@ -94,9 +102,30 @@ public class UserController {
 		return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
-	public HttpEntity<UserResource> getUserByEmailAndPassword1(@RequestParam final String email,@RequestParam final String password) {
-		final User user = this.userService.findUserByEmailAndPassword(email, password);
-		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public @ResponseBody HttpEntity<UserSessionResource> saveSession(@RequestBody LoginRequest loginRequest) {
+		UserSession response = userSessionService.save(loginRequest);
+		return new ResponseEntity<>(new UserSessionResourceAsm().toResource(response), HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/authenticate/{sessionId}", method = RequestMethod.DELETE)
+		 public @ResponseBody HttpEntity<UserSessionResource> deleteSession(@PathVariable String sessionId) {
+		this.userSessionService.deleteById(sessionId);
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+
+//	@JsonView(View.Basic.class)
+//	@RequestMapping(value = "/authenticate", method = RequestMethod.GET)
+//	public @ResponseBody HttpEntity<List<UserSessionResource>> getAllSession() {
+//		final List<UserSession> userList = this.userSessionService.findAll();
+//		return new ResponseEntity<>(new UserSessionResourceAsm().toResources(userList), HttpStatus.OK);
+//	}
+
+	@JsonView(View.Basic.class)
+	@RequestMapping(value = "/authenticate/{sessionId}", method = RequestMethod.GET)
+	public @ResponseBody HttpEntity<UserSessionResource> getSession(@PathVariable String sessionId) {
+		final UserSession userList = this.userSessionService.findOne(sessionId);
+		return new ResponseEntity<>(new UserSessionResourceAsm().toResource(userList), HttpStatus.OK);
 	}
 }

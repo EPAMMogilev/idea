@@ -9,10 +9,14 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.Tag;
 import com.epam.idea.core.model.User;
+import com.epam.idea.core.model.UserSession;
+import com.epam.idea.core.security.LoginRequest;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
+import com.epam.idea.core.service.UserSessionService;
 import com.epam.idea.core.service.exception.UserNotFoundException;
+import com.epam.idea.core.service.exception.UserSessionNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.UserResource;
@@ -41,6 +45,8 @@ import static com.epam.idea.builder.model.TestUserBuilder.aUser;
 import static com.epam.idea.core.model.User.MAX_LENGTH_EMAIL;
 import static com.epam.idea.core.model.User.MAX_LENGTH_PASSWORD;
 import static com.epam.idea.core.model.User.MAX_LENGTH_USERNAME;
+import static com.epam.idea.builder.model.TestUserSessionBuilder.aUserSession;
+import static com.epam.idea.builder.model.TestUserSessionBuilder.DEFAULT_USER_SESSION_ID;
 import static com.epam.idea.rest.controller.RestErrorHandler.USER_NOT_FOUND_LOGREF;
 import static com.epam.idea.rest.resource.support.JsonPropertyName.CREATION_TIME;
 import static com.epam.idea.rest.resource.support.JsonPropertyName.ID;
@@ -80,6 +86,7 @@ public class UserControllerTest {
 	public static final String EXPECTED_IDEA_MODIFICATION_TIME = "2014-10-05T00:00Z";
 	public static final String EXPECTED_COMMENT_CREATION_TIME = "2014-05-05T00:00Z";
 	public static final String EXPECTED_COMMENT_MODIFICATION_TIME = "2014-07-08T00:00Z";
+	public static final String EXPECTED_USER_SESSION_CREATION_TIME = "2015-01-18T00:00Z";
 
 	@Autowired
 	private UserService userServiceMock;
@@ -91,6 +98,9 @@ public class UserControllerTest {
 	private CommentService commentServiceMock;
 
 	@Autowired
+	private UserSessionService userSessionServiceMock;
+
+	@Autowired
 	private WebApplicationContext webApplicationContext;
 
 	private MockMvc mockMvc;
@@ -98,6 +108,7 @@ public class UserControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		Mockito.reset(this.userServiceMock);
+		Mockito.reset(this.userSessionServiceMock);
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
 	}
 
@@ -518,45 +529,122 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void shouldReturnFoundUserByEmailAndPasswordWithHttpCode200() throws Exception {
-		User user = aUser().build();
-
-		when(this.userServiceMock.findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD)).thenReturn(user);
-
-		this.mockMvc.perform(post("/api/v1/users/authentication/").param("email", DEFAULT_EMAIL).param("password", DEFAULT_PASSWORD)
-				.accept(APPLICATION_JSON_UTF8)).andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$." + ID).value(((int) user.getId())))
-				.andExpect(jsonPath("$.username").value(user.getUsername()))
-				.andExpect(jsonPath("$.email").value(user.getEmail()))
-				.andExpect(jsonPath("$.password").doesNotExist())
-				.andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
-				.andExpect(jsonPath("$.links", hasSize(3)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
-				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + user.getId())))
-				.andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
-				.andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/users/" + user.getId() + "/ideas")))
-				.andExpect(jsonPath("$.links[2].rel").value(UserResourceAsm.COMMENTS_REL))
-				.andExpect(jsonPath("$.links[2].href").value(containsString("/api/v1/users/" + user.getId() + "/comments")));
-
-		verify(this.userServiceMock, times(1)).findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD);
-		verifyNoMoreInteractions(this.userServiceMock);
-	}
-
-	@Test
 	public void shouldReturnErrorWithHttpStatus404WhenUserNotFoundByEmailAndPassword() throws Exception {
-		when(this.userServiceMock.findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD)).thenThrow(new UserNotFoundException("This user does not exist"));
+		LoginRequest loginRequest = new LoginRequest();
+		loginRequest.setEmail(DEFAULT_EMAIL);
+		loginRequest.setPassword(DEFAULT_PASSWORD);
+		when(this.userSessionServiceMock.save(any(LoginRequest.class))).thenThrow(new UserNotFoundException("This user does not exist"));
 
-		this.mockMvc.perform(post("/api/v1/users/authentication/").param("email", DEFAULT_EMAIL).param("password", DEFAULT_PASSWORD)
-				.accept(APPLICATION_JSON_UTF8))
+		this.mockMvc.perform(post("/api/v1/users/authenticate/")
+				.accept(APPLICATION_JSON_UTF8)
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(loginRequest)))
 				.andExpect(status().isNotFound())
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$", hasSize(1)))
 				.andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
 				.andExpect(jsonPath("$[0].message").value("This user does not exist"));
 
-		verify(this.userServiceMock, times(1)).findUserByEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD);
-		verifyNoMoreInteractions(this.userServiceMock);
+		verify(this.userSessionServiceMock, times(1)).save(any(LoginRequest.class));
+		verifyNoMoreInteractions(this.userSessionServiceMock);
+	}
+
+	@Test
+	public void shouldCreateSessionAndReturnItWithHttpCode201() throws Exception {
+		User user = aUser().build();
+		LoginRequest loginRequest = new LoginRequest();
+		loginRequest.setEmail(DEFAULT_EMAIL);
+		loginRequest.setPassword(DEFAULT_PASSWORD);
+		UserSession userSession = aUserSession().build();
+		userSession.setUser(user);
+		when(this.userSessionServiceMock.save(any(LoginRequest.class))).thenReturn(userSession);
+
+		this.mockMvc.perform(post("/api/v1/users/authenticate/")
+				.contentType(APPLICATION_JSON_UTF8)
+				.accept(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(loginRequest)))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$." + ID).value(DEFAULT_USER_SESSION_ID))
+				.andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_SESSION_CREATION_TIME))
+				.andExpect(jsonPath("$.links", hasSize(1)));
+
+		verify(this.userSessionServiceMock, times(1)).save(any(LoginRequest.class));
+		verifyNoMoreInteractions(this.userSessionServiceMock);
+	}
+
+	@Test
+	public void shouldDeleteSessionAndReturnHttpCode200() throws Exception {
+		User user = aUser().build();
+		UserSession deleted = aUserSession().build();
+		deleted.setUser(user);
+
+		when(this.userSessionServiceMock.deleteById(deleted.getSessionId())).thenReturn(deleted);
+
+		this.mockMvc.perform(delete("/api/v1/users/authenticate/{userId}", deleted.getSessionId())
+				.contentType(APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk())
+				.andExpect(content().string(EMPTY));
+
+		verify(this.userSessionServiceMock, times(1)).deleteById(deleted.getSessionId());
+		verifyNoMoreInteractions(this.userSessionServiceMock);
+	}
+
+	@Test
+	public void shouldReturnErrorWithHttpStatus404WhenDeleteSessionWhichDoesNotExist() throws Exception {
+		when(this.userSessionServiceMock.deleteById(DEFAULT_USER_SESSION_ID)).thenThrow(new UserSessionNotFoundException(DEFAULT_USER_SESSION_ID));
+
+		this.mockMvc.perform(delete("/api/v1/users/authenticate/{userId}", DEFAULT_USER_SESSION_ID)
+				.contentType(APPLICATION_JSON_UTF8)
+				.accept(APPLICATION_JSON_UTF8))
+				.andExpect(status().isNotFound())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
+				.andExpect(jsonPath("$[0].message").value("Could not find session with id: " + DEFAULT_USER_SESSION_ID + "."))
+				.andExpect(jsonPath("$[0].links", empty()));
+
+		verify(this.userSessionServiceMock, times(1)).deleteById(DEFAULT_USER_SESSION_ID);
+		verifyNoMoreInteractions(this.userSessionServiceMock);
+	}
+
+	@Test
+	public void shouldReturnFoundSessionWithHttpCode200() throws Exception {
+		User user = aUser().build();
+		LoginRequest loginRequest = new LoginRequest();
+		loginRequest.setEmail(DEFAULT_EMAIL);
+		loginRequest.setPassword(DEFAULT_PASSWORD);
+		UserSession userSession = aUserSession().build();
+		userSession.setUser(user);
+
+		when(this.userSessionServiceMock.findOne(userSession.getSessionId())).thenReturn(userSession);
+
+		this.mockMvc.perform(get("/api/v1/users/authenticate/{sessionId}", DEFAULT_USER_ID)
+				.accept(APPLICATION_JSON_UTF8)).andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$." + ID).value(userSession.getSessionId()))
+				.andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_SESSION_CREATION_TIME))
+				.andExpect(jsonPath("$.links", hasSize(1)));
+
+		verify(this.userSessionServiceMock, times(1)).findOne(userSession.getSessionId());
+		verifyNoMoreInteractions(this.userSessionServiceMock);
+	}
+
+	@Test
+	public void shouldReturnErrorWithHttpStatus404WhenUserSessionNotFound() throws Exception {
+		when(this.userSessionServiceMock.findOne(DEFAULT_USER_SESSION_ID)).thenThrow(new UserSessionNotFoundException(DEFAULT_USER_SESSION_ID));
+
+		this.mockMvc.perform(get("/api/v1/users/authenticate/{sessionId}", DEFAULT_USER_SESSION_ID)
+				.accept(APPLICATION_JSON_UTF8))
+				.andExpect(status().isNotFound())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
+				.andExpect(jsonPath("$[0].message").value("Could not find session with id: 1."));
+
+		verify(this.userSessionServiceMock, times(1)).findOne(DEFAULT_USER_SESSION_ID);
+		verifyNoMoreInteractions(this.userSessionServiceMock);
 	}
 }
