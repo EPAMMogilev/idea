@@ -36,9 +36,6 @@ public class UserSessionServiceImpl implements UserSessionService {
 		final List<UserSession> userSessionList = userSessionRepository.findAll();
 		userSessionList.forEach(Hibernate::initialize);
 		return userSessionList;
-
-
-//		return null;
 	}
 
 	@Override
