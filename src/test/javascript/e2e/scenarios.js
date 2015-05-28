@@ -1,6 +1,17 @@
-describe('appIdea', function() {
-	var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea';
+﻿describe('appIdea', function() {
+	//var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea';
+	var homeUrl = 'http://localhost:8080/idea';
 	browser.get(homeUrl);
+
+	//just !login!
+	it('should login', function() {
+    		element(by.id('words')).click();
+    		element.all(by.id('email')).sendKeys('Chris@test.com');
+    		element.all(by.id('password')).sendKeys('1234');
+
+    		//login
+    		element(by.id('btnLogin')).click();
+	});
 
 	it('should filter results ideas list after press button - SPORT', function() {
 		element(by.id('sport')).click();
@@ -28,7 +39,7 @@ describe('appIdea', function() {
 		var postIncRating = element.all(by.id('rating')).first().getText();
 		expect(postIncRating).toBe('4');	
 	});
-	
+
 	it('decrement rating', function() {
 		//get second element by class "vote"
 		element.all(by.css('.vote')).get(1).click();
@@ -53,5 +64,5 @@ describe('appIdea', function() {
 			expect(url.split('%')[0].split('#')[1]).toBe('/ideaDetails');
 		});
 	});
-
+	
 });
