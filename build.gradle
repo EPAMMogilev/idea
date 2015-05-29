@@ -132,6 +132,8 @@ test {
     }
 }
 
+test.outputs.upToDateWhen { false }
+
 //---------------------------Integration tests setup-----------------------------------------//
 
 sourceSets {
