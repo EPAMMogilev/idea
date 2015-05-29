@@ -26,7 +26,7 @@ public class ExceptionsTest {
         try{
             throw new TagDoesNotExistException(new Exception(TEST_MESSAGE));
         }catch (TagDoesNotExistException exc){
-            assertEquals(exc.getMessage(), TEST_MESSAGE);
+            assertEquals(exc.getCause().getMessage(), TEST_MESSAGE);
         }
     }//TagDoesNotExistExceptionString
 
