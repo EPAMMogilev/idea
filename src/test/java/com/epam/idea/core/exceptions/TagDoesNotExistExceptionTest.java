@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Aliaksei_Liubetski on 2015-05-29.
  */
-public class ExceptionsTest {
+public class TagDoesNotExistExceptionTest {
 
     public static final String TEST_MESSAGE = "Test message";
 
