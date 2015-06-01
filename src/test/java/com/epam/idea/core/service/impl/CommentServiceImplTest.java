@@ -68,7 +68,12 @@ public class CommentServiceImplTest {
 
         Comment actual = this.commentService.findOne(comment.getId());
 
+
+        actual.preUpdate();
+        actual.prePersist();
+
         assertThat(actual).isEqualTo(comment);
+        assertThat(actual.toString()).isNotNull();
     }//shouldAddNewComment
 
     @Test
