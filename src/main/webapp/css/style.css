@@ -313,16 +313,21 @@ display: block;
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #528ecc;
+	/*text-shadow:0px 1px 0px #528ecc;*/
 	height: 40px;
 	line-height: initial;
 	width: 150px;
 }
 .addIdeaButton:hover {
 	/*background-color:#378de5;*/
-	background-color:#528fcc;
+	background-color:#60B6F1;
 }
 .addIdeaButton:active {
 	position:relative;
 	top:1px;
+}
+
+#AddIdeaDiv a:hover
+{
+    color: #84BBF3;
 }
