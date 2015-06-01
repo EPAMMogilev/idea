@@ -16,7 +16,8 @@ public class UserSessionNotFoundExceptionTest {
     public void shouldIdeaExistsExceptionString(){
         UserSessionNotFoundException exception = new UserSessionNotFoundException(SOME_EXCEPTION);
 
-        assertThat(exception.getMessage()).isEqualTo(SOME_EXCEPTION);
+        String sCheck = String.format(UserSessionNotFoundException.ERROR_MSG_PATTERN_USER_SESSION_NOT_FOUND, SOME_EXCEPTION);
+        assertThat(exception.getMessage()).isEqualTo(sCheck);
     }
 
     @Test

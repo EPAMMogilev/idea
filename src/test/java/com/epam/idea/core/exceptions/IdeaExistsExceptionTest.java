@@ -16,12 +16,16 @@ public class IdeaExistsExceptionTest {
     public void shouldIdeaExistsExceptionString(){
         IdeaExistsException exception = new IdeaExistsException(SOME_EXCEPTION);
 
+        System.out.println("exception.getMessage(): "+ exception.getMessage());
+
         assertThat(exception.getMessage()).isEqualTo(SOME_EXCEPTION);
     }
 
     @Test
     public void shouldIdeaExistsExceptionWithThrowable(){
         IdeaExistsException exception = new IdeaExistsException(SOME_EXCEPTION, new Exception(SOME_EXCEPTION));
+
+        System.out.println("exception.getMessage(): "+ exception.getMessage());
 
         assertThat(exception.getCause().getMessage()).isEqualTo(SOME_EXCEPTION);
         assertThat(exception.getMessage()).isEqualTo(SOME_EXCEPTION);
@@ -30,6 +34,8 @@ public class IdeaExistsExceptionTest {
     @Test
     public void shouldIdeaExistsExceptionThrowable(){
         IdeaExistsException exception = new IdeaExistsException(new Exception(SOME_EXCEPTION));
+
+        System.out.println("exception.getMessage(): "+ exception.getMessage());
 
         assertThat(exception.getCause().getMessage()).isEqualTo(SOME_EXCEPTION);
     }
