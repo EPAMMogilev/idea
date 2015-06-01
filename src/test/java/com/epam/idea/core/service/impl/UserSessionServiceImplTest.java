@@ -1,5 +1,8 @@
 package com.epam.idea.core.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +62,10 @@ public class UserSessionServiceImplTest {
 		//Given:
 		User user = TestUserBuilder.aUser().build();
 		UserSession userSession = TestUserSessionBuilder.aUserSession().withAuthor(user).build();
+
+		userSession.prePersist();
+		userSession.setSessionId(userSession.getSessionId());
+		userSession.setCreationTime(userSession.getCreationTime());
 
 		//When:
 		this.sut.save(userSession);
