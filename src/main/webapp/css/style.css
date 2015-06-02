@@ -100,11 +100,32 @@ button {
    
 }
 
-.ideas {
-    width: 60%;
+.newIdeas {
+    width: 29%;
     height:auto;
-    float: left;
+    display:inline-block;
     padding-right: 15px;
+    vertical-align: top;
+    padding-right: 15px;
+    min-width: 450px;
+}
+
+.newIdeas ul{
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+.newIdeas .font-cenralbig {
+  text-align: center;
+  font-size: 30;
+}
+
+.ideas {
+    width: 29%;
+    height:auto;
+    display:inline-block;
+    padding-right: 15px;
+    min-width: 450px;
 }
 .ideas ul{
     list-style-type:none;
@@ -120,25 +141,47 @@ button {
    border-top: 1px solid #ddd;
    overflow:hidden;
    position: relative;
+   min-width: 500px;
 }
 
 .idea .left {
   margin-right: 20px;
 }
 
+.middle{
+	width: 65%;
+	height: 100% auto;
+	min-height: 135px;
+    display:inline-block;
+}
 
 .left {
-   float:left; 
+	width: 19%;
+   /*float:left; */
+    display:inline-block;
+	text-align: center;
+
+    vertical-align: middle;
 }
 
 .left img{
-  border-radius: 50px; 
+  /*border-radius: 50px;
   -moz-border-radius: 50px; 
   -webkit-border-radius: 50px;
+    */
+
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
  }
 
 .right {
-   float:right;
+	/*width: 9%;*/
+    display:inline-block;
+	text-align: center;
+    vertical-align: middle;
 }
 
 .ideas .font-cenralbig {
@@ -167,16 +210,25 @@ button {
   .head-text {
   overflow: hidden;
   max-height: 35px;
+  text-overflow: ellipsis;
  
+ }
+
+ .clip
+ {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
  }
  
  .end-text {
+   width: 65%;
    max-height: 20px;
    overflow: hidden;
    bottom: 10px;
    position: absolute;
-   margin-left: 120px;
- 
+   /*margin-left: 120px;*/
+   text-align: left;
  }
  
  .small-area {
@@ -211,7 +263,8 @@ button {
 
 .idea .vote {
   max-height: 45px;
-  text-align: right;
+  /*text-align: right;*/
+  text-align: center;
 }
 
 .vote:hover {
@@ -330,4 +383,9 @@ display: block;
 #AddIdeaDiv a:hover
 {
     color: #84BBF3;
+}
+
+.rating
+{
+    text-align:center;
 }
