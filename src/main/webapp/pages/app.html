@@ -15,6 +15,13 @@
             </li>
         </ul>
     </div>
+    <div class="newIdeas">
+        <ul>
+            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'"  class = "idea-li" >
+                <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+            </li>
+        </ul>
+    </div>
     <div class="right" >
         <!--<img src="images/mockup.png" width="100%" />-->
         <div id="map"></div>
