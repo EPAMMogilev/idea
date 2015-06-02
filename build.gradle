@@ -93,6 +93,8 @@ dependencies {
     // Guava
     compile "com.google.guava:guava-collections:$guavaCollectionsVersion"
 
+    //Logging
+    compile 'log4j:log4j:1.2.17'
 
     // Test dependencies
     testCompile 'junit:junit'
