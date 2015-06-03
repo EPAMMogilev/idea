@@ -1,10 +1,14 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.eveoh.nl/content/repositories/releases'
+        }
     }
 
     dependencies {
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
+        classpath 'nl.eveoh:gradle-aspectj:1.5'
     }
 }
 
@@ -14,10 +18,15 @@ plugins {
     id "com.moowork.grunt" version "0.9"
 }
 
+project.ext {
+    aspectjVersion = '1.8.4'
+}
+
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'aspectj'
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/pmd.gradle"
 apply from: "$rootDir/gradle/findbugs.gradle"
@@ -34,6 +43,7 @@ war.archiveName = 'idea.war'
 
 repositories {
     jcenter()
+    mavenCentral()
     maven { url 'http://repo.spring.io/libs-snapshot' }
 }
 
@@ -96,6 +106,10 @@ dependencies {
     //Logging
     compile 'log4j:log4j:1.2.17'
 
+    //AspectJ
+    //aspectpath 'org.springframework:spring-aspects'
+    compile 'org.springframework:spring-aspects'
+
     // Test dependencies
     testCompile 'junit:junit'
     testCompile 'org.springframework:spring-test'
@@ -103,6 +117,7 @@ dependencies {
     testCompile "org.assertj:assertj-core:$assertJVersion"
     testCompile "com.github.springtestdbunit:spring-test-dbunit:$springTestDbUnitVersion"
     testCompile "org.dbunit:dbunit:$dbUnitVersion"
+    //testCompile "org.springframework:spring-orm"
 
     // Adds a simple way to extract parts of a given document.
     testCompile "com.jayway.jsonpath:json-path:$jsonPathVesrion"
