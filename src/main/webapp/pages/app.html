@@ -8,22 +8,24 @@
     <div class = "searcher">
         <input placeholder="Найти..." ng-model="ideasCtrl.criteria">
     </div>
-    <div class = "ideas">
-        <ul>
-            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
-                <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
-            </li>
-        </ul>
-    </div>
-    <div class="newIdeas">
-        <ul>
-            <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'"  class = "idea-li" >
-                <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
-            </li>
-        </ul>
-    </div>
-    <div class="right" >
-        <!--<img src="images/mockup.png" width="100%" />-->
-        <div id="map"></div>
+    <div id="mainBlock">
+        <div class = "ideas">
+            <ul>
+                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
+                    <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+                </li>
+            </ul>
+        </div>
+        <div class="newIdeas">
+            <ul>
+                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt' | limitTo: 5"  class = "idea-li" >
+                    <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+                </li>
+            </ul>
+        </div>
+        <div id="map" class="mapMainPage" >
+            <!--<img src="images/mockup.png" width="100%" />-->
+            <!--div id="map"></div-->
+        </div>
     </div>
 </div>
