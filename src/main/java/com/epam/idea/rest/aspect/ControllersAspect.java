@@ -23,8 +23,8 @@ public class ControllersAspect {
     public void logBefore(JoinPoint joinPoint){
         log.log(
                 String.format(logPatternBefore,
-                        (joinPoint != null && joinPoint.getThis() != null)?joinPoint.getThis().getClass().getName():null,
-                        (joinPoint != null && joinPoint.getSignature() != null)?joinPoint.getSignature().getName():null,
+                        getClassName(joinPoint),
+                        getMethodName(joinPoint),
                         Arrays.asList(joinPoint.getArgs())
                         )
         );
@@ -34,10 +34,18 @@ public class ControllersAspect {
     public void logAfter(JoinPoint joinPoint){
         log.log(
                 String.format(logPatternAfter,
-                        (joinPoint != null && joinPoint.getThis() != null)?joinPoint.getThis().getClass().getName():null,
-                        (joinPoint != null && joinPoint.getSignature() != null)?joinPoint.getSignature().getName():null
+                        getClassName(joinPoint),
+                        getMethodName(joinPoint)
                 )
         );
     }//logAfter()
+
+    private String getClassName(JoinPoint joinPoint){
+        return (joinPoint != null && joinPoint.getThis() != null)?joinPoint.getThis().getClass().getName():null;
+    }//getClassName
+
+    private String getMethodName(JoinPoint joinPoint){
+        return (joinPoint != null && joinPoint.getSignature() != null)?joinPoint.getSignature().getName():null;
+    }//getMethodName
 
 }
