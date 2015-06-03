@@ -6,6 +6,10 @@ insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, 
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Interactive fuzzy goal programming approach for bilevel programming problem', 'Arora, S.R. & Gupta, Ritu', '2015-02-02 00:00:00', '2015-02-03 00:00:00', 3, 2);
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Two-Segment Separable Programming', 'R. R. Meyer', '2014-12-01', '2014-12-12', -2, 3, 53.945630, 30.369226);
 
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('New ideas in Android mobile development', 'A. K. Developer', '2015-04-01', '2014-04-02', 5, 1, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Java. Best practice', 'D. Payne', '2015-07-01', '2015-07-02', 16, 3, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Bugs driven development', 'Dr M. Nothing', '2015-09-01', '2015-09-01', -3, 2, 53.908010, 30.308924);
+
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
 
