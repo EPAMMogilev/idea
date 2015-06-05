@@ -102,8 +102,8 @@ angular
                           }]
                     }
                 }
-            },
-            onEnter:  function(){ ymaps.ready(mapInit)},
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         });
         }
