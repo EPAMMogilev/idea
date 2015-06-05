@@ -12,7 +12,11 @@
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'Добавить';
         $scope.data = null;
+
+        //maps data
 		$scope.center = [30.331014, 53.894617];
+		var map = null;
+		var ideaCoords = null;
 
 		$scope.back = function(){
             $window.location.href = '#home';
@@ -37,7 +41,9 @@
 		        title:data.title,
 		        createdAt:new Date().getTime(),
 		        lastModifiedAt:new Date().getTime(),
-		        tags: tags
+		        tags: tags,
+		        latitude: (ideaCoords)?ideaCoords[1]:0,
+		        longitude: (ideaCoords)?ideaCoords[0]:0
 		    };
 
             ideasFactory.insertIdea(request).then(
@@ -51,6 +57,19 @@
 				alert("Ошибка создания идеии: " + error.statusText);
 			   }
 			 );
+		};
+
+		$scope.afterInit = function($map){
+			map = $map;
+		};
+
+		$scope.mapClick = function(e){
+			var coords = e.get('coords');
+			//alert(coords.join(', '));
+			ideaCoords = coords;
+
+			//map.Point.show(coords);
+			map.balloon.open(coords, 'Моя идея');
 		};
     }
 

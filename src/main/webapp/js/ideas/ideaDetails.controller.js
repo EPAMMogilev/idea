@@ -28,12 +28,15 @@
             $scope.init = function(){
             var myMap = new ymaps.Map("map", {
                 //[53.894617; 30.331014]
-                center: [53.894617, 30.331014],
+                center: [30.331014, 53.894617],
                 zoom: 11
             });
 
             if(this.detailsCtrl.data && this.detailsCtrl.data.latitude && this.detailsCtrl.data.longitude){
-                var geoPoint = new ymaps.Placemark([this.detailsCtrl.data.latitude, this.detailsCtrl.data.longitude], null,{
+                /*var geoPoint = new ymaps.Placemark([this.detailsCtrl.data.latitude, this.detailsCtrl.data.longitude], null,{
+                    preset: "islands#greenStretchyIcon"
+                });*/
+                var geoPoint = new ymaps.Placemark([this.detailsCtrl.data.longitude, this.detailsCtrl.data.latitude], null,{
                     preset: "islands#greenStretchyIcon"
                 });
 
