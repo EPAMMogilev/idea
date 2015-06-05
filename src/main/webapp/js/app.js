@@ -17,7 +17,8 @@ angular
 		'app.services',
 		'app.filters',
         'ideaFactories',
-		'app.controllers'
+		'app.controllers',
+		'yaMap'
 	]);
 	
 	angular.module('app.directives', []); // set Directives
@@ -47,8 +48,8 @@ angular
             url: '/home',
             views: {
                 'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
-            },
-            onEnter:  function(){ ymaps.ready(mapInit)},
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         }).
         state('login', {
@@ -81,8 +82,8 @@ angular
             url: '/ideaAddNew',
             views: {
                 'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as ctrl'}
-            },
-            onEnter:  function(){ ymaps.ready(mapInit)},
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         }).
         state('ideaUpdate', {
