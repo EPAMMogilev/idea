@@ -14,6 +14,10 @@
     "ng-tags-input" : "2.0.1",
     "swagger-ui": "2.0.24",
     "angular-cookies": "~1.2.x",
-    "angular-md5": "0.1.7"
+    "angular-md5": "0.1.7",
+    "angular-yandex-map":"1.0.4"
+  },
+  "resolutions":{
+    "angular": "1.2.28"
   }
 }
