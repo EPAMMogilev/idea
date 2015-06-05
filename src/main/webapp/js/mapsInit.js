@@ -5,6 +5,8 @@ function mapInit(){
 		zoom: 11,
 		controls: ["zoomControl", "fullscreenControl"]
 	});
+
+    addMapClickEvent(myMap);
 }
 
 function mapInitIdeaDetails(idea){
@@ -22,4 +24,22 @@ function mapInitIdeaDetails(idea){
 
         myMap.geoObjects.add(geoPoint);
     }//if
+
+    addMapClickEvent(myMap);
+}
+
+function addMapClickEvent(map){
+
+    map.events.add('click', function(e){
+    	var coords = e.get('coords');
+    	//alert(coords.join(', '));
+
+    	map.geoObjects.removeAll();
+
+        var geoPoint = new ymaps.Placemark([coords[0], coords[1]], null,{
+            preset: "islands#redIcon"
+        });
+
+        map.geoObjects.add(geoPoint);
+    });
 }
