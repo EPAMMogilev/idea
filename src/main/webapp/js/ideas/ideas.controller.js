@@ -28,14 +28,14 @@
 
         vm.details = function(idea){
             var ideaDetail = {
-                id:idea.id,
+                id:idea.id/*,
                 title:idea.title,
                 description:idea.description,
                 createdAt:idea.createdAt,
                 tagName:idea.tags[0].name,
                 tagId:idea.tags[0].id,
                 latitude:idea.latitude,
-                longitude:idea.longitude
+                longitude:idea.longitude*/
             };
             //detailsService.setData($scope.ideaDetail);
             //$window.location.href = '#ideaDetails';

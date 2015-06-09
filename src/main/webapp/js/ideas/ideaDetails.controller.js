@@ -5,12 +5,22 @@
         .module('app.controllers')
         .controller('detailsCtrl', detailsCtrl);
 
-    detailsCtrl.$inject = ['$scope', '$window', '$state', 'ideaDetails'];
+    detailsCtrl.$inject = ['$scope', '$window', '$state', 'ideasFactory', 'ideaDetails'];
 
-    function detailsCtrl($scope, $window, $state, ideaDetails) {
+    function detailsCtrl($scope, $window, $state, ideasFactory, ideaDetails) {
 
-        this.data = ideaDetails;
-        //$scope.data = ideaDetails;
+        $scope.idea = ideaDetails;
+        $scope.data = null;
+
+        this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
+                                       //success
+                                       function( value )
+                                       {
+                                        $scope.data = value
+                                       }
+                                     );
+
+        //this.data = ideaDetails;
 
 		$scope.back = function(){
             $window.location.href = '#home';
