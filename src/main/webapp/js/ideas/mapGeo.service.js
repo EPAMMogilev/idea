@@ -20,7 +20,31 @@ function mapGeoService() {
 
                     map.geoObjects.add(geoPoint);
                 }//if
-            }
+            },//setGeoCoordsSimpleMap
+            generateGeoObjects:function(ideas){
+                var geoObjects = new Array();
+                if(ideas){
+                    for(var i=0; i<ideas.length; i++){
+                        var oldObject = ideas[i];
+
+                        if(oldObject && oldObject.longitude && oldObject.latitude){
+                            var newGeoObject = {
+                                geometry: {
+                                            type: 'Point',
+                                            coordinates: [oldObject.longitude,oldObject.latitude]
+                                        },
+                                properties: {
+                                    balloonContent: oldObject.title,
+                                    clusterCaption: 'идея #' + oldObject.id
+                                }
+                            };
+                            //add 2 array
+                            geoObjects.push(newGeoObject);
+                        }//if
+                    }//for
+                }//if
+                return geoObjects;
+            }//generateGeoObjects
        };
 };
 })();

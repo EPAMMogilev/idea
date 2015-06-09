@@ -29,6 +29,12 @@
             <ya-toolbar ya-name="zoomControl"></ya-toolbar>
             <ya-toolbar ya-name="scaleLine"></ya-toolbar>
             <ya-toolbar ya-name="typeSelector"></ya-toolbar>
+            <!-- list gps coords -->
+            <ya-collection ya-options="{preset:'twirl#blueIcon'}">
+                <ya-cluster ya-options="{preset:'islands#invertedLightblueClusterIcons'}">
+                    <ya-geo-object ng-repeat="item in geoObjects" ya-source="item" ></ya-geo-object>
+                </ya-cluster>
+            </ya-collection>
         </ya-map>
     </div>
 </div>
