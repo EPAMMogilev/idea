@@ -11,12 +11,28 @@
 
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'Обновить';
-        $scope.data = ideaDetails;
+        $scope.idea = ideaDetails;
+        $scope.data = null;
 
         //maps data
 		$scope.center = [30.331014, 53.894617];
 		var map = null;
 		var ideaCoords = null;
+
+        this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
+                                       //success
+                                       function( value )
+                                       {
+                                        $scope.data = value;
+
+                                        //set geo point
+
+                                        if($scope.data && $scope.data.latitude && $scope.data.longitude && map){
+                                        	var coords = [$scope.data.longitude, $scope.data.latitude];
+											map.balloon.open(coords, 'Моя идея');
+                                        }//if
+                                       }
+                                     );
 
 		$scope.back = function(){
             $window.location.href = '#home';

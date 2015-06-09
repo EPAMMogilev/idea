@@ -40,7 +40,7 @@
 		};
 
 		$scope.edit = function(){
-			$state.go('ideaUpdate', { 'idea': angular.toJson(ideaDetails) });
+			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.idea) });
 		};
 
 		$scope.remove = function(){
