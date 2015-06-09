@@ -148,6 +148,8 @@ public class Idea implements Serializable {
 		this.title = source.title;
 		this.description = source.description;
 		this.rating = source.rating;
+		this.latitude = source.latitude;
+		this.longitude = source.longitude;
 	}
 
 	public BigDecimal getLatitude() {

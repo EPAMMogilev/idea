@@ -414,4 +414,5 @@ button {
     width:1550px;
     min-width:1550px;
     margin: 0 auto;
+    display: block;
 }

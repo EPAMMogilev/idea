@@ -8,7 +8,7 @@
     <div class = "searcher">
         <input placeholder="Найти..." ng-model="ideasCtrl.criteria">
     </div>
-    <div id="mainBlock">
+    <div-- id="mainBlock">
         <div class = "ideas">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
@@ -23,9 +23,12 @@
                 </li>
             </ul>
         </div>
-        <div id="map" class="mapMainPage" >
-            <!--<img src="images/mockup.png" width="100%" />-->
-            <!--div id="map"></div-->
-        </div>
+        <!--div id="map" class="mapMainPage" -->
+        <!--/div-->
+        <ya-map ya-zoom="11" ya-center="[30.331014, 53.894617]" ya-controls="smallMapDefaultSet" class="mapMainPage">
+            <ya-toolbar ya-name="zoomControl"></ya-toolbar>
+            <ya-toolbar ya-name="scaleLine"></ya-toolbar>
+            <ya-toolbar ya-name="typeSelector"></ya-toolbar>
+        </ya-map>
     </div>
 </div>
