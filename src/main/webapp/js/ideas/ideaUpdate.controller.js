@@ -5,9 +5,9 @@
         .module('app.controllers')
         .controller('updateIdea', updateIdea);
 
-    updateIdea.$inject = ['$scope', '$window', /*'restFactory', */'ideasFactory', 'detailsService', 'ideaDetails'];
+    updateIdea.$inject = ['$scope', '$window', /*'restFactory', */'ideasFactory', 'detailsService', 'ideaDetails', 'mapGeoService'];
 
-    function updateIdea($scope, $window, /*restFactory, */ideasFactory, detailsService, ideaDetails) {
+    function updateIdea($scope, $window, /*restFactory, */ideasFactory, detailsService, ideaDetails, mapGeoService) {
 
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'Обновить';
@@ -28,8 +28,14 @@
                                         //set geo point
 
                                         if($scope.data && $scope.data.latitude && $scope.data.longitude && map){
-                                        	var coords = [$scope.data.longitude, $scope.data.latitude];
-											map.balloon.open(coords, 'Моя идея');
+                                        	/*var coords = [$scope.data.longitude, $scope.data.latitude];
+											map.balloon.open(coords, 'Моя идея');*/
+                                            var geoPoints = {
+                                                latitude: $scope.data.latitude,
+                                                longitude: $scope.data.longitude
+                                            };
+
+                                            mapGeoService.setGeoCoordsDirective(map, geoPoints);
                                         }//if
                                        }
                                      );

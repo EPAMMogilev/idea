@@ -5,9 +5,9 @@
         .module('app.controllers')
         .controller('detailsCtrl', detailsCtrl);
 
-    detailsCtrl.$inject = ['$scope', '$window', '$state', 'ideasFactory', 'ideaDetails'];
+    detailsCtrl.$inject = ['$scope', '$window', '$state', 'ideasFactory', 'ideaDetails', 'mapGeoService'];
 
-    function detailsCtrl($scope, $window, $state, ideasFactory, ideaDetails) {
+    function detailsCtrl($scope, $window, $state, ideasFactory, ideaDetails, mapGeoService) {
 
         $scope.idea = ideaDetails;
         $scope.data = null;
@@ -24,11 +24,12 @@
 
                                         if($scope.data && $scope.data.latitude && $scope.data.longitude){
 
-                                            var geoPoint = new ymaps.Placemark([$scope.data.longitude, $scope.data.latitude], null,{
-                                                preset: "islands#greenStretchyIcon"
-                                            });
+                                            var geoPoints = {
+                                                latitude: $scope.data.latitude,
+                                                longitude: $scope.data.longitude
+                                            };
 
-                                            $scope.myMap.geoObjects.add(geoPoint);
+                                            mapGeoService.setGeoCoordsSimpleMap($scope.myMap, geoPoints);
                                         }//if
                                        }
                                      );

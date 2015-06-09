@@ -5,9 +5,9 @@
         .module('app.controllers')
         .controller('addNewIdea', addNewIdea);
 
-    addNewIdea.$inject = ['$scope', '$window', /*'restFactory', */'detailsService', 'ideasFactory'];
+    addNewIdea.$inject = ['$scope', '$window', /*'restFactory', */'detailsService', 'ideasFactory', 'mapGeoService'];
 
-    function addNewIdea($scope, $window, /*restFactory, */detailsService, ideasFactory) {
+    function addNewIdea($scope, $window, /*restFactory, */detailsService, ideasFactory, mapGeoService) {
 
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'Добавить';
@@ -67,9 +67,15 @@
 			var coords = e.get('coords');
 			//alert(coords.join(', '));
 			ideaCoords = coords;
+			var geoPoints = {
+				latitude: coords[1],
+				longitude: coords[0]
+			};
 
 			//map.Point.show(coords);
-			map.balloon.open(coords, 'Моя идея');
+			//map.balloon.open(coords, 'Моя идея');
+
+			mapGeoService.setGeoCoordsDirective(map, geoPoints);
 		};
     }
 
