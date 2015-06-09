@@ -125,13 +125,17 @@ describe('Idea details controllers testing', function(){
 	//controllers;
 	var detailsIdeaTest;
 
+	//service mock
+	var serviceInvoke;
+	var myServiceInvoke;
+
 	//scopes
 	var detailsIdeaScope;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
 	beforeEach(angular.mock.module('app.services'));
-	beforeEach(angular.mock.module('ideaFactories'));
+	//beforeEach(angular.mock.module('ideasFactory'));
 	//beforeEach(angular.mock.module('ideaApp'));
 
 
@@ -141,13 +145,29 @@ describe('Idea details controllers testing', function(){
 		state = $state;
 
 		var vIdeaDetails = {
+				id:1,
 				description: 'Some text'
 			};
+
+		//init serviceInvoke
+		serviceInvoke = function(aId){
+			return{
+				then: function(func1){
+					func1.apply(vIdeaDetails);
+				}
+			}
+		};
+
+		myServiceInvoke = {
+			getIdeaById: serviceInvoke
+		};
+
 		//detailsCtrl
 		detailsIdeaTest  = function(){
 				return $controller('detailsCtrl', {
 					$scope:detailsIdeaScope,
 					$state:state,
+					ideasFactory: myServiceInvoke,
 					ideaDetails: vIdeaDetails
 				});
 		};
@@ -165,7 +185,8 @@ describe('Idea details controllers testing', function(){
 		var ctrl = detailsIdeaTest();
 		expect(ctrl).toBeDefined();
 		// Make our assertions
-		expect(ctrl.data).toBeDefined();
+		//expect(data).toBeDefined();
+		expect(detailsIdeaScope.data).toBeUndefined();
 	});
 
 });
