@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +40,7 @@ public class User implements Serializable {
 	@Column(name = "USERNAME", nullable = false)
 	private String username;
 
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "PASSWORD", nullable = false)
@@ -60,7 +62,15 @@ public class User implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "AUTH_SOCIAL")
+	private SocialNetwork authSocial;
+
+	@Column(name = "SOCIAL_ID")
+	private String socialId;
+
 	public User() {
+		this.authSocial = SocialNetwork.NONE;
 		this.ideas = new ArrayList<>();
 		this.comments = new ArrayList<>();
 		this.roles = new ArrayList<>();
@@ -138,6 +148,22 @@ public class User implements Serializable {
 
 	public void addRole(Role role) {
 		this.roles.add(role);
+	}
+
+	public SocialNetwork getAuthSocial() {
+		return authSocial;
+	}
+
+	public void setAuthSocial(SocialNetwork authSocial) {
+		this.authSocial = authSocial;
+	}
+
+	public String getSocialId() {
+		return socialId;
+	}
+
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
 	}
 
 	@PrePersist

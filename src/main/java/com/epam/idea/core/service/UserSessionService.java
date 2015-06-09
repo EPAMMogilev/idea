@@ -1,5 +1,6 @@
 package com.epam.idea.core.service;
 
+import com.epam.idea.core.model.User;
 import com.epam.idea.core.model.UserSession;
 import com.epam.idea.core.security.LoginRequest;
 
@@ -16,4 +17,6 @@ public interface UserSessionService extends BaseService<UserSession, String> {
 	UserSession deleteById(String sessionId);
 
 	UserSession save(LoginRequest loginRequest);
+
+	UserSession save(User user);
 }

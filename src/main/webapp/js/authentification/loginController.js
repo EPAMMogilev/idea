@@ -5,14 +5,14 @@
         .module('app.controllers')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', 'sessionFactory', '$location', 'sessionService'];
-    function LoginController($scope, sessionFactory, $location, sessionService) {
+    LoginController.$inject = ['$scope', 'sessionFactory', '$location', 'sessionService', '$rootScope'];
+    function LoginController($scope, sessionFactory, $location, sessionService, $rootScope) {
         var vm = this;
 
         vm.user = {};
         vm.user.email = '';
         vm.user.password = '';
-
+//        alert($rootScope.previousPage);
         vm.loginUser = loginUser;
 
         function loginUser(user) {

@@ -64,4 +64,13 @@ public class UserSessionServiceImpl implements UserSessionService {
 		UserSession savedUserSession = save(userSession);
 		return savedUserSession;
 	}
+
+	@Override
+	public UserSession save(User user) {
+		UserSession userSession = new UserSession();
+		userSession.setUser(user);
+		System.out.println(user.getUsername());
+		UserSession savedUserSession = save(userSession);
+		return savedUserSession;
+	}
 }

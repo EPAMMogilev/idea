@@ -107,14 +107,17 @@ angular
         });
         }
 
+
        run.$inject = ['$rootScope', '$location', 'sessionService'];
            function run($rootScope, $location, sessionService) {
-
+               $rootScope.previousPage;
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
+                   $rootScope.previousPage = current;
                    if (sessionService.getSessionId() == '' || sessionService.getSessionId() == null) {
                        restrictedPage =  $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
                        if (restrictedPage) {
+                           $rootScope.previousPage = next;
                            $location.path("/login");
                        }
                    }

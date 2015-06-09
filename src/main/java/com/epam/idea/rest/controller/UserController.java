@@ -115,12 +115,12 @@ public class UserController {
 
 	}
 
-//	@JsonView(View.Basic.class)
-//	@RequestMapping(value = "/authenticate", method = RequestMethod.GET)
-//	public @ResponseBody HttpEntity<List<UserSessionResource>> getAllSession() {
-//		final List<UserSession> userList = this.userSessionService.findAll();
-//		return new ResponseEntity<>(new UserSessionResourceAsm().toResources(userList), HttpStatus.OK);
-//	}
+	@JsonView(View.Basic.class)
+	@RequestMapping(value = "/authenticate", method = RequestMethod.GET)
+	public @ResponseBody HttpEntity<List<UserSessionResource>> getAllSession() {
+		final List<UserSession> userList = this.userSessionService.findAll();
+		return new ResponseEntity<>(new UserSessionResourceAsm().toResources(userList), HttpStatus.OK);
+	}
 
 	@JsonView(View.Basic.class)
 	@RequestMapping(value = "/authenticate/{sessionId}", method = RequestMethod.GET)
