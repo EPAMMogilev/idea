@@ -12,11 +12,24 @@
         $scope.idea = ideaDetails;
         $scope.data = null;
 
+        $scope.myMap = null;
+
         this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
                                        //success
                                        function( value )
                                        {
-                                        $scope.data = value
+                                        $scope.data = value;
+
+                                        //set geo point
+
+                                        if($scope.data && $scope.data.latitude && $scope.data.longitude){
+
+                                            var geoPoint = new ymaps.Placemark([$scope.data.longitude, $scope.data.latitude], null,{
+                                                preset: "islands#greenStretchyIcon"
+                                            });
+
+                                            $scope.myMap.geoObjects.add(geoPoint);
+                                        }//if
                                        }
                                      );
 
@@ -36,22 +49,20 @@
 
 		//init function: load map point
             $scope.init = function(){
-            var myMap = new ymaps.Map("map", {
+            $scope.myMap = new ymaps.Map("map", {
                 //[53.894617; 30.331014]
                 center: [30.331014, 53.894617],
                 zoom: 11
             });
+            /*
+            if($scope.data && $scope.data.latitude && $scope.data.longitude){
 
-            if(this.detailsCtrl.data && this.detailsCtrl.data.latitude && this.detailsCtrl.data.longitude){
-                /*var geoPoint = new ymaps.Placemark([this.detailsCtrl.data.latitude, this.detailsCtrl.data.longitude], null,{
-                    preset: "islands#greenStretchyIcon"
-                });*/
-                var geoPoint = new ymaps.Placemark([this.detailsCtrl.data.longitude, this.detailsCtrl.data.latitude], null,{
+                var geoPoint = new ymaps.Placemark([$scope.data.longitude, $scope.data.latitude], null,{
                     preset: "islands#greenStretchyIcon"
                 });
 
                 myMap.geoObjects.add(geoPoint);
-            }//if
+            }//if*/
 		}
     }
 
