@@ -1,24 +1,24 @@
 ﻿<div id="mainDiv" ng-init="init()">
     <div id="shadowBox">
         <div id="topDiv">
-            <p id="p">{{ideaDetail.title}}</p>
+            <p id="p">{{data.title}}</p>
         </div>
         <!-- details -->
         <div id="dataDiv">
             <div id="lineDivsLeft">
                 <div id="divData">
                     <div id="tdCaption">Идея</div>
-                    <div id="tdData">{{detailsCtrl.data.title}}</div>
+                    <div id="tdData">{{data.title}}</div>
                 </div>
                 <!-- descr -->
                 <div id="divData">
                     <div id="tdCaption">Описание</div>
-                    <div id="tdData">{{detailsCtrl.data.description}}</div>
+                    <div id="tdData">{{data.description}}</div>
                 </div>
                 <!-- created -->
                 <div id="divData">
                     <div id="tdCaption">Создано</div>
-                    <div id="tdData">{{detailsCtrl.data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+                    <div id="tdData">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
                 </div>
             </div>
             <div id="lineDivsRight">
