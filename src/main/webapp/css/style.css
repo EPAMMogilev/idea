@@ -416,3 +416,16 @@ button {
     margin: 0 auto;
     display: block;
 }
+
+#imageLoader
+{
+    display:block;
+    height:0;
+    width:0;
+}
+
+#imgIdeaLogo
+{
+    max-height:100px;
+    max-width:100px;
+}
