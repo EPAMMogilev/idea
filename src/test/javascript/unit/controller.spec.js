@@ -57,7 +57,7 @@ describe('Add Idea controllers testing', function(){
 					detailsService:dServiceInvoke,
 					ideasFactory: myServiceInvoke,
 					mapGeoService: function(){},
-					ngImgur: function(){},
+					imgur: function(){},
 				});
 		};
 	}));
