@@ -18,19 +18,46 @@ describe('Add Idea controllers testing', function(){
 	//beforeEach(angular.mock.module('ideaApp'));
 
 
-	beforeEach(inject(function($state, $rootScope, $controller) {
+	beforeEach(inject(function($state, $rootScope, $controller, $window) {
 		addNewIdeaScope = $rootScope.$new();
 
 		state = $state;
+		window = $window;
 
 		//details
 		var vIdeaDetails = {
 				description: 'Some text'
 			};
 
+		//init serviceInvoke
+		serviceInvoke = function(aId){
+			return{
+				then: function(func1){
+					func1.apply(vIdeaDetails);
+				}
+			}
+		};
+
+		myServiceInvoke = {
+			getIdeaById: serviceInvoke
+		};
+
+		//details service invoke
+		dServiceInvoke = {
+			getCategories: function(){
+				return ['op1', 'op2'];
+			}
+		};
+
+
 		addNewIdeaTest = function(){
 				return $controller('addNewIdea', {
-					$scope:addNewIdeaScope
+					$scope:addNewIdeaScope,
+					$window:window,
+					detailsService:dServiceInvoke,
+					ideasFactory: myServiceInvoke,
+					mapGeoService: function(){},
+					ngImgur: function(){},
 				});
 		};
 	}));
