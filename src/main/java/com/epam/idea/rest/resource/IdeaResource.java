@@ -33,6 +33,8 @@ public class IdeaResource extends ResourceSupport {
 	private BigDecimal latitude;
 	private BigDecimal longitude;
 
+	private String imageUrl;
+
 	//@JsonView({View.Basic.class})
 	private int rating;
 
@@ -124,6 +126,14 @@ public class IdeaResource extends ResourceSupport {
 		this.longitude = longitude;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public Idea toIdea() {
 		final Idea idea = new Idea();
 		idea.setTitle(title);
@@ -134,6 +144,7 @@ public class IdeaResource extends ResourceSupport {
 				.collect(Collectors.toList()));
 		idea.setLatitude(latitude);
 		idea.setLongitude(longitude);
+		idea.setImageUrl(imageUrl);
 		return idea;
 	}
 }
