@@ -19,7 +19,7 @@
 				changeRating: '&'				
 			},
 			link: function(scope, element, attrs) {
-				scope.photo = 'images/photo.gif';
+				scope.photo = (scope.idea.imageUrl)?scope.idea.imageUrl:'images/photo.gif';
 				scope.details = function() {
 					var ideaDetail = {
 						id: scope.idea.id

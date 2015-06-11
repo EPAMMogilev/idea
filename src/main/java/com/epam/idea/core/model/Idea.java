@@ -58,6 +58,9 @@ public class Idea implements Serializable {
 	@Column(name = "LONGITUDE", nullable = true)
 	private BigDecimal longitude;
 
+	@Column(name = "IMAGE_URL", nullable = true)
+	private String imageUrl;
+
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User author;
@@ -166,6 +169,14 @@ public class Idea implements Serializable {
 
 	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	@PreUpdate

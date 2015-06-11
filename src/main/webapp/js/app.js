@@ -18,7 +18,8 @@ angular
 		'app.filters',
         'ideaFactories',
 		'app.controllers',
-		'yaMap'
+		'yaMap',
+		'ngImgur'
 	]);
 	
 	angular.module('app.directives', []); // set Directives
@@ -84,6 +85,7 @@ angular
                 'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as ctrl'}
             },/*
             onEnter:  function(){ ymaps.ready(mapInit)},*/
+            //onEnter:  function(){ initLoadFile()},
             parent: 'root'
         }).
         state('ideaUpdate', {

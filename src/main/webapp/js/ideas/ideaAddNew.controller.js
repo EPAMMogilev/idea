@@ -5,13 +5,16 @@
         .module('app.controllers')
         .controller('addNewIdea', addNewIdea);
 
-    addNewIdea.$inject = ['$scope', '$window', /*'restFactory', */'detailsService', 'ideasFactory', 'mapGeoService'];
+    addNewIdea.$inject = ['$scope', '$window', /*'restFactory', */'detailsService', 'ideasFactory', 'mapGeoService', 'imgur'];
 
-    function addNewIdea($scope, $window, /*restFactory, */detailsService, ideasFactory, mapGeoService) {
+    function addNewIdea($scope, $window, /*restFactory, */detailsService, ideasFactory, mapGeoService, imgur) {
 
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'Добавить';
         $scope.data = null;
+
+        $scope.imageExist = false;
+        $scope.imageFile;
 
         //maps data
 		$scope.center = [30.331014, 53.894617];
@@ -20,6 +23,20 @@
 
 		$scope.back = function(){
             $window.location.href = '#home';
+		};
+
+		$scope.chooseFile = function(){
+    		$('input[type=file]').click();
+
+			$('input[type=file]').change(function() {
+				//read file
+				var input = document.getElementById('imageLoader');
+
+				if(input && input.files && input.files[0]){
+					$scope.imageFile = input.files[0];
+					$scope.imageExist = true;
+				}//if
+			});
 		};
 
 		$scope.doWork = function(data){
@@ -35,29 +52,46 @@
 				);
 			}//for
 
-		    var request = {
-		        id:null,
-		        description:data.description,
-		        title:data.title,
-		        createdAt:new Date().getTime(),
-		        lastModifiedAt:new Date().getTime(),
-		        tags: tags,
-		        latitude: (ideaCoords)?ideaCoords[1]:0,
-		        longitude: (ideaCoords)?ideaCoords[0]:0
-		    };
 
-            ideasFactory.insertIdea(request).then(
-			   //success
-			   function( value )
-			   {
-				$window.location.href = '#home';
-			   },
-			   //error
-			   function( error ){
-				alert("Ошибка создания идеии: " + error.statusText);
-			   }
-			 );
+			var request = {
+				id:null,
+				description:data.description,
+				title:data.title,
+				createdAt:new Date().getTime(),
+				lastModifiedAt:new Date().getTime(),
+				tags: tags,
+				latitude: (ideaCoords)?ideaCoords[1]:0,
+				longitude: (ideaCoords)?ideaCoords[0]:0
+			};
+
+			if($scope.imageExist == true){
+				//load file to imgur
+				imgur.setAPIKey('Client-ID c62cfae02efe4c0');
+				imgur.upload($scope.imageFile).then(function then(model) {
+						console.log('Your adorable cat be here: ' + model.link);
+
+						request.imageUrl = model.link;
+
+						$scope.insertIdea(request);
+				});
+			}else{
+				$scope.insertIdea(request);
+			}//if..else..
 		};
+
+		$scope.insertIdea = function(idea){
+				ideasFactory.insertIdea(idea).then(
+				   //success
+				   function( value )
+				   {
+					$window.location.href = '#home';
+				   },
+				   //error
+				   function( error ){
+					alert("Ошибка создания идеии: " + error.statusText);
+				   }
+				 );
+		};//insertIdea
 
 		$scope.afterInit = function($map){
 			map = $map;
