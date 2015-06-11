@@ -31,6 +31,11 @@
 
                                             mapGeoService.setGeoCoordsSimpleMap($scope.myMap, geoPoints);
                                         }//if
+
+                                        //set image
+                                        if($scope.data != null && $scope.data.imageUrl == null){
+                                            $scope.data.imageUrl = "images/300x300.png";
+                                        }//if
                                        }
                                      );
 
