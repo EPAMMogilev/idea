@@ -52,38 +52,29 @@
 				);
 			}//for
 
+
+			var request = {
+				id:null,
+				description:data.description,
+				title:data.title,
+				createdAt:new Date().getTime(),
+				lastModifiedAt:new Date().getTime(),
+				tags: tags,
+				latitude: (ideaCoords)?ideaCoords[1]:0,
+				longitude: (ideaCoords)?ideaCoords[0]:0
+			};
+
 			if($scope.imageExist == true){
 				//load file to imgur
 				imgur.setAPIKey('Client-ID c62cfae02efe4c0');
 				imgur.upload($scope.imageFile).then(function then(model) {
 						console.log('Your adorable cat be here: ' + model.link);
 
-						var request = {
-							id:null,
-							description:data.description,
-							title:data.title,
-							createdAt:new Date().getTime(),
-							lastModifiedAt:new Date().getTime(),
-							tags: tags,
-							latitude: (ideaCoords)?ideaCoords[1]:0,
-							longitude: (ideaCoords)?ideaCoords[0]:0,
-							imageUrl: model.link
-						};
+						request.imageUrl = model.link;
 
 						$scope.insertIdea(request);
 				});
 			}else{
-				var request = {
-					id:null,
-					description:data.description,
-					title:data.title,
-					createdAt:new Date().getTime(),
-					lastModifiedAt:new Date().getTime(),
-					tags: tags,
-					latitude: (ideaCoords)?ideaCoords[1]:0,
-					longitude: (ideaCoords)?ideaCoords[0]:0
-				};
-
 				$scope.insertIdea(request);
 			}//if..else..
 		};
