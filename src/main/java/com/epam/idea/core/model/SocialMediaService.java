@@ -3,10 +3,10 @@ package com.epam.idea.core.model;
 /**
  * Created by Ihar_Niakhlebau on 08-Jun-15.
  */
-public enum SocialNetwork {
+public enum SocialMediaService {
 	NONE(""), GOOGLE("GOOGLE"), FACEBOOK("FACEBOOK"), VK("VK");
 
-	SocialNetwork(String socialName) {
+	SocialMediaService(String socialName) {
 		this.socialName = socialName;
 	}
 

@@ -1,6 +1,7 @@
 package com.epam.idea.core.service;
 
 import com.epam.idea.core.model.User;
+import com.epam.idea.core.social.RegistrationForm;
 
 public interface UserService extends BaseService<User, Long> {
 
@@ -24,4 +25,8 @@ public interface UserService extends BaseService<User, Long> {
 	User update(long userId, User source);
 
 	User findUserByEmailAndPassword(String email, String password);
+
+	User findUserByEmail(String email);
+
+	User registerNewUserAccount(RegistrationForm userAccountData);
 }

@@ -4,38 +4,33 @@
         .module('app.controllers')
         .controller('sessionCtrl', sessionCtrl);
 
-    sessionCtrl.$inject = ['sessionService', 'sessionFactory', '$location'];
+    sessionCtrl.$inject = ['$rootScope', '$http'];
 
-    function sessionCtrl(sessionService, sessionFactory, $location) {
+    function sessionCtrl($rootScope, $http) {
 
          var vm = this;
-//      vm.currentUser= $rootScope.globals.currentUser;
-//      vm.authenticated = false;
-//      if($rootScope.globals.currentUser){
-//         vm.authenticated = true;}
 
-     
-         if(sessionService.getSessionId() && sessionService.getSessionId() != ''){
-             vm.email =  sessionService.getUser().email;
-             vm.authenticated = true;
-         }
+                 var authenticate = function(callback) {
+                     $http.get('user').success(function(data) {
 
+                       if (data.name) {
+                       console.log(data.name);
+                         $rootScope.authenticated = true;
+                         $rootScope.currentUser = data;
+                       } else {
 
-         vm.logout = function () {
-            sessionFactory.deleteSession(sessionService.getSessionId()).then(function (value) {
-                sessionService.setSessionId('');
-                sessionService.setUser('');
-                vm.authenticated = false;
-                $location.path("home");
-            }, function(error) {
-                console.log(error); alert(error);
-                sessionService.setSessionId('');
-                sessionService.setUser('');
-                vm.authenticated = false;
-                $location.path("home");
-           });
-         };
+                         $rootScope.authenticated = false;
+                       }
+                       callback && callback();
+                     }).error(function() {
+                       $rootScope.authenticated = false;
+                       callback && callback();
+                     });
 
+                   }
+
+                   console.log("hello");;
+                   authenticate();
     }
 
 

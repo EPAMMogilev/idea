@@ -1,6 +1,7 @@
 package com.epam.idea.core.model;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable {
+public class User implements Serializable, Principal {
 
 	public static final int MIN_LENGTH_USERNAME = 1;
 	public static final int MAX_LENGTH_USERNAME = 20;
@@ -64,13 +65,13 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "AUTH_SOCIAL")
-	private SocialNetwork authSocial;
+	private SocialMediaService socialMediaService;
 
 	@Column(name = "SOCIAL_ID")
 	private String socialId;
 
 	public User() {
-		this.authSocial = SocialNetwork.NONE;
+		this.socialMediaService = SocialMediaService.NONE;
 		this.ideas = new ArrayList<>();
 		this.comments = new ArrayList<>();
 		this.roles = new ArrayList<>();
@@ -150,12 +151,12 @@ public class User implements Serializable {
 		this.roles.add(role);
 	}
 
-	public SocialNetwork getAuthSocial() {
-		return authSocial;
+	public SocialMediaService getSocialMediaService() {
+		return socialMediaService;
 	}
 
-	public void setAuthSocial(SocialNetwork authSocial) {
-		this.authSocial = authSocial;
+	public void setSocialMediaService(SocialMediaService authSocial) {
+		this.socialMediaService = authSocial;
 	}
 
 	public String getSocialId() {
@@ -181,5 +182,10 @@ public class User implements Serializable {
 				", password='" + password + '\'' +
 				", creationTime=" + creationTime +
 				'}';
+	}
+
+	@Override
+	public String getName() {
+		return email;
 	}
 }

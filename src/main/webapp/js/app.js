@@ -33,8 +33,8 @@ angular
          .config(config)
          .run(run);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    function config($stateProvider, $urlRouterProvider) {
+    config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
+    function config($stateProvider, $urlRouterProvider, $httpProvider) {
 
         $urlRouterProvider.otherwise('/home');
 
@@ -105,7 +105,9 @@ angular
             onEnter:  function(){ ymaps.ready(mapInit)},
             parent: 'root'
         });
+        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         }
+
 
 
        run.$inject = ['$rootScope', '$location', 'sessionService'];

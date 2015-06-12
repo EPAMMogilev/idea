@@ -5,52 +5,44 @@
         .module('app.controllers')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', 'sessionFactory', '$location', 'sessionService', '$rootScope'];
-    function LoginController($scope, sessionFactory, $location, sessionService, $rootScope) {
-        var vm = this;
+    LoginController.$inject = ['$scope', '$http', '$location', '$rootScope'];
+    function LoginController($scope, $http, $location, $rootScope) {
+     var vm = this;
+     vm.login = login;
+        var authenticate = function(credentials, callback) {
+            var headers = credentials ? {authorization : "Basic "
+                + btoa(credentials.email + ":" + credentials.password)
+            } : {};
+            $http.get('user', {headers : headers}).success(function(data) {
+            
+              if (data.name) {
+                $rootScope.authenticated = true;
+                $rootScope.currentUser = data;
+              } else {
+               
+                $rootScope.authenticated = false;
+              }
+              callback && callback();
+            }).error(function() {
+              $rootScope.authenticated = false;
+              callback && callback();
+            });
 
-        vm.user = {};
-        vm.user.email = '';
-        vm.user.password = '';
-//        alert($rootScope.previousPage);
-        vm.loginUser = loginUser;
+          }
 
-        function loginUser(user) {
-            vm.resetError();
-
-           sessionFactory.createSession(vm.user).then(function (session) {
-
-                if(session.id===null) {
-//                    vm.setError(login.status);
-
-                    return;
+          authenticate();
+          vm.credentials = {};
+          function login() {
+              authenticate(vm.credentials, function() {
+                if ($rootScope.authenticated) {
+                   $location.path("home");
+                  vm.error = false;
+                } else {
+                  $location.path("login");
+                  vm.error = true;
                 }
-
-                sessionService.setSessionId(session.id);
-                sessionService.setUser(session.user);
-
-                vm.user.email = '';
-                vm.user.password = '';
-
-                $location.path("main");
-
-                document.location.reload(true);
-
-           }, function(error) {
-                vm.setError('Invalid user/password combination');
-           });
-        }
-
-        vm.resetError = function() {
-            vm.error = false;
-            vm.errorMessage = '';
-        }
-
-        vm.setError = function(message) {
-            vm.error = true;
-            vm.errorMessage = message;
-            vm.SessionId='';
-        }
+              });
+          };
     }
 
 })();
