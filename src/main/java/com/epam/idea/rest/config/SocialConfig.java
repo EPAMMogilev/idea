@@ -48,19 +48,6 @@ public class SocialConfig implements SocialConfigurer {
 		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
 	}
 
-//	public ConnectionRepository getConnectionRepository() {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		if (authentication == null) {
-//			throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
-//		}
-//		return usersConnectionRepository().createConnectionRepository(authentication.getName());
-//	}
-//
-//	public UsersConnectionRepository usersConnectionRepository() {
-//		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(),
-//				textEncryptor);
-//	}
-
 	@Override
 	public UserIdSource getUserIdSource() {
 		return new AuthenticationNameUserIdSource();

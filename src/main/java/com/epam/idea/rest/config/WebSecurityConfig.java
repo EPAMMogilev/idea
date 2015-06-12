@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.httpBasic().
 			and()
 				.authorizeRequests()
-				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/app.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*")
+				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/app.html", "/pages/details.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*")
 				.permitAll()
 				.anyRequest().authenticated()
 			.and()
@@ -55,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.apply(new SpringSocialConfigurer())
 			.and()
-				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
+				.csrf().disable();
+//				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 
 	}
 

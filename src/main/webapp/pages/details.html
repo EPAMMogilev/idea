@@ -1,28 +1,28 @@
 ﻿<div id="mainDiv" ng-init="init()">
     <div id="shadowBox">
         <div id="topDiv">
-            <p id="p">{{ideaDetail.title}}</p>
+            <p id="p">#{{data.id}} - {{data.title}}</p>
         </div>
         <!-- details -->
         <div id="dataDiv">
             <div id="lineDivsLeft">
                 <div id="divData">
                     <div id="tdCaption">Идея</div>
-                    <div id="tdData">{{detailsCtrl.data.title}}</div>
+                    <div id="tdData">{{data.title}}</div>
                 </div>
                 <!-- descr -->
                 <div id="divData">
                     <div id="tdCaption">Описание</div>
-                    <div id="tdData">{{detailsCtrl.data.description}}</div>
+                    <div id="tdData">{{data.description}}</div>
                 </div>
                 <!-- created -->
                 <div id="divData">
                     <div id="tdCaption">Создано</div>
-                    <div id="tdData">{{detailsCtrl.data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+                    <div id="tdData">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
                 </div>
             </div>
             <div id="lineDivsRight">
-                <img id="imgDetails" src="images/300x300.png" class="img-rounded" id="imgBlock">
+                <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
             </div>
         </div>
 
@@ -50,7 +50,7 @@
 
     <!-- map for this idea -->
     <div id="shadowBox">
-        <div id="map"></div>
+        <div id="map" class="mapDetails"></div>
     </div>
 
     <!-- suggestions for this idea -->

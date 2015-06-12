@@ -101,27 +101,30 @@ button {
 }
 
 .newIdeas {
-    width: 29%;
+    width: 450px;
     height:auto;
     display:inline-block;
     padding-right: 15px;
     vertical-align: top;
     padding-right: 15px;
+    padding-left: 15px;
     min-width: 450px;
 }
 
 .newIdeas ul{
     list-style-type: none;
     margin-bottom: 10px;
+    border-bottom: 1px solid #DDD;
 }
 
 .newIdeas .font-cenralbig {
   text-align: center;
   font-size: 30;
+  width: 20px;
 }
 
 .ideas {
-    width: 29%;
+    width: 450px;
     height:auto;
     display:inline-block;
     padding-right: 15px;
@@ -137,11 +140,12 @@ button {
 
 .idea {
    padding: 10px; 
-   width:100%;
+   width: 450px;
+   height: 150px;
    border-top: 1px solid #ddd;
    overflow:hidden;
    position: relative;
-   min-width: 500px;
+   min-width: 450px;
 }
 
 .idea .left {
@@ -149,7 +153,8 @@ button {
 }
 
 .middle{
-	width: 65%;
+	width: 250px;
+	vertical-align: middle;
 	height: 100% auto;
 	min-height: 135px;
     display:inline-block;
@@ -162,6 +167,7 @@ button {
 	text-align: center;
 
     vertical-align: middle;
+    width: 80px;
 }
 
 .left img{
@@ -178,7 +184,8 @@ button {
  }
 
 .right {
-	/*width: 9%;*/
+	width: 350px;
+	height: 100%;
     display:inline-block;
 	text-align: center;
     vertical-align: middle;
@@ -187,10 +194,11 @@ button {
 .ideas .font-cenralbig {
   text-align: center;
   font-size: 30;
+  width: 50px;
 }
  
  .ideas-container >.right {
-   width:40%; 
+   width:30%;
    float:right;
    overflow:hidden;
  }
@@ -265,6 +273,7 @@ button {
   max-height: 45px;
   /*text-align: right;*/
   text-align: center;
+  font-size: 12px;
 }
 
 .vote:hover {
@@ -287,13 +296,22 @@ button {
   padding: 15px;
 }
 
-#map{
-width: 100%;
-height: 100%;
-/*height: 400px;*/
-display: block;
+.mapMainPage{
+    width: 620px;
+    height: 550px;
+    /*height: 400px;*/
+    display: inline-block;
+    vertical-align: top;
+    min-width:350px;
+    padding-left: 50px;
 }
 
+.map{
+    width: 100%;
+    height: 100%;
+    /*height: 400px;*/
+    display: block;
+}
 
 .container {
     width: 100%;
@@ -373,7 +391,7 @@ display: block;
 }
 .addIdeaButton:hover {
 	/*background-color:#378de5;*/
-	background-color:#60B6F1;
+	background-color:#60B5F2;
 }
 .addIdeaButton:active {
 	position:relative;
@@ -388,6 +406,8 @@ display: block;
 .rating
 {
     text-align:center;
+    font-size: 23px;
+
 }
 
 .btn-google-plus {
@@ -400,3 +420,25 @@ display: block;
   color: #fff;
   background-color: #cb3927;
 }
+
+#mainBlock
+{
+    width:1550px;
+    min-width:1550px;
+    margin: 0 auto;
+    display: block;
+}
+
+#imageLoader
+{
+    display:block;
+    height:0;
+    width:0;
+}
+
+#imgIdeaLogo
+{
+    max-height:100px;
+    max-width:100px;
+}
+

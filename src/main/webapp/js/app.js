@@ -17,7 +17,9 @@ angular
 		'app.services',
 		'app.filters',
         'ideaFactories',
-		'app.controllers'
+		'app.controllers',
+		'yaMap',
+		'ngImgur'
 	]);
 	
 	angular.module('app.directives', []); // set Directives
@@ -47,8 +49,8 @@ angular
             url: '/home',
             views: {
                 'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
-            },
-            onEnter:  function(){ ymaps.ready(mapInit)},
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         }).
         state('login', {
@@ -81,8 +83,9 @@ angular
             url: '/ideaAddNew',
             views: {
                 'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as ctrl'}
-            },
-            onEnter:  function(){ ymaps.ready(mapInit)},
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
+            //onEnter:  function(){ initLoadFile()},
             parent: 'root'
         }).
         state('ideaUpdate', {
@@ -101,11 +104,11 @@ angular
                           }]
                     }
                 }
-            },
-            onEnter:  function(){ ymaps.ready(mapInit)},
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         });
-        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
         }
 
 

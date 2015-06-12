@@ -31,13 +31,20 @@
         </div>
 
         <div id="bottomButtonsBar">
-            <button class="btn btn-default">Загрузить файл</button> <b>или</b> Перетянуть свой файл
+            <button class="btn btn-default" ng-click="chooseFile()">Загрузить файл</button> <b>или</b> Перетянуть свой файл
+            <p id="pFileName"></p>
+            <input type="file" id="imageLoader"/>
         </div>
     </div>
 
     <!-- map for this idea -->
     <div id="shadowBox">
-        <div id="map"></div>
+        <!--div id="map" class="mapDetails"></div-->
+        <ya-map ya-zoom="11" ya-center="{{center}}" class="mapDetails" ya-controls="smallMapDefaultSet"  ya-after-init="afterInit($target)" ya-event-click="mapClick($event)">
+            <ya-toolbar ya-name="zoomControl"></ya-toolbar>
+            <ya-toolbar ya-name="scaleLine"></ya-toolbar>
+            <ya-toolbar ya-name="typeSelector"></ya-toolbar>
+        </ya-map>
     </div>
 
     <div id="shadowBox">

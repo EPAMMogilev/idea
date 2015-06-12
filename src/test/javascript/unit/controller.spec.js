@@ -18,19 +18,46 @@ describe('Add Idea controllers testing', function(){
 	//beforeEach(angular.mock.module('ideaApp'));
 
 
-	beforeEach(inject(function($state, $rootScope, $controller) {
+	beforeEach(inject(function($state, $rootScope, $controller, $window) {
 		addNewIdeaScope = $rootScope.$new();
 
 		state = $state;
+		window = $window;
 
 		//details
 		var vIdeaDetails = {
 				description: 'Some text'
 			};
 
+		//init serviceInvoke
+		serviceInvoke = function(aId){
+			return{
+				then: function(func1){
+					func1.apply(vIdeaDetails);
+				}
+			}
+		};
+
+		myServiceInvoke = {
+			getIdeaById: serviceInvoke
+		};
+
+		//details service invoke
+		dServiceInvoke = {
+			getCategories: function(){
+				return ['op1', 'op2'];
+			}
+		};
+
+
 		addNewIdeaTest = function(){
 				return $controller('addNewIdea', {
-					$scope:addNewIdeaScope
+					$scope:addNewIdeaScope,
+					$window:window,
+					detailsService:dServiceInvoke,
+					ideasFactory: myServiceInvoke,
+					mapGeoService: function(){},
+					imgur: function(){},
 				});
 		};
 	}));
@@ -125,13 +152,17 @@ describe('Idea details controllers testing', function(){
 	//controllers;
 	var detailsIdeaTest;
 
+	//service mock
+	var serviceInvoke;
+	var myServiceInvoke;
+
 	//scopes
 	var detailsIdeaScope;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
 	beforeEach(angular.mock.module('app.services'));
-	beforeEach(angular.mock.module('ideaFactories'));
+	//beforeEach(angular.mock.module('ideasFactory'));
 	//beforeEach(angular.mock.module('ideaApp'));
 
 
@@ -141,13 +172,29 @@ describe('Idea details controllers testing', function(){
 		state = $state;
 
 		var vIdeaDetails = {
+				id:1,
 				description: 'Some text'
 			};
+
+		//init serviceInvoke
+		serviceInvoke = function(aId){
+			return{
+				then: function(func1){
+					func1.apply(vIdeaDetails);
+				}
+			}
+		};
+
+		myServiceInvoke = {
+			getIdeaById: serviceInvoke
+		};
+
 		//detailsCtrl
 		detailsIdeaTest  = function(){
 				return $controller('detailsCtrl', {
 					$scope:detailsIdeaScope,
 					$state:state,
+					ideasFactory: myServiceInvoke,
 					ideaDetails: vIdeaDetails
 				});
 		};
@@ -165,7 +212,8 @@ describe('Idea details controllers testing', function(){
 		var ctrl = detailsIdeaTest();
 		expect(ctrl).toBeDefined();
 		// Make our assertions
-		expect(ctrl.data).toBeDefined();
+		//expect(data).toBeDefined();
+		expect(detailsIdeaScope.data).toBeUndefined();
 	});
 
 });

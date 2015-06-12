@@ -19,16 +19,10 @@
 				changeRating: '&'				
 			},
 			link: function(scope, element, attrs) {
-				scope.photo = 'images/photo.gif';
+				scope.photo = (scope.idea.imageUrl)?scope.idea.imageUrl:'images/photo.gif';
 				scope.details = function() {
 					var ideaDetail = {
-						id: scope.idea.id,
-						title:scope.idea.title,
-						description:scope.idea.description,
-						createdAt:scope.idea.createdAt,
-					    	latitude:scope.idea.latitude,
-					    	longitude:scope.idea.longitude
-
+						id: scope.idea.id
 					};
 					$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
 				};

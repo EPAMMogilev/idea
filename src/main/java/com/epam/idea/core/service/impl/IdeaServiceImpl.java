@@ -10,6 +10,7 @@ import com.epam.idea.core.repository.IdeaRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
+import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class IdeaServiceImpl implements IdeaService {
+
+	private Log log = new Log(IdeaServiceImpl.class);
 
 	@Autowired
 	private IdeaRepository ideaRepository;
@@ -67,7 +70,8 @@ public class IdeaServiceImpl implements IdeaService {
 			fld.setLong(author, 1L);
 			fld.setAccessible(false);
 		}catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			log.logError(e);
 		}
 
 		persisted.setAuthor(author);
