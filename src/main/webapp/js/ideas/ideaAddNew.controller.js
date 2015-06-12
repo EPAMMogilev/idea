@@ -42,6 +42,10 @@
 			  });
 		};//openModalWindow
 
+		$scope.closeModalWindow = function(){
+			$scope.modalInstance.dismiss('cancel');
+		}//closeModalWindow
+
 		$scope.chooseFile = function(){
     		$('input[type=file]').click();
 
@@ -62,9 +66,8 @@
 
 							$scope.imageUrl = model.link;
 
-							if($scope.modalInstance.showModal){
-								$scope.modalInstance.showModal = false;
-							}//if
+							//hide window #modalWindow
+							$scope.closeModalWindow();
 					});
 				}//if
 			});
