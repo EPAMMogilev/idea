@@ -3,6 +3,7 @@ package com.epam.idea.rest.config;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.impl.UserDetailsServiceImpl;
 import com.epam.idea.core.service.impl.SocialUserDetailsServiceImpl;
+import com.epam.idea.rest.resource.filters.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -38,22 +40,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-				.formLogin().loginProcessingUrl("/home/")
-//				.loginPage("/home/")
+				.formLogin()//.loginProcessingUrl("/pages/login.html")
+				.loginPage("/pages/login.html")
 				.permitAll()
-				.and()
-				.httpBasic().and()
+			.and()
+				.httpBasic().
+			and()
 				.authorizeRequests()
-//				.antMatchers("/index.html", "/login.html","/home.html","/user","/","/bower_components/**", "/js/**", "").permitAll()
-				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/app.html", "/fonts/**", "/images/**", "/api/**", "/gglogin", "/auth/**").permitAll()
-//				.anyRequest().authenticated()
-//				.and()
-//				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);;
-				.and()
-//				.logout().logoutUrl("/logout");
-				.logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.and()
-				.apply(new SpringSocialConfigurer());
+				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/app.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*")
+				.permitAll()
+				.anyRequest().authenticated()
+			.and()
+				.logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+			.and()
+				.apply(new SpringSocialConfigurer())
+			.and()
+				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 
 	}
 

@@ -25,7 +25,7 @@ public class RegistrationController {
 	ProviderSignInUtils providerSignInUtils;
 
 	@Autowired
-	private UserService service;
+	private UserService userService;
 
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signupForm(WebRequest request) {
@@ -69,13 +69,13 @@ public class RegistrationController {
 
 	private User createUserAccount(RegistrationForm userAccountData) {
 		User registered = null;
-		registered = service.registerNewUserAccount(userAccountData);
+		registered = userService.registerNewUserAccount(userAccountData);
 		return registered;
 	}
 
 	private User findUserAccount(RegistrationForm userAccountData) {
 		User registered = null;
-		registered = service.findUserByEmail(userAccountData.getEmail());
+		registered = userService.findUserByEmail(userAccountData.getEmail());
 		return registered;
 	}
 

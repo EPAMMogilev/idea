@@ -54,7 +54,7 @@ angular
         state('login', {
             url: '/login',
             views: {
-                'main@': { templateUrl: 'pages/login.html', controller:'LoginController as vm' }
+                'main@': { templateUrl: 'pages/login.html'}
             },
             parent: 'root'
         }).
@@ -116,7 +116,7 @@ angular
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
                    $rootScope.previousPage = current;
-                   if (sessionService.getSessionId() == '' || sessionService.getSessionId() == null) {
+                   if ($rootScope.authenticated !== true) {
                        restrictedPage =  $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
                        if (restrictedPage) {
                            $rootScope.previousPage = next;
