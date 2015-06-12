@@ -54,10 +54,13 @@ describe('Add Idea controllers testing', function(){
 				return $controller('addNewIdea', {
 					$scope:addNewIdeaScope,
 					$window:window,
+					$modal:function(){},
 					detailsService:dServiceInvoke,
 					ideasFactory: myServiceInvoke,
 					mapGeoService: function(){},
 					imgur: function(){},
+					dialogs: function(){}/*,
+					loadModalWindow: function(){}*/
 				});
 		};
 	}));
