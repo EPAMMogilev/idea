@@ -65,12 +65,6 @@ CREATE TABLE `COMMENT` (
   , CONSTRAINT `COMMENTS_fk2` FOREIGN KEY (`IDEA_ID`) REFERENCES IDEA(`ID`)
 );
 
-CREATE TABLE `USER_SESSION` (
-  `ID` VARCHAR(40) NOT NULL
-  , `USER_ID` BIGINT NOT NULL
-  , `CREATION_TIME` TIMESTAMP NOT NULL
-);
-
 create table UserConnection (userId varchar(255) not null,
     providerId varchar(255) not null,
     providerUserId varchar(255),
