@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div id="bottomButtonsBar">
+        <div id="bottomButtonsBar" ngf-drop ng-model="files" class="drop-box"  ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="false" accept="image/*">
             <button class="btn btn-default" ng-click="chooseFile()">Загрузить файл</button> <b>или</b> Перетянуть свой файл
             <p id="pFileName"></p>
             <input type="file" id="imageLoader"/>
