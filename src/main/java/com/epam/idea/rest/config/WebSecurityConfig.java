@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -55,9 +57,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.apply(new SpringSocialConfigurer())
 			.and()
-				.csrf().disable();
-//				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
+				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+		.csrf().csrfTokenRepository(csrfTokenRepository());
 
+	}
+
+	private CsrfTokenRepository csrfTokenRepository() {
+		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+		repository.setHeaderName("X-XSRF-TOKEN");
+		return repository;
 	}
 
 	@Bean

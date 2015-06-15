@@ -11,7 +11,6 @@ import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
 import com.epam.idea.rest.resource.CommentResource;
 import com.epam.idea.rest.resource.IdeaResource;
-import com.epam.idea.rest.resource.UserSessionResource;
 import com.epam.idea.rest.resource.UserResource;
 import com.epam.idea.rest.resource.asm.CommentResourceAsm;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
