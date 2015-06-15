@@ -1,6 +1,5 @@
 package com.epam.idea.rest.config;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,15 @@ import org.springframework.social.security.AuthenticationNameUserIdSource;
 @EnableSocial
 public class SocialConfig implements SocialConfigurer {
 
-	public static String clientId = "133307390078-irhbk08u5omsjfra8qorte4qgkqsvuuv.apps.googleusercontent.com";
-	public static String clientSecret = "_Ai9_dc-5en7Noiyf6IqKUMR";
+	public static String googleClientId = "133307390078-irhbk08u5omsjfra8qorte4qgkqsvuuv.apps.googleusercontent.com";
+	public static String googleClientSecret = "_Ai9_dc-5en7Noiyf6IqKUMR";
 
 	@Autowired
 	private DataSource dataSource;
 
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-		GoogleConnectionFactory googleConnectionFactory = new GoogleConnectionFactory(clientId,clientSecret);
+		GoogleConnectionFactory googleConnectionFactory = new GoogleConnectionFactory(googleClientId, googleClientSecret);
 		googleConnectionFactory.setScope("https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email");
 		cfConfig.addConnectionFactory(googleConnectionFactory);
 

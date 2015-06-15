@@ -3,7 +3,6 @@ package com.epam.idea.rest.controller;
 import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.service.UserService;
-import com.epam.idea.core.social.RegistrationForm;
 import com.epam.idea.core.social.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
@@ -34,50 +33,56 @@ public class RegistrationController {
 	}
 
 	@RequestMapping(value = "/user/register", method = RequestMethod.GET)
-	public String showRegistrationForm(WebRequest request, Model model) {
+	public String loginOrRegistrationNewUser(WebRequest request) {
 		Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 
-		RegistrationForm registration = createRegistrationDTO(connection);
+		User registration = createUserDTO(connection);
 
-		User registered = findUserAccount(registration);
+		User registered = userService.findUserOrRegisterNewUserAccount(registration);
 
-		if (registered == null) {
-			registered = createUserAccount(registration);
-		}
+//		User registered = findUserAccount(registration);
+//
+//		if (registered == null) {
+//			registered = createUserAccount(registration);
+//		}
 		SecurityUtil.logInUser(registered);
 		providerSignInUtils.doPostSignUp(registered.getEmail(), request);
 
 		return "redirect:/";
 	}
+//
+//	private RegistrationForm createRegistrationDTO(Connection<?> connection) {
+//		RegistrationForm dto = new RegistrationForm();
+//
+//		if (connection != null) {
+//			UserProfile socialMediaProfile = connection.fetchUserProfile();
+//			dto.setEmail(socialMediaProfile.getEmail());
+//			dto.setFirstName(socialMediaProfile.getFirstName());
+//			dto.setLastName(socialMediaProfile.getLastName());
+//			dto.setFullName(socialMediaProfile.getUsername());
+//			ConnectionKey providerKey = connection.getKey();
+//			dto.setSignInProvider(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
+//		}
+//
+//		return dto;
+//	}
 
-	private RegistrationForm createRegistrationDTO(Connection<?> connection) {
-		RegistrationForm dto = new RegistrationForm();
+	private User createUserDTO(Connection<?> connection) {
 
+		User dto = new User();
 		if (connection != null) {
 			UserProfile socialMediaProfile = connection.fetchUserProfile();
 			dto.setEmail(socialMediaProfile.getEmail());
-			dto.setFirstName(socialMediaProfile.getFirstName());
-			dto.setLastName(socialMediaProfile.getLastName());
-			dto.setFullName(socialMediaProfile.getUsername());
+			dto.setUsername(socialMediaProfile.getFirstName() + " " + socialMediaProfile.getLastName());
 			ConnectionKey providerKey = connection.getKey();
-			dto.setSignInProvider(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
+			dto.setSocialMediaService(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
 		}
 
 		return dto;
 	}
 
 
-	private User createUserAccount(RegistrationForm userAccountData) {
-		User registered = null;
-		registered = userService.registerNewUserAccount(userAccountData);
-		return registered;
-	}
 
-	private User findUserAccount(RegistrationForm userAccountData) {
-		User registered = null;
-		registered = userService.findUserByEmail(userAccountData.getEmail());
-		return registered;
-	}
 
 
 }

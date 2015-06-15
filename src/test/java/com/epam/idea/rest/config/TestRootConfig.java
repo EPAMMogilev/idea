@@ -7,6 +7,7 @@ import com.epam.idea.core.service.UserService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 
 @Configuration
 public class TestRootConfig {
@@ -29,6 +30,11 @@ public class TestRootConfig {
 	@Bean
 	public CommentService commentServiceMock() {
 		return Mockito.mock(CommentService.class);
+	}
+
+	@Bean
+	public ProviderSignInUtils providerSignInUtils() {
+		return Mockito.mock(ProviderSignInUtils.class);
 	}
 
 }

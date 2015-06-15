@@ -6,7 +6,6 @@ import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.UserService;
 import com.epam.idea.core.service.exception.UserNotFoundException;
-import com.epam.idea.core.social.RegistrationForm;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,22 +68,40 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User registerNewUserAccount(RegistrationForm userAccountData) {
-//		if (emailExist(userAccountData.getEmail())) {
-//			throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
-//		}
+	public User findUserOrRegisterNewUserAccount(User newUser) {
 
-		User user = new User();
-		user.setEmail(userAccountData.getEmail());
-		user.setUsername(userAccountData.getFirstName() + " " + userAccountData.getLastName());
-		user.setPassword(userAccountData.getPassword());
+		User registered = findUserAccount(newUser);
 
-		if (userAccountData.isSocialSignIn()) {
-			user.setSocialMediaService(userAccountData.getSignInProvider());
+		if (registered == null) {
+			registered = save(newUser);
 		}
 
-		return userRepository.save(user);
+		return registered;
 	}
+
+	private User findUserAccount(User userAccountData) {
+		User registered = null;
+		registered = findUserByEmail(userAccountData.getEmail());
+		return registered;
+	}
+
+//	@Override
+//	public User registerNewUserAccount(RegistrationForm userAccountData) {
+////		if (emailExist(userAccountData.getEmail())) {
+////			throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
+////		}
+//
+//		User user = new User();
+//		user.setEmail(userAccountData.getEmail());
+//		user.setUsername(userAccountData.getFirstName() + " " + userAccountData.getLastName());
+//		user.setPassword(userAccountData.getPassword());
+//
+//		if (userAccountData.isSocialSignIn()) {
+//			user.setSocialMediaService(userAccountData.getSignInProvider());
+//		}
+//
+//		return userRepository.save(user);
+//	}
 
 //	private boolean emailExist(String email) {
 //		User user = userRepository.findByEmail(email);

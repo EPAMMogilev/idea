@@ -94,7 +94,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void shouldDeleteUserAndReturnIt() throws Exception {
+	public void shouldDeleteUseByIdrAndReturnIt() throws Exception {
 		//Given:
 		User deletedUser = TestUserBuilder.aUser().build();
 		given(this.userRepositoryMock.findOne(anyLong())).willReturn(Optional.of(deletedUser));
@@ -110,7 +110,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionWhenTryDeleteUserWhichDoesNotExist() throws Exception {
+	public void shouldThrowExceptionWhenTryDeleteUserByIdWhichDoesNotExist() throws Exception {
 		//Given:
 		long fakeUserId = 2L;
 		given(this.userRepositoryMock.findOne(eq(fakeUserId))).willReturn(Optional.empty());
@@ -125,6 +125,19 @@ public class UserServiceImplTest {
 			verify(this.userRepositoryMock, times(1)).findOne(fakeUserId);
 			verifyNoMoreInteractions(this.userRepositoryMock);
 		}
+	}
+
+	@Test
+	public void shouldDeleteUser() throws Exception {
+		//Given:
+		User deletedUser = TestUserBuilder.aUser().build();
+
+		//When:
+		this.sut.delete(deletedUser);
+
+		//Then:
+		verify(this.userRepositoryMock, times(1)).delete(deletedUser);
+		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
 
 	@Test
@@ -230,5 +243,76 @@ public class UserServiceImplTest {
 		}
 	}
 
+	@Test
+	public void shouldReturnFoundUserByEmail() throws Exception {
+		//Given:
+		User found = TestUserBuilder.aUser().build();
+		given(this.userRepositoryMock.findUserByEmail(eq(found.getEmail()))).willReturn(found);
+
+		//When:
+		User actual = this.sut.findUserByEmail(found.getEmail());
+
+		//Then:
+		assertThat(actual).isEqualTo(found);
+		verify(this.userRepositoryMock, times(1)).findUserByEmail(found.getEmail());
+		verifyNoMoreInteractions(this.userRepositoryMock);
+	}
+
+	@Test
+	public void shouldReturnNullWhenTryFindUserByEmailWhichDoesNotExist() throws Exception {
+		//Given:
+		String fakeUserEmail = "fake@fake.fake";
+		given(this.userRepositoryMock.findUserByEmail(eq(fakeUserEmail))).willReturn(null);
+
+		//When:
+
+		User actual =  this.sut.findUserByEmail(fakeUserEmail);
+
+		//Then:
+		assertThat(actual).isEqualTo(null);
+		verify(this.userRepositoryMock, times(1)).findUserByEmail(fakeUserEmail);
+		verifyNoMoreInteractions(this.userRepositoryMock);
+	}
+
+	@Test
+	public void shouldSaveNewUserWithSocialRegistrationAndReturnIt() throws Exception {
+		//Given:
+		User found = TestUserBuilder.aUser().build();
+		given(this.userRepositoryMock.findUserByEmail(eq(found.getEmail()))).willReturn(null);
+		given(this.userRepositoryMock.save(found)).willReturn(found);
+
+		//When:
+		User actual = this.sut.findUserOrRegisterNewUserAccount(found);
+
+		//Then:
+		assertThat(actual).isEqualTo(found);
+		verify(this.userRepositoryMock, times(1)).findUserByEmail(found.getEmail());
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		verify(this.userRepositoryMock, times(1)).save(userCaptor.capture());
+		verifyNoMoreInteractions(this.userRepositoryMock);
+
+		User userArgument = userCaptor.getValue();
+		assertThat(userArgument.getUsername()).isEqualTo(found.getUsername());
+		assertThat(userArgument.getEmail()).isEqualTo(found.getEmail());
+		assertThat(userArgument.getPassword()).isEqualTo(found.getPassword());
+	}
+
+	@Test
+	public void shouldFindUserWithSocialRegistrationAndReturnIt() throws Exception {
+		//Given:
+		User found = TestUserBuilder.aUser().build();
+		given(this.userRepositoryMock.findUserByEmail(eq(found.getEmail()))).willReturn(found);
+
+		//When:
+		User actual = this.sut.findUserOrRegisterNewUserAccount(found);
+
+		//Then:
+		assertThat(actual).isEqualTo(found);
+		assertThat(actual.getUsername()).isEqualTo(found.getUsername());
+		assertThat(actual.getEmail()).isEqualTo(found.getEmail());
+		assertThat(actual.getPassword()).isEqualTo(found.getPassword());
+		verify(this.userRepositoryMock, times(1)).findUserByEmail(found.getEmail());
+		verifyNoMoreInteractions(this.userRepositoryMock);
+	}
 
 }

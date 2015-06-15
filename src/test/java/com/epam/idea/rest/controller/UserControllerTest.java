@@ -13,7 +13,6 @@ import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.UserService;
 import com.epam.idea.core.service.exception.UserNotFoundException;
-import com.epam.idea.core.service.exception.UserSessionNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.UserResource;
