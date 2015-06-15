@@ -153,6 +153,10 @@ public class Idea implements Serializable {
 		this.rating = source.rating;
 		this.latitude = source.latitude;
 		this.longitude = source.longitude;
+
+		if(source.imageUrl != null) {
+			this.imageUrl = source.imageUrl;
+		}//if
 	}
 
 	public BigDecimal getLatitude() {
