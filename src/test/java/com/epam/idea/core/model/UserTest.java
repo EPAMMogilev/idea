@@ -19,7 +19,7 @@ public class UserTest {
 		assertThat(user.getEmail()).isNull();
 		assertThat(user.getName()).isNull();
 		assertThat(user.getPassword()).isNull();
-		assertThat(user.getSocialMediaService()).isNull();
+		assertThat(user.getSocialMediaService()).isNotNull();
 		assertThat(user.getSocialId()).isNull();
 		assertThat(user.getCreationTime()).isNotNull();
 		assertThat(user.getIdeas()).hasSize(0);
