@@ -4,29 +4,34 @@
             <p id="p">Добавить Идею</p>
         </div>
         <div id="dataDivInsert">
-            <!-- idea -->
-            <div id="divData">
-                <div id="tdCaption">Категория</div>
-                <div id="tdDataInsert">
-                    <!--select class="form-control" ng-model="data.tagId" >
-                        <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
-                    </select-->
-                    <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Категория" ng-model="data.tagName">
+            <div id="lineDivsLeftInsert">
+                <!-- idea -->
+                <div id="divData">
+                    <div id="tdCaption">Категория</div>
+                    <div id="tdDataInsert">
+                        <!--select class="form-control" ng-model="data.tagId" >
+                            <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
+                        </select-->
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Категория" ng-model="data.tagName">
+                    </div>
+                </div>
+                <!-- descr -->
+                <div id="divData">
+                    <div id="tdCaption">Идея</div>
+                    <div id="tdDataInsert">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Идея" ng-model="data.title">
+                    </div>
+                </div>
+                <!-- created -->
+                <div id="divData">
+                    <div id="tdCaption">Описание</div>
+                    <div id="tdDataInsert">
+                        <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="Описание" rows="5" ng-model="data.description"></textarea>
+                    </div>
                 </div>
             </div>
-            <!-- descr -->
-            <div id="divData">
-                <div id="tdCaption">Идея</div>
-                <div id="tdDataInsert">
-                    <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Идея" ng-model="data.title">
-                </div>
-            </div>
-            <!-- created -->
-            <div id="divData">
-                <div id="tdCaption">Описание</div>
-                <div id="tdDataInsert">
-                    <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="Описание" rows="5" ng-model="data.description"></textarea>
-                </div>
+            <div id="lineDivsRightInsert">
+                <img id="imgDetailsInsert" ng-src="{{imageUrl}}" class="img-rounded" id="imgBlock">
             </div>
         </div>
 

@@ -15,7 +15,8 @@
 
         $scope.imageExist = false;
         $scope.imageFile;
-        $scope.imageUrl = null;
+        //$scope.imageUrl = null;
+        $scope.imageUrl = "images/photo.gif";
         //$scope.caption = 'Идет загрузка изображения. Дождитесь окончания...';
         $scope.modalInstance = null;
         $scope.files = null;

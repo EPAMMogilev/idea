@@ -101,6 +101,8 @@
                                                 longitude: $scope.data.longitude
                                             };
 
+                                            $scope.imageUrl = $scope.data.imageUrl;
+
                                             mapGeoService.setGeoCoordsDirective(map, geoPoints);
                                         }//if
                                        }

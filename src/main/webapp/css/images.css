@@ -1,0 +1,11 @@
+#imgDetails
+{
+    max-height:300px;
+    max-width:300px;
+}
+
+#imgDetailsInsert
+{
+    max-width: 25%;
+    float: right;
+}
