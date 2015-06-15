@@ -21,7 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 @SessionAttributes("user")
 public class RegistrationController {
 
-	@Autowired
+	@Autowired(required=false)
 	ProviderSignInUtils providerSignInUtils;
 
 	@Autowired

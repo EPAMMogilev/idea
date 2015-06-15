@@ -53,16 +53,13 @@ public class SocialConfig implements SocialConfigurer {
 		return new AuthenticationNameUserIdSource();
 	}
 
-
-
 	@Bean
 	public ConnectController connectController(
 			ConnectionFactoryLocator connectionFactoryLocator,
 			ConnectionRepository connectionRepository) {
-		ConnectController controller = new ConnectController(
-				connectionFactoryLocator, connectionRepository);
 		return new ConnectController(connectionFactoryLocator, connectionRepository);
 	}
+
 	@Bean
 	public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator,UsersConnectionRepository connectionRepository) {
 		ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
