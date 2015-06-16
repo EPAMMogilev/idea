@@ -57,8 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.apply(new SpringSocialConfigurer())
 			.and()
-				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-		.csrf().csrfTokenRepository(csrfTokenRepository());
+				.csrf().disable();
+//				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+//		.csrf().csrfTokenRepository(csrfTokenRepository());
 
 	}
 

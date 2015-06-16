@@ -1,6 +1,6 @@
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Avocado', 'Chris@test.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Apple', 'Scott@test.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-11-02 00:00:00'); -- pass :'12345'
-insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Orange', 'John@test.com', 'e10adc3949ba59abbe56e057f20f883e', '2015-02-28 00:00:00'); -- pass :'123456'
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2015-02-28 00:00:00'); -- pass :'admin'
 
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Nonlinear Optimization by Successive Linear Programming', 'F. Palacios-Gomez & L. Lasdon & M. Engquist', '2015-01-01 03:14:07', '2015-01-02 00:00:00', 2, 1);
 insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Interactive fuzzy goal programming approach for bilevel programming problem', 'Arora, S.R. & Gupta, Ritu', '2015-02-02 00:00:00', '2015-02-03 00:00:00', 3, 2);

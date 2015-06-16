@@ -27,8 +27,8 @@ import org.springframework.social.security.AuthenticationNameUserIdSource;
 @EnableSocial
 public class SocialConfig implements SocialConfigurer {
 
-	public static String googleClientId = "133307390078-irhbk08u5omsjfra8qorte4qgkqsvuuv.apps.googleusercontent.com";
-	public static String googleClientSecret = "_Ai9_dc-5en7Noiyf6IqKUMR";
+	public static String googleClientId = "312001620105-udtemaddk1ii34rqq0cs07lso3co1gbl.apps.googleusercontent.com";
+	public static String googleClientSecret = "CTK9wEzU7VePQS7PhNcbwd3E";
 
 	@Autowired
 	private DataSource dataSource;
