@@ -116,12 +116,6 @@ table
 	padding-bottom: 10px;
 }
 
-#imgDetails
-{
-    max-height:300px;
-    max-width:300px;
-}
-
 #divData
 {
 	width: 100% auto;
@@ -218,7 +212,34 @@ table
 	margin-right: 10px;
 	margin-top: 10px;
 	margin-bottom: 10px;
+    text-align:center;
+}
+
+#lineDivsLeftInsert
+{
+	width: 75% auto;
+	height: 90%;
+	float: left;
+	min-width: 70%;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
         text-align:center;
+}
+
+#lineDivsRightInsert
+{
+	width: auto;
+	height: auto;
+/*	max-width: 300px;
+	max-height: 300px;
+	float: right;*/
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+    text-align:center;
 }
 
 #imgBlock
