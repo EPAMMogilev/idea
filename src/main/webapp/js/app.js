@@ -19,7 +19,8 @@ angular
         'ideaFactories',
 		'app.controllers',
 		'yaMap',
-		'ngImgur'
+		'ngImgur',
+		'ngFileUpload'
 	]);
 	
 	angular.module('app.directives', []); // set Directives

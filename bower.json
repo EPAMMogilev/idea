@@ -16,7 +16,8 @@
     "angular-cookies": "~1.2.x",
     "angular-md5": "0.1.7",
     "angular-yandex-map":"1.0.4",
-    "ng-imgur":"0.1.5"
+    "ng-imgur":"0.1.5",
+    "ng-file-upload":"5.0.6"
   },
   "resolutions":{
     "angular": "1.2.28"
