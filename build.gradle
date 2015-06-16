@@ -42,6 +42,7 @@ httpPort = 9090
 war.archiveName = 'idea.war'
 
 repositories {
+    mavenCentral()
     jcenter()
     mavenCentral()
     maven { url 'http://repo.spring.io/libs-snapshot' }
@@ -103,12 +104,31 @@ dependencies {
     // Guava
     compile "com.google.guava:guava-collections:$guavaCollectionsVersion"
 
+
+    //Spring-Secutity
+    compile 'org.springframework.security:spring-security-core:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-web:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-config:4.0.1.RELEASE'
+
+    //Spring-social
+    compile 'org.springframework.social:spring-social-core'
+    compile 'org.springframework.social:spring-social-config'
+    compile 'org.springframework.social:spring-social-web'
+    compile 'org.springframework.social:spring-social-facebook'
+    compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
+
+    compile 'org.springframework.social:spring-social-security'
+
+    compile 'org.springframework.boot:spring-boot-starter-security'
+
+
     //Logging
     compile 'log4j:log4j:1.2.17'
 
     //AspectJ
     //aspectpath 'org.springframework:spring-aspects'
     compile 'org.springframework:spring-aspects'
+
 
     // Test dependencies
     testCompile 'junit:junit'

@@ -61,4 +61,57 @@ public class UserServiceImpl implements UserService {
 	public User findUserByEmailAndPassword(String email, String password) {
 		return userRepository.findUserByEmailAndPassword(email, password).orElseThrow(()-> new UserNotFoundException("This user does not exist"));
 	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		return userRepository.findUserByEmail(email);
+	}
+
+	@Override
+	public User findUserOrRegisterNewUserAccount(User newUser) {
+
+		User registered = findUserAccount(newUser);
+
+		if (registered == null) {
+			registered = save(newUser);
+		}
+
+		return registered;
+	}
+
+	private User findUserAccount(User userAccountData) {
+		User registered = null;
+		registered = findUserByEmail(userAccountData.getEmail());
+		return registered;
+	}
+
+//	@Override
+//	public User registerNewUserAccount(RegistrationForm userAccountData) {
+////		if (emailExist(userAccountData.getEmail())) {
+////			throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
+////		}
+//
+//		User user = new User();
+//		user.setEmail(userAccountData.getEmail());
+//		user.setUsername(userAccountData.getFirstName() + " " + userAccountData.getLastName());
+//		user.setPassword(userAccountData.getPassword());
+//
+//		if (userAccountData.isSocialSignIn()) {
+//			user.setSocialMediaService(userAccountData.getSignInProvider());
+//		}
+//
+//		return userRepository.save(user);
+//	}
+
+//	private boolean emailExist(String email) {
+//		User user = userRepository.findByEmail(email);
+//
+//		if (user != null) {
+//			return true;
+//		}
+//
+//		return false;
+//	}
+
+
 }

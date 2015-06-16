@@ -1,9 +1,10 @@
 CREATE TABLE `USER` (
   `ID` BIGINT NOT NULL AUTO_INCREMENT
-  , `USERNAME` VARCHAR(20) NOT NULL
-  , `EMAIL` VARCHAR(20) NOT NULL
-  , `PASSWORD` VARCHAR(60) NOT NULL
+  , `USERNAME` VARCHAR(50) NOT NULL
+  , `EMAIL` VARCHAR(50) NOT NULL
+  , `PASSWORD` VARCHAR(60)
   , `CREATION_TIME` TIMESTAMP NOT NULL
+  , `AUTH_SOCIAL` VARCHAR(50)
   , PRIMARY KEY (`ID`)
 );
 
@@ -63,8 +64,16 @@ CREATE TABLE `COMMENT` (
   , CONSTRAINT `COMMENTS_fk2` FOREIGN KEY (`IDEA_ID`) REFERENCES IDEA(`ID`)
 );
 
-CREATE TABLE `USER_SESSION` (
-  `ID` VARCHAR(40) NOT NULL
-  , `USER_ID` BIGINT NOT NULL
-  , `CREATION_TIME` TIMESTAMP NOT NULL
-);
+create table UserConnection (userId varchar(255) not null,
+    providerId varchar(255) not null,
+    providerUserId varchar(255),
+    rank int not null,
+    displayName varchar(255),
+    profileUrl varchar(512),
+    imageUrl varchar(512),
+    accessToken varchar(255) not null,
+    secret varchar(255),
+    refreshToken varchar(255),
+    expireTime bigint,
+    primary key (userId, providerId, providerUserId));
+create unique index UserConnectionRank on UserConnection(userId, providerId, rank);

@@ -1,12 +1,15 @@
 package com.epam.idea.core.model;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +24,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable {
+public class User implements Serializable, Principal {
 
 	public static final int MIN_LENGTH_USERNAME = 1;
 	public static final int MAX_LENGTH_USERNAME = 20;
@@ -38,7 +41,7 @@ public class User implements Serializable {
 	@Column(name = "USERNAME", nullable = false)
 	private String username;
 
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "PASSWORD", nullable = false)
@@ -60,7 +63,12 @@ public class User implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "AUTH_SOCIAL")
+	private SocialMediaService socialMediaService;
+
 	public User() {
+		this.socialMediaService = SocialMediaService.NONE;
 		this.ideas = new ArrayList<>();
 		this.comments = new ArrayList<>();
 		this.roles = new ArrayList<>();
@@ -140,6 +148,14 @@ public class User implements Serializable {
 		this.roles.add(role);
 	}
 
+	public SocialMediaService getSocialMediaService() {
+		return socialMediaService;
+	}
+
+	public void setSocialMediaService(SocialMediaService authSocial) {
+		this.socialMediaService = authSocial;
+	}
+
 	@PrePersist
 	public void prePersist() {
 		this.creationTime = ZonedDateTime.now();
@@ -155,5 +171,10 @@ public class User implements Serializable {
 				", password='" + password + '\'' +
 				", creationTime=" + creationTime +
 				'}';
+	}
+
+	@Override
+	public String getName() {
+		return email;
 	}
 }

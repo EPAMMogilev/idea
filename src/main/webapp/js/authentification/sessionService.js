@@ -2,41 +2,47 @@
     'use strict';
 
     angular
-        .module('ideaFactories')
-        .factory('sessionService',sessionService)
+        .module('app.services')
+        .service('sessionService',sessionService);
 
-        function sessionService() {
+         sessionService.$inject = ['sessionFactory'];
+
+        function sessionService(sessionFactory) {
             var sessionID = '';
             var user = {};
-            return {
-                getSessionId: function() {
-                    if(sessionID=='' || sessionID==null)
-                        sessionID = localStorage.getItem("SessionId");
+            var publicMethod = {
+                getSessionId: getSessionId,
+                setSessionId: setSessionId,
+                getUser: getUser,
+                setUser: setUser
+            };
+            return publicMethod;
 
-                    console.log("Get sessionId => " + sessionID);
+            function getSessionId() {
+                if(sessionID=='' || sessionID==null)
+                    sessionID = localStorage.getItem("SessionId");
+                return sessionID;
+            };
 
-                    return sessionID;
-                },
+            function setSessionId (sessId) {
 
-                setSessionId: function(sessId) {
-                    console.log("Set sessionId=" + sessId);
-                    localStorage.setItem("SessionId", sessId);
-                    sessionID = sessId;
-                    return;
-                },
+                localStorage.setItem("SessionId", sessId);
+                sessionID = sessId;
+                return;
+            };
 
-                getUser: function() {
-                    if(user=='' || user==null)
-                        user = localStorage.getItem("user");
-                    return user;
-                },
+            function getUser () {
+                if(user=='' || user==null)
+                    user = localStorage.getItem("user");
+                return user;
+            };
 
-                setUser: function(user_) {
-                    localStorage.setItem("user", user_);
-                    user = user_;
-                    return;
-                }
-            }
+            function setUser (user_) {
+                localStorage.setItem("user", user_);
+                user = user_;
+                return;
+            };
+
         };
 
 

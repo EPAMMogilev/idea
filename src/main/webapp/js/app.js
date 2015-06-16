@@ -36,8 +36,8 @@ angular
          .config(config)
          .run(run);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    function config($stateProvider, $urlRouterProvider) {
+    config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
+    function config($stateProvider, $urlRouterProvider, $httpProvider) {
 
         $urlRouterProvider.otherwise('/home');
 
@@ -57,7 +57,7 @@ angular
         state('login', {
             url: '/login',
             views: {
-                'main@': { templateUrl: 'pages/login.html', controller:'LoginController as vm' }
+                'main@': { templateUrl: 'pages/login.html'}
             },
             parent: 'root'
         }).
@@ -109,16 +109,21 @@ angular
             onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         });
+
         }
+
+
 
        run.$inject = ['$rootScope', '$location', 'sessionService'];
            function run($rootScope, $location, sessionService) {
-
+               $rootScope.previousPage;
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
-                   if (sessionService.getSessionId() == '' || sessionService.getSessionId() == null) {
+                   $rootScope.previousPage = current;
+                   if ($rootScope.authenticated !== true) {
                        restrictedPage =  $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
                        if (restrictedPage) {
+                           $rootScope.previousPage = next;
                            $location.path("/login");
                        }
                    }
