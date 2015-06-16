@@ -481,7 +481,7 @@ button {
 .clear-fix:after {
     clear: both;
 }
-/* (Internet Explorer 6 è 7) */
+/* (Internet Explorer 6 ï¿½ 7) */
 .clear-fix {
     *zoom: 1;
 }
@@ -490,4 +490,19 @@ button {
 {
 	height: 20px;
 	width: 20px;
+}
+
+.btn-google-plus {
+  color: #fff;
+  background-color: #dd4b39;
+  border: 1px solid #d54331;
+}
+
+.btn-google-plus:focus, .btn-google-plus:hover {
+  color: #fff;
+  background-color: #cb3927;
+}
+
+#LoginIdeaDiv p {
+    margin-top: 10px;
 }
