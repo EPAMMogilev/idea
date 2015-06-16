@@ -7,10 +7,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class IdeaTest {
 
+	public static final String IMAGE_URL = "http://yabs.yandex.by/resource/DUX_U5KJD4ibwCKJ7gXsPu_banana_20141031_key.png";
+
 	@Test
 	public void shouldAddCreationAndModificationTime() {
 		//Given:
 		Idea idea = new Idea();
+
+		//set image url
+		idea.setImageUrl(IMAGE_URL);
 
 		//When:
 		idea.prePersist();
@@ -25,6 +30,8 @@ public class IdeaTest {
 		assertThat(idea.getRating()).isEqualTo(0);
 		assertThat(idea.getComments()).hasSize(0);
 		assertThat(idea.getRelatedTags()).hasSize(0);
+		assertThat(idea.getImageUrl()).isNotEmpty();
+		assertThat(idea.getImageUrl()).isEqualTo(IMAGE_URL);
 	}
 
 	@Test

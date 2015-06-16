@@ -54,10 +54,13 @@ describe('Add Idea controllers testing', function(){
 				return $controller('addNewIdea', {
 					$scope:addNewIdeaScope,
 					$window:window,
+					$modal:function(){},
 					detailsService:dServiceInvoke,
 					ideasFactory: myServiceInvoke,
 					mapGeoService: function(){},
 					imgur: function(){},
+					dialogs: function(){},
+					Upload: function(){}
 				});
 		};
 	}));
@@ -117,8 +120,12 @@ describe('Update Idea controllers testing', function(){
 		updateIdeaTest = function(){
 				return $controller('updateIdea', {
 					$scope:updateIdeaScope,
+					$modal:function(){},
 					$state:state,
-					ideaDetails: vIdeaDetails
+					ideaDetails: vIdeaDetails,
+					imgur: function(){},
+					dialogs: function(){},
+					Upload: function(){}
 				});
 		};
 	}));
