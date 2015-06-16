@@ -67,9 +67,6 @@ public class User implements Serializable, Principal {
 	@Column(name = "AUTH_SOCIAL")
 	private SocialMediaService socialMediaService;
 
-	@Column(name = "SOCIAL_ID")
-	private String socialId;
-
 	public User() {
 		this.socialMediaService = SocialMediaService.NONE;
 		this.ideas = new ArrayList<>();
@@ -157,14 +154,6 @@ public class User implements Serializable, Principal {
 
 	public void setSocialMediaService(SocialMediaService authSocial) {
 		this.socialMediaService = authSocial;
-	}
-
-	public String getSocialId() {
-		return socialId;
-	}
-
-	public void setSocialId(String socialId) {
-		this.socialId = socialId;
 	}
 
 	@PrePersist

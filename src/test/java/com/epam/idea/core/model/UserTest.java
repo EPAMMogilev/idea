@@ -20,7 +20,6 @@ public class UserTest {
 		assertThat(user.getName()).isNull();
 		assertThat(user.getPassword()).isNull();
 		assertThat(user.getSocialMediaService()).isNotNull();
-		assertThat(user.getSocialId()).isNull();
 		assertThat(user.getCreationTime()).isNotNull();
 		assertThat(user.getIdeas()).hasSize(0);
 		assertThat(user.getComments()).hasSize(0);

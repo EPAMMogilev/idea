@@ -3,12 +3,17 @@ package com.epam.idea.rest.controller;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.service.UserService;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
+import com.epam.idea.util.TestConnection;
+import com.epam.idea.util.TestProviderSignInAttempt;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionData;
+import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.UserProfileBuilder;
 import org.springframework.social.connect.support.OAuth2Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -59,7 +64,26 @@ public class RegistrationControllerTest {
 	public void shouldRedirect() throws Exception {
 		User user = aUser().build();
 
-//		when(this.providerSignInUtils.getConnectionFromSession(any(WebRequest.class))).thenReturn(any(Connection.class));
+		ConnectionData connectionData = new ConnectionData("google",
+				"providerUserId",
+				"displayName",
+				"profileUrl",
+				"imageUrl",
+				"accessToken",
+				"secret",
+				"refreshToken",
+				1000L);
+
+
+		UserProfile userProfile = new UserProfileBuilder()
+				.setEmail("email")
+				.setFirstName("firstName")
+				.setLastName("lastName")
+				.build();
+
+		TestConnection connection = new TestConnection(connectionData, userProfile);
+		TestProviderSignInAttempt signIn = new TestProviderSignInAttempt(connection);
+		when(this.providerSignInUtils.getConnectionFromSession(any(WebRequest.class))).thenReturn(connection);
 		when(this.userServiceMock.findUserOrRegisterNewUserAccount(any(User.class))).thenReturn(user);
 
 

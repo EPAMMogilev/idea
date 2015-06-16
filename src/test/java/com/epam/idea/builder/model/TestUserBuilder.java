@@ -9,6 +9,7 @@ import com.epam.idea.core.model.Authority;
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.Role;
+import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.google.common.collect.Lists;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -26,6 +27,7 @@ public class TestUserBuilder {
 	private String username;
 	private String email;
 	private String password;
+	private SocialMediaService socialMediaService;
 	private ZonedDateTime creationTime;
 	private List<Idea> ideas;
 	private List<Comment> comments;
@@ -73,6 +75,11 @@ public class TestUserBuilder {
 
 	public TestUserBuilder withPassword(final String password) {
 		this.password = password;
+		return this;
+	}
+
+	public TestUserBuilder withSocialMediaService(final SocialMediaService socialMediaService) {
+		this.socialMediaService = socialMediaService;
 		return this;
 	}
 
@@ -143,6 +150,7 @@ public class TestUserBuilder {
 		user.setComments(comments);
 		user.setIdeas(ideas);
 		user.setRoles(roles);
+		user.setSocialMediaService(socialMediaService);
 		return user;
 	}
 }
