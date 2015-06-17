@@ -140,13 +140,15 @@ button {
 }
 
 .idea {
-   padding: 10px; 
-   width: 400px;
-   height: 150px;
-   border-top: 1px solid #ddd;
-   /*overflow:hidden;*/
-   position: relative;
-   /*min-width: 450px;*/
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.idea>div{
+	height: 100%;
+	display: inline-block;
+	vertical-align: top;
 }
 
 .idea .left {
@@ -154,21 +156,22 @@ button {
 }
 
 .middle{
-    max-width: 250px;
+    max-width: 300px;
 	height: 100% auto;
 	vertical-align: middle;
-	min-height: 135px;
-    margin-left: 100px;
+	/*min-height: 135px;*/
+    /*margin-left: 100px;*/
+	position: relative;
 }
 
 .left {
-	width: 19%;
    /*float:left; */
     display:inline-block;
 	text-align: center;
 
     vertical-align: middle;
-    width: 80px;
+    width: 100px;
+	height: 100px;
 }
 
 .left img{
@@ -177,7 +180,7 @@ button {
   -webkit-border-radius: 50px;
     */
 
-    position: absolute;
+    /*position: absolute;*/
     top: 10px;
     bottom: 10px;
     left: 0;
@@ -187,12 +190,11 @@ button {
 .right {
     width: 50px;
 	max-width: 350px;
-	height: 80px;
+	/*height: 80px;*/
     display:inline-block;
 	text-align: center;
 	float: right;
 	position: relative;
-	margin-top: -140px;
 	/*vertical-align: top;*/
 }
 
@@ -237,11 +239,12 @@ button {
  .end-text {
    width: 65%;
    max-height: 20px;
-   overflow: hidden;
-   bottom: 10px;
+   /*overflow: hidden;*/
+   bottom: 30px;
    position: absolute;
    /*margin-left: 120px;*/
    text-align: left;
+   white-space: nowrap;
  }
  
  .small-area {
@@ -306,7 +309,7 @@ button {
 }
 
 .mapMainPage{
-    width: 620px;
+    width: 33%;
     height: 550px;
     /*height: 400px;*/
     display: inline-block;
@@ -418,14 +421,6 @@ button {
     font-size: 23px;
 }
 
-#mainBlock
-{
-    width:1550px;
-    min-width:1550px;
-    margin: 0 auto;
-    display: block;
-}
-
 #imageLoader
 {
     display:block;
@@ -514,6 +509,34 @@ button {
 
 #btnLikeIdea
 {
-	vertical-align: bottom;
-	margin-top: 75px;
+	bottom: 30px;
+	position: absolute;
+}
+
+/* new design */
+.dataContainer
+{
+	width: 100%;
+	height: 100%;
+	max-height: 130px;
+	min-width: 1872px;
+	/*overflow: hidden;*/
+    /*border: red solid thin;*/
+}
+
+.dataContainer>div{
+	/*width: 33%;*/
+	min-width: 450px;
+	height: 100%;
+	display: inline-block;
+	/*text-align: center;
+    border: black solid thin;*/
+	vertical-align: top;
+    /*overflow: auto;*/
+}
+
+.idea-li
+{
+    margin-right: 20px;
+    list-style-type: none;
 }
