@@ -30,6 +30,7 @@
                 show: {method: 'GET', params: {ideaId: '@id'}, url: 'api/v1/ideas/:id/'},
                 update: {method: 'PUT', params: {id: '@id'}, url: 'api/v1/ideas/:id/'},
                 create: {method: 'POST', url: 'api/v1/ideas/'},
+                delete: {method: 'DELETE', url: 'api/v1/ideas/:id/'}
                 });
         }
 

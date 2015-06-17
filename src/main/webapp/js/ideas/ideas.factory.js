@@ -13,7 +13,8 @@
             getIdeas: getIdeas,
             getIdeaById: getIdeaById,
             insertIdea: insertIdea,
-            updateIdea: updateIdea
+            updateIdea: updateIdea,
+            removeIdea: removeIdea
         };
         return publicMethod;
 
@@ -34,6 +35,11 @@
 
         function insertIdea(idea){
             var promise = restFactory.ideas().create(idea).$promise;
+            return promise;
+        };
+
+        function removeIdea(idea){
+            var promise = restFactory.ideas().delete(idea).$promise;
             return promise;
         };
 

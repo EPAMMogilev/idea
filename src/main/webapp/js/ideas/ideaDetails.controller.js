@@ -50,7 +50,12 @@
 		};
 
 		$scope.remove = function(){
-            $window.location.href = '#home';
+		    ideasFactory.removeIdea($scope.idea).then(
+                                       function( value )
+                                       {
+                                        alert("Удалено");
+			                            $state.go('home');
+                                       });
 		};
 
 		//init function: load map point
