@@ -17,9 +17,17 @@
 		</p>
 	</div>
 
-	<div class="right font-cenralbig">
+	<!--div class="right font-cenralbig">
 		<div ng-click="changeRating(1)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>
 		<div id="rating" class="rating">{{idea.rating}}</div>
 		<div ng-click="changeRating(-1)" class="vote"><i class="glyphicon glyphicon-menu-down"></i></div>
+	</div-->
+	<div class="right">
+		<div class="font-cenralbig">
+			<div id="rating" class="rating">{{idea.rating}}</div>
+		</div>
+		<div class="font-cenralbig" id="btnLikeIdea">
+			<span class="btn btn-default" ng-click="changeRating(1)"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+		</div>
 	</div>
 </div>
