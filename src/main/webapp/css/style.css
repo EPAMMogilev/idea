@@ -234,6 +234,7 @@ button {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    cursor: pointer;
  }
  
  .end-text {
@@ -432,6 +433,7 @@ button {
 {
     max-height:100px;
     max-width:100px;
+    cursor: pointer;
 }
 
 #progressBar
