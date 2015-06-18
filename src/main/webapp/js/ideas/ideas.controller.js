@@ -9,31 +9,10 @@
     function ideasCtrl($scope, ideasFactory, tagsFactory, mapGeoService) {
 
         var vm = this;
-        $scope.geoObjects = null;// = new Array();
-        /*
-        $scope.updateGeoObjects = function(ideas){
-            if(ideas){
-                for(var i=0; i<ideas.length; i++){
-                    var oldObject = ideas[i];
+        $scope.geoObjects = null;
 
-                    if(oldObject && oldObject.longitude && oldObject.latitude){
-                        var newGeoObject = {
-                            geometry: {
-                                        type: 'Point',
-                                        coordinates: [oldObject.longitude,oldObject.latitude]
-                                    },
-                            properties: {
-                                balloonContent: oldObject.title,
-                                clusterCaption: 'идея #' + oldObject.id
-                            }
-                        };
-                        //add 2 array
-                        $scope.geoObjects.push(newGeoObject);
-                    }//if
-                }//for
-            }//if
-        };//updateGeoObjects
-        */
+        $scope.criteria = null;
+
         vm.selectByCategory =function (tag) {
           tagsFactory.getIdeasByTag(tag).then(function (ideas) {
             vm.ideas = ideas;
