@@ -148,8 +148,18 @@
 				 );
 		};//insertIdea
 
+		$scope.beforeInit = function(){
+			var geolocation = ymaps.geolocation;
+
+			ideaCoords = [geolocation.longitude, geolocation.latitude];
+		};
+
 		$scope.afterInit = function($map){
 			map = $map;
+
+			if(ideaCoords){
+				mapGeoService.setGeoCoordsDirective(map, ideaCoords);
+			}//if
 		};
 
 		$scope.mapClick = function(e){
