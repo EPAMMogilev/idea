@@ -503,6 +503,28 @@ button {
   background-color: #cb3927;
 }
 
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border: 1px solid #335190;
+}
+
+.btn-facebook:focus, .btn-facebook:hover {
+  color: #fff;
+  background-color: #294786;
+}
+
+.btn-vk {
+  color: #fff;
+  background-color: #6383a8;
+  border: 1px solid #6383a8;
+}
+
+.btn-vk:focus, .btn-vk:hover {
+  color: #fff;
+  background-color: #6d8cb0;
+}
+
 #LoginIdeaDiv p {
     margin-top: 10px;
 }
