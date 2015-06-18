@@ -44,8 +44,8 @@ war.archiveName = 'idea.war'
 repositories {
     mavenCentral()
     jcenter()
-    mavenCentral()
     maven { url 'http://repo.spring.io/libs-snapshot' }
+    maven { url 'http://fugru.com/archiva/repository/snapshots'}
 }
 
 dependencyManagement {
@@ -116,6 +116,7 @@ dependencies {
     compile 'org.springframework.social:spring-social-web'
     compile 'org.springframework.social:spring-social-facebook'
     compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
+    compile 'org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-SNAPSHOT'
 
     compile 'org.springframework.social:spring-social-security'
 

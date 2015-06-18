@@ -16,13 +16,9 @@ public class CommonUserDetails extends SocialUser {
 
 	private Long id;
 
-	private String firstName;
-
-	private String lastName;
-
-	private String fullName;
-
 	private Role role;
+
+	private String email;
 
 	private SocialMediaService socialSignInProvider;
 
@@ -38,28 +34,12 @@ public class CommonUserDetails extends SocialUser {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Role getRole() {
@@ -92,6 +72,8 @@ public class CommonUserDetails extends SocialUser {
 
 		private String fullName;
 
+		private String email;
+
 		private String password;
 
 		private Role role;
@@ -104,23 +86,13 @@ public class CommonUserDetails extends SocialUser {
 			this.authorities = new HashSet<>();
 		}
 
-		public Builder firstName(String firstName) {
-			this.firstName = firstName;
-			return this;
-		}
-
 		public Builder id(Long id) {
 			this.id = id;
 			return this;
 		}
 
-		public Builder lastName(String lastName) {
-			this.lastName = lastName;
-			return this;
-		}
-
-		public Builder fullName(String fullName) {
-			this.fullName = fullName;
+		public Builder email(String email) {
+			this.email = email;
 			return this;
 		}
 
@@ -155,14 +127,10 @@ public class CommonUserDetails extends SocialUser {
 
 		public CommonUserDetails build() {
 			CommonUserDetails user = new CommonUserDetails(username, password, authorities);
-
 			user.id = id;
-			user.firstName = firstName;
-			user.lastName = lastName;
 			user.role = role;
 			user.socialSignInProvider = socialSignInProvider;
-			user.fullName = fullName;
-
+			user.email = email;
 			return user;
 		}
 	}

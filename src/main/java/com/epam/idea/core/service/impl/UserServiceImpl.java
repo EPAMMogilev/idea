@@ -2,6 +2,7 @@ package com.epam.idea.core.service.impl;
 
 import java.util.List;
 
+import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.UserService;
@@ -79,39 +80,15 @@ public class UserServiceImpl implements UserService {
 		return registered;
 	}
 
-	private User findUserAccount(User userAccountData) {
-		User registered = null;
-		registered = findUserByEmail(userAccountData.getEmail());
-		return registered;
+	public User findUserBySocialNetworkAndSocialId(SocialMediaService socialMediaService, String socialId) {
+		return userRepository.findUserBySocialNetworkAndSocialId(socialMediaService, socialId);
 	}
 
-//	@Override
-//	public User registerNewUserAccount(RegistrationForm userAccountData) {
-////		if (emailExist(userAccountData.getEmail())) {
-////			throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
-////		}
-//
-//		User user = new User();
-//		user.setEmail(userAccountData.getEmail());
-//		user.setUsername(userAccountData.getFirstName() + " " + userAccountData.getLastName());
-//		user.setPassword(userAccountData.getPassword());
-//
-//		if (userAccountData.isSocialSignIn()) {
-//			user.setSocialMediaService(userAccountData.getSignInProvider());
-//		}
-//
-//		return userRepository.save(user);
-//	}
+	private User findUserAccount(User userAccountData) {
+		User registered = null;
 
-//	private boolean emailExist(String email) {
-//		User user = userRepository.findByEmail(email);
-//
-//		if (user != null) {
-//			return true;
-//		}
-//
-//		return false;
-//	}
-
+		registered = findUserBySocialNetworkAndSocialId(userAccountData.getSocialMediaService(), userAccountData.getSocialId());
+		return registered;
+	}
 
 }

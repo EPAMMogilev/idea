@@ -24,7 +24,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable, Principal {
+public class User implements Serializable {
 
 	public static final int MIN_LENGTH_USERNAME = 1;
 	public static final int MAX_LENGTH_USERNAME = 20;
@@ -64,8 +64,11 @@ public class User implements Serializable, Principal {
 	private List<Role> roles;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "AUTH_SOCIAL")
+	@Column(name = "SOCIAL_MEDIA_SERVICE")
 	private SocialMediaService socialMediaService;
+
+	@Column(name = "SOCIAL_ID")
+	private String socialId;
 
 	public User() {
 		this.socialMediaService = SocialMediaService.NONE;
@@ -156,6 +159,14 @@ public class User implements Serializable, Principal {
 		this.socialMediaService = authSocial;
 	}
 
+	public String getSocialId() {
+		return socialId;
+	}
+
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
+	}
+
 	@PrePersist
 	public void prePersist() {
 		this.creationTime = ZonedDateTime.now();
@@ -173,7 +184,7 @@ public class User implements Serializable, Principal {
 				'}';
 	}
 
-	@Override
+//	@Override
 	public String getName() {
 		return email;
 	}

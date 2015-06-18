@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.epam.idea.builder.model.TestUserBuilder;
+import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.UserService;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -278,7 +280,7 @@ public class UserServiceImplTest {
 	public void shouldSaveNewUserWithSocialRegistrationAndReturnIt() throws Exception {
 		//Given:
 		User found = TestUserBuilder.aUser().build();
-		given(this.userRepositoryMock.findUserByEmail(eq(found.getEmail()))).willReturn(null);
+		given(this.userRepositoryMock.findUserBySocialNetworkAndSocialId(eq(found.getSocialMediaService()), any(String.class))).willReturn(null);
 		given(this.userRepositoryMock.save(found)).willReturn(found);
 
 		//When:
@@ -286,7 +288,7 @@ public class UserServiceImplTest {
 
 		//Then:
 		assertThat(actual).isEqualTo(found);
-		verify(this.userRepositoryMock, times(1)).findUserByEmail(found.getEmail());
+		verify(this.userRepositoryMock, times(1)).findUserBySocialNetworkAndSocialId(eq(found.getSocialMediaService()), any(String.class));
 		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 		verify(this.userRepositoryMock, times(1)).save(userCaptor.capture());
 		verifyNoMoreInteractions(this.userRepositoryMock);
@@ -301,7 +303,7 @@ public class UserServiceImplTest {
 	public void shouldFindUserWithSocialRegistrationAndReturnIt() throws Exception {
 		//Given:
 		User found = TestUserBuilder.aUser().build();
-		given(this.userRepositoryMock.findUserByEmail(eq(found.getEmail()))).willReturn(found);
+		given(this.userRepositoryMock.findUserBySocialNetworkAndSocialId(eq(found.getSocialMediaService()), any(String.class))).willReturn(found);
 
 		//When:
 		User actual = this.sut.findUserOrRegisterNewUserAccount(found);
@@ -311,7 +313,7 @@ public class UserServiceImplTest {
 		assertThat(actual.getUsername()).isEqualTo(found.getUsername());
 		assertThat(actual.getEmail()).isEqualTo(found.getEmail());
 		assertThat(actual.getPassword()).isEqualTo(found.getPassword());
-		verify(this.userRepositoryMock, times(1)).findUserByEmail(found.getEmail());
+		verify(this.userRepositoryMock, times(1)).findUserBySocialNetworkAndSocialId(eq(found.getSocialMediaService()), any(String.class));
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
 

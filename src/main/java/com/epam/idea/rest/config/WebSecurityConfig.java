@@ -35,10 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 				.userDetailsService(userDetailsService()).passwordEncoder(new Md5PasswordEncoder())
+
 		;
-//
-//              .inMemoryAuthentication()
-//				.withUser("user").password("password").roles("USER");
 	}
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -57,9 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.apply(new SpringSocialConfigurer())
 			.and()
-				.csrf().disable();
-//				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-//		.csrf().csrfTokenRepository(csrfTokenRepository());
+				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+		.csrf().csrfTokenRepository(csrfTokenRepository());
 
 	}
 

@@ -37,45 +37,25 @@ public class RegistrationController {
 		Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 
 		User registration = createUserDTO(connection);
-
 		User registered = userService.findUserOrRegisterNewUserAccount(registration);
 
-//		User registered = findUserAccount(registration);
-//
-//		if (registered == null) {
-//			registered = createUserAccount(registration);
-//		}
 		SecurityUtil.logInUser(registered);
-		providerSignInUtils.doPostSignUp(registered.getEmail(), request);
+		providerSignInUtils.doPostSignUp(registered.getSocialId(), request);
 
-		return "redirect:/";
+		return "redirect:/#/home";
 	}
-//
-//	private RegistrationForm createRegistrationDTO(Connection<?> connection) {
-//		RegistrationForm dto = new RegistrationForm();
-//
-//		if (connection != null) {
-//			UserProfile socialMediaProfile = connection.fetchUserProfile();
-//			dto.setEmail(socialMediaProfile.getEmail());
-//			dto.setFirstName(socialMediaProfile.getFirstName());
-//			dto.setLastName(socialMediaProfile.getLastName());
-//			dto.setFullName(socialMediaProfile.getUsername());
-//			ConnectionKey providerKey = connection.getKey();
-//			dto.setSignInProvider(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
-//		}
-//
-//		return dto;
-//	}
 
 	private User createUserDTO(Connection<?> connection) {
 
 		User dto = new User();
 		if (connection != null) {
 			UserProfile socialMediaProfile = connection.fetchUserProfile();
-			dto.setEmail(socialMediaProfile.getEmail());
+			if(socialMediaProfile.getEmail() != null)
+				dto.setEmail(socialMediaProfile.getEmail());
 			dto.setUsername(socialMediaProfile.getFirstName() + " " + socialMediaProfile.getLastName());
 			ConnectionKey providerKey = connection.getKey();
 			dto.setSocialMediaService(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
+			dto.setSocialId(connection.getKey().toString());
 		}
 
 		return dto;

@@ -19,22 +19,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findUserByEmail(username);
+		User user = userRepository.findUserByEmailWithNotEmptyPassword(username);
 
+		if (user == null) {
+			user = userRepository.findUserBySocialId(username);
+		}
 		if (user == null) {
 			throw new UsernameNotFoundException("No user found with username: " + username);
 		}
-		System.out.println(user.getUsername());
 
 		CommonUserDetails principal = CommonUserDetails.getBuilder()
-//				.firstName(user.getFirstName())
-//				.lastName(user.getUsername())
-//				.role(user.getRole())
-				.fullName(user.getUsername())
 				.id(user.getId())
 				.password(user.getPassword())
 				.socialSignInProvider(user.getSocialMediaService())
-				.username(user.getEmail())
+				.username(user.getUsername())
+				.email(user.getEmail())
 				.build();
 
 		return principal;

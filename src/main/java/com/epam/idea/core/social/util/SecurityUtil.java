@@ -9,14 +9,11 @@ public class SecurityUtil {
 
 	public static void logInUser(User user) {
 		CommonUserDetails userDetails = CommonUserDetails.getBuilder()
-//				.firstName(user.getFirstName())
-//				.lastName(user.getUsername())
-//				.role(user.getRole())
-				.fullName(user.getUsername())
 				.id(user.getId())
 				.password(user.getPassword())
 				.socialSignInProvider(user.getSocialMediaService())
-				.username(user.getEmail())
+				.username(user.getUsername())
+				.email(user.getEmail())
 				.build();
 
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
