@@ -1,7 +1,10 @@
 package com.epam.idea.core.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.epam.idea.core.model.Authority;
+import com.epam.idea.core.model.Role;
 import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.UserRepository;
@@ -60,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findUserByEmailAndPassword(String email, String password) {
-		return userRepository.findUserByEmailAndPassword(email, password).orElseThrow(()-> new UserNotFoundException("This user does not exist"));
+		return userRepository.findUserByEmailAndPassword(email, password).orElseThrow(() -> new UserNotFoundException("This user does not exist"));
 	}
 
 	@Override
@@ -74,6 +77,10 @@ public class UserServiceImpl implements UserService {
 		User registered = findUserAccount(newUser);
 
 		if (registered == null) {
+			Role roleUser = new Role();
+			roleUser.setName(Authority.USER);
+			newUser.setRoles(Arrays.asList(roleUser));
+			
 			registered = save(newUser);
 		}
 

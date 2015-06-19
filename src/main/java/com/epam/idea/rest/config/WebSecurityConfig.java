@@ -38,25 +38,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		;
 	}
+
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.formLogin()//.loginProcessingUrl("/pages/login.html")
 				.loginPage("/pages/login.html")
 				.permitAll()
-			.and()
-				.httpBasic().
-			and()
+				.and()
+				.httpBasic()
+				.and()
 				.authorizeRequests()
 				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/app.html", "/pages/details.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*")
 				.permitAll()
 				.anyRequest().authenticated()
-			.and()
+				.and()
 				.logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
-			.and()
+				.and()
 				.apply(new SpringSocialConfigurer())
-			.and()
+				.and()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-		.csrf().csrfTokenRepository(csrfTokenRepository());
+				.csrf().csrfTokenRepository(csrfTokenRepository());
 
 	}
 

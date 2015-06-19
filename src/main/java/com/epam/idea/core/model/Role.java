@@ -1,8 +1,8 @@
 package com.epam.idea.core.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,16 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import static java.util.Objects.requireNonNull;
 
 @Entity
 @Table(name = "ROLE")
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,20 +27,12 @@ public class Role implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private Authority name;
 
-	@ManyToMany
-	@JoinTable(name = "USER_ROLE",
-			joinColumns = @JoinColumn(name = "ROLE_ID"),
-			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-	private List<User> usersWithRole;
-
 	public Role() {
-		this.usersWithRole = new ArrayList<>();
 	}
 
 	public Role(Authority name) {
 		requireNonNull(name, "Name cannot be null");
 		this.name = name;
-		this.usersWithRole = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -58,18 +47,6 @@ public class Role implements Serializable {
 		this.name = name;
 	}
 
-	public List<User> getUsersWithRole() {
-		return usersWithRole;
-	}
-
-	public void setUsersWithRole(List<User> usersWithRole) {
-		this.usersWithRole = usersWithRole;
-	}
-
-	public void addUser(User user) {
-		this.usersWithRole.add(user);
-	}
-
 	@Override
 	public String toString() {
 		return "Role{" +
@@ -77,4 +54,9 @@ public class Role implements Serializable {
 				", name=" + name +
 				'}';
 	}
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + name.toString();
+    }
 }
