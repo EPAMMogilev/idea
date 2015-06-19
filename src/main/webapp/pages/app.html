@@ -6,19 +6,19 @@
         <tag-button identifier="culture" click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
     </div>
     <div class = "searcher">
-        <input placeholder="Найти..." ng-model="ideasCtrl.criteria" class="form-control">
+        <input placeholder="Найти..." ng-model="criteria" class="form-control">
     </div>
     <div class="dataContainer">
         <div>
             <ul>
-                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating'"  class = "idea-li" >
+                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating' | searchLineFilter:criteria"  class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
                 </li>
             </ul>
         </div>
         <div>
             <ul>
-                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt' | limitTo: 5"  class = "idea-li" >
+                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt' | limitTo: 5  | searchLineFilter:criteria"  class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
                 </li>
             </ul>
