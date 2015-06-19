@@ -20,7 +20,8 @@ angular
 		'app.controllers',
 		'yaMap',
 		'ngImgur',
-		'ngFileUpload'
+		'ngFileUpload',
+        'ngMessages'
 	]);
 	
 	angular.module('app.directives', []); // set Directives
@@ -58,6 +59,13 @@ angular
             url: '/login',
             views: {
                 'main@': { templateUrl: 'pages/login.html'}
+            },
+            parent: 'root'
+        }).
+        state('register', {
+            url: '/register',
+            views: {
+                'main@': { templateUrl: 'pages/registration.html'}
             },
             parent: 'root'
         }).

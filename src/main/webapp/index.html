@@ -30,6 +30,8 @@
 
     <script type="text/javascript" src="bower_components/angular-yandex-map/ya-map.min.js"></script>
 
+    <script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
+    
     <!-- Imgur -->
     <script type="text/javascript" src="bower_components/ng-imgur/ng-imgur.js"></script>
 
@@ -56,9 +58,9 @@
         </div>
 
         <div	 class = "href-enter" id="LoginIdeaDiv" >
-            <p ng-if="!authenticated"><a id="words" class="words" href="#login">Login</a></p>
-            {{currentUser.principal.username}}
-            <p ng-if="authenticated"><a href="logout">Logout</a></p>
+            <a><span>{{currentUser.principal.username}}</span></a>
+            <span ng-if="!authenticated"><a id="words" class="words" href="#login">Login</a></span>
+            <span ng-if="authenticated"><a href="logout">Logout</a></span>
         </div>
     </div>
 </div>
