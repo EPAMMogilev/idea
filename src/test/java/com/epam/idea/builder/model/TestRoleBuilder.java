@@ -63,7 +63,6 @@ public class TestRoleBuilder {
 		final Role role = new Role();
 		ReflectionTestUtils.setField(role, "id", id);
 		role.setName(name);
-		role.setUsersWithRole(users);
 		return role;
 	}
 }

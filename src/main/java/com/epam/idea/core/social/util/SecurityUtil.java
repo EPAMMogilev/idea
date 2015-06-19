@@ -1,4 +1,5 @@
 package com.epam.idea.core.social.util;
+
 import com.epam.idea.core.model.CommonUserDetails;
 import com.epam.idea.core.model.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +12,7 @@ public class SecurityUtil {
 		CommonUserDetails userDetails = CommonUserDetails.getBuilder()
 				.id(user.getId())
 				.password(user.getPassword())
+				.roles(user.getRoles())
 				.socialSignInProvider(user.getSocialMediaService())
 				.username(user.getUsername())
 				.email(user.getEmail())
