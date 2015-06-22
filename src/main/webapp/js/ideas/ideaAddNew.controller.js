@@ -108,12 +108,14 @@
 			//todo:make more input fields for more tags and use this for
 			var tags = new Array();
 			for(var i=0; i<1; i++){
-				tags.push(
-					{
-						id:i,
-						name:data.tagName
-					}
-				);
+				if (tags[i] != null && tags[i] != undefined) {
+					tags.push(
+						{
+							id:i,
+							name:data.tagName
+						}
+					);
+				}
 			}//for
 
 
