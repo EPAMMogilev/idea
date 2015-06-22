@@ -1,11 +1,15 @@
 package com.epam.idea.core.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.epam.idea.builder.model.TestIdeaBuilder;
+import com.epam.idea.core.model.CommonUserDetails;
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.IdeaRepository;
+import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.google.common.collect.Lists;
@@ -17,6 +21,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -32,6 +41,15 @@ public class IdeaServiceImplTest {
 	@Mock
 	private IdeaRepository ideaRepositoryMock;
 
+	@Mock
+	private Authentication authenticationMock;
+
+	@Mock
+	private SecurityContext securityContextMock;
+
+	@Mock
+	private UserRepository userRepositoryMock;
+
 	@InjectMocks
 	private IdeaService sut = new IdeaServiceImpl();
 
@@ -43,7 +61,17 @@ public class IdeaServiceImplTest {
 	@Test
 	public void shouldSaveNewIdea() throws Exception {
 		//Given:
+		Long id = 1L;
 		Idea ideaToSave = TestIdeaBuilder.anIdea().build();
+		CommonUserDetails principal = new CommonUserDetails("username", "password", Collections.<GrantedAuthority>emptyList());
+		principal.setId(id);
+		Optional<User> user = Optional.of(new User());
+
+		given(securityContextMock.getAuthentication()).willReturn(authenticationMock);
+		given(authenticationMock.getPrincipal()).willReturn(principal);
+		given(userRepositoryMock.findOne(id)).willReturn(user);
+
+		SecurityContextHolder.setContext(securityContextMock);
 
 		//When:
 		this.sut.save(ideaToSave);
