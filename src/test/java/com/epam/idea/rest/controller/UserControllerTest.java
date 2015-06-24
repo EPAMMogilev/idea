@@ -517,6 +517,49 @@ public class UserControllerTest {
 		assertThat(ideaArgument.getRating()).isEqualTo(ideaResource.getRating());
 	}
 
+	@Test
+	public void shouldReturnFoundUserByEmailWithHttpCode200() throws Exception {
+		User user = aUser().build();
+
+		when(this.userServiceMock.findRegisteredUserByEmail(user.getEmail())).thenReturn(user);
+
+		this.mockMvc.perform(get("/api/v1/users/{userEmail}/email", DEFAULT_EMAIL)
+				.accept(APPLICATION_JSON_UTF8)).andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$." + ID).value(((int) user.getId())))
+				.andExpect(jsonPath("$.username").value(user.getUsername()))
+				.andExpect(jsonPath("$.email").value(user.getEmail()))
+				.andExpect(jsonPath("$.password").doesNotExist())
+				.andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
+				.andExpect(jsonPath("$.links", hasSize(3)))
+				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + user.getId())))
+				.andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
+				.andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/users/" + user.getId() + "/ideas")))
+				.andExpect(jsonPath("$.links[2].rel").value(UserResourceAsm.COMMENTS_REL))
+				.andExpect(jsonPath("$.links[2].href").value(containsString("/api/v1/users/" + user.getId() + "/comments")));
+
+		verify(this.userServiceMock, times(1)).findRegisteredUserByEmail(user.getEmail());
+		verifyNoMoreInteractions(this.userServiceMock);
+	}
+
+	@Test
+	public void shouldReturnErrorWithHttpStatus404WhenUserNotFoundByEmail() throws Exception {
+		when(this.userServiceMock.findRegisteredUserByEmail(DEFAULT_EMAIL)).thenThrow(new UserNotFoundException("This user does not exist"));
+
+		this.mockMvc.perform(get("/api/v1/users/{userEmail}/email", DEFAULT_EMAIL)
+				.accept(APPLICATION_JSON_UTF8))
+				.andExpect(status().isNotFound())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
+				.andExpect(jsonPath("$[0].message").value("This user does not exist"));
+
+		verify(this.userServiceMock, times(1)).findRegisteredUserByEmail(DEFAULT_EMAIL);
+		verifyNoMoreInteractions(this.userServiceMock);
+	}
+
 //	@Test
 //	public void shouldReturnErrorWithHttpStatus404WhenUserNotFoundByEmailAndPassword() throws Exception {
 //		LoginRequest loginRequest = new LoginRequest();
