@@ -35,6 +35,10 @@ public class SocialConfig implements SocialConfigurer {
 	public static String facebookClientSecret = "1dc9045cb99ae97b3686cb10648b29b8";
 	public static String vkClientId = "4960267";
 	public static String vkClientSecret = "uu1iDGVhSi8h6EGsL0Gm";
+	public static String facebookClientIdLocal = "1611494735787495";
+	public static String facebookClientSecretLocal = "03c8a369164ba6f44252496c50c384e6";
+	public static String vkClientIdLocal = "4968709";
+	public static String vkClientSecretLocal = "bRqnZIl4qguZ7xCIWNF4";
 
 	@Autowired
 	private DataSource dataSource;
@@ -50,6 +54,12 @@ public class SocialConfig implements SocialConfigurer {
 		VKontakteConnectionFactory vKontakteConnectionFactory = new VKontakteConnectionFactory(vkClientId, vkClientSecret);
 		vKontakteConnectionFactory.setScope("email");
 		cfConfig.addConnectionFactory(vKontakteConnectionFactory);
+//		FacebookConnectionFactory facebookConnectionFactoryLocal = new FacebookConnectionFactory(facebookClientIdLocal, facebookClientSecretLocal);
+//		facebookConnectionFactoryLocal.setScope("email");
+//		cfConfig.addConnectionFactory(facebookConnectionFactoryLocal);
+//		VKontakteConnectionFactory vKontakteConnectionFactoryLocal = new VKontakteConnectionFactory(vkClientIdLocal, vkClientSecretLocal);
+//		vKontakteConnectionFactoryLocal.setScope("email");
+//		cfConfig.addConnectionFactory(vKontakteConnectionFactoryLocal);
 
 	}
 

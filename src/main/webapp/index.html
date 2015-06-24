@@ -59,9 +59,9 @@
         </div>
 
         <div	 class = "href-enter" id="LoginIdeaDiv" >
-            <a><span>{{currentUser.principal.username}}</span></a>
+            <a><span>{{currentUser.username}}</span></a>
             <span ng-if="!authenticated"><a id="words" class="words" href="#login">Login</a></span>
-            <span ng-if="authenticated"><a href="logout">Logout</a></span>
+            <span ng-if="authenticated"><a href="" ng-click="sessionCtrl.logout()">Logout</a></span>
         </div>
     </div>
 </div>

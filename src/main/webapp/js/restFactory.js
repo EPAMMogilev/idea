@@ -38,7 +38,7 @@
             return $resource('api/v1/users/', {}, {
                 get: {method: 'GET', isArray: true},
                 getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
-                create: {method: 'POST', url: 'api/v1/users/'},
+                create: {method: 'POST', url: 'user/register/'},
                 getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
             });
          }

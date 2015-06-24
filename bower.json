@@ -18,9 +18,11 @@
     "angular-yandex-map":"1.0.4",
     "ng-imgur":"0.1.5",
     "ng-file-upload":"5.0.6",
-    "angular-messages":"1.4.1"
+    "angular-messages":"1.4.1",
+    "angular-route":"~1.2.x",
+    "angular-sanitize":"~1.2.x"
   },
   "resolutions":{
-    "angular": "1.2.28"
+    "angular": "~1.2.x"
   }
 }

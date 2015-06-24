@@ -29,6 +29,7 @@
                    function( value )
                    {
                     $window.location.href = '#home';
+                    $window.location.reload();
                    },
                    //error
                    function( error ){

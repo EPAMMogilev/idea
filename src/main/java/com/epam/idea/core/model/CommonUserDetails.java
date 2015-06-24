@@ -4,11 +4,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.social.security.SocialUser;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CommonUserDetails extends SocialUser {
+public class CommonUserDetails extends SocialUser implements Principal {
 
 	public static Builder getBuilder() {
 		return new Builder();
@@ -56,6 +57,11 @@ public class CommonUserDetails extends SocialUser {
 
 	public void setSocialSignInProvider(SocialMediaService socialSignInProvider) {
 		this.socialSignInProvider = socialSignInProvider;
+	}
+
+	@Override
+	public String getName() {
+		return id.toString();
 	}
 
 	//Getters are omitted for the sake of clarity.

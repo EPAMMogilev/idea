@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findRegisteredUserByEmail(String email) {
-		System.out.println(email);
 		return userRepository.findUserByEmailWithNotEmptyPasswordOptional(email).orElseThrow(() -> new UserNotFoundException("This user does not exist"));
 	}
 
@@ -78,7 +77,7 @@ public class UserServiceImpl implements UserService {
 	public User findUserOrRegisterNewUserAccount(User newUser) {
 
 		User registered = findUserAccount(newUser);
-
+		System.out.println(registered);
 		if (registered == null) {
 			registered = save(newUser);
 		}
