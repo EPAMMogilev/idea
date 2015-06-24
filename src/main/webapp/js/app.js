@@ -20,7 +20,8 @@ angular
 		'app.controllers',
 		'yaMap',
 		'ngImgur',
-		'ngFileUpload'
+		'ngFileUpload',
+		'infinite-scroll'
 	]);
 	
 	angular.module('app.directives', []); // set Directives

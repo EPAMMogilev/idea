@@ -13,6 +13,20 @@
 
         $scope.criteria = null;
 
+        vm.ideasVisible = [];
+
+        this.loadMore = function(){
+            var count = 3;
+            if(this.ideas){
+                var startPos = (this.ideasVisible && this.ideasVisible.length >= 0 )?this.ideasVisible.length - 1 : 0;
+                var subarr = this.ideas.slice(0, startPos + count);
+                this.ideasVisible.length = 0;
+                for(var i=0; i<subarr.length; i++){
+                    this.ideasVisible.push(subarr[i]);
+                }//for
+            }//if
+        };
+
         vm.selectByCategory =function (tag) {
           tagsFactory.getIdeasByTag(tag).then(function (ideas) {
             vm.ideas = ideas;
@@ -25,8 +39,25 @@
         ideasFactory.getIdeas().then(function (ideas) {
             vm.ideas = ideas;
 
+            //sort ideas by date
+            vm.ideas.sort(
+                function(a, b){
+                    var keyA = a.rating;
+                    var keyB = b.rating;
+
+                    if(keyA<keyB) return -1;
+                    if(keyA>keyB) return 1;
+                    return 0;
+                }
+            );
+
             //$scope.updateGeoObjects(ideas);
             $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+
+            //loading array for infinity list
+            if(vm.ideas){
+                vm.ideasVisible = vm.ideas.slice(0, 5);
+            }//if
         });
 
         $scope.$on('ideas-update', function() {
