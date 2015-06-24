@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.UserIdSource;
@@ -27,37 +28,41 @@ import org.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
  */
 @Configuration
 @EnableSocial
+@PropertySource("classpath:/socialConfig.properties")
 public class SocialConfig implements SocialConfigurer {
 
-	public static String googleClientId = "312001620105-udtemaddk1ii34rqq0cs07lso3co1gbl.apps.googleusercontent.com";
-	public static String googleClientSecret = "CTK9wEzU7VePQS7PhNcbwd3E";
-	public static String facebookClientId = "1461506590828890";
-	public static String facebookClientSecret = "1dc9045cb99ae97b3686cb10648b29b8";
-	public static String vkClientId = "4960267";
-	public static String vkClientSecret = "uu1iDGVhSi8h6EGsL0Gm";
-	public static String facebookClientIdLocal = "1611494735787495";
-	public static String facebookClientSecretLocal = "03c8a369164ba6f44252496c50c384e6";
-	public static String vkClientIdLocal = "4968709";
-	public static String vkClientSecretLocal = "bRqnZIl4qguZ7xCIWNF4";
+	public static String GOOGLE_CLIENT_ID = "socialConfig.googleClientId";
+	public static String GOOGLE_CLIENT_SECRET = "socialConfig.googleClientSecret";
+	public static String FACEBOOK_CLIENT_ID = "socialConfig.facebookClientId";
+	public static String FACEBOOK_CLIENT_SECRET = "socialConfig.facebookClientSecret";
+	public static String VK_CLIENT_ID = "socialConfig.vkClientId";
+	public static String VK_CLIENT_SECRET = "socialConfig.vkClientSecret";
+	public static String FACEBOOK_CLIENT_ID_LOCAL = "socialConfig.facebookClientIdLocal";
+	public static String FACEBOOK_CLIENT_SECRET_LOCAL = "socialConfig.facebookClientSecretLocal";
+	public static String VK_CLIENT_ID_LOCAL = "socialConfig.vkClientIdLocal";
+	public static String VK_CLIENT_SECRET_LOCAL = "socialConfig.vkClientSecretLocal";
+
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private DataSource dataSource;
 
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-		GoogleConnectionFactory googleConnectionFactory = new GoogleConnectionFactory(googleClientId, googleClientSecret);
+		GoogleConnectionFactory googleConnectionFactory = new GoogleConnectionFactory(this.env.getRequiredProperty(GOOGLE_CLIENT_ID), this.env.getRequiredProperty(GOOGLE_CLIENT_SECRET));
 		googleConnectionFactory.setScope("https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email");
 		cfConfig.addConnectionFactory(googleConnectionFactory);
-		FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(facebookClientId, facebookClientSecret);
+		FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(this.env.getRequiredProperty(FACEBOOK_CLIENT_ID), this.env.getRequiredProperty(FACEBOOK_CLIENT_SECRET));
 		facebookConnectionFactory.setScope("email");
 		cfConfig.addConnectionFactory(facebookConnectionFactory);
-		VKontakteConnectionFactory vKontakteConnectionFactory = new VKontakteConnectionFactory(vkClientId, vkClientSecret);
+		VKontakteConnectionFactory vKontakteConnectionFactory = new VKontakteConnectionFactory(this.env.getRequiredProperty(VK_CLIENT_ID), this.env.getRequiredProperty(VK_CLIENT_SECRET));
 		vKontakteConnectionFactory.setScope("email");
 		cfConfig.addConnectionFactory(vKontakteConnectionFactory);
-//		FacebookConnectionFactory facebookConnectionFactoryLocal = new FacebookConnectionFactory(facebookClientIdLocal, facebookClientSecretLocal);
+//		FacebookConnectionFactory facebookConnectionFactoryLocal = new FacebookConnectionFactory(this.env.getRequiredProperty(FACEBOOK_CLIENT_ID_LOCAL), this.env.getRequiredProperty(FACEBOOK_CLIENT_SECRET_LOCAL));
 //		facebookConnectionFactoryLocal.setScope("email");
 //		cfConfig.addConnectionFactory(facebookConnectionFactoryLocal);
-//		VKontakteConnectionFactory vKontakteConnectionFactoryLocal = new VKontakteConnectionFactory(vkClientIdLocal, vkClientSecretLocal);
+//		VKontakteConnectionFactory vKontakteConnectionFactoryLocal = new VKontakteConnectionFactory(this.env.getRequiredProperty(VK_CLIENT_ID_LOCAL), this.env.getRequiredProperty(VK_CLIENT_SECRET_LOCAL));
 //		vKontakteConnectionFactoryLocal.setScope("email");
 //		cfConfig.addConnectionFactory(vKontakteConnectionFactoryLocal);
 
