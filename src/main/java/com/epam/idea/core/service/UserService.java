@@ -30,4 +30,6 @@ public interface UserService extends BaseService<User, Long> {
 	User findRegisteredUserByEmail(String email);
 
 	User findUserOrRegisterNewUserAccount(User newUser);
+
+	User createUserAccountAndReturnIt(User user);
 }
