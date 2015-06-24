@@ -7,6 +7,7 @@ import org.springframework.social.security.SocialUser;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CommonUserDetails extends SocialUser implements Principal {
@@ -17,7 +18,7 @@ public class CommonUserDetails extends SocialUser implements Principal {
 
 	private Long id;
 
-	private Role role;
+	private List<Role> roles;
 
 	private String email;
 
@@ -43,12 +44,12 @@ public class CommonUserDetails extends SocialUser implements Principal {
 		this.email = email;
 	}
 
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public SocialMediaService getSocialSignInProvider() {
@@ -64,7 +65,15 @@ public class CommonUserDetails extends SocialUser implements Principal {
 		return id.toString();
 	}
 
-	//Getters are omitted for the sake of clarity.
+	@Override
+	public String toString() {
+		return "CommonUserDetails{" +
+				"id=" + id +
+				", roles=" + roles +
+				", email='" + email + '\'' +
+				", socialSignInProvider=" + socialSignInProvider +
+				"} " + super.toString();
+	}
 
 	public static class Builder {
 
@@ -72,17 +81,11 @@ public class CommonUserDetails extends SocialUser implements Principal {
 
 		private String username;
 
-		private String firstName;
-
-		private String lastName;
-
-		private String fullName;
-
 		private String email;
 
 		private String password;
 
-		private Role role;
+		private List<Role> roles;
 
 		private SocialMediaService socialSignInProvider;
 
@@ -112,12 +115,12 @@ public class CommonUserDetails extends SocialUser implements Principal {
 			return this;
 		}
 
-		public Builder role(Role role) {
-			this.role = role;
-
-			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.toString());
-			this.authorities.add(authority);
-
+		public Builder roles(List<Role> roles) {
+			this.roles = roles;
+			for (Role role : roles) {
+				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getAuthority());
+				this.authorities.add(authority);
+			}
 			return this;
 		}
 
@@ -134,7 +137,7 @@ public class CommonUserDetails extends SocialUser implements Principal {
 		public CommonUserDetails build() {
 			CommonUserDetails user = new CommonUserDetails(username, password, authorities);
 			user.id = id;
-			user.role = role;
+			user.roles = roles;
 			user.socialSignInProvider = socialSignInProvider;
 			user.email = email;
 			return user;

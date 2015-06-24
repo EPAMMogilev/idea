@@ -1,18 +1,20 @@
 package com.epam.idea.core.service.impl;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
+import com.epam.idea.core.model.CommonUserDetails;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.IdeaRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
+import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,24 +58,8 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public Idea save(final Idea persisted) {
-		User author = persisted.getAuthor();
-		//userRepository.
-//		List<Tag> collect = persisted.getTags().parallelStream()
-//				.map(TagResource::toTag)
-//				.collect(Collectors.toList());
-//		//Tag.getBuilder().withName(persisted.)
-		author = new User();
-
-		try{
-			Field fld = author.getClass().getDeclaredField("id");
-			fld.setAccessible(true);
-			fld.setLong(author, 1L);
-			fld.setAccessible(false);
-		}catch (Exception e){
-			//e.printStackTrace();
-			log.logError(e);
-		}
-
+		CommonUserDetails authorDetails = (CommonUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User author = userRepository.findOne(authorDetails.getId()).orElseThrow(() -> new UserNotFoundException("User with id " + authorDetails.getId() + " does not exist"));
 		persisted.setAuthor(author);
 		return ideaRepository.save(persisted);
 	}

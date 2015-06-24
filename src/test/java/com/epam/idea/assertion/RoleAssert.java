@@ -72,38 +72,4 @@ public class RoleAssert extends AbstractAssert<RoleAssert, Role> {
 	 * @return this assertion object.
 	 * @throws AssertionError if the actual Role's usersWithRole does not contain all given User elements.
 	 */
-	public RoleAssert hasUsersWithRole(User... usersWithRole) {
-		// check that actual Role we want to make assertions on is not null.
-		isNotNull();
-
-		// check that given User varargs is not null.
-		if (usersWithRole == null) throw new AssertionError("Expecting usersWithRole parameter not to be null.");
-
-		// check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
-		Iterables.instance().assertContains(info, actual.getUsersWithRole(), usersWithRole);
-
-		// return the current assertion for method chaining
-		return this;
-	}
-
-	/**
-	 * Verifies that the actual Role has no usersWithRole.
-	 * @return this assertion object.
-	 * @throws AssertionError if the actual Role's usersWithRole is not empty.
-	 */
-	public RoleAssert hasNoUsersWithRole() {
-		// check that actual Role we want to make assertions on is not null.
-		isNotNull();
-
-		// we override the default error message with a more explicit one
-		String assertjErrorMessage = "\nExpected :\n  <%s>\nnot to have usersWithRole but had :\n  <%s>";
-
-		// check
-		if (actual.getUsersWithRole().iterator().hasNext()) {
-			failWithMessage(assertjErrorMessage, actual, actual.getUsersWithRole());
-		}
-
-		// return the current assertion for method chaining
-		return this;
-	}
 }
