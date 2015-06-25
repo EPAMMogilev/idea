@@ -14,7 +14,8 @@
             getIdeaById: getIdeaById,
             insertIdea: insertIdea,
             updateIdea: updateIdea,
-            removeIdea: removeIdea
+            removeIdea: removeIdea,
+            getPage: getPage
         };
         return publicMethod;
 
@@ -40,6 +41,11 @@
 
         function removeIdea(idea){
             var promise = restFactory.ideas().delete(idea).$promise;
+            return promise;
+        };
+
+        function getPage(page){
+            var promise = restFactory.ideas().getPage({page: page.page, size: page.size, sort: page.sort}).$promise;
             return promise;
         };
 
