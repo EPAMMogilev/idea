@@ -9,7 +9,9 @@ import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.UserService;
+import com.epam.idea.core.service.exception.DuplicateUserException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
+import com.epam.idea.core.social.util.PasswordHasher;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,16 +74,36 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User findRegisteredUserByEmail(String email) {
+		return userRepository.findUserByEmailWithNotEmptyPasswordOptional(email).orElseThrow(() -> new UserNotFoundException("This user does not exist"));
+	}
+
+	@Override
 	public User findUserOrRegisterNewUserAccount(User newUser) {
 
 		User registered = findUserAccount(newUser);
-
+		System.out.println(registered);
 		if (registered == null) {
 			Role roleUser = new Role();
 			roleUser.setName(Authority.USER);
 			newUser.setRoles(Arrays.asList(roleUser));
 			
 			registered = save(newUser);
+		}
+
+		return registered;
+	}
+
+	@Override
+	public User createUserAccountAndReturnIt(User user) {
+		User registered = null;
+		user.setPassword(PasswordHasher.md5(user.getPassword()));
+		try{
+			findRegisteredUserByEmail(user.getEmail());
+			throw new DuplicateUserException(user.getEmail());
+		}
+		catch (UserNotFoundException ex) {
+			registered = save(user);
 		}
 
 		return registered;

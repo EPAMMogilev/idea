@@ -1,5 +1,5 @@
 <html ng-app="ideaApp">
-<head>>
+<head>
     <title>Idea lab </title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,6 +31,7 @@
 
     <script type="text/javascript" src="bower_components/angular-yandex-map/ya-map.min.js"></script>
 
+    <script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
     <!-- Imgur -->
     <script type="text/javascript" src="bower_components/ng-imgur/ng-imgur.js"></script>
 
@@ -56,10 +57,20 @@
             <a href="#ideaAddNew" class="addIdeaButton" id="addIdeaButton">Добавить идею</a>
         </div>
 
-        <div	 class = "href-enter" id="LoginIdeaDiv" >
-            <p ng-if="!authenticated"><a id="words" class="words" href="#login">Login</a></p>
-            {{currentUser.principal.username}}
-            <p ng-if="authenticated"><a href="logout">Logout</a></p>
+        <div	 class = "href-enter navbar-collapse collapse" id="LoginIdeaDiv" >
+            <span class="dropdown">
+                <a  ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
+                    <i ng-if="currentUser.socialSignInProvider == null" class="fa fa-user"></i><i ng-if="currentUser.socialSignInProvider === 'GOOGLE'" class="fa fa-google-plus-square color-google-plus"></i><i ng-if="currentUser.socialSignInProvider === 'FACEBOOK'" class="fa fa-facebook-square color-facebook"></i><i ng-if="currentUser.socialSignInProvider === 'VKONTAKTE'" class="fa fa-vk color-vk"></i>
+                    {{currentUser.username}}
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#/account">Профиль</a></li>
+                    <li><a href="#/myideas">Мои идеи</a></li>
+                </ul>
+            </span>
+            <span ng-if="!authenticated"><a id="words" class="words" href="#login">ВХОД</a></span>
+            <span ng-if="authenticated"><a href="" ng-click="sessionCtrl.logout()">ВЫХОД</a></span>
         </div>
     </div>
 </div>

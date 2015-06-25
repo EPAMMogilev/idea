@@ -15,6 +15,9 @@ public interface UserRepository extends BaseRepository<User, Long> {
 	User findUserByEmail(String userEmail);
 
 	@Query("select u from User u where u.email = ?1 and u.password is not null")
+	Optional<User> findUserByEmailWithNotEmptyPasswordOptional(String userEmail);
+
+	@Query("select u from User u where u.email = ?1 and u.password is not null")
 	User findUserByEmailWithNotEmptyPassword(String userEmail);
 
 	@Query("select u from User u where u.socialId = ?1")

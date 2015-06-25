@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	UserRepository userRepository;
 
 
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -38,26 +39,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		;
 	}
-
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.formLogin()//.loginProcessingUrl("/pages/login.html")
-				.loginPage("/pages/login.html")
+				.loginPage("/login")
 				.permitAll()
-				.and()
+			.and()
 				.httpBasic()
-				.and()
+			.and()
 				.authorizeRequests()
-				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/app.html", "/pages/details.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*")
+				.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/registration.html", "/pages/app.html", "/pages/details.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*", "/login", "/hi")
 				.permitAll()
+
 				.anyRequest().authenticated()
-				.and()
-				.logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
-				.and()
+			.and()
+				.logout().deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/")
+			.and()
 				.apply(new SpringSocialConfigurer())
-				.and()
+			.and()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-				.csrf().csrfTokenRepository(csrfTokenRepository());
+		.csrf().csrfTokenRepository(csrfTokenRepository());
 
 	}
 

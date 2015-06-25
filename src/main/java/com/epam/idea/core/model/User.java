@@ -29,7 +29,7 @@ public class User implements Serializable {
 	public static final int MIN_LENGTH_USERNAME = 1;
 	public static final int MAX_LENGTH_USERNAME = 20;
 	public static final int MIN_LENGTH_EMAIL = 3;
-	public static final int MAX_LENGTH_EMAIL = 20;
+	public static final int MAX_LENGTH_EMAIL = 30;
 	public static final int MIN_LENGTH_PASSWORD = 6;
 	public static final int MAX_LENGTH_PASSWORD = 20;
 

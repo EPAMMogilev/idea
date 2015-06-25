@@ -4,33 +4,42 @@
         .module('app.controllers')
         .controller('sessionCtrl', sessionCtrl);
 
-    sessionCtrl.$inject = ['$rootScope', '$http'];
+    sessionCtrl.$inject = ['$rootScope', '$http', '$window'];
 
-    function sessionCtrl($rootScope, $http) {
+    function sessionCtrl($rootScope, $http, $window) {
 
          var vm = this;
+         vm.authenticate = authenticate;
+         vm.logout = logout;
 
-                 var authenticate = function(callback) {
-                     $http.get('user').success(function(data) {
+         function authenticate(callback) {
+            $http.get('user').success(function(data) {
 
-                       if (data.name) {
-                       console.log(data.name);
-                         $rootScope.authenticated = true;
-                         $rootScope.currentUser = data;
-                       } else {
+               if (data.name) {
+               console.log(data.name);
+                 $rootScope.authenticated = true;
+                 $rootScope.currentUser = data;
+               } else {
 
-                         $rootScope.authenticated = false;
-                       }
-                       callback && callback();
-                     }).error(function() {
-                       $rootScope.authenticated = false;
-                       callback && callback();
-                     });
+                 $rootScope.authenticated = false;
+               }
+               callback && callback();
+            }).error(function() {
+               $rootScope.authenticated = false;
+               callback && callback();
+            });
 
-                   }
+         }
 
-                   console.log("hello");;
-                   authenticate();
+         function logout() {
+            $http.post("logout", {}).success(function() {
+                   $window.location.reload();
+                }).error(function(data) {
+                    console.log("Logout failed");
+                });
+         }
+
+         vm.authenticate();
     }
 
 

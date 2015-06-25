@@ -1,24 +1,24 @@
 <div class = "login-center-form" ng-controller = "LoginController as vm">
     <div class="login-padding">
-        <h2 class="text-center">Login</h2>
-        <div ng-show="vm.error" class="alert alert-danger">Invalid user/password combination</div>
+        <h2 class="text-center">Вход</h2>
+        <div ng-show="vm.error" class="alert alert-danger">Неверный email и/или пароль</div>
         <form name="form" ng-submit="vm.login()" role="form">
             <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
-                <input type="text" name="email" id="email" class="form-control input-lg" placeholder="E-mail" ng-model="vm.credentials.email" required autofocus="" />
-                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+                <input type="text" name="email" id="email" class="form-control input-lg" placeholder="Email" ng-model="vm.credentials.email" required autofocus="" />
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Введите email</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="vm.credentials.password" required />
-                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Пароль" ng-model="vm.credentials.password" required />
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Введите пароль</span>
             </div>
             <div class="form-actions">
-                <button id="btnLogin" type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
-                <a href="#/register" class="btn btn-link">Register</a>
+                <button id="btnLogin" type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Вход</button>
+                <a href="#/register" class="btn btn-link">Зарегистрироваться</a>
             </div>
         </form>
-        <a class="btn btn-block btn-facebook" href="auth/facebook"><i class="fa fa-facebook"></i> Sigh in with Facebook</a>
-        <a class="btn btn-block btn-google-plus" href="auth/google"><i class="fa fa-google"></i> Sigh in with Google</a>
-        <a class="btn btn-block btn-vk" href="auth/vkontakte"><i class="fa fa-vk"></i> Sigh in with VK</a>
+        <a class="btn btn-block btn-facebook" href="auth/facebook"><i class="fa fa-facebook"></i> Войти через Facebook</a>
+        <a class="btn btn-block btn-google-plus" href="auth/google"><i class="fa fa-google"></i> Войти через Google</a>
+        <a class="btn btn-block btn-vk" href="auth/vkontakte"><i class="fa fa-vk"></i> Войти через VK</a>
 
     </div>
 </div>

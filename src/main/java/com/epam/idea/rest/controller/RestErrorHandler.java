@@ -3,6 +3,7 @@ package com.epam.idea.rest.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.epam.idea.core.service.exception.DuplicateUserException;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.core.service.exception.TagDoesNotExistException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
@@ -41,6 +42,13 @@ public class RestErrorHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public VndErrors tagNotFoundExceptionHandler(final TagDoesNotExistException ex) {
 		return new VndErrors(TAG_NOT_FOUND_LOGREF, ex.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(DuplicateUserException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public VndErrors duplicateUserExceptionHandler(final DuplicateUserException ex) {
+		return new VndErrors(USER_NOT_FOUND_LOGREF, ex.getMessage());
 	}
 
 	@ResponseBody

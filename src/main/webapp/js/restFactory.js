@@ -38,9 +38,8 @@
             return $resource('api/v1/users/', {}, {
                 get: {method: 'GET', isArray: true},
                 getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
-                createSession: {method: 'POST', params: {user: '@user'}, url: 'api/v1/users/authenticate/'},
-                deleteSession: {method: 'DELETE', params: {sessionId: '@sessionId'}, url: 'api/v1/users/authenticate/:sessionId', isArray: true},
-                getSession: {method: 'GET', params: {sessionId: '@sessionId'}, url: 'api/v1/users/authenticate/:sessionId', isArray: true},
+                create: {method: 'POST', url: 'user/register/'},
+                getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
             });
          }
     }

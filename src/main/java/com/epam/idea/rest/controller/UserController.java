@@ -93,4 +93,10 @@ public class UserController {
 		final List<Comment> comments = this.commentService.findCommentsByUserId(userId);
 		return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/{userEmail}/email", method = RequestMethod.GET)
+	public HttpEntity<UserResource> getRegisteredUserByEmail(@PathVariable String userEmail) {
+		User user = this.userService.findRegisteredUserByEmail(userEmail);
+		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
+	}
 }

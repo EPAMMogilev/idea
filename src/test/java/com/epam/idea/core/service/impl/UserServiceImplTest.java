@@ -8,6 +8,7 @@ import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.UserService;
+import com.epam.idea.core.service.exception.DuplicateUserException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -316,5 +317,47 @@ public class UserServiceImplTest {
 		verify(this.userRepositoryMock, times(1)).findUserBySocialNetworkAndSocialId(eq(found.getSocialMediaService()), any(String.class));
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
+
+	@Test
+	public void shouldCreateNewUserAndReturnIt() throws Exception {
+		//Given:
+		User found = TestUserBuilder.aUser().build();
+		given(this.userRepositoryMock.findUserByEmailWithNotEmptyPasswordOptional(any(String.class))).willReturn(Optional.empty());
+		given(this.userRepositoryMock.save(found)).willReturn(found);
+
+		//When:
+		User actual = this.sut.createUserAccountAndReturnIt(found);
+
+		//Then:
+		assertThat(actual).isEqualTo(found);
+		verify(this.userRepositoryMock, times(1)).findUserByEmailWithNotEmptyPasswordOptional(any(String.class));
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		verify(this.userRepositoryMock, times(1)).save(userCaptor.capture());
+		verifyNoMoreInteractions(this.userRepositoryMock);
+
+		User userArgument = userCaptor.getValue();
+		assertThat(userArgument.getUsername()).isEqualTo(found.getUsername());
+		assertThat(userArgument.getEmail()).isEqualTo(found.getEmail());
+		assertThat(userArgument.getPassword()).isEqualTo(found.getPassword());
+	}
+
+	@Test
+	public void shouldThrowExceptionWhenFindUserWithDuplicateEmail() throws Exception {
+		//Given:
+		User found = TestUserBuilder.aUser().build();
+		given(this.userRepositoryMock.findUserByEmailWithNotEmptyPasswordOptional(any(String.class))).willReturn(Optional.of(found));
+
+		//When:
+		try {
+			this.sut.createUserAccountAndReturnIt(found);
+			fail("DuplicateUserException expected because we try create the user which has email existing in database");
+
+		//Then:
+		} catch (DuplicateUserException e) {
+			verify(this.userRepositoryMock, times(1)).findUserByEmailWithNotEmptyPasswordOptional(any(String.class));
+			verifyNoMoreInteractions(this.userRepositoryMock);
+		}
+	}
+
 
 }
