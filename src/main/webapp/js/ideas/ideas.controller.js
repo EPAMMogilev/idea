@@ -14,17 +14,42 @@
         $scope.criteria = null;
 
         vm.ideasVisible = [];
+        vm.newIdeas = [];
+
+        //infinity load
+        vm.newIdeasFilterPattern = 'creationTime,desc';
+        vm.newMostRateFilterPattern = 'rating,desc';
+        vm.pageRequest = {
+            page: 0,
+            size: 3,
+            sort: 'creationTime,desc'
+        };
 
         this.loadMore = function(){
-            var count = 3;
-            if(this.ideas){
-                var startPos = (this.ideasVisible && this.ideasVisible.length >= 0 )?this.ideasVisible.length - 1 : 0;
-                var subarr = this.ideas.slice(0, startPos + count);
-                this.ideasVisible.length = 0;
-                for(var i=0; i<subarr.length; i++){
-                    this.ideasVisible.push(subarr[i]);
-                }//for
-            }//if
+
+            vm.pageRequest.page += 1;
+
+            vm.pageRequest.sort = vm.newMostRateFilterPattern;
+            ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+                if(ideas){
+                    for(var i=0; i < ideas.length; i++){
+                        vm.ideasVisible.push(ideas[i]);
+                    }//for
+                }//if
+
+                //$scope.updateGeoObjects(ideas);
+                $scope.geoObjects = mapGeoService.generateGeoObjects(vm.ideasVisible);
+            });
+
+            //load most popular ideas
+            vm.pageRequest.sort = vm.newIdeasFilterPattern;
+            ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+                if(ideas){
+                    for(var i=0; i < ideas.length; i++){
+                        vm.newIdeas.push(ideas[i]);
+                    }//for
+                }//if
+            });
         };
 
         vm.selectByCategory =function (tag) {
@@ -36,6 +61,21 @@
         })
         };
 
+        vm.pageRequest.sort = vm.newMostRateFilterPattern;
+        ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+            vm.ideasVisible = ideas;
+
+            //$scope.updateGeoObjects(ideas);
+            $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+        });
+
+
+        //load most popular ideas
+        vm.pageRequest.sort = vm.newIdeasFilterPattern;
+        ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+            vm.newIdeas = ideas;
+        });
+/*
         ideasFactory.getIdeas().then(function (ideas) {
             vm.ideas = ideas;
 
@@ -58,7 +98,7 @@
             if(vm.ideas){
                 vm.ideasVisible = vm.ideas.slice(0, 5);
             }//if
-        });
+        });*/
 
         $scope.$on('ideas-update', function() {
             ideasFactory.getIdeas().then(function (ideas) {

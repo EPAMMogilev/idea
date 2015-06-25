@@ -18,7 +18,8 @@
         </div>
         <div  class="newIdeas">
             <ul>
-                <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'| searchLineFilter:criteria | limitTo: 5  "  class = "idea-li" >
+                <!--<li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'| searchLineFilter:criteria | limitTo: 5  "  class = "idea-li" >-->
+                <li ng-repeat="idea in ideasCtrl.newIdeas"  class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
                 </li>
             </ul>
