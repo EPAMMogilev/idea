@@ -9,7 +9,8 @@
         <input placeholder="Найти..." ng-model="criteria" class="form-control">
     </div>
     <div class="dataContainer">
-        <div infinite-scroll='ideasCtrl.loadMore()'> <!-- class="allIdeas"  -->
+        <!-- class="allIdeas"  -->
+        <div  id="lstMostRating" class="allIdeas" ideas-list="ideasCtrl.loadMore()">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.ideasVisible | orderBy: '-rating' | searchLineFilter:criteria"  class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
