@@ -30,6 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -154,6 +155,19 @@ public class IdeaServiceImplTest {
 	}
 
 	@Test
+	public void shouldDeleteIdea() throws Exception {
+		//Given:
+		Idea deletedIdea = TestIdeaBuilder.anIdea().build();
+
+		//When:
+		this.sut.delete(deletedIdea);
+
+		//Then:
+		verify(this.ideaRepositoryMock, times(1)).delete(deletedIdea);
+		verifyNoMoreInteractions(this.ideaRepositoryMock);
+	}
+
+	@Test
 	public void shouldUpdateIdeaAndReturnIt() throws Exception {
 		//Given:
 		Idea source = new TestIdeaBuilder()
@@ -215,6 +229,42 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
 		verify(this.ideaRepositoryMock, times(1)).findAll();
+		verifyNoMoreInteractions(this.ideaRepositoryMock);
+	}
+
+	@Test
+	public void shouldReturnListOfIdeasByUserId() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findByUserId(any(Long.class))).willReturn(ideas);
+
+		//When:
+		List<Idea> actual = this.sut.findIdeasByUserId(1);
+
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+		verify(this.ideaRepositoryMock, times(1)).findByUserId(any(Long.class));
+		verifyNoMoreInteractions(this.ideaRepositoryMock);
+	}
+
+	@Test
+	public void shouldReturnListOfIdeasByTagId() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findByTagId(any(Long.class))).willReturn(ideas);
+
+		//When:
+		List<Idea> actual = this.sut.findIdeasByTagId(1);
+
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+		verify(this.ideaRepositoryMock, times(1)).findByTagId(any(Long.class));
 		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 }
