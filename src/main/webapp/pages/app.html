@@ -10,7 +10,7 @@
     </div>
     <div class="dataContainer">
         <!-- class="allIdeas"  -->
-        <div  id="lstMostRating" class="allIdeas" ideas-list="ideasCtrl.loadMore()">
+        <div  id="lstMostRating" class="allIdeas" ideas-list update-function="ideasCtrl.loadMore()">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.ideasVisible | orderBy: '-rating' | searchLineFilter:criteria"  class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>

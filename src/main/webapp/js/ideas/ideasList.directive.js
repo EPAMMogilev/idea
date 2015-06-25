@@ -10,9 +10,13 @@
 	function ideasList() {
 		return {
 			restrict: 'A',
+			scope:{
+			    updateFunction: '&'
+			},
 			link: function(scope, element, attrs) {
                 element.bind('scroll', function(){
                     alert('scroll: ');
+                    scope.updateFunction();
                 });
 			}//link
 		}

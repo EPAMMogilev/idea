@@ -21,7 +21,7 @@
         vm.newMostRateFilterPattern = 'rating,desc';
         vm.pageRequest = {
             page: 0,
-            size: 3,
+            size: 5,
             sort: 'creationTime,desc'
         };
 
