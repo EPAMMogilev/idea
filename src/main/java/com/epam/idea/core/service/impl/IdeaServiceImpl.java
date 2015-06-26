@@ -13,8 +13,10 @@ import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,9 +42,14 @@ public class IdeaServiceImpl implements IdeaService {
 	@Transactional(readOnly = true)
 	public List<Idea> findAll() {
 		final List<Idea> allIdeas = ideaRepository.findAll();
+		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
+
 		allIdeas.forEach(idea -> {
 			Hibernate.initialize(idea.getAuthor());
 			Hibernate.initialize(idea.getRelatedTags());
+			if (!isAnonymous) {
+				idea.setIsLiked(isCurrentUserLikedIdea(idea.getId()));
+			}
 		});
 		return allIdeas;
 	}
@@ -58,7 +65,7 @@ public class IdeaServiceImpl implements IdeaService {
 	}
 
 	@Override
-	@PreAuthorize("isAuthentificated()")
+	@PreAuthorize("isFullyAuthenticated()")
 	public Idea save(final Idea persisted) {
 		User author = userRepository.findCurrentUser();
 		persisted.setAuthor(author);
@@ -118,5 +125,11 @@ public class IdeaServiceImpl implements IdeaService {
 		}
 
 		return ideaRepository.save(idea);
+	}
+
+	@Override
+	public boolean isCurrentUserLikedIdea(long ideaId) {
+		Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+		return idea != null;
 	}
 }

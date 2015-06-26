@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -79,6 +80,9 @@ public class Idea implements Serializable {
 			joinColumns = @JoinColumn(name = "IDEA_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	private List<User> likedUsers;
+
+	@Transient
+	private boolean isLiked;
 
 	public Idea() {
 		this.relatedTags = new ArrayList<>();
@@ -219,5 +223,13 @@ public class Idea implements Serializable {
 
 	public void setLikedUsers(List<User> likedUsers) {
 		this.likedUsers = likedUsers;
+	}
+
+	public boolean getIsLiked() {
+		return isLiked;
+	}
+
+	public void setIsLiked(boolean isLiked) {
+		this.isLiked = isLiked;
 	}
 }

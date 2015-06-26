@@ -16,7 +16,9 @@
 				idea: '=',			
 				ngModel: '=',
 				details: '&',				
-				changeRating: '&'				
+				changeRating: '&',
+				changeLike: '&'
+
 			},
 			link: function(scope, element, attrs) {
 				scope.photo = (scope.idea.imageUrl)?scope.idea.imageUrl:'images/photo.gif';
@@ -36,6 +38,7 @@
 							scope.idea.rating = idea.rating;
 						}
 					);
+					scope.idea.liked = !scope.idea.liked;
 				}
 			},
 			templateUrl:'templates/idea.tpl.html'

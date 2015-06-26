@@ -38,6 +38,9 @@ public interface IdeaService extends BaseService<Idea, Long> {
 	@PreAuthorize("hasRole('ADMIN') or userId == principal.id")
 	Idea saveForUser(@Param("userId") long userId, Idea idea);
 
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isFullyAuthenticated()")
 	Idea changeIdeaLike(long ideaId);
+
+	@PreAuthorize("isFullyAuthenticated()")
+	boolean isCurrentUserLikedIdea(long ideaId);
 }

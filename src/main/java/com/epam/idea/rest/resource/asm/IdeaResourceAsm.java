@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.epam.idea.core.model.Idea;
-import com.epam.idea.core.model.User;
 import com.epam.idea.rest.controller.IdeaController;
 import com.epam.idea.rest.controller.UserController;
 import com.epam.idea.rest.resource.IdeaResource;
@@ -50,6 +49,7 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
 		} else {
 			ideaResource.setTags(emptyList());
 		}
+		ideaResource.setIsLiked(original.getIsLiked());
 		ideaResource.add(linkTo(methodOn(IdeaController.class).show(original.getId())).withSelfRel());
 		Optional.ofNullable(original.getAuthor()).ifPresent(author ->
 				ideaResource.add(linkTo(methodOn(UserController.class).getUser(author.getId())).withRel(REL_AUTHOR)));

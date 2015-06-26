@@ -27,8 +27,9 @@
 			<div id="rating" class="rating">{{idea.rating}}</div>
 		</div>
 		<div class="font-cenralbig" id="btnLikeIdea">
-			<span class="btn btn-default" ng-click="changeLike()">
-				<i class="fa fa-thumbs-o-up fa-2x"></i>
+			<span class="btn btn-thumbs" ng-click="changeLike()">
+				<i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="{{idea.liked}}"></i>
+				<i class="fa fa-thumbs-up fa-2x color-thumbs" ng-hide="{{!idea.liked}}"></i>
 			</span>
 		</div>
 	</div>
