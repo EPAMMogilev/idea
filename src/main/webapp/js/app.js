@@ -20,9 +20,8 @@ angular
 		'app.controllers',
 		'yaMap',
 		'ngImgur',
-		'ngFileUpload'
-
-        'ngMessages'
+		'ngFileUpload',
+	        'ngMessages'
 	]);
 	
 	angular.module('app.directives', []); // set Directives
