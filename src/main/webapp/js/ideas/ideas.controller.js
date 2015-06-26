@@ -17,20 +17,22 @@
         vm.newIdeas = [];
 
         //infinity load
-        vm.newIdeasFilterPattern = 'creationTime,desc';
-        vm.newMostRateFilterPattern = 'rating,desc';
-        vm.pageRequest = {
+        vm.pageRatingRequest = {
+            page: 0,
+            size: 5,
+            sort: 'rating,desc'
+        };
+        vm.pageNewRequest = {
             page: 0,
             size: 5,
             sort: 'creationTime,desc'
         };
 
-        this.loadMore = function(){
+        this.loadMoreRating = function(){
 
-            vm.pageRequest.page += 1;
+            vm.pageRatingRequest.page += 1;
 
-            vm.pageRequest.sort = vm.newMostRateFilterPattern;
-            ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+            ideasFactory.getPage(vm.pageRatingRequest).then(function (ideas) {
                 if(ideas){
                     for(var i=0; i < ideas.length; i++){
                         vm.ideasVisible.push(ideas[i]);
@@ -40,10 +42,13 @@
                 //$scope.updateGeoObjects(ideas);
                 $scope.geoObjects = mapGeoService.generateGeoObjects(vm.ideasVisible);
             });
+        };
 
+        this.loadMoreNew = function(){
+
+            vm.pageNewRequest.page += 1;
             //load most popular ideas
-            vm.pageRequest.sort = vm.newIdeasFilterPattern;
-            ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+            ideasFactory.getPage(vm.pageNewRequest).then(function (ideas) {
                 if(ideas){
                     for(var i=0; i < ideas.length; i++){
                         vm.newIdeas.push(ideas[i]);
@@ -61,8 +66,7 @@
         })
         };
 
-        vm.pageRequest.sort = vm.newMostRateFilterPattern;
-        ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+        ideasFactory.getPage(vm.pageRatingRequest).then(function (ideas) {
             vm.ideasVisible = ideas;
 
             //$scope.updateGeoObjects(ideas);
@@ -71,8 +75,7 @@
 
 
         //load most popular ideas
-        vm.pageRequest.sort = vm.newIdeasFilterPattern;
-        ideasFactory.getPage(vm.pageRequest).then(function (ideas) {
+        ideasFactory.getPage(vm.pageNewRequest).then(function (ideas) {
             vm.newIdeas = ideas;
         });
 /*

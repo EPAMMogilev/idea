@@ -101,7 +101,7 @@ button {
 }
 
 .newIdeas {
-    width: 450px;
+    width: 600px;
     height:auto;
     display:inline-block;
     /*padding-right: 15px;*/
@@ -109,6 +109,9 @@ button {
     padding-right: 15px;
     padding-left: 15px;
     min-width: 450px;
+    /*srolls*/
+    max-height: 640px;
+    overflow-y: auto;
 }
 
 .newIdeas ul{
@@ -582,8 +585,10 @@ button {
 
 .allIdeas
 {
-    height: 650px;
-    overflow: scroll;
+    display: inline-block;
+    /*border: 1px solid red;*/
+    max-height: 640px;
+    overflow-y: auto;
 }
 
 .newIdeas

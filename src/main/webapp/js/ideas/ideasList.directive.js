@@ -21,7 +21,7 @@
 
                     var scrollPercent = 100 - Math.round(scrollTop / (scrollH/100));
 
-                    if(scrollPercent > 99){
+                    if(scrollPercent > 96){
                         alert('% = ' + scrollPercent);
                         scope.updateFunction();
                     }//if
