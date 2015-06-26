@@ -3,18 +3,18 @@ package com.epam.idea.core.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.epam.idea.core.model.CommonUserDetails;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.IdeaRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
-import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +31,8 @@ public class IdeaServiceImpl implements IdeaService {
 	private UserRepository userRepository;
 
 	@Override
-	public void delete(final Idea deleted) {
+	@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
+	public void delete(@Param("idea")Idea deleted) {
 		ideaRepository.delete(deleted);
 	}
 
@@ -57,6 +58,7 @@ public class IdeaServiceImpl implements IdeaService {
 	}
 
 	@Override
+	@PreAuthorize("isAuthentificated()")
 	public Idea save(final Idea persisted) {
 		User author = userRepository.findCurrentUser();
 		persisted.setAuthor(author);
@@ -72,8 +74,7 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public Idea update(final long ideaId, final Idea source) {
-		final
-		Idea target = findOne(ideaId);
+		final Idea target = findOne(ideaId);
 		target.updateWith(source);
 		return target;
 	}
@@ -117,9 +118,5 @@ public class IdeaServiceImpl implements IdeaService {
 		}
 
 		return ideaRepository.save(idea);
-	}
-
-	public Idea getLikedIdea(long ideaId) {
-		return ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
 	}
 }
