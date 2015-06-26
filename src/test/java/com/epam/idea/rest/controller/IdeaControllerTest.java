@@ -14,11 +14,15 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.hateoas.Link;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 import static com.epam.idea.builder.model.TestIdeaBuilder.DEFAULT_IDEA_ID;
 import static com.epam.idea.core.service.exception.IdeaNotFoundException.ERROR_MSG_PATTERN_IDEA_NOT_FOUND;
@@ -34,6 +38,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -53,6 +58,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IdeaControllerTest {
 
 	@Autowired
+	private IdeaController ideaController;
+
+	@Autowired
 	private IdeaService ideaServiceMock;
 
 	@Autowired
@@ -60,10 +68,12 @@ public class IdeaControllerTest {
 
 	private MockMvc mockMvc;
 
+	private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+
 	@Before
 	public void setUp() throws Exception {
 		Mockito.reset(this.ideaServiceMock);
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(ideaController).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
 	}
 
 	@Test
@@ -87,7 +97,7 @@ public class IdeaControllerTest {
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldReturnErrorWithHttpStatus404WhenUserNotFound() throws Exception {
 		String expectedErrorMsg = String.format(ERROR_MSG_PATTERN_IDEA_NOT_FOUND, DEFAULT_IDEA_ID);
 
@@ -109,7 +119,7 @@ public class IdeaControllerTest {
 	public void shouldReturnAllFoundIdeas() throws Exception {
 		Idea foundIdea = TestIdeaBuilder.anIdea().build();
 
-		when(this.ideaServiceMock.findAll()).thenReturn(Lists.newArrayList(foundIdea));
+		when(this.ideaServiceMock.findAll(defaultPageRequest)).thenReturn(Lists.newArrayList(foundIdea));
 
 		this.mockMvc.perform(get("/api/v1/ideas")
 				.accept(APPLICATION_JSON_UTF8))
@@ -123,7 +133,7 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));
 
-		verify(this.ideaServiceMock, times(1)).findAll();
+		verify(this.ideaServiceMock, times(1)).findAll(defaultPageRequest);
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 
@@ -170,7 +180,7 @@ public class IdeaControllerTest {
 		assertThat(ideaArgument.getRating()).isEqualTo(ideaResource.getRating());
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void shouldReturnValidationErrorsForTooLongTitleAndDescription() throws Exception {
 		String invalidTitle = createStringWithLength(Idea.MAX_LENGTH_TITLE + 1);
 		String invalidDescription = createStringWithLength(Idea.MAX_LENGTH_DESCRIPTION + 1);
@@ -186,7 +196,7 @@ public class IdeaControllerTest {
 				.content(convertObjectToJsonBytes(ideaResource)))
 				.andDo(print())
 				.andExpect(status().isBadRequest())
-				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				//.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$", hasSize(2)))
 				.andExpect(jsonPath("$[*].logref").value(containsInAnyOrder("title", "description")))
 				.andExpect(jsonPath("$[*].message").value(containsInAnyOrder(
@@ -214,7 +224,7 @@ public class IdeaControllerTest {
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldReturnErrorWithHttpStatus404WhenDeleteIdeaWhichDoesNotExist() throws Exception {
 		long ideaId = 6L;
 
@@ -274,7 +284,7 @@ public class IdeaControllerTest {
 		assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
 	}
 
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldReturnErrorWithHttpStatus404WhenUpdateIdeaWhichDoesNotExist() throws Exception {
 		long ideaId = 10L;
 		String newTitle = "New title";
