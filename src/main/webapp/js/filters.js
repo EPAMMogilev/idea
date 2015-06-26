@@ -30,7 +30,9 @@ angular
         var filtered = [];
 
         if(!criteria || 0 === criteria.length){
-            filtered = items.slice();
+            if(items){
+                filtered = items.slice();
+            }//if
         }else{
             for(var i=0; i<items.length; i++){
                 var item = items[i];
