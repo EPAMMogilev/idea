@@ -147,6 +147,8 @@ button {
 	height: 100%;
 	overflow: hidden;
 	max-height: 130px;
+	border-bottom: 1px solid #ddd;
+	margin-top: 10px;
 }
 
 .idea>div{

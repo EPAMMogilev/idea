@@ -32,7 +32,8 @@
 
             vm.pageRatingRequest.page += 1;
 
-            ideasFactory.getPage(vm.pageRatingRequest).then(function (ideas) {
+            var promiseResponse = ideasFactory.getPage(vm.pageRatingRequest);
+            promiseResponse.then(function (ideas) {
                 if(ideas){
                     for(var i=0; i < ideas.length; i++){
                         vm.ideasVisible.push(ideas[i]);
@@ -42,19 +43,24 @@
                 //$scope.updateGeoObjects(ideas);
                 $scope.geoObjects = mapGeoService.generateGeoObjects(vm.ideasVisible);
             });
+
+            return promiseResponse;
         };
 
         this.loadMoreNew = function(){
 
             vm.pageNewRequest.page += 1;
             //load most popular ideas
-            ideasFactory.getPage(vm.pageNewRequest).then(function (ideas) {
+            var promiseResponse = ideasFactory.getPage(vm.pageNewRequest);
+            promiseResponse.then(function (ideas) {
                 if(ideas){
                     for(var i=0; i < ideas.length; i++){
                         vm.newIdeas.push(ideas[i]);
                     }//for
                 }//if
             });
+
+            return promiseResponse;
         };
 
         vm.selectByCategory =function (tag) {

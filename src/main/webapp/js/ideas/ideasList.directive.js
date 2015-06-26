@@ -15,17 +15,19 @@
 			    divName: '@'
 			},
 			link: function(scope, element, attrs) {
-                element.bind('scroll', function(){
-                    var scrollTop = element.scrollTop();
-                    var scrollH = $(scope.divName).height();
-
-                    var scrollPercent = 100 - Math.round(scrollTop / (scrollH/100));
-
-                    if(scrollPercent > 96){
-                        alert('% = ' + scrollPercent);
-                        scope.updateFunction();
-                    }//if
-                });
+			    var scrollFunc = function(){
+                                             var workDiv = $(scope.divName);
+                                             if(workDiv){
+                                                if(workDiv[0].scrollHeight - workDiv.scrollTop() == workDiv.outerHeight())
+                                                {
+                                                     element.unbind('scroll');
+                                                     scope.updateFunction().then(function(){
+                                                        element.bind('scroll', scrollFunc);
+                                                     });
+                                                }
+                                             }//if
+                                         };
+                element.bind('scroll', scrollFunc);
 			}//link
 		}
 	}
