@@ -58,8 +58,7 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public Idea save(final Idea persisted) {
-		CommonUserDetails authorDetails = (CommonUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User author = userRepository.findOne(authorDetails.getId()).orElseThrow(() -> new UserNotFoundException("User with id " + authorDetails.getId() + " does not exist"));
+		User author = userRepository.findCurrentUser();
 		persisted.setAuthor(author);
 		return ideaRepository.save(persisted);
 	}
@@ -95,12 +94,32 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public Idea saveForUser(final long userId, final Idea idea) {
-		Optional<User> userOptional = userRepository.findOne(userId);
-		User user = userOptional.get();
+		User user = userRepository.findOne(userId).get();
 		List<Idea> ideas = user.getIdeas();
 		ideas.add(idea);
 		idea.setAuthor(user);
 		Idea savedIdea = ideaRepository.save(idea);
 		return savedIdea;
+	}
+
+	@Override
+	public Idea changeIdeaLike(long ideaId) {
+		Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+		User currentUser = userRepository.findCurrentUser();
+
+		if (idea == null) {
+			idea = ideaRepository.findOne(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
+			idea.getLikedUsers().add(currentUser);
+			idea.setRating(idea.getRating() + 1);
+		} else {
+			idea.getLikedUsers().remove(currentUser);
+			idea.setRating(idea.getRating() - 1);
+		}
+
+		return ideaRepository.save(idea);
+	}
+
+	public Idea getLikedIdea(long ideaId) {
+		return ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
 	}
 }

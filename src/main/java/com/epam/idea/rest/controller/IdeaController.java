@@ -53,4 +53,10 @@ public class IdeaController {
 		final Idea updatedIdea = this.ideaService.update(ideaId, ideaResource.toIdea());
 		return new ResponseEntity<>(new IdeaResourceAsm().toResource(updatedIdea), HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/{ideaId}/like", method = RequestMethod.POST)
+	public HttpEntity<IdeaResource> changeLike(@PathVariable final long ideaId) {
+		final Idea updatedIdea = this.ideaService.changeIdeaLike(ideaId);
+		return new ResponseEntity<>(new IdeaResourceAsm().toResource(updatedIdea), HttpStatus.OK);
+	}
 }

@@ -2,9 +2,11 @@ package com.epam.idea.core.repository;
 
 import java.util.Optional;
 
+import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.SocialMediaService;
 import com.epam.idea.core.model.User;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 public interface UserRepository extends BaseRepository<User, Long> {
 
@@ -25,4 +27,7 @@ public interface UserRepository extends BaseRepository<User, Long> {
 
 	@Query("select u from User u where u.socialMediaService = ?1 and u.socialId = ?2")
 	User findUserBySocialNetworkAndSocialId(SocialMediaService socialMediaService, String socialId);
+
+	@Query("select u from User u where u.id = ?#{ principal?.id }")
+	User findCurrentUser();
 }

@@ -30,6 +30,13 @@
 					scope.idea.rating += mark;
 					ideasFactory.updateIdea(scope.idea);
 				};
+				scope.changeLike = function() {
+					ideasFactory.changeIdeaLike(scope.idea.id).then(
+						function (idea) {
+							scope.idea.rating = idea.rating;
+						}
+					);
+				}
 			},
 			templateUrl:'templates/idea.tpl.html'
 		}

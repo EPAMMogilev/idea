@@ -74,9 +74,16 @@ public class Idea implements Serializable {
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "IDEA_LIKES",
+			joinColumns = @JoinColumn(name = "IDEA_ID"),
+			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+	private List<User> likedUsers;
+
 	public Idea() {
 		this.relatedTags = new ArrayList<>();
 		this.comments = new ArrayList<>();
+		this.likedUsers = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -204,5 +211,13 @@ public class Idea implements Serializable {
 				", rating=" + rating +
 				", GPS [" + latitude + "; " + longitude + "]" +
 				'}';
+	}
+
+	public List<User> getLikedUsers() {
+		return likedUsers;
+	}
+
+	public void setLikedUsers(List<User> likedUsers) {
+		this.likedUsers = likedUsers;
 	}
 }

@@ -14,7 +14,8 @@
             getIdeaById: getIdeaById,
             insertIdea: insertIdea,
             updateIdea: updateIdea,
-            removeIdea: removeIdea
+            removeIdea: removeIdea,
+            changeIdeaLike: changeIdeaLike
         };
         return publicMethod;
 
@@ -43,5 +44,9 @@
             return promise;
         };
 
+        function changeIdeaLike(id) {
+            var promise = restFactory.ideas().changeLike({id: id}).$promise;
+            return promise;
+        };
     }
 })();

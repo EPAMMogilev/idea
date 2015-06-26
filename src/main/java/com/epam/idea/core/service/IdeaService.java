@@ -30,4 +30,8 @@ public interface IdeaService extends BaseService<Idea, Long> {
 	List<Idea> findIdeasByTagId(long tagId);
 
 	Idea saveForUser(long userId, Idea idea);
+
+	Idea changeIdeaLike(long ideaId);
+
+	Idea getLikedIdea(long ideaId);
 }

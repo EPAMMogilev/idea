@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.epam.idea.core.model.Idea;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 public interface IdeaRepository extends BaseRepository<Idea, Long> {
 
@@ -26,4 +27,7 @@ public interface IdeaRepository extends BaseRepository<Idea, Long> {
 	 */
 	@Query("select t.ideasWithTag from Tag t where t.id = ?1")
 	List<Idea> findByTagId(Long tagId);
+
+	@Query("select i from Idea i left join i.likedUsers u where i.id = ?1 and u.id = ?#{ principal?.id }")
+	Idea findIdeaByIdThatLikedCurrentUser(long ideaId);
 }
