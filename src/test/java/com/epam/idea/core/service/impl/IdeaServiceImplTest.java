@@ -21,6 +21,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,6 +55,8 @@ public class IdeaServiceImplTest {
 
 	@InjectMocks
 	private IdeaService sut = new IdeaServiceImpl();
+
+    private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
 
 	@Before
 	public void setUp() throws Exception {
@@ -267,4 +271,31 @@ public class IdeaServiceImplTest {
 		verify(this.ideaRepositoryMock, times(1)).findByTagId(any(Long.class));
 		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
+
+
+    @Test
+    public void shouldReturnPageWithListOfIdeas() throws Exception {
+        //Given:
+        Idea foundIdea = TestIdeaBuilder.anIdea().build();
+        given(this.sut.findAll(defaultPageRequest)).willReturn(Lists.newArrayList(foundIdea));
+
+        //When:
+        Idea actual = this.sut.findOne(foundIdea.getId());
+
+        //Then:
+        assertThat(actual).isEqualTo(foundIdea);
+        verify(this.ideaRepositoryMock, times(1)).findOne(foundIdea.getId());
+        verifyNoMoreInteractions(this.ideaRepositoryMock);
+    }
+
+
+    @Test
+    public void shouldSaveForUser() throws Exception {
+        //getting idea
+        Idea foundIdea = TestIdeaBuilder.anIdea().build();
+        given(this.ideaRepositoryMock.findOne(eq(foundIdea.getId()))).willReturn(Optional.of(foundIdea));
+
+        //saveForUser
+        given(this.sut.saveForUser(1, foundIdea)).willReturn(foundIdea);
+    }
 }
