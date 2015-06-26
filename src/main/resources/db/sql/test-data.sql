@@ -1,15 +1,15 @@
-insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Avocado', 'Chris@test.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
-insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('Apple', 'Scott@test.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-11-02 00:00:00'); -- pass :'12345'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2015-02-28 00:00:00'); -- pass :'admin'
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('FirstUser', 'first@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('SecondUser', 'second@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
+insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('ThirdUser', 'third@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Nonlinear Optimization by Successive Linear Programming', 'F. Palacios-Gomez & L. Lasdon & M. Engquist', '2015-01-01 03:14:07', '2015-01-02 00:00:00', 2, 1);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID) values ('Interactive fuzzy goal programming approach for bilevel programming problem', 'Arora, S.R. & Gupta, Ritu', '2015-02-02 00:00:00', '2015-02-03 00:00:00', 3, 2);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Two-Segment Separable Programming', 'R. R. Meyer', '2014-12-01', '2014-12-12', -2, 3, 53.945630, 30.369226);
-
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('New ideas in Android mobile development', 'A. K. Developer', '2015-04-01', '2014-04-02', 5, 1, 53.880755, 30.358379);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Java. Best practice', 'D. Payne', '2015-07-01', '2015-07-02', 16, 3, 53.903200, 30.335055);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Replication database. Best practise', 'Mr. K. Aqua', '2015-06-09', '2015-06-09', 2, 1, 53.903200, 30.335055);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE, IMAGE_URL) values ('Bugs driven development', 'Dr M. Nothing', '2015-09-01', '2015-09-01', -3, 2, 53.908010, 30.308924, 'http://yabs.yandex.by/resource/DUX_U5KJD4ibwCKJ7gXsPu_banana_20141031_key.png');
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Велопарковка', 'Офис ТК4 очень ждёт её возращения', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Площадка для аджилити', 'Я думаю,  у многих владельцев собак возникала необходимость в такой площадке. К сожалению, в нашем городе их единицы. Предлагаю оборудовать как минимум ещё одну.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Видеонаблюдение для зоосада', 'Как насчёт установки системы видеонаблюдения? Могилевчане могли бы наблюдать за жизнью животных из дома в режиме реального времени', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Бесплатный Wi-Fi', 'В Могилеве нужны зоны бесплатного доступа в интернет. Особенно на площади Славы', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ремонт Пушкинского моста', 'Мост давно требует полной реконструкции', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Могилевский полумарафон', 'Предлагаю организовать городской полумарафон как для любителей, так и для профессионалов. Повысим интерес к бегу у молодёжи!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
 
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
@@ -17,14 +17,20 @@ insert into ROLE (NAME) values ('USER');
 insert into USER_ROLE (USER_ID, ROLE_ID) values (1, 1);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (2, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (3, 2);
+insert into USER_ROLE (USER_ID, ROLE_ID) values (4, 2);
 
-insert into TAG (NAME) values ('Sport');
-insert into TAG (NAME) values ('Transport');
-insert into TAG (NAME) values ('Culture');
+insert into TAG (NAME) values ('Спорт');
+insert into TAG (NAME) values ('Транспорт');
+insert into TAG (NAME) values ('Культура');
+insert into TAG (NAME) values ('Животные');
 
-insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 1);
-insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 2);
-insert into IDEA_TAG (IDEA_ID, TAG_ID) values (3, 1);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 2);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 4);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (3, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (4, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (5, 2);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (6, 2);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (7, 4);
 
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (1, 1, 'Awesome!', '2014-08-02 00:00:00', '2014-12-24 00:00:00', 5);
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (2, 2, 'Super!', '2014-06-12 00:00:00', '2014-09-20 00:00:00', 10);

@@ -20,7 +20,8 @@ angular
 		'app.controllers',
 		'yaMap',
 		'ngImgur',
-		'ngFileUpload',
+		'ngFileUpload'
+
         'ngMessages'
 	]);
 	
@@ -52,7 +53,7 @@ angular
             views: {
                 'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
             },/*
-            onEnter:  function(){ ymaps.ready(mapInit)},*/
+            onEnter:  function(){ initMostRating()},*/
             parent: 'root'
         }).
         state('login', {

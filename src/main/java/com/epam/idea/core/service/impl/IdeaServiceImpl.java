@@ -14,6 +14,7 @@ import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,5 +103,10 @@ public class IdeaServiceImpl implements IdeaService {
 		idea.setAuthor(user);
 		Idea savedIdea = ideaRepository.save(idea);
 		return savedIdea;
+	}
+
+	@Override
+	public List<Idea> findAll(Pageable pageable) {
+		return ideaRepository.findAll(pageable);
 	}
 }
