@@ -107,6 +107,10 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public List<Idea> findAll(Pageable pageable) {
-		return ideaRepository.findAll(pageable);
+        List<Idea> allIdeas = ideaRepository.findAll(pageable);
+        allIdeas.forEach(idea -> {
+            Hibernate.initialize(idea.getRelatedTags());
+        });
+		return allIdeas;
 	}
 }
