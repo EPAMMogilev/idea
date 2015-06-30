@@ -266,7 +266,7 @@ tomcat {
     httpPort = 9090
 }
 
-
+/*
 //---------------------------- Open Shift -----------------------------------------/
 task openShiftRelease <<{
 	println 'Release from OpenShift ready';
@@ -282,4 +282,4 @@ task prepeareOpenShift {
 	
 }
 
-openShiftRelease.dependsOn prepeareOpenShift, build;
+openShiftRelease.dependsOn prepeareOpenShift, build;*/
