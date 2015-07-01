@@ -12,14 +12,14 @@
         <div>
             <ul>
                 <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-rating' | searchLineFilter:criteria"  class = "idea-li" >
-                    <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+                    <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>
         <div>
             <ul>
                 <li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'| searchLineFilter:criteria | limitTo: 5  "  class = "idea-li" >
-                    <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+                    <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>

@@ -17,7 +17,8 @@
 				ngModel: '=',
 				details: '&',				
 				changeRating: '&',
-				changeLike: '&'
+				changeLike: '&',
+				isAuthenticated: '='
 
 			},
 			link: function(scope, element, attrs) {
