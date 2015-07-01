@@ -4,6 +4,8 @@ import com.epam.idea.core.repository.config.db.ProdDatabaseConfig;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Properties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -18,5 +20,13 @@ public class DatabaseConfigTest {
         javax.sql.DataSource ds = config.dataSource();
 
         assertThat(ds).isNotNull();
+    }//shouldCheckDataSource
+
+    public void shouldGetJPAProperties(){
+        ProdDatabaseConfig config = new ProdDatabaseConfig();
+        Properties prop = config.jpaProperties();
+
+        assertThat(config).isNotNull();
+        assertThat(prop).isNotNull();
     }//shouldCheckDataSource
 }
