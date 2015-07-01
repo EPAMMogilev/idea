@@ -82,7 +82,7 @@ public class Idea implements Serializable {
 	private List<User> likedUsers;
 
 	@Transient
-	private boolean isLiked;
+	private boolean liked;
 
 	public Idea() {
 		this.relatedTags = new ArrayList<>();
@@ -225,11 +225,11 @@ public class Idea implements Serializable {
 		this.likedUsers = likedUsers;
 	}
 
-	public boolean getIsLiked() {
-		return isLiked;
+	public boolean getLiked() {
+		return liked;
 	}
 
-	public void setIsLiked(boolean isLiked) {
-		this.isLiked = isLiked;
+	public void setLiked(boolean liked) {
+		this.liked = liked;
 	}
 }

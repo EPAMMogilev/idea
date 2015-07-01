@@ -13,7 +13,6 @@ import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +47,7 @@ public class IdeaServiceImpl implements IdeaService {
 			Hibernate.initialize(idea.getAuthor());
 			Hibernate.initialize(idea.getRelatedTags());
 			if (!isAnonymous) {
-				idea.setIsLiked(isCurrentUserLikedIdea(idea.getId()));
+				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 			}
 		});
 		return allIdeas;
@@ -57,9 +56,13 @@ public class IdeaServiceImpl implements IdeaService {
 	@Override
 	@Transactional(readOnly = true)
 	public Idea findOne(final Long ideaId) {
+		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
 		final Optional<Idea> ideaOptional = ideaRepository.findOne(ideaId);
 		return ideaOptional.map(idea -> {
 					Hibernate.initialize(idea.getRelatedTags());
+					if (isAnonymous) {
+						idea.setLiked(isCurrentUserLikedIdea(ideaId));
+					}
 					return idea;
 				}).orElseThrow(() -> new IdeaNotFoundException(ideaId));
 	}
@@ -89,14 +92,28 @@ public class IdeaServiceImpl implements IdeaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Idea> findIdeasByUserId(final long userId) {
-		return ideaRepository.findByUserId(userId);
+		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
+		List<Idea> ideas = ideaRepository.findByUserId(userId);
+		ideas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			if (isAnonymous) {
+				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+			}
+		});
+		return ideas;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Idea> findIdeasByTagId(final long tagId) {
+		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
 		final List<Idea> ideas = ideaRepository.findByTagId(tagId);
-		ideas.forEach(idea -> Hibernate.initialize(idea.getRelatedTags()));
+		ideas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			if (isAnonymous) {
+				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+			}
+		});
 		return ideas;
 	}
 

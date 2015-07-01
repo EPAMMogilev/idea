@@ -49,7 +49,7 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
 		} else {
 			ideaResource.setTags(emptyList());
 		}
-		ideaResource.setIsLiked(original.getIsLiked());
+		ideaResource.setLiked(original.getLiked());
 		ideaResource.add(linkTo(methodOn(IdeaController.class).show(original.getId())).withSelfRel());
 		Optional.ofNullable(original.getAuthor()).ifPresent(author ->
 				ideaResource.add(linkTo(methodOn(UserController.class).getUser(author.getId())).withRel(REL_AUTHOR)));
