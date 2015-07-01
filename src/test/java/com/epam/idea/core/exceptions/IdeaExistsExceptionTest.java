@@ -39,4 +39,13 @@ public class IdeaExistsExceptionTest {
 
         assertThat(exception.getCause().getMessage()).isEqualTo(SOME_EXCEPTION);
     }
+
+    @Test
+    public void shouldIdeaExistsExceptionDefaultConstructorThrowable(){
+        IdeaExistsException exception = new IdeaExistsException();
+
+        System.out.println("exception.getMessage(): "+ exception.getMessage());
+
+        assertThat(exception.getCause()).isNull();
+    }
 }
