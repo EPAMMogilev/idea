@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,7 +44,7 @@ public class IdeaServiceImplTest {
 	private IdeaRepository ideaRepositoryMock;
 
 	@Mock
-	private Authentication authenticationMock;
+	private AnonymousAuthenticationToken authenticationMock;
 
 	@Mock
 	private SecurityContext securityContextMock;
@@ -99,7 +100,6 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(foundIdea);
 		verify(this.ideaRepositoryMock, times(1)).findOne(foundIdea.getId());
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -133,7 +133,6 @@ public class IdeaServiceImplTest {
 		assertThat(actual).isEqualTo(deletedIdea);
 		verify(this.ideaRepositoryMock, times(1)).findOne(deletedIdea.getId());
 		verify(this.ideaRepositoryMock, times(1)).delete(deletedIdea);
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -189,7 +188,6 @@ public class IdeaServiceImplTest {
 		assertThat(actual.getTitle()).isEqualTo(source.getTitle());
 		assertThat(actual.getDescription()).isEqualTo(source.getDescription());
 		verify(this.ideaRepositoryMock, times(1)).findOne(target.getId());
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -222,6 +220,7 @@ public class IdeaServiceImplTest {
 				TestIdeaBuilder.anIdea().build()
 		);
 		given(this.ideaRepositoryMock.findAll()).willReturn(ideas);
+		given(this.securityContextMock.getAuthentication()).willReturn(authenticationMock);
 
 		//When:
 		List<Idea> actual = this.sut.findAll();
@@ -247,7 +246,6 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
 		verify(this.ideaRepositoryMock, times(1)).findByUserId(any(Long.class));
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
