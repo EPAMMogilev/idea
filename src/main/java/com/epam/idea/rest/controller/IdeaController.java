@@ -8,6 +8,9 @@ import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +34,8 @@ public class IdeaController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public HttpEntity<List<IdeaResource>> showAll() {
-		final List<Idea> foundIdeas = ideaService.findAll();
+	public HttpEntity<List<IdeaResource>> showAll(@PageableDefault(page = 0, size = 500) Pageable pageable) {
+		final List<Idea> foundIdeas = ideaService.findAll(pageable);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResources(foundIdeas), HttpStatus.OK);
 	}
 

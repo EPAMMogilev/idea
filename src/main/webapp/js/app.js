@@ -21,7 +21,7 @@ angular
 		'yaMap',
 		'ngImgur',
 		'ngFileUpload',
-        'ngMessages'
+	        'ngMessages'
 	]);
 	
 	angular.module('app.directives', []); // set Directives
@@ -52,7 +52,7 @@ angular
             views: {
                 'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
             },/*
-            onEnter:  function(){ ymaps.ready(mapInit)},*/
+            onEnter:  function(){ initMostRating()},*/
             parent: 'root'
         }).
         state('login', {

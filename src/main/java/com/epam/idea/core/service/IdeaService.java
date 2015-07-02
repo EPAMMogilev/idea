@@ -5,6 +5,7 @@ import java.util.List;
 import com.epam.idea.core.model.Authority;
 import com.epam.idea.core.model.Idea;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -43,4 +44,6 @@ public interface IdeaService extends BaseService<Idea, Long> {
 
 	@PreAuthorize("isFullyAuthenticated()")
 	boolean isCurrentUserLikedIdea(long ideaId);
+
+	List<Idea> findAll(Pageable pageable);
 }

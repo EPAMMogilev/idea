@@ -13,6 +13,7 @@ import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -148,5 +149,14 @@ public class IdeaServiceImpl implements IdeaService {
 	public boolean isCurrentUserLikedIdea(long ideaId) {
 		Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
 		return idea != null;
+	}
+
+	@Override
+	public List<Idea> findAll(Pageable pageable) {
+        List<Idea> allIdeas = ideaRepository.findAll(pageable);
+        allIdeas.forEach(idea -> {
+            Hibernate.initialize(idea.getRelatedTags());
+        });
+		return allIdeas;
 	}
 }
