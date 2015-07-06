@@ -7,17 +7,17 @@
         <div id="dataDiv">
             <div id="lineDivsLeft">
                 <div id="divData">
-                    <div id="tdCaption">Идея</div>
+                    <div id="tdCaption" translate="IDEA"></div>
                     <div id="tdData">{{data.title}}</div>
                 </div>
                 <!-- descr -->
                 <div id="divData">
-                    <div id="tdCaption">Описание</div>
+                    <div id="tdCaption" translate="DESCRIPTION"></div>
                     <div id="tdData">{{data.description}}</div>
                 </div>
                 <!-- created -->
                 <div id="divData">
-                    <div id="tdCaption">Создано</div>
+                    <div id="tdCaption" translate="CREATED"></div>
                     <div id="tdData">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
                 </div>
             </div>
@@ -28,11 +28,11 @@
 
         <div id="bottomButtonsBar">
             <div id="divLeft">
-                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Назад</button>
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK" /></button>
             </div>
             <div id="divRightAlignRight">
-                <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Изменить</button>
-                <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Удалить</button>
+                <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
+                <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
     <!-- who like this idea -->
     <div id="shadowBox">
         <div id="likeDiv">
-            <p id="p">Кому понравилась эта идея</p>
+            <p id="p" translate="THIS_IDEA_HAS_LIKED"></p>
         </div>
         <div id="likeDivList">
             Some user
@@ -56,10 +56,10 @@
     <!-- suggestions for this idea -->
     <div id="shadowBox">
         <div id="likeDiv">
-            <p id="p">Комментарии</p>
+            <p id="p" translate="COMMENTS"></p>
         </div>
         <div id="commentsDiv">
-            <input type="text" id="searchLine" class="form-control" name="edtComment" width="100%" placeholder="Ваше предложение">
+            <input type="text" id="searchLine" class="form-control" name="edtComment" width="100%" placeholder="{{ 'YOUR_SUGGESTION' | translate }}">
         </div>
     </div>
 

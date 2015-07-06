@@ -10,7 +10,7 @@
     function addNewIdea($scope, $window, $modal, detailsService, ideasFactory, mapGeoService, imgur, Upload) {
 
         this.categories =  detailsService.getCategories();
-        $scope.bottomButtonName = 'Добавить';
+        $scope.bottomButtonName = 'ADD';
         $scope.data = null;
 
         $scope.imageExist = false;
