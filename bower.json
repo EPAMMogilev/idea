@@ -20,7 +20,8 @@
     "ng-file-upload":"5.0.6",
     "angular-messages":"1.4.1",
     "angular-route":"~1.2.x",
-    "angular-sanitize":"~1.2.x"
+    "angular-sanitize":"~1.2.x",
+    "angular-translate":"2.5.2"
   },
   "resolutions":{
     "angular": "~1.2.x"
