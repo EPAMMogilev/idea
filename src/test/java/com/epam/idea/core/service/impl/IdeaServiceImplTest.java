@@ -1,5 +1,7 @@
 package com.epam.idea.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -267,7 +269,6 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
 		verify(this.ideaRepositoryMock, times(1)).findByTagId(any(Long.class));
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 
@@ -302,4 +303,43 @@ public class IdeaServiceImplTest {
         //Then:
         assertThat(actual).isEqualTo(foundIdea);
     }
+
+	@Test
+	public void shouldChangeLikedForUserAndIdea_whenLikedIsFalse() {
+		long ideaId = 1L;
+		User user = new User();
+		Idea idea = TestIdeaBuilder.anIdea().withId(ideaId).build();
+
+		final int ratingBefore = idea.getRating();
+		final int likedUsersBefore = idea.getLikedUsers().size();
+
+		given(ideaRepositoryMock.findIdeaByIdThatLikedCurrentUser(ideaId)).willReturn(null);
+		given(userRepositoryMock.findCurrentUser()).willReturn(user);
+		given(ideaRepositoryMock.findOne(ideaId)).willReturn(Optional.of(idea));
+		given(ideaRepositoryMock.save(idea)).willReturn(idea);
+
+		Idea changedLikeIdea = this.sut.changeIdeaLike(ideaId);
+
+		assertThat(changedLikeIdea.getLikedUsers().size()).isEqualTo(likedUsersBefore + 1);
+		assertThat(changedLikeIdea.getRating()).isEqualTo(ratingBefore + 1);
+	}
+
+	@Test
+	public void shouldChangeLikedForUserAndIdea_whenLikedIsTrue() {
+		long ideaId = 1L;
+		User user = new User();
+		Idea likedIdea = TestIdeaBuilder.anIdea().withId(ideaId).withLikedUser(user).withLiked(true).build();
+
+		final int ratingBefore = likedIdea.getRating();
+		final int likedUsersBefore = likedIdea.getLikedUsers().size();
+
+		given(ideaRepositoryMock.findIdeaByIdThatLikedCurrentUser(ideaId)).willReturn(likedIdea);
+		given(userRepositoryMock.findCurrentUser()).willReturn(user);
+		given(ideaRepositoryMock.save(likedIdea)).willReturn(likedIdea);
+
+		Idea changedLikeIdea = this.sut.changeIdeaLike(ideaId);
+
+		assertThat(changedLikeIdea.getLikedUsers().size()).isEqualTo(likedUsersBefore - 1);
+		assertThat(changedLikeIdea.getRating()).isEqualTo(ratingBefore - 1);
+	}
 }

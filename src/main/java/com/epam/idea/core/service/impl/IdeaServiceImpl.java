@@ -42,14 +42,11 @@ public class IdeaServiceImpl implements IdeaService {
 	@Transactional(readOnly = true)
 	public List<Idea> findAll() {
 		final List<Idea> allIdeas = ideaRepository.findAll();
-		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
 
 		allIdeas.forEach(idea -> {
 			Hibernate.initialize(idea.getAuthor());
 			Hibernate.initialize(idea.getRelatedTags());
-			if (!isAnonymous) {
-				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-			}
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return allIdeas;
 	}
@@ -57,13 +54,10 @@ public class IdeaServiceImpl implements IdeaService {
 	@Override
 	@Transactional(readOnly = true)
 	public Idea findOne(final Long ideaId) {
-		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
 		final Optional<Idea> ideaOptional = ideaRepository.findOne(ideaId);
 		return ideaOptional.map(idea -> {
 					Hibernate.initialize(idea.getRelatedTags());
-					if (isAnonymous) {
-						idea.setLiked(isCurrentUserLikedIdea(ideaId));
-					}
+					idea.setLiked(isCurrentUserLikedIdea(ideaId));
 					return idea;
 				}).orElseThrow(() -> new IdeaNotFoundException(ideaId));
 	}
@@ -93,13 +87,10 @@ public class IdeaServiceImpl implements IdeaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Idea> findIdeasByUserId(final long userId) {
-		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
 		List<Idea> ideas = ideaRepository.findByUserId(userId);
 		ideas.forEach(idea -> {
 			Hibernate.initialize(idea.getRelatedTags());
-			if (isAnonymous) {
-				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-			}
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return ideas;
 	}
@@ -107,13 +98,10 @@ public class IdeaServiceImpl implements IdeaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Idea> findIdeasByTagId(final long tagId) {
-		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
 		final List<Idea> ideas = ideaRepository.findByTagId(tagId);
 		ideas.forEach(idea -> {
 			Hibernate.initialize(idea.getRelatedTags());
-			if (isAnonymous) {
-				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-			}
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return ideas;
 	}
@@ -147,16 +135,24 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public boolean isCurrentUserLikedIdea(long ideaId) {
-		Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
-		return idea != null;
+		boolean isCurrentUserLikedIdea = false;
+		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
+		System.out.println("IS ANONYMOUS? " + isAnonymous);
+		if (!isAnonymous) {
+			System.out.println("NOT ANONYMOUS");
+			Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+			isCurrentUserLikedIdea = idea != null;
+		}
+		return isCurrentUserLikedIdea;
 	}
 
 	@Override
 	public List<Idea> findAll(Pageable pageable) {
-        List<Idea> allIdeas = ideaRepository.findAll(pageable);
-        allIdeas.forEach(idea -> {
-            Hibernate.initialize(idea.getRelatedTags());
-        });
+		List<Idea> allIdeas = ideaRepository.findAll(pageable);
+		allIdeas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+		});
 		return allIdeas;
 	}
 }
