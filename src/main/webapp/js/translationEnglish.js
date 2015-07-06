@@ -1,11 +1,5 @@
-(function() {
-     angular
-         .module('ideaApp')
-         .config(config);
-
-     config.$inject = ['$translateProvider'];
-     function config($translateProvider) {
-         $translateProvider.translations('en', {
+         var arrayEnglish =
+         {
              OR:"or",
              USERNAME: 'Username',
              PASSWORD: 'Password',
@@ -49,7 +43,5 @@
              YOUR_SUGGESTION:"Your suggestion",
              BUTTON_LANG_EN: 'en',
              BUTTON_LANG_RU: 'ru'
-         });
-     }
-})();
+         };
 

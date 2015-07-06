@@ -120,6 +120,8 @@ angular
             parent: 'root'
         });
 
+        $translateProvider.translations('en', arrayEnglish);
+         $translateProvider.translations('ru', arrayRussian);
         $translateProvider.useSanitizeValueStrategy('sanitize');
         $translateProvider.preferredLanguage('ru');
 

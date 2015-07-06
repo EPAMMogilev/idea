@@ -1,11 +1,5 @@
-(function() {
-     angular
-         .module('ideaApp')
-         .config(config);
-
-     config.$inject = ['$translateProvider'];
-     function config($translateProvider) {
-         $translateProvider.translations('ru', {
+         var arrayRussian =
+         {
              OR:'или',
              USERNAME: 'Имя прользователя',
              PASSWORD: 'Пароль',
@@ -49,9 +43,5 @@
              YOUR_SUGGESTION:"Ваше предложение",
              BUTTON_LANG_EN: 'en',
              BUTTON_LANG_RU: 'ru'
-         });
-         $translateProvider.useSanitizeValueStrategy('sanitize');
-         $translateProvider.preferredLanguage('ru');
-     }
-})();
+         };
 
