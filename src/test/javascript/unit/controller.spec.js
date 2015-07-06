@@ -79,7 +79,7 @@ describe('Add Idea controllers testing', function(){
 		expect(ctrl).toBeDefined();
 
 		expect(addNewIdeaScope.bottomButtonName).toBeDefined();
-		expect(addNewIdeaScope.bottomButtonName).toEqual('Добавить');
+		expect(addNewIdeaScope.bottomButtonName).toEqual('ADD');
 		expect(addNewIdeaScope.data).toBeNull();
 	});
 
@@ -144,7 +144,7 @@ describe('Update Idea controllers testing', function(){
 
 		// Make our assertions
 		expect(updateIdeaScope.bottomButtonName).toBeDefined();
-		expect(updateIdeaScope.bottomButtonName).toBe('Обновить');
+		expect(updateIdeaScope.bottomButtonName).toBe('UPDATE');
 		expect(updateIdeaScope.data).toBeDefined();
 	});
 });
