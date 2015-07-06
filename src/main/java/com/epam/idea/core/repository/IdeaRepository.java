@@ -1,8 +1,10 @@
 package com.epam.idea.core.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.epam.idea.core.model.Idea;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 public interface IdeaRepository extends BaseRepository<Idea, Long> {
@@ -26,4 +28,7 @@ public interface IdeaRepository extends BaseRepository<Idea, Long> {
 	 */
 	@Query("select t.ideasWithTag from Tag t where t.id = ?1")
 	List<Idea> findByTagId(Long tagId);
+
+	@Query("select i from Idea i")
+	List<Idea> findAll(Pageable pageable);
 }

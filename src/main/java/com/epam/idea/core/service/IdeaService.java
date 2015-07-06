@@ -3,6 +3,7 @@ package com.epam.idea.core.service;
 import java.util.List;
 
 import com.epam.idea.core.model.Idea;
+import org.springframework.data.domain.Pageable;
 
 public interface IdeaService extends BaseService<Idea, Long> {
 
@@ -30,4 +31,6 @@ public interface IdeaService extends BaseService<Idea, Long> {
 	List<Idea> findIdeasByTagId(long tagId);
 
 	Idea saveForUser(long userId, Idea idea);
+
+	List<Idea> findAll(Pageable pageable);
 }

@@ -265,3 +265,21 @@ def webappsCopy(tomcat_webapps) {
 tomcat {
     httpPort = 9090
 }
+
+/*
+//---------------------------- Open Shift -----------------------------------------/
+task openShiftRelease <<{
+	println 'Release from OpenShift ready';
+}
+
+task prepeareOpenShift {
+	println '!!!prepeareOpenShift!!!';
+    def someFile = 'src\\main\\webapp\\index.html';
+	String contents = new File(someFile).getText('UTF-8');
+	contents = contents.replace('src=\"bower_components/', 'src=\"build/bower_components/');
+	//println contents;
+	new File(someFile).write(contents, 'UTF-8');
+	
+}
+
+openShiftRelease.dependsOn prepeareOpenShift, build;*/
