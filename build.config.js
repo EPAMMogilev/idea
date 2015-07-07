@@ -24,7 +24,7 @@ module.exports = {
     js: [ 'js/**/*.js', '!src/**/*.spec.js'],
     jslong: [ 'src/main/webapp/js/**/*.js', '!src/main/webapp/js/**/*.spec.js'],
     jsunit: [ 'js/**/*.spec.js' ],
-
+    json: ['languages/*.json'],
     html: [ 'index.html' ],
     templateHtml: [ 'pages/**/*.html', 'templates/**/*.html'],
     font: [ 'fonts/**/*' ],

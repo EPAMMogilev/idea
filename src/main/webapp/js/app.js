@@ -120,8 +120,10 @@ angular
             parent: 'root'
         });
 
-        $translateProvider.translations('en', arrayEnglish);
-         $translateProvider.translations('ru', arrayRussian);
+        $translateProvider.useStaticFilesLoader({
+          prefix: 'languages/',
+          suffix: '.json'
+        });
         $translateProvider.useSanitizeValueStrategy('sanitize');
         $translateProvider.preferredLanguage('ru');
 

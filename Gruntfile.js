@@ -119,7 +119,18 @@ module.exports = function (grunt) {
                     }
                   ]
             },
-			
+
+			 build_json: {
+                  files: [
+                    {
+                      src: [ '<%= app_files.json %>' ],
+                      dest: '<%= build_dir %>/',
+                      cwd: '<%= resource_dir %>/',
+                      expand: true
+                    }
+                  ]
+            },
+
             lcov: {
                 expand: true,
                 src: 'target/site/cobertura/**',
