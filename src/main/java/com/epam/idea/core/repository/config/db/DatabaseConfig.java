@@ -7,8 +7,8 @@ public interface DatabaseConfig {
 	String SCHEMA_SCRIPT_LOCATION = "classpath:db/sql/schema.sql";
 	String DATA_SCRIPT_LOCATION = "classpath:db/sql/test-data.sql";
 
-    String SCHEMA_SCRIPT_LOCATION_PROD = "classpath:db/sql/schema_mysql.sql";
-    String DATA_SCRIPT_LOCATION_PROD = "classpath:db/sql/test-data_mysql.sql";
+	String SCHEMA_SCRIPT_LOCATION_PROD = "classpath:db/sql/schema_mysql.sql";
+	String DATA_SCRIPT_LOCATION_PROD = "classpath:db/sql/test-data_mysql.sql";
 
 	/** Name of the DataSource class provided by the JDBC driver. */
 	String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";

@@ -1,14 +1,20 @@
 package com.epam.idea.builder.resource;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.epam.idea.core.model.User;
 import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.TagResource;
 import com.epam.idea.rest.resource.UserResource;
 
 public class TestIdeaResourceBuilder {
+
+	public static final String DEFAULT_TITLE = "Bar";
+	public static final String DEFAULT_DESCRIPTION = "Lorem ipsum";
+	public static final int DEFAULT_RATING = 5;
 
 	private String title;
 	private String description;
@@ -17,12 +23,17 @@ public class TestIdeaResourceBuilder {
 	private int rating;
 	private UserResource author;
 	private List<TagResource> tags = new ArrayList<>();
+	private boolean liked;
 
 	private TestIdeaResourceBuilder() {
 	}
 
 	public static TestIdeaResourceBuilder anIdeaResource() {
-		return new TestIdeaResourceBuilder();
+		return new TestIdeaResourceBuilder()
+				.withTitle(DEFAULT_TITLE)
+				.withRating(DEFAULT_RATING)
+				.withDescription(DEFAULT_DESCRIPTION)
+				.withLiked(false);
 	}
 
 	public TestIdeaResourceBuilder withTitle(final String title) {
@@ -60,6 +71,11 @@ public class TestIdeaResourceBuilder {
 		return this;
 	}
 
+	public TestIdeaResourceBuilder withLiked(final boolean liked) {
+		this.liked = liked;
+		return this;
+	}
+
 	public TestIdeaResourceBuilder but() {
 		return anIdeaResource()
 				.withTitle(title)
@@ -68,7 +84,8 @@ public class TestIdeaResourceBuilder {
 				.withModificationTime(modificationTime)
 				.withRating(rating)
 				.withAuthor(author)
-				.withRelatedTags(tags);
+				.withRelatedTags(tags)
+				.withLiked(liked);
 	}
 
 	public IdeaResource build() {
@@ -78,6 +95,7 @@ public class TestIdeaResourceBuilder {
 		ideaResource.setCreationTime(creationTime);
 		ideaResource.setModificationTime(modificationTime);
 		ideaResource.setRating(rating);
+		ideaResource.setLiked(liked);
 //		if (author != null) {
 //			ideaResource.setAuthor(author);
 //		}

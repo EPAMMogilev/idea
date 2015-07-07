@@ -16,7 +16,10 @@
 				idea: '=',			
 				ngModel: '=',
 				details: '&',				
-				changeRating: '&'				
+				changeRating: '&',
+				changeLike: '&',
+				isAuthenticated: '='
+
 			},
 			link: function(scope, element, attrs) {
 				scope.photo = (scope.idea.imageUrl)?scope.idea.imageUrl:'images/photo.gif';
@@ -30,6 +33,14 @@
 					scope.idea.rating += mark;
 					ideasFactory.updateIdea(scope.idea);
 				};
+				scope.changeLike = function() {
+					ideasFactory.changeIdeaLike(scope.idea.id).then(
+						function (idea) {
+							scope.idea.rating = idea.rating;
+						}
+					);
+					scope.idea.liked = !scope.idea.liked;
+				}
 			},
 			templateUrl:'templates/idea.tpl.html'
 		}

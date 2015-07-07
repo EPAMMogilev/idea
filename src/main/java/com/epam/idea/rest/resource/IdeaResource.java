@@ -38,6 +38,8 @@ public class IdeaResource extends ResourceSupport {
 	//@JsonView({View.Basic.class})
 	private int rating;
 
+	private boolean liked;
+
 	private UserResource author;
 
 	private List<TagResource> tags;
@@ -145,6 +147,15 @@ public class IdeaResource extends ResourceSupport {
 		idea.setLatitude(latitude);
 		idea.setLongitude(longitude);
 		idea.setImageUrl(imageUrl);
+		idea.setLiked(liked);
 		return idea;
+	}
+
+	public boolean getLiked() {
+		return liked;
+	}
+
+	public void setLiked(boolean liked) {
+		this.liked = liked;
 	}
 }

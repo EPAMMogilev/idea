@@ -71,9 +71,6 @@ dependencies {
     compile 'org.springframework:spring-core'
     compile "org.springframework:spring-web"
     compile 'org.springframework:spring-webmvc'
-    compile 'org.springframework.security:spring-security-core'
-    compile 'org.springframework.security:spring-security-web'
-    compile 'org.springframework.security:spring-security-test'
     compile 'org.springframework.hateoas:spring-hateoas'
     compile 'org.springframework.data:spring-data-jpa'
 
@@ -110,6 +107,8 @@ dependencies {
     compile 'org.springframework.security:spring-security-core:4.0.1.RELEASE'
     compile 'org.springframework.security:spring-security-web:4.0.1.RELEASE'
     compile 'org.springframework.security:spring-security-config:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-data:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-test:4.0.1.RELEASE'
 
     //Spring-social
     compile 'org.springframework.social:spring-social-core'

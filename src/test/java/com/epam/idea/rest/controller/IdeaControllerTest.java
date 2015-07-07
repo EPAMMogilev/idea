@@ -1,12 +1,15 @@
 package com.epam.idea.rest.controller;
 
 import com.epam.idea.builder.model.TestIdeaBuilder;
+import com.epam.idea.builder.model.TestUserBuilder;
 import com.epam.idea.builder.resource.TestIdeaResourceBuilder;
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.model.User;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
+import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +27,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static com.epam.idea.builder.model.TestIdeaBuilder.DEFAULT_IDEA_ID;
+import static com.epam.idea.builder.model.TestIdeaBuilder.DEFAULT_RATING;
 import static com.epam.idea.core.service.exception.IdeaNotFoundException.ERROR_MSG_PATTERN_IDEA_NOT_FOUND;
 import static com.epam.idea.rest.controller.RestErrorHandler.IDEA_NOT_FOUND_LOGREF;
 import static com.epam.idea.util.TestUtils.APPLICATION_JSON_UTF8;
@@ -139,20 +146,12 @@ public class IdeaControllerTest {
 
 	@Test
 	public void shouldCreateIdeaAndReturnItWithHttpCode201() throws Exception {
-		long ideaId = 2L;
-		int rating = 3;
-		String title = "title";
-		String description = "description";
-		IdeaResource ideaResource = TestIdeaResourceBuilder.anIdeaResource()
-				.withTitle(title)
-				.withDescription(description)
-				.withRating(rating)
-				.build();
+		IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
 		Idea createdIdea = new TestIdeaBuilder()
-				.withId(ideaId)
-				.withTitle(title)
-				.withDescription(description)
-				.withRating(rating)
+				.withId(10L)
+				.withTitle(source.getTitle())
+				.withDescription(source.getDescription())
+				.withRating(source.getRating())
 				.build();
 
 		when(this.ideaServiceMock.save(any(Idea.class))).thenReturn(createdIdea);
@@ -160,7 +159,7 @@ public class IdeaControllerTest {
 		this.mockMvc.perform(post("/api/v1/ideas")
 				.contentType(APPLICATION_JSON_UTF8)
 				.accept(APPLICATION_JSON_UTF8)
-				.content(convertObjectToJsonBytes(ideaResource)))
+				.content(convertObjectToJsonBytes(source)))
 				.andDo(print())
 				.andExpect(status().isCreated())
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -175,9 +174,9 @@ public class IdeaControllerTest {
 		verifyNoMoreInteractions(this.ideaServiceMock);
 
 		Idea ideaArgument = userCaptor.getValue();
-		assertThat(ideaArgument.getTitle()).isEqualTo(ideaResource.getTitle());
-		assertThat(ideaArgument.getDescription()).isEqualTo(ideaResource.getDescription());
-		assertThat(ideaArgument.getRating()).isEqualTo(ideaResource.getRating());
+		assertThat(ideaArgument.getTitle()).isEqualTo(source.getTitle());
+		assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
+		assertThat(ideaArgument.getRating()).isEqualTo(source.getRating());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -248,16 +247,11 @@ public class IdeaControllerTest {
 	@Test
 	public void shouldUpdateIdeaAndReturnItWithHttpCode200() throws Exception {
 		long ideaId = 10L;
-		String newTitle = "New title";
-		String newDescription = "New description";
-		IdeaResource source = TestIdeaResourceBuilder.anIdeaResource()
-				.withTitle(newTitle)
-				.withDescription(newDescription)
-				.build();
+		IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
 		Idea updatedIdea = new TestIdeaBuilder()
 				.withId(ideaId)
-				.withTitle(newTitle)
-				.withDescription(newDescription)
+				.withTitle(source.getTitle())
+				.withDescription(source.getDescription())
 				.build();
 
 		when(this.ideaServiceMock.update(eq(ideaId), any(Idea.class))).thenReturn(updatedIdea);
@@ -287,12 +281,7 @@ public class IdeaControllerTest {
 	@Test(expected = NestedServletException.class)
 	public void shouldReturnErrorWithHttpStatus404WhenUpdateIdeaWhichDoesNotExist() throws Exception {
 		long ideaId = 10L;
-		String newTitle = "New title";
-		String newDescription = "New description";
-		IdeaResource source = TestIdeaResourceBuilder.anIdeaResource()
-				.withTitle(newTitle)
-				.withDescription(newDescription)
-				.build();
+		IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
 
 		when(this.ideaServiceMock.update(eq(ideaId), any(Idea.class))).thenThrow(new IdeaNotFoundException(ideaId));
 
@@ -314,5 +303,41 @@ public class IdeaControllerTest {
 		Idea ideaArgument = userCaptor.getValue();
 		assertThat(ideaArgument.getTitle()).isEqualTo(source.getTitle());
 		assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
+	}
+
+	@Test
+	public void shouldChangeIdeaLikeAndReturnItWithHttpCode200() throws Exception {
+		long ideaId = 10L;
+		IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
+		Idea changedLikeIdea = new TestIdeaBuilder().anIdea().build();
+		User likedUser = TestUserBuilder.aUser().build();
+
+		source.setLiked(false);
+		changedLikeIdea.setLiked(true);
+		changedLikeIdea.setLikedUsers(Arrays.asList(likedUser));
+
+		when(this.ideaServiceMock.changeIdeaLike(eq(ideaId))).thenReturn(changedLikeIdea);
+
+		this.mockMvc.perform(post("/api/v1/ideas/{ideaId}/like", ideaId)
+				.accept(APPLICATION_JSON_UTF8)
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(source)))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.title").value(changedLikeIdea.getTitle()))
+				.andExpect(jsonPath("$.description").value(changedLikeIdea.getDescription()))
+				.andExpect(jsonPath("$.links", hasSize(1)))
+				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + changedLikeIdea.getId())))
+				.andExpect(jsonPath("$.liked").value(true));
+
+//		ArgumentCaptor<Idea> ideaCaptor = ArgumentCaptor.forClass(Idea.class);
+		verify(this.ideaServiceMock, times(1)).changeIdeaLike(eq(ideaId));
+		verifyNoMoreInteractions(this.ideaServiceMock);
+
+//		Idea ideaArgument = ideaCaptor.getValue();
+//		assertThat(ideaArgument.getTitle()).isEqualTo(source.getTitle());
+//		assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
 	}
 }

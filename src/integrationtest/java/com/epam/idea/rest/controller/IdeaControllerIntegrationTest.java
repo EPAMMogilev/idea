@@ -22,7 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import static com.epam.idea.rest.controller.RestErrorHandler.IDEA_NOT_FOUND_LOGREF;
 import static com.epam.idea.util.TestUtils.APPLICATION_JSON_UTF8;
 import static com.epam.idea.util.TestUtils.convertObjectToJsonBytes;
@@ -51,14 +50,20 @@ public class IdeaControllerIntegrationTest {
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
+//	@Autowired
+//	private Filter springSecurityFilterChain;
+
 	private MockMvc mockMvc;
 
 	@Before
 	public void setUp() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
+//				.addFilter(springSecurityFilterChain)
+				.build();
 	}
 
 	@Test
+	@Ignore
 	@DatabaseSetup("ideaController-ideas.xml")
 	public void shouldReturnInfoOfFoundIdeaAsJsonWithHttpCode200() throws Exception {
 		this.mockMvc.perform(get("/api/v1/ideas/{ideaId}", IDEA_ID)

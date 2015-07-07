@@ -13,7 +13,7 @@
         <div id="lstMostRating" class="allIdeas" ideas-list update-function="ideasCtrl.loadMoreRating()" div-name="#lstMostRating">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.ideasVisible | orderBy: '-rating' | searchLineFilter:criteria"  class = "idea-li" >
-                    <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+                    <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>
@@ -22,7 +22,7 @@
             <ul>
                 <!--<li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'| searchLineFilter:criteria | limitTo: 5  "  class = "idea-li" >-->
                 <li ng-repeat="idea in ideasCtrl.newIdeas"  class = "idea-li" >
-                    <show-idea idea="idea" ng-model="ideasCtrl.criteria"></show-idea>
+                    <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>

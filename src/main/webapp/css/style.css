@@ -548,6 +548,16 @@ button {
     list-style-type: none;
 }
 
+.btn-thumbs {
+  color: #19B5E6;
+  background-color: transparent;
+}
+
+.btn-thumbs:focus, .btn-thumbs:hover {
+  color: #fff;
+  background-color: #D8F5FD;
+}
+
 .btn-google-plus {
   color: #fff;
   background-color: #dd4b39;
@@ -596,6 +606,10 @@ button {
 
 .color-vk {
   color: #6383a8;
+}
+
+.color-thumbs {
+  color: #19B5E6;
 }
 
 .allIdeas

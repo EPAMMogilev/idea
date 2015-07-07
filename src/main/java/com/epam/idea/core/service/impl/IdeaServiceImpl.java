@@ -3,18 +3,19 @@ package com.epam.idea.core.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.epam.idea.core.model.CommonUserDetails;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.IdeaRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
-import com.epam.idea.core.service.exception.UserNotFoundException;
 import com.epam.idea.logger.Log;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,8 @@ public class IdeaServiceImpl implements IdeaService {
 	private UserRepository userRepository;
 
 	@Override
-	public void delete(final Idea deleted) {
+	@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
+	public void delete(@Param("idea")Idea deleted) {
 		ideaRepository.delete(deleted);
 	}
 
@@ -40,9 +42,11 @@ public class IdeaServiceImpl implements IdeaService {
 	@Transactional(readOnly = true)
 	public List<Idea> findAll() {
 		final List<Idea> allIdeas = ideaRepository.findAll();
+
 		allIdeas.forEach(idea -> {
 			Hibernate.initialize(idea.getAuthor());
 			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return allIdeas;
 	}
@@ -53,14 +57,15 @@ public class IdeaServiceImpl implements IdeaService {
 		final Optional<Idea> ideaOptional = ideaRepository.findOne(ideaId);
 		return ideaOptional.map(idea -> {
 					Hibernate.initialize(idea.getRelatedTags());
+					idea.setLiked(isCurrentUserLikedIdea(ideaId));
 					return idea;
 				}).orElseThrow(() -> new IdeaNotFoundException(ideaId));
 	}
 
 	@Override
+	@PreAuthorize("isFullyAuthenticated()")
 	public Idea save(final Idea persisted) {
-		CommonUserDetails authorDetails = (CommonUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User author = userRepository.findOne(authorDetails.getId()).orElseThrow(() -> new UserNotFoundException("User with id " + authorDetails.getId() + " does not exist"));
+		User author = userRepository.findCurrentUser();
 		persisted.setAuthor(author);
 		return ideaRepository.save(persisted);
 	}
@@ -74,8 +79,7 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public Idea update(final long ideaId, final Idea source) {
-		final
-		Idea target = findOne(ideaId);
+		final Idea target = findOne(ideaId);
 		target.updateWith(source);
 		return target;
 	}
@@ -83,21 +87,28 @@ public class IdeaServiceImpl implements IdeaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Idea> findIdeasByUserId(final long userId) {
-		return ideaRepository.findByUserId(userId);
+		List<Idea> ideas = ideaRepository.findByUserId(userId);
+		ideas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+		});
+		return ideas;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Idea> findIdeasByTagId(final long tagId) {
 		final List<Idea> ideas = ideaRepository.findByTagId(tagId);
-		ideas.forEach(idea -> Hibernate.initialize(idea.getRelatedTags()));
+		ideas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+		});
 		return ideas;
 	}
 
 	@Override
 	public Idea saveForUser(final long userId, final Idea idea) {
-		Optional<User> userOptional = userRepository.findOne(userId);
-		User user = userOptional.get();
+		User user = userRepository.findOne(userId).get();
 		List<Idea> ideas = user.getIdeas();
 		ideas.add(idea);
 		idea.setAuthor(user);
@@ -106,11 +117,42 @@ public class IdeaServiceImpl implements IdeaService {
 	}
 
 	@Override
+	public Idea changeIdeaLike(long ideaId) {
+		Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+		User currentUser = userRepository.findCurrentUser();
+
+		if (idea == null) {
+			idea = ideaRepository.findOne(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
+			idea.getLikedUsers().add(currentUser);
+			idea.setRating(idea.getRating() + 1);
+		} else {
+			idea.getLikedUsers().remove(currentUser);
+			idea.setRating(idea.getRating() - 1);
+		}
+
+		return ideaRepository.save(idea);
+	}
+
+	@Override
+	public boolean isCurrentUserLikedIdea(long ideaId) {
+		boolean isCurrentUserLikedIdea = false;
+		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
+		System.out.println("IS ANONYMOUS? " + isAnonymous);
+		if (!isAnonymous) {
+			System.out.println("NOT ANONYMOUS");
+			Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+			isCurrentUserLikedIdea = idea != null;
+		}
+		return isCurrentUserLikedIdea;
+	}
+
+	@Override
 	public List<Idea> findAll(Pageable pageable) {
-        List<Idea> allIdeas = ideaRepository.findAll(pageable);
-        allIdeas.forEach(idea -> {
-            Hibernate.initialize(idea.getRelatedTags());
-        });
+		List<Idea> allIdeas = ideaRepository.findAll(pageable);
+		allIdeas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+		});
 		return allIdeas;
 	}
 }

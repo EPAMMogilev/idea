@@ -29,10 +29,13 @@ public class TestIdeaBuilder {
 	private User author;
 	private List<Tag> tags;
 	private List<Comment> comments;
+	private boolean liked;
+	private List<User> likedUsers;
 
 	public TestIdeaBuilder() {
 		this.tags = new ArrayList<>(1);
 		this.comments = new ArrayList<>(1);
+		this.likedUsers = new ArrayList<>();
 	}
 
 	public static TestIdeaBuilder anIdea() {
@@ -42,7 +45,9 @@ public class TestIdeaBuilder {
 				.withDescription(DEFAULT_DESCRIPTION)
 				.withRating(DEFAULT_RATING)
 				.withCreationTime(DEFAULT_CREATION_TIME)
-				.withModificationTime(DEFAULT_MODIFICATION_TIME);
+				.withModificationTime(DEFAULT_MODIFICATION_TIME)
+				.withLikedUsers(new ArrayList<>())
+				.withLiked(false);
 	}
 
 	public TestIdeaBuilder withId(final long id) {
@@ -100,6 +105,21 @@ public class TestIdeaBuilder {
 		return this;
 	}
 
+	public TestIdeaBuilder withLiked(boolean liked) {
+		this.liked = liked;
+		return this;
+	}
+
+	public TestIdeaBuilder withLikedUsers(List<User> likedUsers) {
+		this.likedUsers = likedUsers;
+		return this;
+	}
+
+	public TestIdeaBuilder withLikedUser(User likedUser) {
+		this.likedUsers.add(likedUser);
+		return this;
+	}
+
 	public TestIdeaBuilder but() {
 		return anIdea()
 				.withId(id)
@@ -110,7 +130,9 @@ public class TestIdeaBuilder {
 				.withRating(rating)
 				.withAuthor(author)
 				.withTags(tags)
-				.withComments(comments);
+				.withComments(comments)
+				.withLiked(liked)
+				.withLikedUsers(likedUsers);
 	}
 
 	public Idea build() {
@@ -124,6 +146,8 @@ public class TestIdeaBuilder {
 		idea.setRating(rating);
 		idea.setDescription(description);
 		idea.setComments(comments);
+		idea.setLiked(liked);
+		idea.setLikedUsers(likedUsers);
 		return idea;
 	}
 }

@@ -1,5 +1,7 @@
 package com.epam.idea.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -45,7 +48,7 @@ public class IdeaServiceImplTest {
 	private IdeaRepository ideaRepositoryMock;
 
 	@Mock
-	private Authentication authenticationMock;
+	private AnonymousAuthenticationToken authenticationMock;
 
 	@Mock
 	private SecurityContext securityContextMock;
@@ -56,7 +59,7 @@ public class IdeaServiceImplTest {
 	@InjectMocks
 	private IdeaService sut = new IdeaServiceImpl();
 
-    private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+	private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
 
 	@Before
 	public void setUp() throws Exception {
@@ -103,7 +106,6 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(foundIdea);
 		verify(this.ideaRepositoryMock, times(1)).findOne(foundIdea.getId());
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -137,7 +139,6 @@ public class IdeaServiceImplTest {
 		assertThat(actual).isEqualTo(deletedIdea);
 		verify(this.ideaRepositoryMock, times(1)).findOne(deletedIdea.getId());
 		verify(this.ideaRepositoryMock, times(1)).delete(deletedIdea);
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -193,7 +194,6 @@ public class IdeaServiceImplTest {
 		assertThat(actual.getTitle()).isEqualTo(source.getTitle());
 		assertThat(actual.getDescription()).isEqualTo(source.getDescription());
 		verify(this.ideaRepositoryMock, times(1)).findOne(target.getId());
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -226,6 +226,7 @@ public class IdeaServiceImplTest {
 				TestIdeaBuilder.anIdea().build()
 		);
 		given(this.ideaRepositoryMock.findAll()).willReturn(ideas);
+		given(this.securityContextMock.getAuthentication()).willReturn(authenticationMock);
 
 		//When:
 		List<Idea> actual = this.sut.findAll();
@@ -251,7 +252,6 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
 		verify(this.ideaRepositoryMock, times(1)).findByUserId(any(Long.class));
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 	@Test
@@ -269,39 +269,77 @@ public class IdeaServiceImplTest {
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
 		verify(this.ideaRepositoryMock, times(1)).findByTagId(any(Long.class));
-		verifyNoMoreInteractions(this.ideaRepositoryMock);
 	}
 
 
-    @Test
-    public void shouldReturnPageWithListOfIdeas() throws Exception {
-        //Given:
-        List<Idea> ideas = Lists.newArrayList(
-                TestIdeaBuilder.anIdea().build(),
-                TestIdeaBuilder.anIdea().build()
-        );
-        given(this.ideaRepositoryMock.findAll(defaultPageRequest)).willReturn(ideas);
+	@Test
+	public void shouldReturnPageWithListOfIdeas() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findAll(defaultPageRequest)).willReturn(ideas);
 
-        //When:
-        List<Idea> actual = this.sut.findAll(defaultPageRequest);
+		//When:
+		List<Idea> actual = this.sut.findAll(defaultPageRequest);
 
-        //Then:
-        assertThat(actual).isEqualTo(ideas);
-    }
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+	}
 
 
-    @Test
-    public void shouldSaveForUser() throws Exception {
-        //getting idea
-        Idea foundIdea = TestIdeaBuilder.anIdea().build();
-        Optional<User> user = Optional.of(new User());
+	@Test
+	public void shouldSaveForUser() throws Exception {
+		//getting idea
+		Idea foundIdea = TestIdeaBuilder.anIdea().build();
+		Optional<User> user = Optional.of(new User());
 
-        given(this.ideaRepositoryMock.save(foundIdea)).willReturn(foundIdea);
-        given(userRepositoryMock.findOne(1l)).willReturn(user);
+		given(this.ideaRepositoryMock.save(foundIdea)).willReturn(foundIdea);
+		given(userRepositoryMock.findOne(1l)).willReturn(user);
 
-        //When:
-        Idea actual = this.sut.saveForUser(1, foundIdea);
-        //Then:
-        assertThat(actual).isEqualTo(foundIdea);
-    }
+		//When:
+		Idea actual = this.sut.saveForUser(1, foundIdea);
+		//Then:
+		assertThat(actual).isEqualTo(foundIdea);
+	}
+
+	@Test
+	public void shouldChangeLikedForUserAndIdea_whenLikedIsFalse() {
+		long ideaId = 1L;
+		User user = new User();
+		Idea idea = TestIdeaBuilder.anIdea().withId(ideaId).build();
+
+		final int ratingBefore = idea.getRating();
+		final int likedUsersBefore = idea.getLikedUsers().size();
+
+		given(ideaRepositoryMock.findIdeaByIdThatLikedCurrentUser(ideaId)).willReturn(null);
+		given(userRepositoryMock.findCurrentUser()).willReturn(user);
+		given(ideaRepositoryMock.findOne(ideaId)).willReturn(Optional.of(idea));
+		given(ideaRepositoryMock.save(idea)).willReturn(idea);
+
+		Idea changedLikeIdea = this.sut.changeIdeaLike(ideaId);
+
+		assertThat(changedLikeIdea.getLikedUsers().size()).isEqualTo(likedUsersBefore + 1);
+		assertThat(changedLikeIdea.getRating()).isEqualTo(ratingBefore + 1);
+	}
+
+	@Test
+	public void shouldChangeLikedForUserAndIdea_whenLikedIsTrue() {
+		long ideaId = 1L;
+		User user = new User();
+		Idea likedIdea = TestIdeaBuilder.anIdea().withId(ideaId).withLikedUser(user).withLiked(true).build();
+
+		final int ratingBefore = likedIdea.getRating();
+		final int likedUsersBefore = likedIdea.getLikedUsers().size();
+
+		given(ideaRepositoryMock.findIdeaByIdThatLikedCurrentUser(ideaId)).willReturn(likedIdea);
+		given(userRepositoryMock.findCurrentUser()).willReturn(user);
+		given(ideaRepositoryMock.save(likedIdea)).willReturn(likedIdea);
+
+		Idea changedLikeIdea = this.sut.changeIdeaLike(ideaId);
+
+		assertThat(changedLikeIdea.getLikedUsers().size()).isEqualTo(likedUsersBefore - 1);
+		assertThat(changedLikeIdea.getRating()).isEqualTo(ratingBefore - 1);
+	}
 }
