@@ -1,43 +1,43 @@
 <div class = "login-center-form" ng-controller = "RegistrationController as vm">
     <div class="login-padding">
-        <h2 class="text-center">Регистрация</h2>
-        <div ng-show="vm.error" class="alert alert-danger">Неверный email и/или пароль</div>
+        <h2 class="text-center" translate="REGISTRATION"></h2>
+        <div ng-show="vm.error" class="alert alert-danger" translate="WRONG_EMAIL_PASSWORD"></div>
         <form name="registerForm" ng-submit="vm.registration()" role="registerForm">
             <div class="form-group" ng-class="{ 'has-error' : registerForm.username.$invalid && registerForm.username.$dirty}">
-                <input class="form-control input-lg ng-valid ng-touched ng-dirty ng-valid-required " id="username" name="username" placeholder="Имя пользователя" ng-model="vm.credentials.username" required ng-maxlength="20" >
+                <input class="form-control input-lg ng-valid ng-touched ng-dirty ng-valid-required " id="username" name="username" placeholder="{{ 'USERNAME' | translate }}" ng-model="vm.credentials.username" required ng-maxlength="20" >
                 <div class="help-block text-danger ng-scope ng-active" ng-if="registerForm.username.$dirty" ng-messages="registerForm.username.$error">
-                    <div ng-message="required">Введите имя пользователя. </div>
-                    <div ng-message="maxlength">Имя пользователя слишком длинное. </div>
+                    <div ng-message="required"><span translate="ENTER_USERNAME"/></div>
+                    <div ng-message="maxlength"><span translate="PASSWORD_IS_TOO_LONG"/></div>
                 </div>
 
             </div>
             <div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && registerForm.email.$dirty}">
                 <input class="form-control input-lg ng-valid ng-touched ng-dirty ng-valid-email ng-valid-required ng-valid-pattern" type="E-mail" id="email" name="email" ng-model="vm.credentials.email" placeholder="Email" required ng-pattern="/^[A-z]+[a-z0-9._\-]+@[a-z]+\.[a-z.]{2,5}$/" ng-maxlength="30" ng-change = "vm.editEmail()" record-availability-validator>
                 <div class="help-block text-danger ng-scope ng-active" ng-if="registerForm.email.$dirty" ng-messages="registerForm.email.$error">
-                    <div ng-message="pattern" >Введите корректный e-mail.</div>
-                    <div ng-message="required">Введите e-mail. </div>
-                    <div ng-message="maxlength">E-mail пользователя слишком длинный. </div>
-                    <div ng-message="recordAvailable">Данный e-mail занят другим пользователем.</div>
+                    <div ng-message="pattern"><span translate="ENTER_CORRECT_EMAIL"/></div>
+                    <div ng-message="required"><span translate="ENTER_EMAIL"/></div>
+                    <div ng-message="maxlength"><span translate="EMAIL_IS_TOO_LONG"/></div>
+                    <div ng-message="recordAvailable"><span translate="EMAIL_ALREADY_USED"/></div>
                 </div>
 
             </div>
             <div class="form-group" ng-class="{ 'has-error': registerForm.password.$dirty && registerForm.password.$invalid }">
-                <input type="password" name="password" id="password" class="form-control input-lg ng-pristine ng-valid ng-valid-required ng-touched ng-valid-compare-to" placeholder="Пароль" ng-model="vm.credentials.password" required ng-minlength="6" ng-maxlength="20"/>
+                <input type="password" name="password" id="password" class="form-control input-lg ng-pristine ng-valid ng-valid-required ng-touched ng-valid-compare-to" placeholder="{{ 'PASSWORD' | translate }}" ng-model="vm.credentials.password" required ng-minlength="6" ng-maxlength="20"/>
                 <div class="help-block text-danger ng-scope ng-active" ng-if="registerForm.password.$dirty" ng-messages="registerForm.password.$error">
-                    <div ng-message="required" class="ng-scope">Введите пароль.</div>
-                    <div ng-message="minlength">Пароль пользователя слишком короткий.</div>
-                    <div ng-message="maxlength">Пароль пользователя слишком длинный.</div>
+                    <div ng-message="required" class="ng-scope" translate="ENTER_PASSWORD"></div>
+                    <div ng-message="minlength"><span translate="PASSWORD_IS_TOO_SHORT"/></div>
+                    <div ng-message="maxlength"><span translate="PASSWORD_IS_TOO_LONG"/></div>
                 </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error' : registerForm.confirmPassword.$invalid && registerForm.confirmPassword.$dirty }">
-                <input compare-to="vm.credentials.password" class="form-control input-lg ng-isolate-scope ng-dirty ng-touched ng-valid ng-valid-compare-to" type="password" ng-model="confirmPassword" name="confirmPassword" ng-model="confirmPassword" placeholder="Подтвердить пароль">
+                <input compare-to="vm.credentials.password" class="form-control input-lg ng-isolate-scope ng-dirty ng-touched ng-valid ng-valid-compare-to" type="password" ng-model="confirmPassword" name="confirmPassword" ng-model="confirmPassword" placeholder="{{ 'CONFIRM_PASSWORD' | translate }}">
                 <div class="help-block text-danger ng-scope ng-active" ng-if="registerForm.confirmPassword.$dirty" ng-messages="registerForm.confirmPassword.$error">
-                    <div ng-message="errorCompareTo" class="ng-scope">Пароль не совпадает.</div>
+                    <div ng-message="errorCompareTo" class="ng-scope"><span translate="PASSWORD_DOES_NOT_MUCH"/></div>
                 </div>
             </div>
             <div class="form-actions">
-                <button id="btnLogin" type="submit" ng-disabled="registerForm.$invalid" class="btn btn-primary">Зарегистрироваться</button>
-                <a href="#/login" class="btn btn-link">Войти</a>
+                <button id="btnLogin" type="submit" ng-disabled="registerForm.$invalid" class="btn btn-primary" translate="SIGN_UP"></button>
+                <a href="#/login" class="btn btn-link" translate="LOGIN"></a>
             </div>
         </form>
     </div>

@@ -1,32 +1,32 @@
 <div id="mainDiv">
     <div id="shadowBox">
         <div id="topDiv">
-            <p id="p">Добавить Идею</p>
+            <p id="p" translate="ADD_IDEA"></p>
         </div>
         <div id="dataDivInsert">
             <div id="lineDivsLeftInsert">
                 <!-- idea -->
                 <div id="divData">
-                    <div id="tdCaption">Категория</div>
+                    <div id="tdCaption"translate="CATEGORY"></div>
                     <div id="tdDataInsert">
                         <!--select class="form-control" ng-model="data.tagId" >
                             <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
                         </select-->
-                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Категория" ng-model="data.tagName">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'CATEGORY' | translate }}" ng-model="data.tagName">
                     </div>
                 </div>
                 <!-- descr -->
                 <div id="divData">
-                    <div id="tdCaption">Идея</div>
+                    <div id="tdCaption" translate="IDEA"></div>
                     <div id="tdDataInsert">
-                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="Идея" ng-model="data.title">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title">
                     </div>
                 </div>
                 <!-- created -->
                 <div id="divData">
-                    <div id="tdCaption">Описание</div>
+                    <div id="tdCaption" translate="DESCRIPTION"></div>
                     <div id="tdDataInsert">
-                        <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="Описание" rows="5" ng-model="data.description"></textarea>
+                        <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description"></textarea>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         </div>
 
         <div id="bottomButtonsBar" ngf-drop ng-model="files" class="drop-box"  ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="false" accept="image/*">
-            <button class="btn btn-default" ng-click="chooseFile()">Загрузить файл</button> <b>или</b> Перетянуть свой файл
+            <button class="btn btn-default" ng-click="chooseFile()" translate="UPLOAD_FILE"/> <b translate="OR"/> <span translate="DRAG_FILE"/>
             <p id="pFileName"></p>
             <input type="file" id="imageLoader"/>
         </div>
@@ -55,10 +55,10 @@
     <div id="shadowBox">
         <div id="bottomButtonsBar">
             <div id="divLeft">
-                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Назад</button>
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK"/> </button>
             </div>
             <div id="divRight">
-                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{bottomButtonName}}</button>
+                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
             </div>
         </div>
     </div>

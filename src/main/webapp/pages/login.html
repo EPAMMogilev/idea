@@ -1,24 +1,24 @@
 <div class = "login-center-form" ng-controller = "LoginController as vm">
     <div class="login-padding">
-        <h2 class="text-center">Вход</h2>
-        <div ng-show="vm.error" class="alert alert-danger">Неверный email и/или пароль</div>
+        <h2 class="text-center" translate="ENTER"></h2>
+        <div ng-show="vm.error" class="alert alert-danger" translate="WRONG_EMAIL_PASSWORD"></div>
         <form name="form" ng-submit="vm.login()" role="form">
             <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
                 <input type="text" name="email" id="email" class="form-control input-lg" placeholder="Email" ng-model="vm.credentials.email" required autofocus="" />
-                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Введите email</span>
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block" translate="ENTER_EMAIL"></span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Пароль" ng-model="vm.credentials.password" required />
-                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Введите пароль</span>
+                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="{{ 'PASSWORD' | translate }}" ng-model="vm.credentials.password" required />
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block" translate="ENTER_USERNAME"></span>
             </div>
             <div class="form-actions">
-                <button id="btnLogin" type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Вход</button>
-                <a href="#/register" class="btn btn-link">Зарегистрироваться</a>
+                <button id="btnLogin" type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="ENTER"></button>
+                <a href="#/register" class="btn btn-link" translate="SIGN_UP"></a>
             </div>
         </form>
-        <a class="btn btn-block btn-facebook" href="auth/facebook"><i class="fa fa-facebook"></i> Войти через Facebook</a>
-        <a class="btn btn-block btn-google-plus" href="auth/google"><i class="fa fa-google"></i> Войти через Google</a>
-        <a class="btn btn-block btn-vk" href="auth/vkontakte"><i class="fa fa-vk"></i> Войти через VK</a>
+        <a class="btn btn-block btn-facebook" href="auth/facebook"><i class="fa fa-facebook"></i> <span translate="SIGN_IN_WITH"></span> Facebook</a>
+        <a class="btn btn-block btn-google-plus" href="auth/google"><i class="fa fa-google"></i> <span translate="SIGN_IN_WITH"></span> Google</a>
+        <a class="btn btn-block btn-vk" href="auth/vkontakte"><i class="fa fa-vk"></i> <span translate="SIGN_IN_WITH"></span> VK</a>
 
     </div>
 </div>

@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿﻿'use strict';
 /**
  * @name ideaApp
  *
@@ -21,9 +21,11 @@ angular
 		'yaMap',
 		'ngImgur',
 		'ngFileUpload',
-	        'ngMessages'
+        'ngMessages',
+        'pascalprecht.translate',
+        'ngSanitize'
 	]);
-	
+
 	angular.module('app.directives', []); // set Directives
 	angular.module('app.services', []); // set Services
 	angular.module('app.controllers', []); // set Ctrls
@@ -37,8 +39,8 @@ angular
          .config(config)
          .run(run);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
-    function config($stateProvider, $urlRouterProvider, $httpProvider) {
+    config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider'];
+    function config($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider) {
 
         $urlRouterProvider.otherwise('/home');
 
@@ -52,7 +54,7 @@ angular
             views: {
                 'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
             },/*
-            onEnter:  function(){ initMostRating()},*/
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
         }).
         state('login', {
@@ -72,13 +74,13 @@ angular
         state('ideaDetails', {
             url: '/ideaDetails:idea',
             views: {
-				'main@': { 
+				'main@': {
 					templateUrl: 'pages/details.html',
-					controller: 'detailsCtrl as detailsCtrl',	
+					controller: 'detailsCtrl as detailsCtrl',
 					resolve: {
 						ideaDetails: ['$stateParams',
 						  function ($stateParams) {
-							console.log('Go to Details');
+
 							var idea = angular.fromJson($stateParams.idea);
 							return idea;
 						  }]
@@ -106,8 +108,8 @@ angular
                     resolve: {
                         ideaDetails: ['$stateParams',
                           function ($stateParams) {
-                            console.log('Go to Update');
-                            console.log('update param: ' + $stateParams.idea);
+
+
                             var idea = angular.fromJson($stateParams.idea);
                             return idea;
                           }]
@@ -118,7 +120,12 @@ angular
             parent: 'root'
         });
 
-        }
+        $translateProvider.translations('en', arrayEnglish);
+         $translateProvider.translations('ru', arrayRussian);
+        $translateProvider.useSanitizeValueStrategy('sanitize');
+        $translateProvider.preferredLanguage('ru');
+
+    }
 
 
 

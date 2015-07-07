@@ -10,7 +10,7 @@
     function updateIdea($scope, $window, $modal, ideasFactory, detailsService, ideaDetails, mapGeoService, imgur, Upload) {
 
         this.categories =  detailsService.getCategories();
-        $scope.bottomButtonName = 'Обновить';
+        $scope.bottomButtonName = 'UPDATE';
         $scope.idea = ideaDetails;
         $scope.data = null;
 
