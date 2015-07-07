@@ -59,7 +59,7 @@ public class IdeaServiceImplTest {
 	@InjectMocks
 	private IdeaService sut = new IdeaServiceImpl();
 
-    private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+	private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
 
 	@Before
 	public void setUp() throws Exception {
@@ -272,37 +272,37 @@ public class IdeaServiceImplTest {
 	}
 
 
-    @Test
-    public void shouldReturnPageWithListOfIdeas() throws Exception {
-        //Given:
-        List<Idea> ideas = Lists.newArrayList(
-                TestIdeaBuilder.anIdea().build(),
-                TestIdeaBuilder.anIdea().build()
-        );
-        given(this.ideaRepositoryMock.findAll(defaultPageRequest)).willReturn(ideas);
+	@Test
+	public void shouldReturnPageWithListOfIdeas() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findAll(defaultPageRequest)).willReturn(ideas);
 
-        //When:
-        List<Idea> actual = this.sut.findAll(defaultPageRequest);
+		//When:
+		List<Idea> actual = this.sut.findAll(defaultPageRequest);
 
-        //Then:
-        assertThat(actual).isEqualTo(ideas);
-    }
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+	}
 
 
-    @Test
-    public void shouldSaveForUser() throws Exception {
-        //getting idea
-        Idea foundIdea = TestIdeaBuilder.anIdea().build();
-        Optional<User> user = Optional.of(new User());
+	@Test
+	public void shouldSaveForUser() throws Exception {
+		//getting idea
+		Idea foundIdea = TestIdeaBuilder.anIdea().build();
+		Optional<User> user = Optional.of(new User());
 
-        given(this.ideaRepositoryMock.save(foundIdea)).willReturn(foundIdea);
-        given(userRepositoryMock.findOne(1l)).willReturn(user);
+		given(this.ideaRepositoryMock.save(foundIdea)).willReturn(foundIdea);
+		given(userRepositoryMock.findOne(1l)).willReturn(user);
 
-        //When:
-        Idea actual = this.sut.saveForUser(1, foundIdea);
-        //Then:
-        assertThat(actual).isEqualTo(foundIdea);
-    }
+		//When:
+		Idea actual = this.sut.saveForUser(1, foundIdea);
+		//Then:
+		assertThat(actual).isEqualTo(foundIdea);
+	}
 
 	@Test
 	public void shouldChangeLikedForUserAndIdea_whenLikedIsFalse() {
