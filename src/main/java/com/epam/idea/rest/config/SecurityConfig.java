@@ -62,7 +62,7 @@ public class SecurityConfig {
 					.httpBasic()
 				.and()
 					.authorizeRequests()
-					.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/registration.html", "/pages/app.html", "/pages/details.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*", "/login", "/hi")
+					.antMatchers("/index.html", "/", "/css/**", "/js/**", "/bower_components/**", "/templates/**", "/pages/login.html", "/pages/registration.html", "/pages/app.html", "/pages/details.html", "/fonts/**", "/images/**", "/api/**", "/auth/**", "/signup", "/user/*", "/login", "/languages/*")
 					.permitAll()
 					.anyRequest().authenticated()
 				.and()
