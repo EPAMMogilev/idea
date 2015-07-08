@@ -30,7 +30,7 @@
             <div id="divLeft">
                 <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK" /></button>
             </div>
-            <div id="divRightAlignRight" ng-show="haveRights(data)">
+            <div id="divRightAlignRight" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
                 <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
                 <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
             </div>

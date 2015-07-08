@@ -4,9 +4,9 @@
         .module('app.controllers')
         .controller('sessionCtrl', sessionCtrl);
 
-    sessionCtrl.$inject = ['$rootScope', '$http', '$window', '$translate'];
+    sessionCtrl.$inject = ['$rootScope', '$http', '$window', '$translate', 'sessionService'];
 
-    function sessionCtrl($rootScope, $http, $window, $translate) {
+    function sessionCtrl($rootScope, $http, $window, $translate, sessionService) {
 
          var vm = this;
          vm.authenticate = authenticate;
@@ -47,6 +47,10 @@
 
          vm.getCurrentLang = function () {
              return $translate.use();
+         }
+
+         vm.hasRole = function (role, user) {
+               return sessionService.hasRole(role, user);
          }
     }
 

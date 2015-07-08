@@ -5,16 +5,17 @@
         .module('app.services')
         .service('sessionService',sessionService);
 
-         sessionService.$inject = ['sessionFactory'];
+         sessionService.$inject = ['sessionFactory', '$rootScope'];
 
-        function sessionService(sessionFactory) {
+        function sessionService(sessionFactory, $rootScope) {
             var sessionID = '';
             var user = {};
             var publicMethod = {
                 getSessionId: getSessionId,
                 setSessionId: setSessionId,
                 getUser: getUser,
-                setUser: setUser
+                setUser: setUser,
+                hasRole: hasRole
             };
             return publicMethod;
 
@@ -43,8 +44,24 @@
                 return;
             };
 
-        };
+            function hasRole (role, user) {
+                if(user == undefined) {
+                    if($rootScope.currentUser == undefined) {
+                    return false;
+                        } else {
+                            user = $rootScope.currentUser;
+                        }
+                    }
 
+                for (var i = 0; i < user.authorities.length; i++) {
+                    if(user.authorities[i].authority == role) {
+                        return true;
+                    }
 
+                return false;
+                };
+
+            };
+    };
 })();
 
