@@ -5,14 +5,26 @@
         .module('app.controllers')
         .controller('detailsCtrl', detailsCtrl);
 
-    detailsCtrl.$inject = ['$scope', '$window', '$state', 'ideasFactory', 'ideaDetails', 'mapGeoService'];
+    detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService'];
 
-    function detailsCtrl($scope, $window, $state, ideasFactory, ideaDetails, mapGeoService) {
+    function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService) {
 
         $scope.idea = ideaDetails;
         $scope.data = null;
 
         $scope.myMap = null;
+
+
+
+		$scope.isAuthor = function (idea) {
+			if(idea && $rootScope.currentUser)
+			{
+				if ($rootScope.currentUser.id == idea.author.id) {
+					return true;
+				}
+			}
+			return false;
+        }
 
         this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
                                        //success
