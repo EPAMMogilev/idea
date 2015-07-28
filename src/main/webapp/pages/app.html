@@ -1,27 +1,22 @@
 <div class = "ideas-container">
-    <div id="tag-buttons" class="btn-group">
-        <tag-button identifier="all" click="ideasCtrl.selectByCategory()" active="true">Все</tag-button>
-        <tag-button identifier="sport" click="ideasCtrl.selectByCategory('1')">Спорт</tag-button>
-        <tag-button identifier="transport" click="ideasCtrl.selectByCategory('2')">Транспорт</tag-button>
-        <tag-button identifier="culture" click="ideasCtrl.selectByCategory('3')">Культура</tag-button>
+    <div id="tag-buttons" class="btn-group" ng-controller="tagsCtrl as tagsCtrl">
+        <tag-button identifier="all" ng-click="ideasCtrl.selectByCategory(null)" active="true">Все</tag-button>
+        <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag)">{{tag.name}}</tag-button>
     </div>
     <div class = "searcher">
         <input placeholder="{{ 'FIND' | translate }}..." ng-model="criteria" class="form-control">
     </div>
     <div class="dataContainer">
-        <!-- class="allIdeas"  -->
-        <div id="lstMostRating" class="allIdeas" ideas-list update-function="ideasCtrl.loadMoreRating()" div-name="#lstMostRating">
+        <div id="lstMostRating" class="popularIdeas" ideas-list update-function="ideasCtrl.loadPageForPopular()" div-name="#lstMostRating">
             <ul>
-                <li ng-repeat="idea in ideasCtrl.ideasVisible | orderBy: '-rating' | searchLineFilter:criteria"  class = "idea-li" >
+                <li ng-repeat="idea in ideasCtrl.popular | searchLineFilter:criteria"  class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>
-        <div id="lstNewIdeas" class="newIdeas" ideas-list update-function="ideasCtrl.loadMoreNew()" div-name="#lstNewIdeas">
-        <!--div class="allIdeas" ideas-list update-function="ideasCtrl.loadMore()"-->
+        <div id="lstNewIdeas" class="latestIdeas" ideas-list update-function="ideasCtrl.loadPageForLatest()" div-name="#lstNewIdeas">
             <ul>
-                <!--<li ng-repeat="idea in ideasCtrl.ideas | orderBy: '-createdAt'| searchLineFilter:criteria | limitTo: 5  "  class = "idea-li" >-->
-                <li ng-repeat="idea in ideasCtrl.newIdeas"  class = "idea-li" >
+                <li ng-repeat="idea in ideasCtrl.latest" class = "idea-li" >
                     <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>

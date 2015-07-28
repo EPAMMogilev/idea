@@ -32,10 +32,6 @@ public interface IdeaService extends BaseService<Idea, Long> {
 	@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
 	Idea update(long ideaId, @Param("idea") Idea source);
 
-	List<Idea> findIdeasByUserId(long userId);
-
-	List<Idea> findIdeasByTagId(long tagId);
-
 	@PreAuthorize("hasRole('ADMIN') or userId == principal.id")
 	Idea saveForUser(@Param("userId") long userId, Idea idea);
 
@@ -46,4 +42,8 @@ public interface IdeaService extends BaseService<Idea, Long> {
 	boolean isCurrentUserLikedIdea(long ideaId);
 
 	List<Idea> findAll(Pageable pageable);
+
+	List<Idea> findAllByUserId(long userId);
+
+	List<Idea> findAllByTagId(Pageable pageable, Long tag);
 }

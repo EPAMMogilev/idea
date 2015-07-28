@@ -100,7 +100,7 @@ button {
    
 }
 
-.newIdeas {
+.latestIdeas {
     width: 600px;
     height:auto;
     display:inline-block;
@@ -114,14 +114,14 @@ button {
     overflow-y: auto;
 }
 
-.newIdeas ul{
+.latestIdeas ul{
     list-style-type: none;
     margin-bottom: 10px;
     border-bottom: 1px solid #DDD;
     width: 450px;
 }
 
-.newIdeas .font-cenralbig {
+.latestIdeas .font-cenralbig {
   text-align: center;
   font-size: 30;
   width: 50px;
@@ -612,14 +612,10 @@ button {
   color: #19B5E6;
 }
 
-.allIdeas
+.popularIdeas
 {
     display: inline-block;
     /*border: 1px solid red;*/
     max-height: 640px;
     overflow-y: auto;
-}
-
-.newIdeas
-{
 }

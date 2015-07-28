@@ -56,10 +56,10 @@ public class IdeaServiceImpl implements IdeaService {
 	public Idea findOne(final Long ideaId) {
 		final Optional<Idea> ideaOptional = ideaRepository.findOne(ideaId);
 		return ideaOptional.map(idea -> {
-					Hibernate.initialize(idea.getRelatedTags());
-					idea.setLiked(isCurrentUserLikedIdea(ideaId));
-					return idea;
-				}).orElseThrow(() -> new IdeaNotFoundException(ideaId));
+			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(ideaId));
+			return idea;
+		}).orElseThrow(() -> new IdeaNotFoundException(ideaId));
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Idea> findIdeasByUserId(final long userId) {
+	public List<Idea> findAllByUserId(final long userId) {
 		List<Idea> ideas = ideaRepository.findByUserId(userId);
 		ideas.forEach(idea -> {
 			Hibernate.initialize(idea.getRelatedTags());
@@ -96,13 +96,18 @@ public class IdeaServiceImpl implements IdeaService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public List<Idea> findIdeasByTagId(final long tagId) {
-		final List<Idea> ideas = ideaRepository.findByTagId(tagId);
-		ideas.forEach(idea -> {
-			Hibernate.initialize(idea.getRelatedTags());
-			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-		});
+	public List<Idea> findAllByTagId(Pageable pageable, Long tagId) {
+		List<Idea> ideas;
+		if (tagId != null) {
+			ideas = ideaRepository.findAllByTagId(pageable, tagId);
+			ideas.forEach(idea -> {
+				Hibernate.initialize(idea.getRelatedTags());
+				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+			});
+		}
+		else {
+			ideas = findAll(pageable);
+		}
 		return ideas;
 	}
 
@@ -118,7 +123,7 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public Idea changeIdeaLike(long ideaId) {
-		Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+		Idea idea = ideaRepository.findByIdAndLikedByCurrentUser(ideaId);
 		User currentUser = userRepository.findCurrentUser();
 
 		if (idea == null) {
@@ -140,7 +145,7 @@ public class IdeaServiceImpl implements IdeaService {
 		System.out.println("IS ANONYMOUS? " + isAnonymous);
 		if (!isAnonymous) {
 			System.out.println("NOT ANONYMOUS");
-			Idea idea = ideaRepository.findIdeaByIdThatLikedCurrentUser(ideaId);
+			Idea idea = ideaRepository.findByIdAndLikedByCurrentUser(ideaId);
 			isCurrentUserLikedIdea = idea != null;
 		}
 		return isCurrentUserLikedIdea;

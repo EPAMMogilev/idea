@@ -27,11 +27,12 @@ public interface IdeaRepository extends BaseRepository<Idea, Long> {
 	 * @param tagId The id of the tag.
 	 * @return All the ideas marked by the tag.
 	 */
-	@Query("select t.ideasWithTag from Tag t where t.id = ?1")
-	List<Idea> findByTagId(Long tagId);
+
+	@Query("select i from Idea i left join i.relatedTags t where t.id = ?1")
+	List<Idea> findAllByTagId(Pageable pageable, Long tagId);
 
 	@Query("select i from Idea i left join i.likedUsers u where i.id = ?1 and u.id = ?#{ principal?.id }")
-	Idea findIdeaByIdThatLikedCurrentUser(long ideaId);
+	Idea findByIdAndLikedByCurrentUser(long ideaId);
 
 	@Query("select i from Idea i")
 	List<Idea> findAll(Pageable pageable);

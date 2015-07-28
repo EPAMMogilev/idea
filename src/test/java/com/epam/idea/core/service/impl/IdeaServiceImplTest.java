@@ -1,7 +1,5 @@
 package com.epam.idea.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +24,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -247,7 +243,7 @@ public class IdeaServiceImplTest {
 		given(this.ideaRepositoryMock.findByUserId(any(Long.class))).willReturn(ideas);
 
 		//When:
-		List<Idea> actual = this.sut.findIdeasByUserId(1);
+		List<Idea> actual = this.sut.findAllByUserId(1);
 
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
@@ -261,14 +257,14 @@ public class IdeaServiceImplTest {
 				TestIdeaBuilder.anIdea().build(),
 				TestIdeaBuilder.anIdea().build()
 		);
-		given(this.ideaRepositoryMock.findByTagId(any(Long.class))).willReturn(ideas);
+		given(this.ideaRepositoryMock.findAllByTagId(defaultPageRequest, any(Long.class))).willReturn(ideas);
 
 		//When:
-		List<Idea> actual = this.sut.findIdeasByTagId(1);
+		List<Idea> actual = this.sut.findAllByTagId(defaultPageRequest, 1L);
 
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
-		verify(this.ideaRepositoryMock, times(1)).findByTagId(any(Long.class));
+		verify(this.ideaRepositoryMock, times(1)).findAllByTagId(defaultPageRequest, any(Long.class));
 	}
 
 
@@ -313,7 +309,7 @@ public class IdeaServiceImplTest {
 		final int ratingBefore = idea.getRating();
 		final int likedUsersBefore = idea.getLikedUsers().size();
 
-		given(ideaRepositoryMock.findIdeaByIdThatLikedCurrentUser(ideaId)).willReturn(null);
+		given(ideaRepositoryMock.findByIdAndLikedByCurrentUser(ideaId)).willReturn(null);
 		given(userRepositoryMock.findCurrentUser()).willReturn(user);
 		given(ideaRepositoryMock.findOne(ideaId)).willReturn(Optional.of(idea));
 		given(ideaRepositoryMock.save(idea)).willReturn(idea);
@@ -333,7 +329,7 @@ public class IdeaServiceImplTest {
 		final int ratingBefore = likedIdea.getRating();
 		final int likedUsersBefore = likedIdea.getLikedUsers().size();
 
-		given(ideaRepositoryMock.findIdeaByIdThatLikedCurrentUser(ideaId)).willReturn(likedIdea);
+		given(ideaRepositoryMock.findByIdAndLikedByCurrentUser(ideaId)).willReturn(likedIdea);
 		given(userRepositoryMock.findCurrentUser()).willReturn(user);
 		given(ideaRepositoryMock.save(likedIdea)).willReturn(likedIdea);
 
