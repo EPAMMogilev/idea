@@ -8,6 +8,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static com.epam.idea.assertion.IdeaProjectAssertions.assertThatIdea;
@@ -55,7 +56,7 @@ public class IdeaRepositoryIntegrationTest {
 	@DatabaseSetup(value = "ideaRepository-ideas.xml")
 	public void shouldFindAllIdeasByTagId() throws Exception {
 		// When:
-		List<Idea> ideas = this.ideaRepository.findByTagId(TAG_ID);
+		List<Idea> ideas = this.ideaRepository.findAllByTagId(new PageRequest(0, 500, null), TAG_ID);
 
 		// Then:
 		assertThat(ideas).hasSize(1);

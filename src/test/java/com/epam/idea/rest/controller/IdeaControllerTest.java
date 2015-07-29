@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -126,7 +127,7 @@ public class IdeaControllerTest {
 	public void shouldReturnAllFoundIdeas() throws Exception {
 		Idea foundIdea = TestIdeaBuilder.anIdea().build();
 
-		when(this.ideaServiceMock.findAll(defaultPageRequest)).thenReturn(Lists.newArrayList(foundIdea));
+		when(this.ideaServiceMock.findAllByTagId(defaultPageRequest, null)).thenReturn(Arrays.asList(foundIdea));
 
 		this.mockMvc.perform(get("/api/v1/ideas")
 				.accept(APPLICATION_JSON_UTF8))
@@ -140,7 +141,7 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));
 
-		verify(this.ideaServiceMock, times(1)).findAll(defaultPageRequest);
+		verify(this.ideaServiceMock, times(1)).findAllByTagId(defaultPageRequest, null);
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 
