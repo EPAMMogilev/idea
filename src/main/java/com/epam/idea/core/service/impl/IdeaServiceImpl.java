@@ -142,9 +142,7 @@ public class IdeaServiceImpl implements IdeaService {
 	public boolean isCurrentUserLikedIdea(long ideaId) {
 		boolean isCurrentUserLikedIdea = false;
 		boolean isAnonymous = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
-		System.out.println("IS ANONYMOUS? " + isAnonymous);
 		if (!isAnonymous) {
-			System.out.println("NOT ANONYMOUS");
 			Idea idea = ideaRepository.findByIdAndLikedByCurrentUser(ideaId);
 			isCurrentUserLikedIdea = idea != null;
 		}
