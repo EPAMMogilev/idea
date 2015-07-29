@@ -3,13 +3,25 @@ insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('FirstUser',
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('SecondUser', 'second@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('ThirdUser', 'third@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Р’РµР»РѕРїР°СЂРєРѕРІРєР°', 'РћС„РёСЃ РўРљ4 РѕС‡РµРЅСЊ Р¶РґС‘С‚ РµС‘ РІРѕР·СЂР°С‰РµРЅРёСЏ', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('РџР»РѕС‰Р°РґРєР° РґР»СЏ Р°РґР¶РёР»РёС‚Рё', 'РЇ РґСѓРјР°СЋ,  Сѓ РјРЅРѕРіРёС… РІР»Р°РґРµР»СЊС†РµРІ СЃРѕР±Р°Рє РІРѕР·РЅРёРєР°Р»Р° РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚СЊ РІ С‚Р°РєРѕР№ РїР»РѕС‰Р°РґРєРµ. Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, РІ РЅР°С€РµРј РіРѕСЂРѕРґРµ РёС… РµРґРёРЅРёС†С‹. РџСЂРµРґР»Р°РіР°СЋ РѕР±РѕСЂСѓРґРѕРІР°С‚СЊ РєР°Рє РјРёРЅРёРјСѓРј РµС‰С‘ РѕРґРЅСѓ.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Р’РёРґРµРѕРЅР°Р±Р»СЋРґРµРЅРёРµ РґР»СЏ Р·РѕРѕСЃР°РґР°', 'РљР°Рє РЅР°СЃС‡С‘С‚ СѓСЃС‚Р°РЅРѕРІРєРё СЃРёСЃС‚РµРјС‹ РІРёРґРµРѕРЅР°Р±Р»СЋРґРµРЅРёСЏ? РњРѕРіРёР»РµРІС‡Р°РЅРµ РјРѕРіР»Рё Р±С‹ РЅР°Р±Р»СЋРґР°С‚СЊ Р·Р° Р¶РёР·РЅСЊСЋ Р¶РёРІРѕС‚РЅС‹С… РёР· РґРѕРјР° РІ СЂРµР¶РёРјРµ СЂРµР°Р»СЊРЅРѕРіРѕ РІСЂРµРјРµРЅРё', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Р‘РµСЃРїР»Р°С‚РЅС‹Р№ Wi-Fi', 'Р’ РњРѕРіРёР»РµРІРµ РЅСѓР¶РЅС‹ Р·РѕРЅС‹ Р±РµСЃРїР»Р°С‚РЅРѕРіРѕ РґРѕСЃС‚СѓРїР° РІ РёРЅС‚РµСЂРЅРµС‚. РћСЃРѕР±РµРЅРЅРѕ РЅР° РїР»РѕС‰Р°РґРё РЎР»Р°РІС‹', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Р РµРјРѕРЅС‚ РџСѓС€РєРёРЅСЃРєРѕРіРѕ РјРѕСЃС‚Р°', 'РњРѕСЃС‚ РґР°РІРЅРѕ С‚СЂРµР±СѓРµС‚ РїРѕР»РЅРѕР№ СЂРµРєРѕРЅСЃС‚СЂСѓРєС†РёРё', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('РњРѕРіРёР»РµРІСЃРєРёР№ РїРѕР»СѓРјР°СЂР°С„РѕРЅ', 'РџСЂРµРґР»Р°РіР°СЋ РѕСЂРіР°РЅРёР·РѕРІР°С‚СЊ РіРѕСЂРѕРґСЃРєРѕР№ РїРѕР»СѓРјР°СЂР°С„РѕРЅ РєР°Рє РґР»СЏ Р»СЋР±РёС‚РµР»РµР№, С‚Р°Рє Рё РґР»СЏ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»РѕРІ. РџРѕРІС‹СЃРёРј РёРЅС‚РµСЂРµСЃ Рє Р±РµРіСѓ Сѓ РјРѕР»РѕРґС‘Р¶Рё!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('РљРѕС‚РѕРєР°С„Рµ', 'РЈ РЅР°СЃ РµСЃС‚СЊ Р°РЅС‚РёРєР°С„Рµ, РЅРѕ РЅРµС‚ РєРѕС‚РѕРєР°С„Рµ. Рђ РІРµРґСЊ СЌС‚Рѕ Р±С‹Р»Рѕ Р±С‹ РѕС‚Р»РёС‡РЅС‹Рј РјРµСЃС‚РѕРј РґР»СЏ РѕС‚РґС‹С…Р°!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Велопарковка', 'Офис ТК4 очень ждёт её возращения', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Площадка для аджилити', 'Я думаю,  у многих владельцев собак возникала необходимость в такой площадке. К сожалению, в нашем городе их единицы. Предлагаю оборудовать как минимум ещё одну.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Видеонаблюдение для зоосада', 'Как насчёт установки системы видеонаблюдения? Могилевчане могли бы наблюдать за жизнью животных из дома в режиме реального времени', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Бесплатный Wi-Fi', 'В Могилеве нужны зоны бесплатного доступа в интернет. Особенно на площади Славы', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ремонт Пушкинского моста', 'Мост давно требует полной реконструкции', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Могилевский полумарафон', 'Предлагаю организовать городской полумарафон как для любителей, так и для профессионалов. Повысим интерес к бегу у молодёжи!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе1', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе2', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе3', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе4', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе5', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе6', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе7', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе8', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе9', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе10', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе11', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе12', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
 
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
@@ -19,10 +31,10 @@ insert into USER_ROLE (USER_ID, ROLE_ID) values (2, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (3, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (4, 2);
 
-insert into TAG (NAME) values ('РЎРїРѕСЂС‚');
-insert into TAG (NAME) values ('РўСЂР°РЅСЃРїРѕСЂС‚');
-insert into TAG (NAME) values ('РљСѓР»СЊС‚СѓСЂР°');
-insert into TAG (NAME) values ('Р–РёРІРѕС‚РЅС‹Рµ');
+insert into TAG (NAME) values ('Спорт');
+insert into TAG (NAME) values ('Транспорт');
+insert into TAG (NAME) values ('Культура');
+insert into TAG (NAME) values ('Животные');
 
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 4);
@@ -31,6 +43,18 @@ insert into IDEA_TAG (IDEA_ID, TAG_ID) values (4, 3);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (5, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (6, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (7, 4);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (8, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (9, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (10, 4);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (11, 4);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (12, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (13, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (14, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (15, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (16, 4);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (17, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (18, 3);
+insert into IDEA_TAG (IDEA_ID, TAG_ID) values (19, 3);
 
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (1, 1, 'Awesome!', '2014-08-02 00:00:00', '2014-12-24 00:00:00', 5);
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (2, 2, 'Super!', '2014-06-12 00:00:00', '2014-09-20 00:00:00', 10);

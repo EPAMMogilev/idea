@@ -16,7 +16,8 @@
             updateIdea: updateIdea,
             removeIdea: removeIdea,
             changeIdeaLike: changeIdeaLike,
-            getPage: getPage
+            getPage: getPage,
+            getPageWithTag: getPageWithTag
         };
         return publicMethod;
 
@@ -35,12 +36,12 @@
             return promise;
         };
 
-        function insertIdea(idea){
+        function insertIdea(idea) {
             var promise = restFactory.ideas().create(idea).$promise;
             return promise;
         };
 
-        function removeIdea(idea){
+        function removeIdea(idea) {
             var promise = restFactory.ideas().delete(idea).$promise;
             return promise;
         };
@@ -50,8 +51,13 @@
             return promise;
         };
 
-        function getPage(page){
+        function getPage(page) {
             var promise = restFactory.ideas().getPage({page: page.page, size: page.size, sort: page.sort}).$promise;
+            return promise;
+        };
+
+        function getPageWithTag(page, tag) {
+            var promise = restFactory.ideas().getPage({page: page.page, size: page.size, sort: page.sort, tagId: tag.id}).$promise;
             return promise;
         };
     }

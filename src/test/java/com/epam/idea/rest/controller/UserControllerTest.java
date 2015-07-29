@@ -35,7 +35,6 @@ import org.springframework.web.context.WebApplicationContext;
 import static com.epam.idea.builder.model.TestTagBuilder.aTag;
 import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_CREATION_TIME;
 import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_EMAIL;
-import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_PASSWORD;
 import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_USER_ID;
 import static com.epam.idea.builder.model.TestUserBuilder.aUser;
 import static com.epam.idea.core.model.User.MAX_LENGTH_EMAIL;
@@ -379,7 +378,7 @@ public class UserControllerTest {
 				.withTags(Lists.newArrayList(tag))
 				.build();
 
-		when(this.ideaServiceMock.findIdeasByUserId(userId)).thenReturn(Lists.newArrayList(idea));
+		when(this.ideaServiceMock.findAllByUserId(userId)).thenReturn(Lists.newArrayList(idea));
 
 		this.mockMvc.perform(get("/api/v1/users/{userId}/ideas", userId)
 				.accept(APPLICATION_JSON_UTF8))
@@ -408,7 +407,7 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$[0].tags[0].links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$[0].tags[0].links[1].href").value(containsString("/api/v1/tags/" + idea.getRelatedTags().get(0).getId() + "/ideas")));
 
-		verify(this.ideaServiceMock, times(1)).findIdeasByUserId(userId);
+		verify(this.ideaServiceMock, times(1)).findAllByUserId(userId);
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 

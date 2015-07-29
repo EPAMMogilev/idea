@@ -1,139 +1,108 @@
 (function() {
-    'use strict';
-    angular
-        .module('app.controllers')
-        .controller('ideasCtrl', ideasCtrl);
+	'use strict';
+	angular
+		.module('app.controllers')
+		.controller('ideasCtrl', ideasCtrl);
 
-    ideasCtrl.$inject = ['$scope', 'ideasFactory', 'tagsFactory', 'mapGeoService'];
+	ideasCtrl.$inject = ['$scope', 'ideasService', 'ideasFactory', 'tagsFactory', 'mapGeoService'];
 
-    function ideasCtrl($scope, ideasFactory, tagsFactory, mapGeoService) {
+	function ideasCtrl($scope, ideasService, ideasFactory, tagsFactory, mapGeoService) {
 
-        var vm = this;
-        $scope.geoObjects = null;
+		var vm = this;
+		$scope.geoObjects = null;
+		$scope.criteria = null;
 
-        $scope.criteria = null;
+		vm.paramsForPopular = {
+			page: 0,
+			size: 5,
+			sort: 'rating,desc'
+		};
+		vm.paramsForLatest = {
+			page: 0,
+			size: 5,
+			sort: 'creationTime,desc'
+		};
 
-        vm.ideasVisible = [];
-        vm.newIdeas = [];
+		vm.popular = [];
+		vm.latest = [];
+		vm.tag = null;
 
-        //infinity load
-        vm.pageRatingRequest = {
-            page: 0,
-            size: 5,
-            sort: 'rating,desc'
-        };
-        vm.pageNewRequest = {
-            page: 0,
-            size: 5,
-            sort: 'creationTime,desc'
-        };
+		this.loadPageForPopular = function(){
+			vm.paramsForPopular.page++;
+			var promiseResponse = ideasService.getPage(vm.paramsForPopular, vm.tag);
+			promiseResponse.then(function (ideas) {
+				if (ideas) {
+					vm.popular = vm.popular.concat(ideas);
+				}
+			$scope.geoObjects = mapGeoService.generateGeoObjects(vm.popular);
+			});
+			return promiseResponse;
+		};
 
-        this.loadMoreRating = function(){
+		this.loadPageForLatest = function(){
+			vm.paramsForLatest.page++;
+			var promiseResponse = ideasService.getPage(vm.paramsForLatest, vm.tag);
+			promiseResponse.then(function (ideas) {
+				if (ideas) {
+					vm.latest = vm.latest.concat(ideas);
+				}
+				$scope.geoObjects = mapGeoService.generateGeoObjects(vm.latest);
+			});
+			return promiseResponse;
+		};
 
-            vm.pageRatingRequest.page += 1;
+		vm.selectByCategory = function(tag) {
+			vm.tag = tag;
 
-            var promiseResponse = ideasFactory.getPage(vm.pageRatingRequest);
-            promiseResponse.then(function (ideas) {
-                if(ideas){
-                    for(var i=0; i < ideas.length; i++){
-                        vm.ideasVisible.push(ideas[i]);
-                    }//for
-                }//if
+			vm.paramsForLatest.page = 0;
+			vm.paramsForPopular.page = 0;
 
-                //$scope.updateGeoObjects(ideas);
-                $scope.geoObjects = mapGeoService.generateGeoObjects(vm.ideasVisible);
-            });
+			ideasService.getPage(vm.paramsForPopular, vm.tag).then(function (ideas) {
 
-            return promiseResponse;
-        };
+				vm.popular = ideas;
+				$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+			});
 
-        this.loadMoreNew = function(){
+			ideasService.getPage(vm.paramsForLatest, vm.tag).then(function (ideas) {
+				vm.latest = ideas;
 
-            vm.pageNewRequest.page += 1;
-            //load most popular ideas
-            var promiseResponse = ideasFactory.getPage(vm.pageNewRequest);
-            promiseResponse.then(function (ideas) {
-                if(ideas){
-                    for(var i=0; i < ideas.length; i++){
-                        vm.newIdeas.push(ideas[i]);
-                    }//for
-                }//if
-            });
+			});
+		}
 
-            return promiseResponse;
-        };
+		ideasService.getPage(vm.paramsForPopular, vm.tag).then(function (ideas) {
+			vm.popular = ideas;
 
-        vm.selectByCategory =function (tag) {
-          tagsFactory.getIdeasByTag(tag).then(function (ideas) {
-            vm.ideas = ideas;
+			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+		});
 
-            //$scope.updateGeoObjects(ideas);
-            $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
-        })
-        };
+		ideasService.getPage(vm.paramsForLatest, vm.tag).then(function (ideas) {
+			vm.latest = ideas;
 
-        ideasFactory.getPage(vm.pageRatingRequest).then(function (ideas) {
-            vm.ideasVisible = ideas;
+			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+		});
 
-            //$scope.updateGeoObjects(ideas);
-            $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
-        });
+		$scope.$on('ideas-update', function() {
+			ideasFactory.getIdeas().then(function (ideas) {
+			vm.ideas = ideas;
+			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+			});
+		});
 
-
-        //load most popular ideas
-        ideasFactory.getPage(vm.pageNewRequest).then(function (ideas) {
-            vm.newIdeas = ideas;
-        });
-/*
-        ideasFactory.getIdeas().then(function (ideas) {
-            vm.ideas = ideas;
-
-            //sort ideas by date
-            vm.ideas.sort(
-                function(a, b){
-                    var keyA = a.rating;
-                    var keyB = b.rating;
-
-                    if(keyA<keyB) return -1;
-                    if(keyA>keyB) return 1;
-                    return 0;
-                }
-            );
-
-            //$scope.updateGeoObjects(ideas);
-            $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
-
-            //loading array for infinity list
-            if(vm.ideas){
-                vm.ideasVisible = vm.ideas.slice(0, 5);
-            }//if
-        });*/
-
-        $scope.$on('ideas-update', function() {
-            ideasFactory.getIdeas().then(function (ideas) {
-                vm.ideas = ideas;
-
-            //$scope.updateGeoObjects(ideas);
-            $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
-            });
-        });
-
-        vm.details = function(idea){
-            var ideaDetail = {
-                id:idea.id
-            };
+		vm.details = function(idea){
+			var ideaDetail = {
+				id:idea.id
+			};
 
 			console.log('Go to Details');
 			$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
-        };
+		};
 
-        //gui effects
-        $scope.mouseenter=function(e){
-            e.get('target').options.set('preset', 'islands#greenIcon');
-        };
-        $scope.mouseleave=function(e){
-            e.get('target').options.unset('preset');
-        };
-    }
+		$scope.mouseenter=function(e){
+			e.get('target').options.set('preset', 'islands#greenIcon');
+		};
+		$scope.mouseleave=function(e){
+			e.get('target').options.unset('preset');
+		};
+	}
 
 })();

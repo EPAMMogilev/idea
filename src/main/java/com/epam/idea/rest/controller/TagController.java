@@ -11,6 +11,7 @@ import com.epam.idea.rest.resource.TagResource;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
 import com.epam.idea.rest.resource.asm.TagResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/api/v1/tags")
@@ -45,7 +47,7 @@ public class TagController {
 
 	@RequestMapping(value = "/{tagId}/ideas", method = RequestMethod.GET)
 	public HttpEntity<List<IdeaResource>> getAllFoundIdeasForTag(@PathVariable final long tagId) {
-		final List<Idea> foundIdeas = this.ideaService.findIdeasByTagId(tagId);
+		final List<Idea> foundIdeas = this.ideaService.findAllByTagId(new PageRequest(0, 500), tagId);
 		final List<IdeaResource> ideaResources = new IdeaResourceAsm().toResources(foundIdeas);
 		return new ResponseEntity<>(ideaResources, HttpStatus.OK);
 	}

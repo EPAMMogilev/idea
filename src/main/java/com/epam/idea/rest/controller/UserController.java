@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -77,7 +76,7 @@ public class UserController {
 
 	@RequestMapping(value = "/{userId}/ideas", method = RequestMethod.GET)
 	public HttpEntity<List<IdeaResource>> getUserIdeas(@PathVariable final long userId) {
-		final List<Idea> userIdeas = this.ideaService.findIdeasByUserId(userId);
+		final List<Idea> userIdeas = this.ideaService.findAllByUserId(userId);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResources(userIdeas), HttpStatus.OK);
 	}
 

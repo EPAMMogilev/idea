@@ -8,7 +8,6 @@ import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpEntity;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/api/v1/ideas")
@@ -34,8 +34,9 @@ public class IdeaController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public HttpEntity<List<IdeaResource>> showAll(@PageableDefault(page = 0, size = 500) Pageable pageable) {
-		final List<Idea> foundIdeas = ideaService.findAll(pageable);
+	public HttpEntity<List<IdeaResource>> showAll(@PageableDefault(page = 0, size = 500) Pageable pageable,
+	                                              @RequestParam(required = false) Long tagId) {
+		final List<Idea> foundIdeas = ideaService.findAllByTagId(pageable, tagId);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResources(foundIdeas), HttpStatus.OK);
 	}
 

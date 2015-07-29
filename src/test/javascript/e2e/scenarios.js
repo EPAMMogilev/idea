@@ -17,24 +17,24 @@
 			});
 	});
 
-	it('should filter results ideas list after press button - SPORT', function() {
-		element(by.id('sport')).click();
+	it('should filter results ideas list after press button - tag1', function() {
+		element(by.id('tag1')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(2);
 	});
 	
-	it('should filter results ideas list after press button - TRANSPORT', function() {
-		element(by.id('transport')).click();
+	it('should filter results ideas list after press button - tag2', function() {
+		element(by.id('tag2')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(1);		
 	});
 	
-	it('should filter results ideas list after press button - CULTURE', function() {
-		element(by.id('culture')).click();
+	it('should filter results ideas list after press button - tag3', function() {
+		element(by.id('tag3')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(0);		
 	});
 	
 	it('should filter results ideas list after press button - ALL', function() {
 		element(by.id('all')).click();
-		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(3);		
+		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(10);
 	});
 	
 	it('increment rating', function() {

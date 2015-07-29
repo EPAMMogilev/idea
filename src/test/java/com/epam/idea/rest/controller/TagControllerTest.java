@@ -15,11 +15,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.hateoas.Link;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 import static com.epam.idea.rest.resource.support.JsonPropertyName.ID;
 import static com.epam.idea.util.TestUtils.APPLICATION_JSON_UTF8;
@@ -41,6 +45,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TagControllerTest {
 
 	@Autowired
+	private TagController tagController;
+
+	@Autowired
 	private TagService tagServiceMock;
 
 	@Autowired
@@ -51,10 +58,12 @@ public class TagControllerTest {
 
 	private MockMvc mockMvc;
 
+	private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+
 	@Before
 	public void setUp() throws Exception {
 		Mockito.reset(this.tagServiceMock);
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(tagController).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
 	}
 
 	@Test
@@ -101,7 +110,7 @@ public class TagControllerTest {
 		verifyNoMoreInteractions(this.tagServiceMock);
 	}
 
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldReturnErrorWithHttpStatus404WhenTagNotFound() throws Exception {
 		when(this.tagServiceMock.findOne(TestTagBuilder.DEFAULT_ID)).thenThrow(new TagDoesNotExistException());
 
@@ -125,7 +134,7 @@ public class TagControllerTest {
 		tag.addIdea(idea);
 		idea.addTag(tag);
 
-		when(this.ideaServiceMock.findIdeasByTagId(tag.getId())).thenReturn(Lists.newArrayList(idea));
+		when(this.ideaServiceMock.findAllByTagId(defaultPageRequest, tag.getId())).thenReturn(Lists.newArrayList(idea));
 
 		this.mockMvc.perform(get("/api/v1/tags/{tagId}/ideas", tag.getId())
 				.accept(APPLICATION_JSON_UTF8))
@@ -147,7 +156,7 @@ public class TagControllerTest {
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + idea.getId())));
 
-		verify(this.ideaServiceMock, times(1)).findIdeasByTagId(tag.getId());
+		verify(this.ideaServiceMock, times(1)).findAllByTagId(defaultPageRequest, tag.getId());
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 }
