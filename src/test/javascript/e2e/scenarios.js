@@ -1,5 +1,8 @@
 ﻿describe('appIdea', function() {
 	var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea';
+	
+	jasmine.getEnv().defaultTimeoutInterval = 15000;
+
 	//var homeUrl = 'http://localhost:8080/idea';
 	browser.get(homeUrl);
 
