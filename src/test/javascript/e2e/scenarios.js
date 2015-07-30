@@ -1,24 +1,30 @@
 ﻿describe('appIdea', function() {
 	var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea';
+	//var homeUrl = 'http://localhost:8080/idea';
 	
 	jasmine.getEnv().defaultTimeoutInterval = 30000;
+	
+	function login() {
+		element(by.id('words')).click();
+		element.all(by.id('email')).sendKeys('first@idea.com');
+		element.all(by.id('password')).sendKeys('1234');
 
-	//var homeUrl = 'http://localhost:8080/idea';
-	browser.get(homeUrl);
+		element(by.id('btnLogin')).click();
 
-	//just !login!
-	it('should login', function() {
-    		element(by.id('words')).click();
-    		element.all(by.id('email')).sendKeys('first@idea.com');
-    		element.all(by.id('password')).sendKeys('1234');
+		browser.getLocationAbsUrl().then(function(url) {
+			expect(url.split('%')[0].split('#')[1]).toBe('/home');
+		});
+	}
 
-    		//login
-    		element(by.id('btnLogin')).click();
-
-    		browser.getLocationAbsUrl().then(function(url) {
-				expect(url.split('%')[0].split('#')[1]).toBe('/home');
-			});
+	beforeAll(function() {
+		browser.get(homeUrl);
+		login();
 	});
+
+	beforeEach(function() {
+		browser.get(homeUrl);
+	});
+	
 
 	it('should filter results ideas list after press button - tag1', function() {
 		element(by.id('tag1')).click();
@@ -54,8 +60,7 @@
 		expect(postIncRating).toBe('31');
 	});
 	
-	it('should redirect  to ideaDetails page', function() {
-		browser.get(homeUrl);
+	it('should redirect  to ideaDetails page (first idea link)', function() {
 		//get first element by attribute ng-click="details()" (photo)
 		element.all(by.css('a[ng-click="details()"]')).first().click();
 		browser.getLocationAbsUrl().then(function(url) {
@@ -63,47 +68,23 @@
 		});
 	});
 	
-	it('should redirect  to ideaDetails page', function() {
-		browser.get(homeUrl);
+	it('should redirect  to ideaDetails page (second idea link)', function() {
 		//get second element by attribute ng-click="details()" (title)
 		element.all(by.css('a[ng-click="details()"]')).get(1).click();
 		browser.getLocationAbsUrl().then(function(url) {
 			expect(url.split('%')[0].split('#')[1]).toBe('/ideaDetails');
 		});
-	});
-
-
-	it('should open idea details page', function(){
-		browser.get(homeUrl);
+	});	
+	
+	it('should open idea details page (by clicking on image)', function(){
 
 		element.all(by.id('imgIdeaLogo')).get(2).click();
 
-		//ideaDetails
 		browser.getLocationAbsUrl().then(function(url) {
 			expect(url.split('%')[0].split('#')[1]).toContain('/ideaDetails');
 		});
 	});
-
-	//TODO: make tests independent
 	
-	/*it('should open idea update page', function(){
-		element(by.id('btnUpdate')).click();
-
-		//ideaDetails
-		browser.getLocationAbsUrl().then(function(url) {
-			expect(url.split('%')[0].split('#')[1]).toContain('/ideaUpdate');
-		});
-	});
-
-	it('should update data', function(){
-		element(by.id('btnInsertUpdate')).click();
-
-		//ideaDetails
-		browser.getLocationAbsUrl().then(function(url) {
-			expect(url.split('%')[0].split('#')[1]).toContain('/home');
-		});
-	});
-
 	it('should insert new idea', function(){
 		element(by.id('addIdeaButton')).click();
 
@@ -126,6 +107,56 @@
 		browser.getLocationAbsUrl().then(function(url) {
 			expect(url.split('%')[0].split('#')[1]).toContain('/home');
 		});
-	});*/
+	});
+	
+	
+	describe('Update Page', function() {
+
+		beforeEach(function() {
+			openFirstIdeaDetails();
+		});
+		
+		function openFirstIdeaDetails() {
+			element.all(by.css('#lstNewIdeas #imgIdeaLogo')).get(0).click();
+			browser.getLocationAbsUrl().then(function(url) {
+				expect(url.split('%')[0].split('#')[1]).toContain('/ideaDetails');
+			});
+		}		
+
+		it('should open idea update page', function(){
+			var btnUpdate = by.id('btnUpdate');
+			waitForElement(btnUpdate);	
+			element(btnUpdate).click();
+
+			browser.getLocationAbsUrl().then(function(url) {
+				expect(url.split('%')[0].split('#')[1]).toContain('/ideaUpdate');
+			});
+		});
+
+		it('should update data', function(){
+			var btnUpdate = by.id('btnUpdate');
+			waitForElement(btnUpdate);	
+			element(btnUpdate).click();
+			
+			var btnInsertUpdate = by.id('btnInsertUpdate');
+			waitForElement(btnInsertUpdate);	
+			element(btnInsertUpdate).click();
+
+			browser.getLocationAbsUrl().then(function(url) {
+				expect(url.split('%')[0].split('#')[1]).toContain('/home');
+			});
+		});		
+
+	});
+	
+		
+	function waitForElement(byLocator) {
+		browser.wait(function() {
+			return browser.driver.isElementPresent(byLocator);
+		}, 8000);
+
+		expect(browser.driver.isElementPresent(byLocator)).toBeTruthy();
+	}
+	
 
 });
