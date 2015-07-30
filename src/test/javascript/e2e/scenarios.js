@@ -6,7 +6,7 @@
 	//just !login!
 	it('should login', function() {
     		element(by.id('words')).click();
-    		element.all(by.id('email')).sendKeys('Chris@test.com');
+    		element.all(by.id('email')).sendKeys('first@idea.com');
     		element.all(by.id('password')).sendKeys('1234');
 
     		//login
@@ -19,36 +19,36 @@
 
 	it('should filter results ideas list after press button - tag1', function() {
 		element(by.id('tag1')).click();
-		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(2);
+		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(0);
 	});
 	
 	it('should filter results ideas list after press button - tag2', function() {
 		element(by.id('tag2')).click();
-		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(1);		
+		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(3);
 	});
 	
 	it('should filter results ideas list after press button - tag3', function() {
 		element(by.id('tag3')).click();
-		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(0);		
+		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(2);
 	});
 	
 	it('should filter results ideas list after press button - ALL', function() {
 		element(by.id('all')).click();
-		expect(element.all(by.repeater('idea in ideasCtrl.ideas')).count()).toEqual(10);
+		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(5);
 	});
 	
 	it('increment rating', function() {
 		//get first element by class "vote"
-		element.all(by.css('.vote')).first().click();
+		element.all(by.id('btnLikeIdea')).click();
 		var postIncRating = element.all(by.id('rating')).first().getText();
-		expect(postIncRating).toBe('4');	
+		expect(postIncRating).toBe('32');
 	});
 
 	it('decrement rating', function() {
 		//get second element by class "vote"
-		element.all(by.css('.vote')).get(1).click();
+		element.all(by.id('btnLikeIdea')).click();
 		var postIncRating = element.all(by.id('rating')).first().getText();
-		expect(postIncRating).toBe('3');	
+		expect(postIncRating).toBe('31');
 	});
 	
 	it('should redirect  to ideaDetails page', function() {
@@ -73,7 +73,7 @@
 	it('should open idea details page', function(){
 		browser.get(homeUrl);
 
-		element.all(by.id('imgIdeaLogo')).first().click();
+		element.all(by.id('imgIdeaLogo')).get(2).click();
 
 		//ideaDetails
 		browser.getLocationAbsUrl().then(function(url) {
@@ -82,7 +82,7 @@
 	});
 
 	it('should open idea update page', function(){
-		element.all(by.id('btnUpdate')).first().click();
+		element(by.id('btnUpdate')).click();
 
 		//ideaDetails
 		browser.getLocationAbsUrl().then(function(url) {
@@ -91,9 +91,6 @@
 	});
 
 	it('should update data', function(){
-		var fld = element.all(by.id('searchLine')).get(1);
-		fld.sendKeys('New idea caption');
-
 		element(by.id('btnInsertUpdate')).click();
 
 		//ideaDetails
