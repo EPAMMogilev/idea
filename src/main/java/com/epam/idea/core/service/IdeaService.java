@@ -29,7 +29,7 @@ public interface IdeaService extends BaseService<Idea, Long> {
 	 * @return The updated idea.
 	 * @throws com.epam.idea.core.service.exception.IdeaNotFoundException If no idea was found with the given id.
 	 */
-	@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
+	//@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
 	Idea update(long ideaId, @Param("idea") Idea source);
 
 	@PreAuthorize("hasRole('ADMIN') or userId == principal.id")

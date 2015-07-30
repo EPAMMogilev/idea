@@ -39,14 +39,14 @@
 	
 	it('increment rating', function() {
 		//get first element by class "vote"
-		element.all(by.id('btnLikeIdea')).click();
+		element.all(by.css(".btn-thumbs")).first().click();
 		var postIncRating = element.all(by.id('rating')).first().getText();
 		expect(postIncRating).toBe('32');
 	});
 
 	it('decrement rating', function() {
 		//get second element by class "vote"
-		element.all(by.id('btnLikeIdea')).click();
+		element.all(by.css('.btn-thumbs')).first().click();
 		var postIncRating = element.all(by.id('rating')).first().getText();
 		expect(postIncRating).toBe('31');
 	});
