@@ -6,7 +6,8 @@ exports.config = {
 	specs: ['e2e/*.js'],
 
 	capabilities: {
-		'browserName': 'firefox',
+		//'browserName': 'firefox',
+		'browserName': process.env.BROWSER_NAME || 'firefox',
 		'firefox_binary': process.env.FF_PORTABLE
 	},
 
