@@ -1,0 +1,16 @@
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
+
+jacoco {
+    toolVersion = '0.7.4.201502262128'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true // coveralls plugin depends on xml format report
+        csv.enabled false
+        html.destination "${buildDir}/jacoco-report"
+    }
+    executionData = files(["$buildDir/reports/jacoco/unit/jacocoUnit.exec",
+                           "$buildDir/reports/jacoco/integration/jacocoIntegration.exec"])
+}

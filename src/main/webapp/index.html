@@ -1,0 +1,100 @@
+<html ng-app="ideaApp">
+<head>
+    <title>Idea lab </title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ideaDetails.css"/>
+    <link rel="stylesheet" type="text/css" href="css/images.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/logo.png">
+
+    <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
+
+    <script type="text/javascript" src="bower_components/bootstrap/bootstrap.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-ui-router/angular-ui-router.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-md5/angular-md5.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-yandex-map/ya-map.min.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
+    <!-- Imgur -->
+    <script type="text/javascript" src="bower_components/ng-imgur/ng-imgur.js"></script>
+
+    <!-- File upload -->
+    <script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+
+    <!-- infinity scroll -->
+    <script type='text/javascript' src='bower_components/ngInfiniteScroll/ng-infinite-scroll.js'></script>
+
+    <script src="js/min/script.min.js"></script>
+
+    <!-- Yandex maps scripts -->
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div class = "head-container">
+
+    <div class = "container" ng-controller="sessionCtrl as sessionCtrl">
+        <div class = "head-title title-font" id="IHaveIdeaDiv">
+            <p> <!--a href="#ideaAddNew"--><i class="fa fa-child"></i> <span translate="I_HAVE_IDEA"></span><!--/a--></p>
+        </div>
+
+        <div id="AddIdeaDiv">
+            <a href="#ideaAddNew" class="addIdeaButton" id="addIdeaButton" translate="ADD_IDEA"></a>
+        </div>
+
+        <div	 class = "href-enter navbar-collapse collapse" id="LoginIdeaDiv" >
+            <span class="dropdown">
+                <a  ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
+                    <i ng-if="currentUser.socialSignInProvider == null || currentUser.socialSignInProvider == 'NONE'" class="fa fa-user"></i><i ng-if="currentUser.socialSignInProvider === 'GOOGLE'" class="fa fa-google-plus-square color-google-plus"></i><i ng-if="currentUser.socialSignInProvider === 'FACEBOOK'" class="fa fa-facebook-square color-facebook"></i><i ng-if="currentUser.socialSignInProvider === 'VKONTAKTE'" class="fa fa-vk color-vk"></i>
+                    {{currentUser.username}}
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#/account" translate="PROFILE"></a></li>
+                    <li><a href="#/myideas" translate="MY_IDEAS">Мои идеи</a></li>
+                </ul>
+            </span>
+            <span ng-if="!authenticated"><a id="words" class="words" href="#login" translate="LOGIN"></a></span>
+            <span ng-if="authenticated"><a href="" ng-click="sessionCtrl.logout()" translate="LOGOUT"></a></span>
+            <span class="dropdown">
+                <a  href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
+                    {{sessionCtrl.getCurrentLang()}}
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="" ng-click="sessionCtrl.useLang('en')" >en</a></li>
+                    <li><a href="" ng-click="sessionCtrl.useLang('ru')">ru</a></li>
+                </ul>
+            </span>
+        </div>
+    </div>
+</div>
+<div class = "container" ng-controller="sessionCtrl as sessionCtrl">
+    <div data-ui-view='main' autoscroll='false'></div>
+</div>
+</body>
+</html>

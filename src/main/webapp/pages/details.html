@@ -1,0 +1,66 @@
+﻿<div id="mainDiv" ng-init="init()">
+    <div id="shadowBox">
+        <div id="topDiv">
+            <p id="p">#{{data.id}} - {{data.title}}</p>
+        </div>
+        <!-- details -->
+        <div id="dataDiv">
+            <div id="lineDivsLeft">
+                <div id="divData">
+                    <div id="tdCaption" translate="IDEA"></div>
+                    <div id="tdData">{{data.title}}</div>
+                </div>
+                <!-- descr -->
+                <div id="divData">
+                    <div id="tdCaption" translate="DESCRIPTION"></div>
+                    <div id="tdData">{{data.description}}</div>
+                </div>
+                <!-- created -->
+                <div id="divData">
+                    <div id="tdCaption" translate="CREATED"></div>
+                    <div id="tdData">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+                </div>
+            </div>
+            <div id="lineDivsRight">
+                <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
+            </div>
+        </div>
+
+        <div id="bottomButtonsBar">
+            <div id="divLeft">
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK" /></button>
+            </div>
+            <div id="divRightAlignRight" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
+                <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
+                <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- who like this idea -->
+    <div id="shadowBox">
+        <div id="likeDiv">
+            <p id="p" translate="THIS_IDEA_HAS_LIKED"></p>
+        </div>
+        <div id="likeDivList">
+            Some user
+        </div>
+    </div>
+
+
+    <!-- map for this idea -->
+    <div id="shadowBox">
+        <div id="map" class="mapDetails"></div>
+    </div>
+
+    <!-- suggestions for this idea -->
+    <div id="shadowBox">
+        <div id="likeDiv">
+            <p id="p" translate="COMMENTS"></p>
+        </div>
+        <div id="commentsDiv">
+            <input type="text" id="searchLine" class="form-control" name="edtComment" width="100%" placeholder="{{ 'YOUR_SUGGESTION' | translate }}">
+        </div>
+    </div>
+
+</div>
