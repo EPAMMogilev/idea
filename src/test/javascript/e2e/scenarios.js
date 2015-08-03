@@ -26,12 +26,12 @@
 	});
 	
 
-	it('should filter results ideas list after press button - tag1', function() {
+	/*it('should filter results ideas list after press button - tag1', function() {
 		element(by.id('tag1')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(0);
 	});
 	
-	/*it('should filter results ideas list after press button - tag2', function() {
+	it('should filter results ideas list after press button - tag2', function() {
 		element(by.id('tag2')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(3);
 	});
@@ -107,7 +107,7 @@
 		browser.getLocationAbsUrl().then(function(url) {
 			expect(url.split('%')[0].split('#')[1]).toContain('/home');
 		});
-	});
+	});*/
 	
 	
 	describe('Update Page', function() {
@@ -123,7 +123,7 @@
 			});
 		}		
 
-		it('should open idea update page', function(){
+		/*it('should open idea update page', function(){
 			var btnUpdate = by.id('btnUpdate');
 			waitForElement(btnUpdate);	
 			element(btnUpdate).click();
@@ -131,7 +131,7 @@
 			browser.getLocationAbsUrl().then(function(url) {
 				expect(url.split('%')[0].split('#')[1]).toContain('/ideaUpdate');
 			});
-		});
+		});*/
 
 		it('should update data', function(){
 			var btnUpdate = by.id('btnUpdate');
@@ -145,17 +145,13 @@
 			browser.getLocationAbsUrl().then(function(url) {
 				expect(url.split('%')[0].split('#')[1]).toContain('/home');
 			});
-		});		
+		});	
 
 	});
 	
-	*/	
+		
 	function waitForElement(byLocator) {
-		browser.wait(function() {
-			return browser.driver.isElementPresent(byLocator);
-		}, 8000);
-
-		expect(browser.driver.isElementPresent(byLocator)).toBeTruthy();
+		expect(element(byLocator).isDisplayed()).toBe(true);
 	}
 	
 
