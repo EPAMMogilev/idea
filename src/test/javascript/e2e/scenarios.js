@@ -4,7 +4,12 @@
 	
 	//jasmine.getEnv().defaultTimeoutInterval = 30000;
 	
-	function login() {
+	function goToHomePage() {
+		browser.get(homeUrl);
+		expect(browser.getCurrentUrl()).toMatch("/home");
+	}
+
+	/*function login() {
 		element(by.id('words')).click();
 		element.all(by.id('email')).sendKeys('first@idea.com');
 		element.all(by.id('password')).sendKeys('1234');
@@ -16,19 +21,17 @@
 		});
 	}
 
-	/*beforeAll(function() {
-		browser.get(homeUrl);
+	beforeAll(function() {
+		goToHomePage();
 		login();
-	});
+	});*/
 
 	beforeEach(function() {
-		browser.get(homeUrl);
-	});*/
+		goToHomePage();
+	});
 	
 
 	it('should filter results ideas list after press button - tag1', function() {
-		browser.get(homeUrl);
-		
 		element(by.id('tag1')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(0);
 	});
@@ -122,19 +125,14 @@
 			var latestIdeaLink = by.css('#lstNewIdeas #imgIdeaLogo');
 			waitForElement(latestIdeaLink);	
 			element.all(latestIdeaLink).get(0).click();
-			browser.getLocationAbsUrl().then(function(url) {
-				expect(url.split('%')[0].split('#')[1]).toContain('/ideaDetails');
-			});
+			expect(browser.getCurrentUrl()).toMatch("/ideaDetails");
 		}		
 
 		it('should open idea update page', function(){
 			var btnUpdate = by.id('btnUpdate');
 			waitForElement(btnUpdate);	
 			element(btnUpdate).click();
-
-			browser.getLocationAbsUrl().then(function(url) {
-				expect(url.split('%')[0].split('#')[1]).toContain('/ideaUpdate');
-			});
+			expect(browser.getCurrentUrl()).toMatch("/ideaUpdate");
 		});
 
 		it('should update data', function(){
