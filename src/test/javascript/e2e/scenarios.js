@@ -1,5 +1,5 @@
 ﻿describe('appIdea', function() {
-	var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea';
+	var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea/#/home';
 	//var homeUrl = 'http://localhost:8080/idea';
 	
 	//jasmine.getEnv().defaultTimeoutInterval = 30000;

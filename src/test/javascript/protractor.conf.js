@@ -3,7 +3,7 @@ var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 exports.config = {
 	allScriptsTimeout: 60000,
 	
-	rootElement: 'html',
+	rootElement: "[ng-app]",
 
 	specs: ['e2e/*.js'],
 
