@@ -26,12 +26,12 @@
 	});
 	
 
-	/*it('should filter results ideas list after press button - tag1', function() {
+	it('should filter results ideas list after press button - tag1', function() {
 		element(by.id('tag1')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(0);
 	});
 	
-	it('should filter results ideas list after press button - tag2', function() {
+	/*it('should filter results ideas list after press button - tag2', function() {
 		element(by.id('tag2')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(3);
 	});
@@ -117,7 +117,9 @@
 		});
 		
 		function openFirstIdeaDetails() {
-			element.all(by.css('#lstNewIdeas #imgIdeaLogo')).get(0).click();
+			var latestIdeaLink = by.css('#lstNewIdeas #imgIdeaLogo');
+			waitForElement(latestIdeaLink);	
+			element.all(latestIdeaLink).get(0).click();
 			browser.getLocationAbsUrl().then(function(url) {
 				expect(url.split('%')[0].split('#')[1]).toContain('/ideaDetails');
 			});
