@@ -31,7 +31,7 @@
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(0);
 	});
 	
-	it('should filter results ideas list after press button - tag2', function() {
+	/*it('should filter results ideas list after press button - tag2', function() {
 		element(by.id('tag2')).click();
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(3);
 	});
@@ -149,7 +149,7 @@
 
 	});
 	
-		
+	*/	
 	function waitForElement(byLocator) {
 		browser.wait(function() {
 			return browser.driver.isElementPresent(byLocator);
