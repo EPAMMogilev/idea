@@ -4,13 +4,16 @@ package com.epam.idea.rest.resource;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.validation.constraints.Size;
 
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.hateoas.ResourceSupport;
 
 public class IdeaResource extends ResourceSupport {
@@ -44,8 +47,11 @@ public class IdeaResource extends ResourceSupport {
 
 	private List<TagResource> tags;
 
+	private List<UserResource> likedUsers;
+
 	public IdeaResource() {
 		this.tags = new ArrayList<>();
+		this.setLikedUsers(new ArrayList<>());
 	}
 
 	public long getIdeaId() {
@@ -144,6 +150,9 @@ public class IdeaResource extends ResourceSupport {
 		idea.setRelatedTags(tags.parallelStream()
 				.map(TagResource::toTag)
 				.collect(Collectors.toList()));
+		idea.setLikedUsers(likedUsers.stream()
+				.map(UserResource::toUser)
+				.collect(Collectors.toList()));
 		idea.setLatitude(latitude);
 		idea.setLongitude(longitude);
 		idea.setImageUrl(imageUrl);
@@ -158,4 +167,13 @@ public class IdeaResource extends ResourceSupport {
 	public void setLiked(boolean liked) {
 		this.liked = liked;
 	}
+
+	public List<UserResource> getLikedUsers() {
+		return likedUsers;
+	}
+
+	public void setLikedUsers(List<UserResource> likedUsers) {
+		this.likedUsers = likedUsers;
+	}
+
 }
