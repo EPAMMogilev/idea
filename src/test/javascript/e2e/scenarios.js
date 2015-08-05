@@ -51,14 +51,14 @@
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(5);
 	});
 
-	it('increment rating', function() {
+	it('decrement rating', function() {
 		//get first element by class "vote"
 		element.all(by.css(".btn-thumbs")).first().click();
 		var postIncRating = element.all(by.id('rating')).first().getText();
-		expect(postIncRating).toBe('32');
+		expect(postIncRating).toBe('30');
 	});
 
-	it('decrement rating', function() {
+	it('increment rating', function() {
 		//get second element by class "vote"
 		element.all(by.css('.btn-thumbs')).first().click();
 		var postIncRating = element.all(by.id('rating')).first().getText();
@@ -79,7 +79,7 @@
 		browser.getLocationAbsUrl().then(function(url) {
 			expect(url.split('%')[0].split('#')[1]).toBe('/ideaDetails');
 		});
-	});	
+	});
 
 	it('should open idea details page (by clicking on image)', function(){
 
@@ -123,31 +123,31 @@
 
 		function openFirstIdeaDetails() {
 			var latestIdeaLink = by.css('#lstNewIdeas #imgIdeaLogo');
-			waitForElement(latestIdeaLink);	
+			waitForElement(latestIdeaLink);
 			element.all(latestIdeaLink).get(0).click();
 			expect(browser.getCurrentUrl()).toMatch("/ideaDetails");
 		}
 
 		it('should open idea update page', function(){
 			var btnUpdate = by.id('btnUpdate');
-			waitForElement(btnUpdate);	
+			waitForElement(btnUpdate);
 			element(btnUpdate).click();
 			expect(browser.getCurrentUrl()).toMatch("/ideaUpdate");
 		});
 
 		it('should update data', function(){
 			var btnUpdate = by.id('btnUpdate');
-			waitForElement(btnUpdate);	
+			waitForElement(btnUpdate);
 			element(btnUpdate).click();
-			
+
 			var btnInsertUpdate = by.id('btnInsertUpdate');
-			waitForElement(btnInsertUpdate);	
+			waitForElement(btnInsertUpdate);
 			element(btnInsertUpdate).click();
 
 			browser.getLocationAbsUrl().then(function(url) {
 				expect(url.split('%')[0].split('#')[1]).toContain('/home');
 			});
-		});	
+		});
 
 	});
 
