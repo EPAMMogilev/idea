@@ -9,6 +9,8 @@ import com.epam.idea.rest.controller.IdeaController;
 import com.epam.idea.rest.controller.UserController;
 import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.TagResource;
+import com.epam.idea.rest.resource.UserResource;
+
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import static java.util.Collections.emptyList;
@@ -48,6 +50,14 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
 			ideaResource.setTags(tagResources);
 		} else {
 			ideaResource.setTags(emptyList());
+		}
+		if (isInitialized(original.getLikedUsers())) {
+			List<UserResource> userNames = original.getLikedUsers().stream()
+					.map(user-> new UserResourceAsm().toResource(user))
+					.collect(Collectors.toList());
+			ideaResource.setLikedUsers(userNames);
+		} else {
+			ideaResource.setLikedUsers(emptyList());
 		}
 		ideaResource.setLiked(original.getLiked());
 		ideaResource.add(linkTo(methodOn(IdeaController.class).show(original.getId())).withSelfRel());

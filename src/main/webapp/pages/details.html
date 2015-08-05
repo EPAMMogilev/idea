@@ -43,7 +43,8 @@
             <p id="p" translate="THIS_IDEA_HAS_LIKED"></p>
         </div>
         <div id="likeDivList">
-            Some user
+            <span ng-if="data.likedUsers != null  && data.likedUsers.length != 0" ng-repeat="user in data.likedUsers">{{$first ? '' : ', '}}{{user.username}}</span>
+            <span ng-if="data.likedUsers == null || data.likedUsers.length == 0"><p id="p" translate="NO_LIKED_USERS"></p></span>
         </div>
     </div>
 

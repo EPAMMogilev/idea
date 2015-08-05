@@ -160,6 +160,7 @@ dependencies {
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors()
+    maxHeapSize = "1g"
 
     reports.html.destination = file("$reports.html.destination/unit")
     reports.junitXml.destination = file("$reports.junitXml.destination/unit")
@@ -278,7 +279,7 @@ task prepeareOpenShift {
 	contents = contents.replace('src=\"bower_components/', 'src=\"build/bower_components/');
 	//println contents;
 	new File(someFile).write(contents, 'UTF-8');
-	
+
 }
 
 openShiftRelease.dependsOn prepeareOpenShift, build;*/
