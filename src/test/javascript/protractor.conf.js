@@ -10,7 +10,11 @@ exports.config = {
 	capabilities: {
 		//'browserName': 'firefox',
 		'browserName': process.env.BROWSER_NAME || 'firefox',
-		'firefox_binary': process.env.FF_PORTABLE
+		'firefox_binary': process.env.FF_PORTABLE,
+		'chromeOptions': {
+			//'binary': process.env.CHROME_PORTABLE || 'D:\\_inst\\GoogleChromePortable\\GoogleChromePortable.exe'
+			'binary': process.env.CHROME_PORTABLE
+		}
 	},
 
 	//baseUrl: 'http://localhost:8282/',
