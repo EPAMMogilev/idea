@@ -1,7 +1,9 @@
 var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
 exports.config = {
-	allScriptsTimeout: 11000,
+	allScriptsTimeout: 300000,
+	
+	rootElement: "[ng-app]",
 
 	specs: ['e2e/*.js'],
 
@@ -15,7 +17,7 @@ exports.config = {
 		}
 	},
 
-	baseUrl: 'http://localhost:8282/',
+	//baseUrl: 'http://localhost:8282/',
 
 	framework: 'jasmine2',
 	
@@ -43,6 +45,6 @@ exports.config = {
 		// If true, include stack traces in failures.
 		includeStackTrace : true,
 		// Default time to wait in ms before a test fails.
-		defaultTimeoutInterval : 60000
+		defaultTimeoutInterval : 300000
 	}
 };
