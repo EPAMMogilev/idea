@@ -46,7 +46,6 @@ public class IdeaServiceImpl implements IdeaService {
 		allIdeas.forEach(idea -> {
 			Hibernate.initialize(idea.getAuthor());
 			Hibernate.initialize(idea.getRelatedTags());
-			Hibernate.initialize(idea.getLikedUsers());
 			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return allIdeas;
@@ -92,7 +91,6 @@ public class IdeaServiceImpl implements IdeaService {
 		List<Idea> ideas = ideaRepository.findByUserId(userId);
 		ideas.forEach(idea -> {
 			Hibernate.initialize(idea.getRelatedTags());
-			Hibernate.initialize(idea.getLikedUsers());
 			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return ideas;
@@ -105,7 +103,6 @@ public class IdeaServiceImpl implements IdeaService {
 			ideas = ideaRepository.findAllByTagId(pageable, tagId);
 			ideas.forEach(idea -> {
 				Hibernate.initialize(idea.getRelatedTags());
-				Hibernate.initialize(idea.getLikedUsers());
 				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 			});
 		}
