@@ -86,7 +86,8 @@ public class IdeaControllerTest {
 
 	@Test
 	public void shouldReturnFoundIdeaWithHttpCode200() throws Exception {
-		Idea foundIdea = TestIdeaBuilder.anIdea().build();
+		User foundLikedUser = TestUserBuilder.aUser().build();
+		Idea foundIdea = TestIdeaBuilder.anIdea().withLikedUser(foundLikedUser).build();
 
 		when(this.ideaServiceMock.findOne(foundIdea.getId())).thenReturn(foundIdea);
 
@@ -97,6 +98,8 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$.title").value(foundIdea.getTitle()))
 				.andExpect(jsonPath("$.description").value(foundIdea.getDescription()))
 				.andExpect(jsonPath("$.rating").value(foundIdea.getRating()))
+				.andExpect(jsonPath("$.likedUsers", hasSize(1)))
+				.andExpect(jsonPath("$.likedUsers[0].username").value(foundLikedUser.getUsername()))
 				.andExpect(jsonPath("$.links", hasSize(1)))
 				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));

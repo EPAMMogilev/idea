@@ -23,6 +23,7 @@ public class TestIdeaResourceBuilder {
 	private int rating;
 	private UserResource author;
 	private List<TagResource> tags = new ArrayList<>();
+	private List<UserResource> likedUsers = new ArrayList<>();
 	private boolean liked;
 
 	private TestIdeaResourceBuilder() {
@@ -71,6 +72,11 @@ public class TestIdeaResourceBuilder {
 		return this;
 	}
 
+	public TestIdeaResourceBuilder withLikedUsers(final List<UserResource> likedUsers) {
+		this.likedUsers = likedUsers;
+		return this;
+	}
+
 	public TestIdeaResourceBuilder withLiked(final boolean liked) {
 		this.liked = liked;
 		return this;
@@ -85,6 +91,7 @@ public class TestIdeaResourceBuilder {
 				.withRating(rating)
 				.withAuthor(author)
 				.withRelatedTags(tags)
+				.withLikedUsers(likedUsers)
 				.withLiked(liked);
 	}
 
@@ -100,6 +107,7 @@ public class TestIdeaResourceBuilder {
 //			ideaResource.setAuthor(author);
 //		}
 		ideaResource.setTags(tags);
+		ideaResource.setLikedUsers(likedUsers);
 		return ideaResource;
 	}
 }
