@@ -1,16 +1,23 @@
 var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
 exports.config = {
-	allScriptsTimeout: 11000,
+	allScriptsTimeout: 300000,
+	
+	rootElement: "[ng-app]",
 
 	specs: ['e2e/**/*.spec.js'],
 
 	capabilities: {
-		'browserName': 'firefox',
-		'firefox_binary': process.env.FF_PORTABLE
+		//'browserName': 'firefox',
+		'browserName': process.env.BROWSER_NAME || 'firefox',
+		'firefox_binary': process.env.FF_PORTABLE,
+		'chromeOptions': {
+			//'binary': process.env.CHROME_PORTABLE || 'D:\\_inst\\GoogleChromePortable\\GoogleChromePortable.exe'
+			'binary': process.env.CHROME_PORTABLE
+		}
 	},
 
-	baseUrl: 'http://localhost:8282/',
+	//baseUrl: 'http://localhost:8282/',
 
 	framework: 'jasmine2',
 	
@@ -38,6 +45,6 @@ exports.config = {
 		// If true, include stack traces in failures.
 		includeStackTrace : true,
 		// Default time to wait in ms before a test fails.
-		defaultTimeoutInterval : 60000
+		defaultTimeoutInterval : 300000
 	}
 };
