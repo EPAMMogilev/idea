@@ -41,14 +41,13 @@ insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('TwentyEight
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('TwentyNinthUser', 'twenty_ninth@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('ThirtiethUser', 'thirtieth@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 
-
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Г‚ГҐГ«Г®ГЇГ Г°ГЄГ®ГўГЄГ ', 'ГЋГґГЁГ± Г’ГЉ4 Г®Г·ГҐГ­Гј Г¦Г¤ВёГІ ГҐВё ГўГ®Г§Г°Г Г№ГҐГ­ГЁГї', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ГЏГ«Г®Г№Г Г¤ГЄГ  Г¤Г«Гї Г Г¤Г¦ГЁГ«ГЁГІГЁ', 'Гџ Г¤ГіГ¬Г Гѕ,  Гі Г¬Г­Г®ГЈГЁГµ ГўГ«Г Г¤ГҐГ«ГјГ¶ГҐГў Г±Г®ГЎГ ГЄ ГўГ®Г§Г­ГЁГЄГ Г«Г  Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г®Г±ГІГј Гў ГІГ ГЄГ®Г© ГЇГ«Г®Г№Г Г¤ГЄГҐ. ГЉ Г±Г®Г¦Г Г«ГҐГ­ГЁГѕ, Гў Г­Г ГёГҐГ¬ ГЈГ®Г°Г®Г¤ГҐ ГЁГµ ГҐГ¤ГЁГ­ГЁГ¶Г». ГЏГ°ГҐГ¤Г«Г ГЈГ Гѕ Г®ГЎГ®Г°ГіГ¤Г®ГўГ ГІГј ГЄГ ГЄ Г¬ГЁГ­ГЁГ¬ГіГ¬ ГҐГ№Вё Г®Г¤Г­Гі.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Г‚ГЁГ¤ГҐГ®Г­Г ГЎГ«ГѕГ¤ГҐГ­ГЁГҐ Г¤Г«Гї Г§Г®Г®Г±Г Г¤Г ', 'ГЉГ ГЄ Г­Г Г±Г·ВёГІ ГіГ±ГІГ Г­Г®ГўГЄГЁ Г±ГЁГ±ГІГҐГ¬Г» ГўГЁГ¤ГҐГ®Г­Г ГЎГ«ГѕГ¤ГҐГ­ГЁГї? ГЊГ®ГЈГЁГ«ГҐГўГ·Г Г­ГҐ Г¬Г®ГЈГ«ГЁ ГЎГ» Г­Г ГЎГ«ГѕГ¤Г ГІГј Г§Г  Г¦ГЁГ§Г­ГјГѕ Г¦ГЁГўГ®ГІГ­Г»Гµ ГЁГ§ Г¤Г®Г¬Г  Гў Г°ГҐГ¦ГЁГ¬ГҐ Г°ГҐГ Г«ГјГ­Г®ГЈГ® ГўГ°ГҐГ¬ГҐГ­ГЁ', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ГЃГҐГ±ГЇГ«Г ГІГ­Г»Г© Wi-Fi', 'Г‚ ГЊГ®ГЈГЁГ«ГҐГўГҐ Г­ГіГ¦Г­Г» Г§Г®Г­Г» ГЎГҐГ±ГЇГ«Г ГІГ­Г®ГЈГ® Г¤Г®Г±ГІГіГЇГ  Гў ГЁГ­ГІГҐГ°Г­ГҐГІ. ГЋГ±Г®ГЎГҐГ­Г­Г® Г­Г  ГЇГ«Г®Г№Г Г¤ГЁ Г‘Г«Г ГўГ»', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ГђГҐГ¬Г®Г­ГІ ГЏГіГёГЄГЁГ­Г±ГЄГ®ГЈГ® Г¬Г®Г±ГІГ ', 'ГЊГ®Г±ГІ Г¤Г ГўГ­Г® ГІГ°ГҐГЎГіГҐГІ ГЇГ®Г«Г­Г®Г© Г°ГҐГЄГ®Г­Г±ГІГ°ГіГЄГ¶ГЁГЁ', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ГЊГ®ГЈГЁГ«ГҐГўГ±ГЄГЁГ© ГЇГ®Г«ГіГ¬Г Г°Г ГґГ®Г­', 'ГЏГ°ГҐГ¤Г«Г ГЈГ Гѕ Г®Г°ГЈГ Г­ГЁГ§Г®ГўГ ГІГј ГЈГ®Г°Г®Г¤Г±ГЄГ®Г© ГЇГ®Г«ГіГ¬Г Г°Г ГґГ®Г­ ГЄГ ГЄ Г¤Г«Гї Г«ГѕГЎГЁГІГҐГ«ГҐГ©, ГІГ ГЄ ГЁ Г¤Г«Гї ГЇГ°Г®ГґГҐГ±Г±ГЁГ®Г­Г Г«Г®Гў. ГЏГ®ГўГ»Г±ГЁГ¬ ГЁГ­ГІГҐГ°ГҐГ± ГЄ ГЎГҐГЈГі Гі Г¬Г®Г«Г®Г¤ВёГ¦ГЁ!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ГЉГ®ГІГ®ГЄГ ГґГҐ', 'Г“ Г­Г Г± ГҐГ±ГІГј Г Г­ГІГЁГЄГ ГґГҐ, Г­Г® Г­ГҐГІ ГЄГ®ГІГ®ГЄГ ГґГҐ. ГЂ ГўГҐГ¤Гј ГЅГІГ® ГЎГ»Г«Г® ГЎГ» Г®ГІГ«ГЁГ·Г­Г»Г¬ Г¬ГҐГ±ГІГ®Г¬ Г¤Г«Гї Г®ГІГ¤Г»ГµГ !', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Велопарковка', 'Офис ТК4 очень ждёт её возращения', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Площадка для аджилити', 'Я думаю,  у многих владельцев собак возникала необходимость в такой площадке. К сожалению, в нашем городе их единицы. Предлагаю оборудовать как минимум ещё одну.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Видеонаблюдение для зоосада', 'Как насчёт установки системы видеонаблюдения? Могилевчане могли бы наблюдать за жизнью животных из дома в режиме реального времени', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Бесплатный Wi-Fi', 'В Могилеве нужны зоны бесплатного доступа в интернет. Особенно на площади Славы', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ремонт Пушкинского моста', 'Мост давно требует полной реконструкции', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Могилевский полумарафон', 'Предлагаю организовать городской полумарафон как для любителей, так и для профессионалов. Повысим интерес к бегу у молодёжи!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
 
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
@@ -85,10 +84,10 @@ insert into USER_ROLE (USER_ID, ROLE_ID) values (29, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (30, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (31, 2);
 
-insert into TAG (NAME) values ('Г‘ГЇГ®Г°ГІ');
-insert into TAG (NAME) values ('Г’Г°Г Г­Г±ГЇГ®Г°ГІ');
-insert into TAG (NAME) values ('ГЉГіГ«ГјГІГіГ°Г ');
-insert into TAG (NAME) values ('Г†ГЁГўГ®ГІГ­Г»ГҐ');
+insert into TAG (NAME) values ('Спорт');
+insert into TAG (NAME) values ('Транспорт');
+insert into TAG (NAME) values ('Культура');
+insert into TAG (NAME) values ('Животные');
 
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 4);

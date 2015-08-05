@@ -30,13 +30,13 @@ insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('TwentyEight
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('TwentyNinthUser', 'twenty_ninth@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('ThirtiethUser', 'thirtieth@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Âåëîïàðêîâêà', 'Îôèñ ÒÊ4 î÷åíü æä¸ò å¸ âîçðàùåíèÿ', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ïëîùàäêà äëÿ àäæèëèòè', 'ß äóìàþ,  ó ìíîãèõ âëàäåëüöåâ ñîáàê âîçíèêàëà íåîáõîäèìîñòü â òàêîé ïëîùàäêå. Ê ñîæàëåíèþ, â íàøåì ãîðîäå èõ åäèíèöû. Ïðåäëàãàþ îáîðóäîâàòü êàê ìèíèìóì åù¸ îäíó.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Âèäåîíàáëþäåíèå äëÿ çîîñàäà', 'Êàê íàñ÷¸ò óñòàíîâêè ñèñòåìû âèäåîíàáëþäåíèÿ? Ìîãèëåâ÷àíå ìîãëè áû íàáëþäàòü çà æèçíüþ æèâîòíûõ èç äîìà â ðåæèìå ðåàëüíîãî âðåìåíè', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Áåñïëàòíûé Wi-Fi', 'Â Ìîãèëåâå íóæíû çîíû áåñïëàòíîãî äîñòóïà â èíòåðíåò. Îñîáåííî íà ïëîùàäè Ñëàâû', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ðåìîíò Ïóøêèíñêîãî ìîñòà', 'Ìîñò äàâíî òðåáóåò ïîëíîé ðåêîíñòðóêöèè', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ìîãèëåâñêèé ïîëóìàðàôîí', 'Ïðåäëàãàþ îðãàíèçîâàòü ãîðîäñêîé ïîëóìàðàôîí êàê äëÿ ëþáèòåëåé, òàê è äëÿ ïðîôåññèîíàëîâ. Ïîâûñèì èíòåðåñ ê áåãó ó ìîëîä¸æè!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Êîòîêàôå', 'Ó íàñ åñòü àíòèêàôå, íî íåò êîòîêàôå. À âåäü ýòî áûëî áû îòëè÷íûì ìåñòîì äëÿ îòäûõà!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Велопарковка', 'Офис ТК4 очень ждёт её возращения', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Площадка для аджилити', 'Я думаю,  у многих владельцев собак возникала необходимость в такой площадке. К сожалению, в нашем городе их единицы. Предлагаю оборудовать как минимум ещё одну.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Видеонаблюдение для зоосада', 'Как насчёт установки системы видеонаблюдения? Могилевчане могли бы наблюдать за жизнью животных из дома в режиме реального времени', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Бесплатный Wi-Fi', 'В Могилеве нужны зоны бесплатного доступа в интернет. Особенно на площади Славы', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Ремонт Пушкинского моста', 'Мост давно требует полной реконструкции', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Могилевский полумарафон', 'Предлагаю организовать городской полумарафон как для любителей, так и для профессионалов. Повысим интерес к бегу у молодёжи!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('Котокафе', 'У нас есть антикафе, но нет котокафе. А ведь это было бы отличным местом для отдыха!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
 
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
@@ -72,11 +72,11 @@ insert into USER_ROLE (USER_ID, ROLE_ID) values (28, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (29, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (30, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (31, 2);
-	
-insert into TAG (NAME) values ('Ñïîðò');
-insert into TAG (NAME) values ('Òðàíñïîðò');
-insert into TAG (NAME) values ('Êóëüòóðà');
-insert into TAG (NAME) values ('Æèâîòíûå');
+
+insert into TAG (NAME) values ('Спорт');
+insert into TAG (NAME) values ('Транспорт');
+insert into TAG (NAME) values ('Культура');
+insert into TAG (NAME) values ('Животные');
 
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 4);
