@@ -5,17 +5,17 @@ var LoginPage = require('../login/login.po.js');
 
 describe('home page test', function() {
 
-	var homePage;
-	var loginPage;
+	var homePage = new HomePage();
+	var loginPage = new LoginPage();
 
-	beforeEach(function() {
-		homePage = new HomePage();
+	beforeAll(function() {
+		loginPage.getPage();
+		loginPage.login('admin', 'admin');
 	});
 
-	function login() {
-		loginPage = new LoginPage();
-		loginPage.login('first@idea.com', '1234');
-	};
+	beforeEach(function() {
+		homePage.getPage();
+	});
 
 	it('should filter results ideas list after press button - all', function() {
 		homePage.getAll();
@@ -41,23 +41,29 @@ describe('home page test', function() {
 		expect(homePage.latestIdeas.count()).toEqual(2);
 	});
 
-	it('should open login page after press login button', function() {
-		homePage.login();
-
-		browser.getLocationAbsUrl().then(function(url) {
-			expect(url.split('%')[0].split('#')[1]).toBe('/login');
-		});
-	});
-
 	it('should increment idea rating', function() {
-		login();
 		homePage.like(0);
-		expect(homePage.getRating(0)).toBe('32');
+		expect(homePage.getRating(0)).toBe("30");
 	});
 
 	it('should decrement idea rating', function() {
-		login();
 		homePage.like(0);
-		expect(homePage.getRating(0)).toBe('31');
+		expect(homePage.getRating(0)).toBe("31");
 	});
+
+	it('should open idea details page (by clicking on image)', function() {
+		homePage.ideaDetails(0);
+		browser.getLocationAbsUrl().then(function(url) {
+			expect(url.split('%')[0].split('#')[1]).toContain('/ideaDetails');
+		});
+	});
+
+	it('should open add idea page with login', function() {
+		homePage.addIdea();
+		browser.getLocationAbsUrl().then(function(url) {
+			expect(url.split('%')[0].split('#')[1]).toContain('/ideaAddNew');
+		});
+	});
+
+
 });
