@@ -12,10 +12,12 @@ describe('update idea page test', function() {
 	var detailsPage = new DetailsPage();
 	var loginPage = new LoginPage();
 
-	beforeEach(function() {
+	beforeAll(function() {
 		loginPage.getPage();
 		loginPage.login("admin", "admin");
+	});
 
+	beforeEach(function() {
 		homePage.getPage();
 		homePage.ideaDetails(5);
 		detailsPage.update();

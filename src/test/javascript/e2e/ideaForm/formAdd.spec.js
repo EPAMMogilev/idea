@@ -10,10 +10,12 @@ describe('add idea page test', function() {
 	var homePage = new HomePage();
 	var loginPage = new LoginPage();
 
-	beforeEach(function() {
+	beforeAll(function() {
 		loginPage.getPage();
 		loginPage.login("admin", "admin");
+	});
 
+	beforeEach(function() {
 		homePage.getPage();
 		homePage.addIdea();
 	});
