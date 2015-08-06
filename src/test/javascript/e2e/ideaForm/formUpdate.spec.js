@@ -3,14 +3,19 @@
 var FormPage = require('../ideaForm/form.po.js');
 var HomePage = require('../home/home.po.js');
 var DetailsPage = require('../ideaDetails/details.po.js');
+var LoginPage = require('../login/login.po.js');
 
 describe('update idea page test', function() {
 
 	var formPage = new FormPage();
 	var homePage = new HomePage();
 	var detailsPage = new DetailsPage();
+	var loginPage = new LoginPage();
 
 	beforeEach(function() {
+		loginPage.getPage();
+		loginPage.login("admin", "admin");
+
 		homePage.getPage();
 		homePage.ideaDetails(5);
 		detailsPage.update();
