@@ -5,7 +5,7 @@ exports.config = {
 	
 	rootElement: "[ng-app]",
 
-	specs: ['e2e/*.js'],
+	specs: ['e2e/**/*.spec.js'],
 
 	capabilities: {
 		//'browserName': 'firefox',
