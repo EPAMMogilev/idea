@@ -41,6 +41,7 @@
     "THIS_IDEA_HAS_LIKED":"Кому понравилась эта идея",
     "YOUR_SUGGESTION":"Ваше предложение",
     "BUTTON_LANG_EN": "en",
-    "BUTTON_LANG_RU": "ru"
+    "BUTTON_LANG_RU": "ru",
+    "NO_LIKED_USERS": "Нет таких пользователей"
 }
 

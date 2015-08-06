@@ -57,6 +57,7 @@ public class IdeaServiceImpl implements IdeaService {
 		final Optional<Idea> ideaOptional = ideaRepository.findOne(ideaId);
 		return ideaOptional.map(idea -> {
 			Hibernate.initialize(idea.getRelatedTags());
+			Hibernate.initialize(idea.getLikedUsers());
 			idea.setLiked(isCurrentUserLikedIdea(ideaId));
 			return idea;
 		}).orElseThrow(() -> new IdeaNotFoundException(ideaId));
