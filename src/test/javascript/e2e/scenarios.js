@@ -1,6 +1,6 @@
 ﻿describe('appIdea', function() {
-	var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea/#/home';
-	//var homeUrl = 'http://localhost:8080/idea';
+	//var homeUrl = 'http://evbymogsd0030.minsk.epam.com:7080/idea/#/home';
+	var homeUrl = 'http://localhost:9090/Idea';
 
 	//jasmine.getEnv().defaultTimeoutInterval = 30000;
 
@@ -51,18 +51,19 @@
 		expect(element.all(by.repeater('idea in ideasCtrl.popular')).count()).toEqual(5);
 	});
 
-	it('decrement rating', function() {
-		//get first element by class "vote"
-		element.all(by.css(".btn-thumbs")).first().click();
-		var postIncRating = element.all(by.id('rating')).first().getText();
-		expect(postIncRating).toBe('30');
-	});
+	it('increment and decrement rating', function() {
+		getRatingFirstPromise().then(function(strRating) {
+			var intRating = parseInt(strRating);
+			element.all(by.css(".btn-thumbs")).first().click();
 
-	it('increment rating', function() {
-		//get second element by class "vote"
-		element.all(by.css('.btn-thumbs')).first().click();
-		var postIncRating = element.all(by.id('rating')).first().getText();
-		expect(postIncRating).toBe('31');
+			getRatingFirstPromise().then(function(strRatingAfrterFirstClick) {
+
+				var intRatingAfrterFirstClick = parseInt(strRatingAfrterFirstClick);
+				expect(Math.abs(intRatingAfrterFirstClick - intRating)).toBe(1);
+				element.all(by.css(".btn-thumbs")).first().click();
+				expect(getRatingFirstPromise()).toBe(strRating);
+			});
+		});
 	});
 
 	it('should redirect  to ideaDetails page (first idea link)', function() {
@@ -154,6 +155,10 @@
 
 	function waitForElement(byLocator) {
 		expect(element(byLocator).isDisplayed()).toBe(true);
+	}
+
+	function getRatingFirstPromise() {
+		return element.all(by.id('rating')).first().getText();
 	}
 
 
