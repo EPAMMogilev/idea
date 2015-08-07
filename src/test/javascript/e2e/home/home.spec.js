@@ -41,14 +41,17 @@ describe('home page test', function() {
 		expect(homePage.latestIdeas.count()).toEqual(2);
 	});
 
-	it('should increment idea rating', function() {
-		homePage.like(0);
-		expect(homePage.getRating(0)).toBe("30");
-	});
-
-	it('should decrement idea rating', function() {
-		homePage.like(0);
-		expect(homePage.getRating(0)).toBe("31");
+	it('should increment and decrement idea rating', function() {
+		homePage.getRating(0).then(function(strRating) {
+			var intRating = parseInt(strRating)
+			homePage.like(0);
+			homePage.getRating(0).then(function(strRatingAfrterFirstClick) {
+				var intRatingAfrterFirstClick = parseInt(strRatingAfrterFirstClick);
+				expect(Math.abs(intRatingAfrterFirstClick - intRating)).toBe(1);
+				homePage.like(0);
+				expect(homePage.getRating(0)).toBe(strRating);
+			});
+		});
 	});
 
 	it('should open idea details page (by clicking on image)', function() {
