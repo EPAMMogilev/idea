@@ -30,6 +30,7 @@ apply plugin: 'aspectj'
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/pmd.gradle"
 apply from: "$rootDir/gradle/findbugs.gradle"
+apply from: "$rootDir/gradle/checkstyle.gradle"
 
 group = 'com.epam.idea'
 version = '0.1-SNAPSHOT'
