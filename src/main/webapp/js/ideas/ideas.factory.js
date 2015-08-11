@@ -17,9 +17,20 @@
             removeIdea: removeIdea,
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
-            getPageWithTag: getPageWithTag
+            getPageWithTag: getPageWithTag,
+            isUserAuthorOfIdea: isUserAuthorOfIdea
         };
         return publicMethod;
+
+        function isUserAuthorOfIdea(user, idea) {
+			if(idea && user)
+			{
+				if (user.id == idea.author.id) {
+					return true;
+				}
+			}
+			return false;
+		}
 
         function getIdeas() {
             var promise = restFactory.ideas().get().$promise;

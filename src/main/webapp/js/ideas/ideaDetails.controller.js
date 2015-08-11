@@ -13,15 +13,9 @@
 		$scope.data = null;
 		$scope.myMap = null;
 
-		$scope.isAuthor = function (idea) {
-			if(idea && $rootScope.currentUser)
-			{
-				if ($rootScope.currentUser.id == idea.author.id) {
-					return true;
-				}
-			}
-			return false;
-		}
+		$scope.isAuthor = function(idea) {
+			return ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, idea);
+		};
 
 		this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
 			//success

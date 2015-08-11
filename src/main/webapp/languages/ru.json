@@ -42,6 +42,8 @@
     "YOUR_SUGGESTION":"Ваше предложение",
     "BUTTON_LANG_EN": "en",
     "BUTTON_LANG_RU": "ru",
-    "NO_LIKED_USERS": "Нет таких пользователей"
+    "NO_LIKED_USERS": "Нет таких пользователей",
+    "ACCESS_DENIED_MSG": "Доступ запрещен",
+    "ACCESS_DENIED_DESC": "Вам не разрешено выполнять данную операцию"
 }
 

@@ -5,7 +5,7 @@
  * @description
  * A main module.
  */
- 
+
 angular
 	.module('ideaApp', [
 	    'ngResource',
@@ -99,6 +99,13 @@ angular
             //onEnter:  function(){ initLoadFile()},
             parent: 'root'
         }).
+        state('accessDenied', {
+            url: '/accessDenied',
+            views: {
+                'main@': { templateUrl: 'pages/accessDenied.html', controller: 'accessDenied as ctrl'}
+            },
+            parent: 'root'
+        }).
         state('ideaUpdate', {
             url: '/ideaUpdate:idea',
             views: {
@@ -131,8 +138,8 @@ angular
 
 
 
-       run.$inject = ['$rootScope', '$location', 'sessionService'];
-           function run($rootScope, $location, sessionService) {
+       run.$inject = ['$rootScope', '$location', '$stateParams', 'authorizationService'];/*['$rootScope', '$location', '$stateParams', 'sessionService', 'ideasFactory'];*/
+           function run($rootScope, $location, $stateParams, authorizationService) {
                $rootScope.previousPage;
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
@@ -145,9 +152,23 @@ angular
                        }
                    }
                    else {
-                       restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+                       restrictedPage = $.inArrayRegEx($location.path(), ['/ideaUpdate']) !== -1;
                        if (restrictedPage) {
-                           $location.path("/home");
+                    	   /*if(!sessionService.hasRole('ROLE_ADMIN')) {
+	                    	   var idea = angular.fromJson($stateParams.idea);
+	                    	   ideasFactory.getIdeaById(idea.id).then(function(value) {
+		                    	   if(!ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, value)) {
+		                    		   $location.path("/accessDenied");
+		                    	   }
+	                    	   });
+                    	   }*/
+                    	   var idea = angular.fromJson($stateParams.idea);
+                    	   authorizationService.redirectFromEditToAccessDeniedIfNeeded(idea);
+                       } else {
+	                       restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+	                       if (restrictedPage) {
+	                           $location.path("/home");
+	                       }
                        }
                    }
 
