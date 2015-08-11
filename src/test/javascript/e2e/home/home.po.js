@@ -1,5 +1,6 @@
-var HomePage = function() {};
+var ConversionUtility= require('../promiseConversion-utility.js');
 
+var HomePage = function() {};
 HomePage.prototype = Object.create({}, {
 	popularIdeas:   { get: function() { return element.all(by.repeater('idea in ideasCtrl.popular')); }},
 	latestIdeas:    { get: function() { return element.all(by.repeater('idea in ideasCtrl.latest')); }},
@@ -17,7 +18,7 @@ HomePage.prototype = Object.create({}, {
 	addIdea:    { value: function() { return this.addButton.click(); }},
 	getAll:     { value: function() { return this.allButton.click(); }},
 	getByTag:   { value: function(id) { return this.tagButtons.get(id).click(); }},
-	getRating:  { value: function(id) { return this.ratings.get(id).getText(); }},
+	getRating:  { value: function(id) { return ConversionUtility.getIntValue(this.ratings.get(id)); }},
 	like:       { value: function(id) { return this.likeButtons.get(id).click(); }},
 	ideaDetails:{ value: function(id) { return this.ideaLogos.get(id).click(); }},
 

@@ -15,6 +15,15 @@ describe('home page test', function() {
 
 	beforeEach(function() {
 		homePage.getPage();
+	    jasmine.addMatchers({
+	        toBeChangedByOne: function() {
+	            return {
+	                compare: function(actual, expected) {
+	                    return { pass: (actual == expected + 1) || (actual == expected - 1) };
+	                }
+	            };
+	        }
+	    });
 	});
 
 	it('should filter results ideas list after press button - all', function() {
@@ -41,14 +50,12 @@ describe('home page test', function() {
 		expect(homePage.latestIdeas.count()).toEqual(2);
 	});
 
-	it('should increment idea rating', function() {
+	it('should increment and decrement idea rating', function() {
+		var initialRating = homePage.getRating(0);
 		homePage.like(0);
-		expect(homePage.getRating(0)).toBe("30");
-	});
-
-	it('should decrement idea rating', function() {
+		expect(homePage.getRating(0)).toBeChangedByOne(initialRating);
 		homePage.like(0);
-		expect(homePage.getRating(0)).toBe("31");
+		expect(homePage.getRating(0)).toBe(initialRating);
 	});
 
 	it('should open idea details page (by clicking on image)', function() {
