@@ -205,7 +205,7 @@ check.dependsOn integrationTest
 // The Gradle Wrapper is the preferred way of starting a Gradle build
 // Run the following command to download and initialize the wrapper scripts: gradle wrapper
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
+    gradleVersion = '2.5'
 }
 
 // makes sure on each build that grunt is installed
