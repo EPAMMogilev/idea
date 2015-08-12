@@ -116,7 +116,6 @@ angular
                         ideaDetails: ['$stateParams',
                           function ($stateParams) {
 
-
                             var idea = angular.fromJson($stateParams.idea);
                             return idea;
                           }]
@@ -138,8 +137,8 @@ angular
 
 
 
-       run.$inject = ['$rootScope', '$location', '$stateParams', 'authorizationService'];/*['$rootScope', '$location', '$stateParams', 'sessionService', 'ideasFactory'];*/
-           function run($rootScope, $location, $stateParams, authorizationService) {
+       run.$inject = ['$rootScope', '$location', 'authorizationService'];
+           function run($rootScope, $location, authorizationService) {
                $rootScope.previousPage;
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
@@ -154,15 +153,7 @@ angular
                    else {
                        restrictedPage = $.inArrayRegEx($location.path(), ['/ideaUpdate']) !== -1;
                        if (restrictedPage) {
-                    	   /*if(!sessionService.hasRole('ROLE_ADMIN')) {
-	                    	   var idea = angular.fromJson($stateParams.idea);
-	                    	   ideasFactory.getIdeaById(idea.id).then(function(value) {
-		                    	   if(!ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, value)) {
-		                    		   $location.path("/accessDenied");
-		                    	   }
-	                    	   });
-                    	   }*/
-                    	   var idea = angular.fromJson($stateParams.idea);
+                    	   var idea = getIdeaParamFromUrl($location.path());
                     	   authorizationService.redirectFromEditToAccessDeniedIfNeeded(idea);
                        } else {
 	                       restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
@@ -188,6 +179,11 @@ angular
                    }
                }
                return -1;
+           }
+
+           function getIdeaParamFromUrl(path) {
+        	   var stringIdea = path.substring(path.indexOf("{"), path.indexOf("}") + 1);
+        	   return angular.fromJson(stringIdea);
            }
 
 
