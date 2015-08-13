@@ -81,7 +81,7 @@ public class IdeaServiceImpl implements IdeaService {
 	}
 
 	@Override
-	@PostAuthorize("hasRole('ADMIN') or #target.author.id == principal.id")
+	@PostAuthorize("hasRole('ADMIN') or returnObject.author.id == principal.id")
 	public Idea update(final long ideaId, final Idea source) {
 		final Idea target = findOne(ideaId);
 		target.updateWith(source);
