@@ -5,7 +5,7 @@
  * @description
  * A main module.
  */
- 
+
 angular
 	.module('ideaApp', [
 	    'ngResource',
@@ -99,6 +99,13 @@ angular
             //onEnter:  function(){ initLoadFile()},
             parent: 'root'
         }).
+        state('accessDenied', {
+            url: '/accessDenied',
+            views: {
+                'main@': { templateUrl: 'pages/accessDenied.html', controller: 'accessDenied as ctrl'}
+            },
+            parent: 'root'
+        }).
         state('ideaUpdate', {
             url: '/ideaUpdate:idea',
             views: {
@@ -108,7 +115,6 @@ angular
                     resolve: {
                         ideaDetails: ['$stateParams',
                           function ($stateParams) {
-
 
                             var idea = angular.fromJson($stateParams.idea);
                             return idea;
@@ -131,8 +137,8 @@ angular
 
 
 
-       run.$inject = ['$rootScope', '$location', 'sessionService'];
-           function run($rootScope, $location, sessionService) {
+       run.$inject = ['$rootScope', '$location', 'authorizationService'];
+           function run($rootScope, $location, authorizationService) {
                $rootScope.previousPage;
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
@@ -145,9 +151,15 @@ angular
                        }
                    }
                    else {
-                       restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+                       restrictedPage = $.inArrayRegEx($location.path(), ['/ideaUpdate']) !== -1;
                        if (restrictedPage) {
-                           $location.path("/home");
+                    	   var idea = getIdeaParamFromUrl($location.path());
+                    	   authorizationService.redirectFromEditToAccessDeniedIfNeeded(idea);
+                       } else {
+	                       restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+	                       if (restrictedPage) {
+	                           $location.path("/home");
+	                       }
                        }
                    }
 
@@ -167,6 +179,11 @@ angular
                    }
                }
                return -1;
+           }
+
+           function getIdeaParamFromUrl(path) {
+        	   var stringIdea = path.substring(path.indexOf("{"), path.indexOf("}") + 1);
+        	   return angular.fromJson(stringIdea);
            }
 
 

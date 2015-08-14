@@ -18,10 +18,21 @@
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
             getPageWithTag: getPageWithTag,
+            isUserAuthorOfIdea: isUserAuthorOfIdea,
             getPageWithQuery: getPageWithQuery,
             getPageWithTagAndQuery: getPageWithTagAndQuery
         };
         return publicMethod;
+
+        function isUserAuthorOfIdea(user, idea) {
+			if(idea && user)
+			{
+				if (user.id == idea.author.id) {
+					return true;
+				}
+			}
+			return false;
+		}
 
         function getIdeas() {
             var promise = restFactory.ideas().get().$promise;
