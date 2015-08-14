@@ -35,8 +35,9 @@ public class IdeaController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public HttpEntity<List<IdeaResource>> showAll(@PageableDefault(page = 0, size = 500) Pageable pageable,
+	                                              @RequestParam(required = false) String query,
 	                                              @RequestParam(required = false) Long tagId) {
-		final List<Idea> foundIdeas = ideaService.findAllByTagId(pageable, tagId);
+		final List<Idea> foundIdeas = ideaService.findAllByQueryAndTagId(pageable, query, tagId);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResources(foundIdeas), HttpStatus.OK);
 	}
 

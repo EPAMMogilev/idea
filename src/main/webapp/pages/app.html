@@ -4,20 +4,20 @@
         <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag)">{{tag.name}}</tag-button>
     </div>
     <div class = "searcher">
-        <input placeholder="{{ 'FIND' | translate }}..." ng-model="criteria" class="form-control">
+        <input placeholder="{{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasCtrl.selectByQuery()" class="form-control">
     </div>
     <div class="dataContainer">
         <div id="lstMostRating" class="popularIdeas" ideas-list update-function="ideasCtrl.loadPageForPopular()" div-name="#lstMostRating">
             <ul>
-                <li ng-repeat="idea in ideasCtrl.popular | searchLineFilter:criteria"  class = "idea-li" >
-                    <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
+                <li ng-repeat="idea in ideasCtrl.popular"  class = "idea-li" >
+                    <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>
         <div id="lstNewIdeas" class="latestIdeas" ideas-list update-function="ideasCtrl.loadPageForLatest()" div-name="#lstNewIdeas">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.latest" class = "idea-li" >
-                    <show-idea idea="idea" ng-model="ideasCtrl.criteria" is-authenticated="authenticated"></show-idea>
+                    <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>

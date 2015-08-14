@@ -17,7 +17,9 @@
             removeIdea: removeIdea,
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
-            getPageWithTag: getPageWithTag
+            getPageWithTag: getPageWithTag,
+            getPageWithQuery: getPageWithQuery,
+            getPageWithTagAndQuery: getPageWithTagAndQuery
         };
         return publicMethod;
 
@@ -57,7 +59,17 @@
         };
 
         function getPageWithTag(page, tag) {
-            var promise = restFactory.ideas().getPage({page: page.page, size: page.size, sort: page.sort, tagId: tag.id}).$promise;
+            var promise = restFactory.ideas().getPageWithTag({page: page.page, size: page.size, sort: page.sort, tagId: tag.id}).$promise;
+            return promise;
+        };
+
+        function getPageWithQuery(page, query) {
+            var promise = restFactory.ideas().getPageWithQuery({page: page.page, size: page.size, sort: page.sort, query: query}).$promise;
+            return promise;
+        };
+
+        function getPageWithTagAndQuery(page, tag, query) {
+            var promise = restFactory.ideas().getPageWithTagAndQuery({page: page.page, size: page.size, sort: page.sort, tagId: tag.id, query: query}).$promise;
             return promise;
         };
     }

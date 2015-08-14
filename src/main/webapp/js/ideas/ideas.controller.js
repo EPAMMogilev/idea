@@ -11,6 +11,7 @@
 		var vm = this;
 		$scope.geoObjects = null;
 		$scope.criteria = null;
+		$scope.query = null;
 
 		vm.paramsForPopular = {
 			page: 0,
@@ -58,24 +59,36 @@
 			vm.paramsForPopular.page = 0;
 
 			ideasService.getPage(vm.paramsForPopular, vm.tag).then(function (ideas) {
-
 				vm.popular = ideas;
 				$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 			});
 
 			ideasService.getPage(vm.paramsForLatest, vm.tag).then(function (ideas) {
 				vm.latest = ideas;
-
 			});
 		}
 
-		ideasService.getPage(vm.paramsForPopular, vm.tag).then(function (ideas) {
+		vm.selectByQuery = function() {
+			vm.paramsForLatest.page = 0;
+			vm.paramsForPopular.page = 0;
+
+			ideasService.getPage(vm.paramsForPopular, vm.tag, $scope.query).then(function (ideas) {
+				vm.popular = ideas;
+				$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
+			});
+
+			ideasService.getPage(vm.paramsForLatest, vm.tag, $scope.query).then(function (ideas) {
+				vm.latest = ideas;
+			});
+		}
+
+		ideasService.getPage(vm.paramsForPopular, vm.tag, $scope.query).then(function (ideas) {
 			vm.popular = ideas;
 
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 		});
 
-		ideasService.getPage(vm.paramsForLatest, vm.tag).then(function (ideas) {
+		ideasService.getPage(vm.paramsForLatest, vm.tag, $scope.query).then(function (ideas) {
 			vm.latest = ideas;
 
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);

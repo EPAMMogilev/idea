@@ -9,8 +9,6 @@ import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
-import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,12 +25,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static com.epam.idea.builder.model.TestIdeaBuilder.DEFAULT_IDEA_ID;
-import static com.epam.idea.builder.model.TestIdeaBuilder.DEFAULT_RATING;
 import static com.epam.idea.core.service.exception.IdeaNotFoundException.ERROR_MSG_PATTERN_IDEA_NOT_FOUND;
 import static com.epam.idea.rest.controller.RestErrorHandler.IDEA_NOT_FOUND_LOGREF;
 import static com.epam.idea.util.TestUtils.APPLICATION_JSON_UTF8;
@@ -130,7 +125,7 @@ public class IdeaControllerTest {
 	public void shouldReturnAllFoundIdeas() throws Exception {
 		Idea foundIdea = TestIdeaBuilder.anIdea().build();
 
-		when(this.ideaServiceMock.findAllByTagId(defaultPageRequest, null)).thenReturn(Arrays.asList(foundIdea));
+		when(this.ideaServiceMock.findAllByQueryAndTagId(defaultPageRequest, null, null)).thenReturn(Arrays.asList(foundIdea));
 
 		this.mockMvc.perform(get("/api/v1/ideas")
 				.accept(APPLICATION_JSON_UTF8))
@@ -144,7 +139,7 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));
 
-		verify(this.ideaServiceMock, times(1)).findAllByTagId(defaultPageRequest, null);
+		verify(this.ideaServiceMock, times(1)).findAllByQueryAndTagId(defaultPageRequest, null, null);
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 
@@ -199,7 +194,7 @@ public class IdeaControllerTest {
 				.content(convertObjectToJsonBytes(ideaResource)))
 				.andDo(print())
 				.andExpect(status().isBadRequest())
-				//.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+						//.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$", hasSize(2)))
 				.andExpect(jsonPath("$[*].logref").value(containsInAnyOrder("title", "description")))
 				.andExpect(jsonPath("$[*].message").value(containsInAnyOrder(
