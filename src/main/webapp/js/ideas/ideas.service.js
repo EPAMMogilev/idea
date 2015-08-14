@@ -10,11 +10,19 @@
 
 		return {
 
-			getPage:function(params, tag) {
-				if (tag) {
-					return ideasFactory.getPageWithTag(params, tag);
+			getPage:function(params, tag, query) {
+				if (tag && query) {
+					return ideasFactory.getPageWithTagAndQuery(params, tag, query);
 				} else {
-					return ideasFactory.getPage(params) ;
+					if(tag) {
+						return ideasFactory.getPageWithTag(params, tag);
+					} else {
+						if (query) {
+							return ideasFactory.getPageWithQuery(params, query);
+						} else {
+							return ideasFactory.getPage(params) ;
+						}
+					}
 				}
 			},
 

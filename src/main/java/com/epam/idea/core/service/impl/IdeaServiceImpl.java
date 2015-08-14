@@ -1,5 +1,6 @@
 package com.epam.idea.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
-	public void delete(@Param("idea")Idea deleted) {
+	public void delete(@Param("idea") Idea deleted) {
 		ideaRepository.delete(deleted);
 	}
 
@@ -98,17 +99,30 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	public List<Idea> findAllByTagId(Pageable pageable, Long tagId) {
+		return findAllByQueryAndTagId(pageable, null, tagId);
+	}
+
+	@Override
+	public List<Idea> findAllByQueryAndTagId(Pageable pageable, String query, Long tagId) {
 		List<Idea> ideas;
-		if (tagId != null) {
-			ideas = ideaRepository.findAllByTagId(pageable, tagId);
-			ideas.forEach(idea -> {
-				Hibernate.initialize(idea.getRelatedTags());
-				idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-			});
+		if (tagId != null && query != null) {
+			ideas = ideaRepository.findAllByTagIdAndByQuery(pageable, tagId, query.toUpperCase());
+		} else {
+			if (tagId != null) {
+				ideas = ideaRepository.findAllByTagId(pageable, tagId);
+			} else {
+				if (query != null) {
+					ideas = ideaRepository.findAllByQuery(pageable, query.toUpperCase());
+				} else {
+					ideas = ideaRepository.findAll(pageable);
+				}
+			}
 		}
-		else {
-			ideas = findAll(pageable);
-		}
+		ideas.forEach(idea -> {
+			Hibernate.initialize(idea.getRelatedTags());
+			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+		});
+
 		return ideas;
 	}
 

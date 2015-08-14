@@ -1,49 +1,50 @@
-
 (function () {
-    'use strict';
-    angular
-        .module('ideaFactories')
-        .factory('restFactory', restFactory);
+	'use strict';
+	angular
+		.module('ideaFactories')
+		.factory('restFactory', restFactory);
 
-    restFactory.$inject = ['$resource'];
+	restFactory.$inject = ['$resource'];
 
-    function restFactory($resource) {
+	function restFactory($resource) {
 
-        var factory = {
-            ideas: ideas,
-            tags: tags,
-            users: users
-        };
+		var factory = {
+			ideas: ideas,
+			tags: tags,
+			users: users
+		};
 
-        return factory;
+		return factory;
 
-        function tags() {
-            return $resource('api/v1/tags/', {}, {
-                get: {method: 'GET', isArray: true},
-                getIdeasByTag: {method: 'GET', params: {id: '@id'}, url: 'api/v1/tags/:id/ideas/', isArray: true},
-               });
-        }
+		function tags() {
+			return $resource('api/v1/tags/', {}, {
+				get: {method: 'GET', isArray: true},
+				getIdeasByTag: {method: 'GET', params: {id: '@id'}, url: 'api/v1/tags/:id/ideas/', isArray: true},
+				});
+		}
 
-        function ideas() {
-            return $resource('api/v1/ideas/', {}, {
-                get: {method: 'GET', isArray: true},
-                show: {method: 'GET', params: {ideaId: '@id'}, url: 'api/v1/ideas/:id/'},
-                update: {method: 'PUT', params: {id: '@id'}, url: 'api/v1/ideas/:id/'},
-                create: {method: 'POST', url: 'api/v1/ideas/'},
-                delete: {method: 'DELETE', url: 'api/v1/ideas/:id/'},
-                changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/ideas/:id/like/'},
-                getPage: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc', isArray: true},
-                getPageWithTag: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', tagId: '@tagId'}, url: 'api/v1/ideas?page=:page&size=:size&tagId=:tagId&sort=:sort&sort=title,asc', isArray: true}
-                });
-        }
+		function ideas() {
+			return $resource('api/v1/ideas/', {}, {
+				get: {method: 'GET', isArray: true},
+				show: {method: 'GET', params: {ideaId: '@id'}, url: 'api/v1/ideas/:id/'},
+				update: {method: 'PUT', params: {id: '@id'}, url: 'api/v1/ideas/:id/'},
+				create: {method: 'POST', url: 'api/v1/ideas/'},
+				delete: {method: 'DELETE', url: 'api/v1/ideas/:id/'},
+				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/ideas/:id/like/'},
+				getPage: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc', isArray: true},
+				getPageWithTag: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', tagId: '@tagId'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&tagId=:tagId', isArray: true},
+				getPageWithQuery: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', query: '@query'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&query=:query', isArray: true},
+				getPageWithTagAndQuery: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', tagId: '@tagId', query: "@query"}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&tagId=:tagId&query=:query', isArray: true}
+			});
+		}
 
-         function users() {
-            return $resource('api/v1/users/', {}, {
-                get: {method: 'GET', isArray: true},
-                getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
-                create: {method: 'POST', url: 'user/register/'},
-                getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
-            });
-         }
-    }
+		function users() {
+			return $resource('api/v1/users/', {}, {
+				get: {method: 'GET', isArray: true},
+				getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
+				create: {method: 'POST', url: 'user/register/'},
+				getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
+			});
+		}
+	}
 })();
