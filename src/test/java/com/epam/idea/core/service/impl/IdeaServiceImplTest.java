@@ -189,6 +189,9 @@ public class IdeaServiceImplTest {
 		assertThat(actual.getId()).isEqualTo(target.getId());
 		assertThat(actual.getTitle()).isEqualTo(source.getTitle());
 		assertThat(actual.getDescription()).isEqualTo(source.getDescription());
+		assertThat(actual.getRating()).isEqualTo(source.getRating());
+		assertThat(actual.getLikedUsers()).isEqualTo(source.getLikedUsers());
+		assertThat(actual.getLiked()).isEqualTo(source.getLiked());
 		verify(this.ideaRepositoryMock, times(1)).findOne(target.getId());
 	}
 

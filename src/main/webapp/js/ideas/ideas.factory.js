@@ -25,8 +25,7 @@
         return publicMethod;
 
         function isUserAuthorOfIdea(user, idea) {
-			if(idea && user)
-			{
+			if(idea && user) {
 				if (user.id == idea.author.id) {
 					return true;
 				}
