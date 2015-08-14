@@ -267,6 +267,57 @@ public class IdeaServiceImplTest {
 		verify(this.ideaRepositoryMock, times(1)).findAllByTagId(any(PageRequest.class), any(Long.class));
 	}
 
+	@Test
+	public void shouldReturnListOfIdeasByTagIdAndQuery_whenQueryIsNull() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findAllByTagId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
+
+		//When:
+		List<Idea> actual = this.sut.findAllByQueryAndTagId(defaultPageRequest, null, 1L);
+
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+		verify(this.ideaRepositoryMock, times(1)).findAllByTagId(any(PageRequest.class), any(Long.class));
+	}
+
+	@Test
+	public void shouldReturnListOfIdeasByTagIdAndQuery_whenTagIdIsNull() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findAllByQuery(any(PageRequest.class), any(String.class))).willReturn(ideas);
+
+		//When:
+		List<Idea> actual = this.sut.findAllByQueryAndTagId(defaultPageRequest, "Bar", null);
+
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+		verify(this.ideaRepositoryMock, times(1)).findAllByQuery(any(PageRequest.class), any(String.class));
+	}
+
+	@Test
+	public void shouldReturnListOfIdeasByTagIdAndQuery() throws Exception {
+		//Given:
+		List<Idea> ideas = Lists.newArrayList(
+				TestIdeaBuilder.anIdea().build(),
+				TestIdeaBuilder.anIdea().build()
+		);
+		given(this.ideaRepositoryMock.findAllByTagIdAndByQuery(any(PageRequest.class), any(Long.class), any(String.class))).willReturn(ideas);
+
+		//When:
+		List<Idea> actual = this.sut.findAllByQueryAndTagId(defaultPageRequest, "Bar", 1L);
+
+		//Then:
+		assertThat(actual).isEqualTo(ideas);
+		verify(this.ideaRepositoryMock, times(1)).findAllByTagIdAndByQuery(any(PageRequest.class), any(Long.class), any(String.class));
+	}
+
 
 	@Test
 	public void shouldReturnPageWithListOfIdeas() throws Exception {
