@@ -1,6 +1,7 @@
 package com.epam.idea.rest.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
 
 import com.epam.idea.core.model.Comment;
@@ -17,6 +18,7 @@ import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
 import com.epam.idea.rest.resource.asm.UserResourceAsm;
 import com.epam.idea.rest.resource.support.View;
 import com.fasterxml.jackson.annotation.JsonView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -76,7 +79,7 @@ public class UserController {
 
 	@RequestMapping(value = "/{userId}/ideas", method = RequestMethod.GET)
 	public HttpEntity<List<IdeaResource>> getUserIdeas(@PathVariable final long userId) {
-		final List<Idea> userIdeas = this.ideaService.findAllByUserId(userId);
+		final List<Idea> userIdeas = this.ideaService.findAllByUserId(new PageRequest(0, 500), userId);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResources(userIdeas), HttpStatus.OK);
 	}
 

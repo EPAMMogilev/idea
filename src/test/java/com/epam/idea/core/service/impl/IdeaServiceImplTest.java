@@ -243,14 +243,14 @@ public class IdeaServiceImplTest {
 				TestIdeaBuilder.anIdea().build(),
 				TestIdeaBuilder.anIdea().build()
 		);
-		given(this.ideaRepositoryMock.findByUserId(any(Long.class))).willReturn(ideas);
+		given(this.ideaRepositoryMock.findAllByUserId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
 
 		//When:
-		List<Idea> actual = this.sut.findAllByUserId(1);
+		List<Idea> actual = this.sut.findAllByUserId(defaultPageRequest, 1L);
 
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
-		verify(this.ideaRepositoryMock, times(1)).findByUserId(any(Long.class));
+		verify(this.ideaRepositoryMock, times(1)).findAllByUserId(any(PageRequest.class), any(Long.class));
 	}
 
 	@Test

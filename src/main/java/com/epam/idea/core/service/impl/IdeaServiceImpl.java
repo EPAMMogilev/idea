@@ -91,13 +91,8 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Idea> findAllByUserId(final long userId) {
-		List<Idea> ideas = ideaRepository.findByUserId(userId);
-		ideas.forEach(idea -> {
-			Hibernate.initialize(idea.getRelatedTags());
-			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-		});
-		return ideas;
+	public List<Idea> findAllByUserId(Pageable pageable, Long userId) {
+		return findAllByUserIdQueryAndTagId(pageable, userId, null, null);
 	}
 
 	@Override

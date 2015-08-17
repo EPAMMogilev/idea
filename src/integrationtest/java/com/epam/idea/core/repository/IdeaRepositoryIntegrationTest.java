@@ -37,7 +37,7 @@ public class IdeaRepositoryIntegrationTest {
 	@DatabaseSetup(value = "ideaRepository-ideas.xml")
 	public void shouldFindAllIdeasByUserId() throws Exception {
 		// When:
-		List<Idea> ideas = this.ideaRepository.findByUserId(USER_ID);
+		List<Idea> ideas = this.ideaRepository.findAllByUserId(new PageRequest(0, 500, null), USER_ID);
 
 		// Then:
 		assertThat(ideas).hasSize(1);
