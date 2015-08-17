@@ -71,6 +71,14 @@ angular
             },
             parent: 'root'
         }).
+        state('myIdeas', {
+            url: '/myideas',
+            views: {
+                'main@': { templateUrl: 'pages/app.html', controller: 'ideasCtrl as ideasCtrl'}
+            },/*
+            onEnter:  function(){ ymaps.ready(mapInit)},*/
+            parent: 'root'
+        }).
         state('ideaDetails', {
             url: '/ideaDetails:idea',
             views: {

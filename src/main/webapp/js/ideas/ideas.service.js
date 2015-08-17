@@ -10,19 +10,11 @@
 
 		return {
 
-			getPage:function(params, tag, query) {
-				if (tag && query) {
-					return ideasFactory.getPageWithTagAndQuery(params, tag, query);
+			getPage:function(params, user, tag, query) {
+				if(user) {
+					return getPageIfUserIsNotNull(params, user, tag, query);
 				} else {
-					if(tag) {
-						return ideasFactory.getPageWithTag(params, tag);
-					} else {
-						if (query) {
-							return ideasFactory.getPageWithQuery(params, query);
-						} else {
-							return ideasFactory.getPage(params) ;
-						}
-					}
+					return getPageIfUserIsNull(params, tag, query);
 				}
 			},
 
@@ -31,5 +23,37 @@
 			}
 
 		};
-	};
+
+		function getPageIfUserIsNotNull(params, user, tag, query) {
+			if (tag && query) {
+				return ideasFactory.getPageOfUserWithTagAndQuery(params, user, tag, query);
+			} else {
+				if(tag) {
+					return ideasFactory.getPageOfUserWithTag(params, user, tag);
+				} else {
+					if (query) {
+						return ideasFactory.getPageOfUserWithQuery(params, user, query);
+					} else {
+						return ideasFactory.getPageOfUser(params, user) ;
+					}
+				}
+			}
+		};
+
+		function getPageIfUserIsNull(params, tag, query) {
+			if (tag && query) {
+				return ideasFactory.getPageWithTagAndQuery(params, tag, query);
+			} else {
+				if(tag) {
+					return ideasFactory.getPageWithTag(params, tag);
+				} else {
+					if (query) {
+						return ideasFactory.getPageWithQuery(params, query);
+					} else {
+						return ideasFactory.getPage(params) ;
+					}
+				}
+			}
+		};
+	}
 })();

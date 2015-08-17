@@ -20,7 +20,11 @@
             getPageWithTag: getPageWithTag,
             isUserAuthorOfIdea: isUserAuthorOfIdea,
             getPageWithQuery: getPageWithQuery,
-            getPageWithTagAndQuery: getPageWithTagAndQuery
+            getPageWithTagAndQuery: getPageWithTagAndQuery,
+            getPageOfUser: getPageOfUser,
+            getPageOfUserWithTag: getPageOfUserWithTag,
+            getPageOfUserWithQuery: getPageOfUserWithQuery,
+            getPageOfUserWithTagAndQuery: getPageOfUserWithTagAndQuery
         };
         return publicMethod;
 
@@ -80,6 +84,26 @@
 
         function getPageWithTagAndQuery(page, tag, query) {
             var promise = restFactory.ideas().getPageWithTagAndQuery({page: page.page, size: page.size, sort: page.sort, tagId: tag.id, query: query}).$promise;
+            return promise;
+        };
+
+        function getPageOfUser(page, userId) {
+            var promise = restFactory.ideas().getPageOfUser({userId: userId, page: page.page, size: page.size, sort: page.sort}).$promise;
+            return promise;
+        };
+
+        function getPageOfUserWithTag(page, userId, tag) {
+            var promise = restFactory.ideas().getPageOfUserWithTag({userId: userId, page: page.page, size: page.size, sort: page.sort, tagId: tag.id}).$promise;
+            return promise;
+        };
+
+        function getPageOfUserWithQuery(page, userId, query) {
+            var promise = restFactory.ideas().getPageOfUserWithQuery({userId: userId, page: page.page, size: page.size, sort: page.sort, query: query}).$promise;
+            return promise;
+        };
+
+        function getPageOfUserWithTagAndQuery(page, userId, tag, query) {
+            var promise = restFactory.ideas().getPageOfUserWithTagAndQuery({userId: userId, page: page.page, size: page.size, sort: page.sort, tagId: tag.id, query: query}).$promise;
             return promise;
         };
     }

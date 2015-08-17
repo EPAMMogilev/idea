@@ -280,7 +280,7 @@ public class IdeaServiceImplTest {
 		given(this.ideaRepositoryMock.findAllByTagId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
 
 		//When:
-		List<Idea> actual = this.sut.findAllByQueryAndTagId(defaultPageRequest, null, 1L);
+		List<Idea> actual = this.sut.findAllByUserIdQueryAndTagId(defaultPageRequest, null, null, 1L);
 
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
@@ -297,7 +297,7 @@ public class IdeaServiceImplTest {
 		given(this.ideaRepositoryMock.findAllByQuery(any(PageRequest.class), any(String.class))).willReturn(ideas);
 
 		//When:
-		List<Idea> actual = this.sut.findAllByQueryAndTagId(defaultPageRequest, "Bar", null);
+		List<Idea> actual = this.sut.findAllByUserIdQueryAndTagId(defaultPageRequest, null, "Bar", null);
 
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
@@ -314,7 +314,7 @@ public class IdeaServiceImplTest {
 		given(this.ideaRepositoryMock.findAllByTagIdAndByQuery(any(PageRequest.class), any(Long.class), any(String.class))).willReturn(ideas);
 
 		//When:
-		List<Idea> actual = this.sut.findAllByQueryAndTagId(defaultPageRequest, "Bar", 1L);
+		List<Idea> actual = this.sut.findAllByUserIdQueryAndTagId(defaultPageRequest, null, "Bar", 1L);
 
 		//Then:
 		assertThat(actual).isEqualTo(ideas);
