@@ -162,6 +162,8 @@ public class Idea implements Serializable {
 		this.title = source.title;
 		this.description = source.description;
 		this.rating = source.rating;
+		this.liked = source.liked;
+		this.likedUsers = source.likedUsers;
 		this.latitude = source.latitude;
 		this.longitude = source.longitude;
 
