@@ -69,14 +69,14 @@
 
         <div	 class = "href-enter navbar-collapse collapse" id="LoginIdeaDiv" >
             <span class="dropdown">
-                <a  ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
+                <a id="username" ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
                     <i ng-if="currentUser.socialSignInProvider == null || currentUser.socialSignInProvider == 'NONE'" class="fa fa-user"></i><i ng-if="currentUser.socialSignInProvider === 'GOOGLE'" class="fa fa-google-plus-square color-google-plus"></i><i ng-if="currentUser.socialSignInProvider === 'FACEBOOK'" class="fa fa-facebook-square color-facebook"></i><i ng-if="currentUser.socialSignInProvider === 'VKONTAKTE'" class="fa fa-vk color-vk"></i>
                     {{currentUser.username}}
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#/account" translate="PROFILE"></a></li>
-                    <li><a href="#/myideas" translate="MY_IDEAS">Мои идеи</a></li>
+                    <li><a id="myideas" href="#/myideas" translate="MY_IDEAS">Мои идеи</a></li>
                 </ul>
             </span>
             <span ng-if="!authenticated"><a id="words" class="words" href="#login" translate="LOGIN"></a></span>
