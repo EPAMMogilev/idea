@@ -30,13 +30,13 @@ insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('TwentyEight
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('TwentyNinthUser', 'twenty_ninth@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('ThirtiethUser', 'thirtieth@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
 
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–í–µ–ª–æ–ø–∞—Ä–∫–æ–≤–∫–∞', '–û—Ñ–∏—Å –¢–ö4 –æ—á–µ–Ω—å –∂–¥—ë—Ç –µ—ë –≤–æ–∑—Ä–∞—â–µ–Ω–∏—è', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–ü–ª–æ—â–∞–¥–∫–∞ –¥–ª—è –∞–¥–∂–∏–ª–∏—Ç–∏', '–Ø –¥—É–º–∞—é,  —É –º–Ω–æ–≥–∏—Ö –≤–ª–∞–¥–µ–ª—å—Ü–µ–≤ —Å–æ–±–∞–∫ –≤–æ–∑–Ω–∏–∫–∞–ª–∞ –Ω–µ–æ–±—Ö–æ–¥–∏–º–æ—Å—Ç—å –≤ —Ç–∞–∫–æ–π –ø–ª–æ—â–∞–¥–∫–µ. –ö —Å–æ–∂–∞–ª–µ–Ω–∏—é, –≤ –Ω–∞—à–µ–º –≥–æ—Ä–æ–¥–µ –∏—Ö –µ–¥–∏–Ω–∏—Ü—ã. –ü—Ä–µ–¥–ª–∞–≥–∞—é –æ–±–æ—Ä—É–¥–æ–≤–∞—Ç—å –∫–∞–∫ –º–∏–Ω–∏–º—É–º –µ—â—ë –æ–¥–Ω—É.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–í–∏–¥–µ–æ–Ω–∞–±–ª—é–¥–µ–Ω–∏–µ –¥–ª—è –∑–æ–æ—Å–∞–¥–∞', '–ö–∞–∫ –Ω–∞—Å—á—ë—Ç —É—Å—Ç–∞–Ω–æ–≤–∫–∏ —Å–∏—Å—Ç–µ–º—ã –≤–∏–¥–µ–æ–Ω–∞–±–ª—é–¥–µ–Ω–∏—è? –ú–æ–≥–∏–ª–µ–≤—á–∞–Ω–µ –º–æ–≥–ª–∏ –±—ã –Ω–∞–±–ª—é–¥–∞—Ç—å –∑–∞ –∂–∏–∑–Ω—å—é –∂–∏–≤–æ—Ç–Ω—ã—Ö –∏–∑ –¥–æ–º–∞ –≤ —Ä–µ–∂–∏–º–µ —Ä–µ–∞–ª—å–Ω–æ–≥–æ –≤—Ä–µ–º–µ–Ω–∏', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–ë–µ—Å–ø–ª–∞—Ç–Ω—ã–π Wi-Fi', '–í –ú–æ–≥–∏–ª–µ–≤–µ –Ω—É–∂–Ω—ã –∑–æ–Ω—ã –±–µ—Å–ø–ª–∞—Ç–Ω–æ–≥–æ –¥–æ—Å—Ç—É–ø–∞ –≤ –∏–Ω—Ç–µ—Ä–Ω–µ—Ç. –û—Å–æ–±–µ–Ω–Ω–æ –Ω–∞ –ø–ª–æ—â–∞–¥–∏ –°–ª–∞–≤—ã', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–†–µ–º–æ–Ω—Ç –ü—É—à–∫–∏–Ω—Å–∫–æ–≥–æ –º–æ—Å—Ç–∞', '–ú–æ—Å—Ç –¥–∞–≤–Ω–æ —Ç—Ä–µ–±—É–µ—Ç –ø–æ–ª–Ω–æ–π —Ä–µ–∫–æ–Ω—Å—Ç—Ä—É–∫—Ü–∏–∏', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–ú–æ–≥–∏–ª–µ–≤—Å–∫–∏–π –ø–æ–ª—É–º–∞—Ä–∞—Ñ–æ–Ω', '–ü—Ä–µ–¥–ª–∞–≥–∞—é –æ—Ä–≥–∞–Ω–∏–∑–æ–≤–∞—Ç—å –≥–æ—Ä–æ–¥—Å–∫–æ–π –ø–æ–ª—É–º–∞—Ä–∞—Ñ–æ–Ω –∫–∞–∫ –¥–ª—è –ª—é–±–∏—Ç–µ–ª–µ–π, —Ç–∞–∫ –∏ –¥–ª—è –ø—Ä–æ—Ñ–µ—Å—Å–∏–æ–Ω–∞–ª–æ–≤. –ü–æ–≤—ã—Å–∏–º –∏–Ω—Ç–µ—Ä–µ—Å –∫ –±–µ–≥—É —É –º–æ–ª–æ–¥—ë–∂–∏!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
-insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('–ö–æ—Ç–æ–∫–∞—Ñ–µ', '–£ –Ω–∞—Å –µ—Å—Ç—å –∞–Ω—Ç–∏–∫–∞—Ñ–µ, –Ω–æ –Ω–µ—Ç –∫–æ—Ç–æ–∫–∞—Ñ–µ. –ê –≤–µ–¥—å —ç—Ç–æ –±—ã–ª–æ –±—ã –æ—Ç–ª–∏—á–Ω—ã–º –º–µ—Å—Ç–æ–º –¥–ª—è –æ—Ç–¥—ã—Ö–∞!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('≤’€ﬁﬂ–‡⁄ﬁ“⁄–', 'æ‰ÿ· ¬∫4 ﬁÁ’›Ï ÷‘Ò‚ ’Ò “ﬁ◊‡–È’›ÿÔ', '2015-05-13', '2015-05-13', 8, 4, 53.903200, 30.335055);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ø€ﬁÈ–‘⁄– ‘€Ô –‘÷ÿ€ÿ‚ÿ', 'œ ‘„‹–Ó,  „ ‹›ﬁ”ÿÂ “€–‘’€ÏÊ’“ ·ﬁ—–⁄ “ﬁ◊›ÿ⁄–€– ›’ﬁ—Âﬁ‘ÿ‹ﬁ·‚Ï “ ‚–⁄ﬁŸ ﬂ€ﬁÈ–‘⁄’. ∫ ·ﬁ÷–€’›ÿÓ, “ ›–Ë’‹ ”ﬁ‡ﬁ‘’ ÿÂ ’‘ÿ›ÿÊÎ. ø‡’‘€–”–Ó ﬁ—ﬁ‡„‘ﬁ“–‚Ï ⁄–⁄ ‹ÿ›ÿ‹„‹ ’ÈÒ ﬁ‘›„.', '2015-01-26', '2015-01-26', 2, 3, 53.911445, 30.328036);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('≤ÿ‘’ﬁ›–—€Ó‘’›ÿ’ ‘€Ô ◊ﬁﬁ·–‘–', '∫–⁄ ›–·ÁÒ‚ „·‚–›ﬁ“⁄ÿ ·ÿ·‚’‹Î “ÿ‘’ﬁ›–—€Ó‘’›ÿÔ? ºﬁ”ÿ€’“Á–›’ ‹ﬁ”€ÿ —Î ›–—€Ó‘–‚Ï ◊– ÷ÿ◊›ÏÓ ÷ÿ“ﬁ‚›ÎÂ ÿ◊ ‘ﬁ‹– “ ‡’÷ÿ‹’ ‡’–€Ï›ﬁ”ﬁ “‡’‹’›ÿ', '2015-03-30', '2015-03-30', 12, 2, 53.860442, 30.258000);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('±’·ﬂ€–‚›ÎŸ Wi-Fi', '≤ ºﬁ”ÿ€’“’ ›„÷›Î ◊ﬁ›Î —’·ﬂ€–‚›ﬁ”ﬁ ‘ﬁ·‚„ﬂ– “ ÿ›‚’‡›’‚. æ·ﬁ—’››ﬁ ›– ﬂ€ﬁÈ–‘ÿ ¡€–“Î', '2015-06-02', '2015-06-02', 23, 2, 53.894325, 30.330429);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('¿’‹ﬁ›‚ ø„Ë⁄ÿ›·⁄ﬁ”ﬁ ‹ﬁ·‚–', 'ºﬁ·‚ ‘–“›ﬁ ‚‡’—„’‚ ﬂﬁ€›ﬁŸ ‡’⁄ﬁ›·‚‡„⁄Êÿÿ', '2015-04-05', '2015-04-05', 31, 4, 53.892096, 30.329662);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('ºﬁ”ÿ€’“·⁄ÿŸ ﬂﬁ€„‹–‡–‰ﬁ›', 'ø‡’‘€–”–Ó ﬁ‡”–›ÿ◊ﬁ“–‚Ï ”ﬁ‡ﬁ‘·⁄ﬁŸ ﬂﬁ€„‹–‡–‰ﬁ› ⁄–⁄ ‘€Ô €Ó—ÿ‚’€’Ÿ, ‚–⁄ ÿ ‘€Ô ﬂ‡ﬁ‰’··ÿﬁ›–€ﬁ“. øﬁ“Î·ÿ‹ ÿ›‚’‡’· ⁄ —’”„ „ ‹ﬁ€ﬁ‘Ò÷ÿ!', '2015-04-16', '2015-04-16', 19, 2, 53.895185, 30.330892);
+insert into IDEA (TITLE, DESCRIPTION, CREATION_TIME, MODIFICATION_TIME, RATING, USER_ID, LATITUDE, LONGITUDE) values ('∫ﬁ‚ﬁ⁄–‰’', '√ ›–· ’·‚Ï –›‚ÿ⁄–‰’, ›ﬁ ›’‚ ⁄ﬁ‚ﬁ⁄–‰’. ∞ “’‘Ï Ì‚ﬁ —Î€ﬁ —Î ﬁ‚€ÿÁ›Î‹ ‹’·‚ﬁ‹ ‘€Ô ﬁ‚‘ÎÂ–!', '2014-12-21', '2015-12-21', 0, 3, 53.895815, 30.333220);
 
 insert into ROLE (NAME) values ('ADMIN');
 insert into ROLE (NAME) values ('USER');
@@ -73,10 +73,10 @@ insert into USER_ROLE (USER_ID, ROLE_ID) values (29, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (30, 2);
 insert into USER_ROLE (USER_ID, ROLE_ID) values (31, 2);
 
-insert into TAG (NAME) values ('–°–ø–æ—Ä—Ç');
-insert into TAG (NAME) values ('–¢—Ä–∞–Ω—Å–ø–æ—Ä—Ç');
-insert into TAG (NAME) values ('–ö—É–ª—å—Ç—É—Ä–∞');
-insert into TAG (NAME) values ('–ñ–∏–≤–æ—Ç–Ω—ã–µ');
+insert into TAG (NAME) values ('¡ﬂﬁ‡‚');
+insert into TAG (NAME) values ('¬‡–›·ﬂﬁ‡‚');
+insert into TAG (NAME) values ('∫„€Ï‚„‡–');
+insert into TAG (NAME) values ('∂ÿ“ﬁ‚›Î’');
 
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (1, 2);
 insert into IDEA_TAG (IDEA_ID, TAG_ID) values (2, 4);
