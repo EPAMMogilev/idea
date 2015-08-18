@@ -44,6 +44,7 @@
     "BUTTON_LANG_RU": "ru",
     "NO_LIKED_USERS": "Нет таких пользователей",
     "ACCESS_DENIED_MSG": "Доступ запрещен",
-    "ACCESS_DENIED_DESC": "Вам не разрешено выполнять данную операцию"
+    "ACCESS_DENIED_DESC": "Вам не разрешено выполнять данную операцию",
+    "HOME": " Домой"
 }
 
