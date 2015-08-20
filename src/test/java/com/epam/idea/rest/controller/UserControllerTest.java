@@ -31,6 +31,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static com.epam.idea.builder.model.TestTagBuilder.aTag;
 import static com.epam.idea.builder.model.TestUserBuilder.DEFAULT_CREATION_TIME;
@@ -81,6 +83,9 @@ public class UserControllerTest {
 	public static final String EXPECTED_COMMENT_MODIFICATION_TIME = "2014-07-08T00:00Z";
 
 	@Autowired
+	private UserController userController;
+
+	@Autowired
 	private UserService userServiceMock;
 
 	@Autowired
@@ -93,6 +98,8 @@ public class UserControllerTest {
 	private WebApplicationContext webApplicationContext;
 
 	private MockMvc mockMvc;
+
+	private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
 
 	@Before
 	public void setUp() throws Exception {
@@ -378,7 +385,7 @@ public class UserControllerTest {
 				.withTags(Lists.newArrayList(tag))
 				.build();
 
-		when(this.ideaServiceMock.findAllByUserId(userId)).thenReturn(Lists.newArrayList(idea));
+		when(this.ideaServiceMock.findAllByUserId(defaultPageRequest, userId)).thenReturn(Lists.newArrayList(idea));
 
 		this.mockMvc.perform(get("/api/v1/users/{userId}/ideas", userId)
 				.accept(APPLICATION_JSON_UTF8))
@@ -407,7 +414,7 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$[0].tags[0].links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$[0].tags[0].links[1].href").value(containsString("/api/v1/tags/" + idea.getRelatedTags().get(0).getId() + "/ideas")));
 
-		verify(this.ideaServiceMock, times(1)).findAllByUserId(userId);
+		verify(this.ideaServiceMock, times(1)).findAllByUserId(defaultPageRequest, userId);
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 

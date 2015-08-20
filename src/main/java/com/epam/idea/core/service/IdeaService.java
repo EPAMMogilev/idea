@@ -43,9 +43,10 @@ public interface IdeaService extends BaseService<Idea, Long> {
 
 	List<Idea> findAll(Pageable pageable);
 
-	List<Idea> findAllByUserId(long userId);
+	List<Idea> findAllByUserId(Pageable pageable, Long userId);
 
 	List<Idea> findAllByTagId(Pageable pageable, Long tag);
 
-	List<Idea> findAllByQueryAndTagId(Pageable pageable, String query, Long tag);
+	List<Idea> findAllByUserIdQueryAndTagId(Pageable pageable, Long user, String query, Long tag);
+
 }

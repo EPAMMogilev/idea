@@ -37,7 +37,7 @@ public class IdeaRepositoryIntegrationTest {
 	@DatabaseSetup(value = "ideaRepository-ideas.xml")
 	public void shouldFindAllIdeasByUserId() throws Exception {
 		// When:
-		List<Idea> ideas = this.ideaRepository.findByUserId(USER_ID);
+		List<Idea> ideas = this.ideaRepository.findAllByUserId(new PageRequest(0, 500, null), USER_ID);
 
 		// Then:
 		assertThat(ideas).hasSize(1);
@@ -68,5 +68,43 @@ public class IdeaRepositoryIntegrationTest {
 		assertThatTag(ideas.get(0).getRelatedTags().get(0))
 				.hasId(TAG_ID)
 				.hasName(TAG_NAME);
+	}
+
+	@Test
+	@DatabaseSetup(value = "ideaRepository-ideas.xml")
+	public void shouldFindAllIdeasByUserIdAndByTagId() throws Exception {
+		// When:
+		List<Idea> ideas = this.ideaRepository.findAllByUserIdAndByTagId(new PageRequest(0, 500, null), USER_ID, TAG_ID);
+
+		// Then:
+		assertThat(ideas).hasSize(1);
+		assertThatIdea(ideas.get(0))
+				.hasId(IDEA_ID)
+				.hasTitle(IDEA_TITLE)
+				.hasDescription(IDEA_DESCRIPTION)
+				.hasRating(IDEA_RATING);
+		assertThatUser(ideas.get(0).getAuthor())
+				.hasId(USER_ID)
+				.hasUsername(USERNAME)
+				.hasEmail(USER_EMAIL);
+	}
+
+	@Test
+	@DatabaseSetup(value = "ideaRepository-ideas.xml")
+	public void shouldFindAllIdeasByUserIdByTagIdAndByQuery() throws Exception {
+		// When:
+		List<Idea> ideas = this.ideaRepository.findAllByUserIdByTagIdAndByQuery(new PageRequest(0, 500, null), USER_ID, TAG_ID, "TEST");
+
+		// Then:
+		assertThat(ideas).hasSize(1);
+		assertThatIdea(ideas.get(0))
+				.hasId(IDEA_ID)
+				.hasTitle(IDEA_TITLE)
+				.hasDescription(IDEA_DESCRIPTION)
+				.hasRating(IDEA_RATING);
+		assertThatUser(ideas.get(0).getAuthor())
+				.hasId(USER_ID)
+				.hasUsername(USERNAME)
+				.hasEmail(USER_EMAIL);
 	}
 }

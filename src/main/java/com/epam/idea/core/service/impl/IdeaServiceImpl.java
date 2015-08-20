@@ -91,13 +91,8 @@ public class IdeaServiceImpl implements IdeaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Idea> findAllByUserId(final long userId) {
-		List<Idea> ideas = ideaRepository.findByUserId(userId);
-		ideas.forEach(idea -> {
-			Hibernate.initialize(idea.getRelatedTags());
-			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-		});
-		return ideas;
+	public List<Idea> findAllByUserId(Pageable pageable, Long userId) {
+		return findAllByUserIdQueryAndTagId(pageable, userId, null, null);
 	}
 
 	@Override
@@ -106,20 +101,25 @@ public class IdeaServiceImpl implements IdeaService {
 	}
 
 	@Override
-	public List<Idea> findAllByQueryAndTagId(Pageable pageable, String query, Long tagId) {
+	public List<Idea> findAllByUserIdQueryAndTagId(Pageable pageable, Long userId, String query, Long tagId) {
 		List<Idea> ideas;
-		if (tagId != null && query != null) {
-			ideas = ideaRepository.findAllByTagIdAndByQuery(pageable, tagId, query.toUpperCase());
-		} else {
-			if (tagId != null) {
-				ideas = ideaRepository.findAllByTagId(pageable, tagId);
+		if(userId != null) {
+			if (tagId != null && query != null) {
+				ideas = ideaRepository.findAllByUserIdByTagIdAndByQuery(pageable, userId, tagId, query.toUpperCase());
 			} else {
-				if (query != null) {
-					ideas = ideaRepository.findAllByQuery(pageable, query.toUpperCase());
+				if (tagId != null) {
+					ideas = ideaRepository.findAllByUserIdAndByTagId(pageable, userId, tagId);
 				} else {
-					ideas = ideaRepository.findAll(pageable);
+					if (query != null) {
+						ideas = ideaRepository.findAllByUserIdAndByQuery(pageable, userId, query.toUpperCase());
+					} else {
+						ideas = ideaRepository.findAllByUserId(pageable, userId);
+					}
 				}
 			}
+		}
+		else {
+			ideas = findAllByQueryAndTagId(pageable, query, tagId);
 		}
 		ideas.forEach(idea -> {
 			Hibernate.initialize(idea.getRelatedTags());
@@ -175,5 +175,23 @@ public class IdeaServiceImpl implements IdeaService {
 			idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
 		});
 		return allIdeas;
+	}
+
+	public List<Idea> findAllByQueryAndTagId(Pageable pageable, String query, Long tagId) {
+		List<Idea> ideas;
+		if (tagId != null && query != null) {
+			ideas = ideaRepository.findAllByTagIdAndByQuery(pageable, tagId, query.toUpperCase());
+		} else {
+			if (tagId != null) {
+				ideas = ideaRepository.findAllByTagId(pageable, tagId);
+			} else {
+				if (query != null) {
+					ideas = ideaRepository.findAllByQuery(pageable, query.toUpperCase());
+				} else {
+					ideas = ideaRepository.findAll(pageable);
+				}
+			}
+		}
+		return ideas;
 	}
 }

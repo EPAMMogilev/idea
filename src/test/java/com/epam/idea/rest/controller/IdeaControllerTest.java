@@ -125,7 +125,7 @@ public class IdeaControllerTest {
 	public void shouldReturnAllFoundIdeas() throws Exception {
 		Idea foundIdea = TestIdeaBuilder.anIdea().build();
 
-		when(this.ideaServiceMock.findAllByQueryAndTagId(defaultPageRequest, null, null)).thenReturn(Arrays.asList(foundIdea));
+		when(this.ideaServiceMock.findAllByUserIdQueryAndTagId(defaultPageRequest, null, null, null)).thenReturn(Arrays.asList(foundIdea));
 
 		this.mockMvc.perform(get("/api/v1/ideas")
 				.accept(APPLICATION_JSON_UTF8))
@@ -139,7 +139,7 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));
 
-		verify(this.ideaServiceMock, times(1)).findAllByQueryAndTagId(defaultPageRequest, null, null);
+		verify(this.ideaServiceMock, times(1)).findAllByUserIdQueryAndTagId(defaultPageRequest, null, null, null);
 		verifyNoMoreInteractions(this.ideaServiceMock);
 	}
 

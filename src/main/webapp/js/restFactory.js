@@ -31,10 +31,7 @@
 				create: {method: 'POST', url: 'api/v1/ideas/'},
 				delete: {method: 'DELETE', url: 'api/v1/ideas/:id/'},
 				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/ideas/:id/like/'},
-				getPage: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc', isArray: true},
-				getPageWithTag: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', tagId: '@tagId'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&tagId=:tagId', isArray: true},
-				getPageWithQuery: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', query: '@query'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&query=:query', isArray: true},
-				getPageWithTagAndQuery: {method: 'GET', params: {page: '@page', size: '@size', sort: '@sort', tagId: '@tagId', query: "@query"}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&tagId=:tagId&query=:query', isArray: true}
+				getPage: {method: 'GET', params: {userId: '@userId', page: '@page', size: '@size', sort: '@sort', tagId: '@tagId', query: "@query"}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&userId=:userId&tagId=:tagId&query=:query', isArray: true}
 			});
 		}
 
@@ -44,6 +41,7 @@
 				getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
 				create: {method: 'POST', url: 'user/register/'},
 				getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
+
 			});
 		}
 	}

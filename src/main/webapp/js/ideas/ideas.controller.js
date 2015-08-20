@@ -4,11 +4,12 @@
 		.module('app.controllers')
 		.controller('ideasCtrl', ideasCtrl);
 
-	ideasCtrl.$inject = ['$scope', 'ideasService', 'ideasFactory', 'tagsFactory', 'mapGeoService'];
+	ideasCtrl.$inject = ['$scope', '$location', '$rootScope', 'ideasFactory', 'tagsFactory', 'mapGeoService'];
 
-	function ideasCtrl($scope, ideasService, ideasFactory, tagsFactory, mapGeoService) {
+	function ideasCtrl($scope, $location, $rootScope, ideasFactory, tagsFactory, mapGeoService) {
 
 		var vm = this;
+		var userId = null;
 		$scope.geoObjects = null;
 		$scope.criteria = null;
 		$scope.query = null;
@@ -28,9 +29,19 @@
 		vm.latest = [];
 		vm.tag = null;
 
+		activate();
+
+        function activate() {
+            if($location.path().indexOf("/myideas") !== -1) {
+            	userId = $rootScope.currentUser.id;
+            } else {
+            	userId = null;
+            }
+        }
+
 		this.loadPageForPopular = function(){
 			vm.paramsForPopular.page++;
-			var promiseResponse = ideasService.getPage(vm.paramsForPopular, vm.tag);
+			var promiseResponse = ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, null);
 			promiseResponse.then(function (ideas) {
 				if (ideas) {
 					vm.popular = vm.popular.concat(ideas);
@@ -42,7 +53,7 @@
 
 		this.loadPageForLatest = function(){
 			vm.paramsForLatest.page++;
-			var promiseResponse = ideasService.getPage(vm.paramsForLatest, vm.tag);
+			var promiseResponse = ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, null);
 			promiseResponse.then(function (ideas) {
 				if (ideas) {
 					vm.latest = vm.latest.concat(ideas);
@@ -58,12 +69,12 @@
 			vm.paramsForLatest.page = 0;
 			vm.paramsForPopular.page = 0;
 
-			ideasService.getPage(vm.paramsForPopular, vm.tag).then(function (ideas) {
+			ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, null).then(function (ideas) {
 				vm.popular = ideas;
 				$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 			});
 
-			ideasService.getPage(vm.paramsForLatest, vm.tag).then(function (ideas) {
+			ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, null).then(function (ideas) {
 				vm.latest = ideas;
 			});
 		}
@@ -72,23 +83,23 @@
 			vm.paramsForLatest.page = 0;
 			vm.paramsForPopular.page = 0;
 
-			ideasService.getPage(vm.paramsForPopular, vm.tag, $scope.query).then(function (ideas) {
+			ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, $scope.query).then(function (ideas) {
 				vm.popular = ideas;
 				$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 			});
 
-			ideasService.getPage(vm.paramsForLatest, vm.tag, $scope.query).then(function (ideas) {
+			ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, $scope.query).then(function (ideas) {
 				vm.latest = ideas;
 			});
 		}
 
-		ideasService.getPage(vm.paramsForPopular, vm.tag, $scope.query).then(function (ideas) {
+		ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, $scope.query).then(function (ideas) {
 			vm.popular = ideas;
 
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 		});
 
-		ideasService.getPage(vm.paramsForLatest, vm.tag, $scope.query).then(function (ideas) {
+		ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, $scope.query).then(function (ideas) {
 			vm.latest = ideas;
 
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);

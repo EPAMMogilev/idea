@@ -11,16 +11,6 @@ import org.springframework.stereotype.Repository;
 
 public interface IdeaRepository extends BaseRepository<Idea, Long> {
 
-	/**
-	 * Return a list of ideas which belongs to the user with given id,
-	 * or an empty list if the user has no ideas.
-	 *
-	 * @param userId The id of the user.
-	 * @return All the ideas of the user.
-	 */
-	@Query("select i from Idea i where i.author.id = ?1")
-	List<Idea> findByUserId(Long userId);
-
 	@Query("select i from Idea i")
 	List<Idea> findAll(Pageable pageable);
 
@@ -43,4 +33,16 @@ public interface IdeaRepository extends BaseRepository<Idea, Long> {
 
 	@Query("select i from Idea i left join i.likedUsers u where i.id = ?1 and u.id = ?#{ principal?.id }")
 	Idea findByIdAndLikedByCurrentUser(long ideaId);
+
+	@Query("select i from Idea i where i.author.id = ?1")
+	List<Idea> findAllByUserId(Pageable pageable, Long userId);
+
+	@Query("select i from Idea i left join i.relatedTags t where i.author.id = ?1 and t.id = ?2")
+	List<Idea> findAllByUserIdAndByTagId(Pageable pageable, Long userId, Long tagId);
+
+	@Query("select i from Idea i where i.author.id = ?1 and (UPPER(i.title) like %?2% or UPPER(i.description) like %?2%)")
+	List<Idea> findAllByUserIdAndByQuery(Pageable pageable, Long userId, String query);
+
+	@Query("select i from Idea i left join i.relatedTags t where i.author.id = ?1 and t.id = ?2 and (UPPER(i.title) like %?3% or UPPER(i.description) like %?3%)")
+	List<Idea> findAllByUserIdByTagIdAndByQuery(Pageable pageable, Long userId, Long tagId, String query);
 }
