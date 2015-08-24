@@ -46,6 +46,7 @@
     "NO_LIKED_USERS": "No such users",
     "ACCESS_DENIED_MSG": "Access Denied",
     "ACCESS_DENIED_DESC": "You are not allowed to do this operation.",
-    "HOME": " Home"
+    "HOME": "Home",
+    "REGISTER": "Register"
 }
 

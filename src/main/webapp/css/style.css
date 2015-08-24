@@ -24,7 +24,7 @@ button {
     padding: 5px 10px;
     border: 1px solid transparent;
     border-color: #ccc;
-    
+
 }
 
 .words
@@ -41,7 +41,6 @@ button {
     background-repeat: no-repeat;
     background-size: 100%;
     padding: 25px 0;
-    margin-bottom: 20px;
 }
 
 .head-container a {
@@ -97,7 +96,7 @@ button {
 
 .searcher {
    padding: 20px 0;
-   
+
 }
 
 .latestIdeas {
@@ -182,7 +181,7 @@ button {
 
 .left img{
   /*border-radius: 50px;
-  -moz-border-radius: 50px; 
+  -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
     */
 
@@ -209,7 +208,7 @@ button {
   font-size: 30;
   width: 50px;
 }
- 
+
  .ideas-container >.right {
    width:30%;
    float:right;
@@ -221,18 +220,18 @@ button {
   text-decoration: none;
   font: 20px Arial;
   }
-  
+
  .body-text {
   overflow: hidden;
   max-height: 35px;
- 
+
  }
- 
+
   .head-text {
   overflow: hidden;
   max-height: 35px;
   text-overflow: ellipsis;
- 
+
  }
 
  .clip
@@ -242,7 +241,7 @@ button {
     overflow: hidden;
     cursor: pointer;
  }
- 
+
  .end-text {
    width: 65%;
    max-height: 20px;
@@ -253,7 +252,7 @@ button {
    text-align: left;
    white-space: nowrap;
  }
- 
+
  .small-area {
    color: #777;
    font-size: 90%;
@@ -263,7 +262,7 @@ button {
     overflow: hidden;
 
  }
-  
+
 
 .right .glyphicon  {
   color: #337ab7;
@@ -389,7 +388,7 @@ button {
 }
 
 
-.addIdeaButton {
+/*.addIdeaButton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
 	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
@@ -405,12 +404,12 @@ button {
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 24px;
-	text-decoration:none;
+	text-decoration:none;*/
 	/*text-shadow:0px 1px 0px #528ecc;*/
-	height: 40px;
+	/*height: 40px;
 	line-height: initial;
 	width: 150px;
-}
+}*/
 .addIdeaButton:hover {
 	/*background-color:#378de5;*/
 	background-color:#60B5F2;
@@ -429,6 +428,24 @@ button {
 {
     text-align:center;
     font-size: 23px;
+}
+
+.uppercase {
+   text-transform: uppercase;
+}
+.navbar-container {
+   border-bottom: 1px solid #DDD;
+   margin-bottom: 20px;
+   background-color: #4a9ee3;
+}
+
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: #0059b3;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #ffffff;
 }
 
 #imageLoader
