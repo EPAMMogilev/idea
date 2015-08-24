@@ -268,7 +268,7 @@ tomcat {
 }
 
 /*
-//---------------------------- Open Shift -----------------------------------------/
+//---------------------------- Open Shift - Old -----------------------------------------/
 task openShiftRelease <<{
 	println 'Release from OpenShift ready';
 }
