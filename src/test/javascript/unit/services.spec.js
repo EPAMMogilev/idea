@@ -89,6 +89,56 @@ describe("app.services module", function() {
        }));
     });
 
+   describe('sessionService', function () {
+
+       var testSessionService;
+
+       module('ideasFactories');
+
+       beforeEach(inject(function (sessionService) {
+           testSessionService = sessionService;
+       }));
+
+
+       it('check get icon for google user', function() {
+    	   var user = {
+                   id: 2,
+                   socialSignInProvider: 'GOOGLE'
+        	   };
+           var iconClass = testSessionService.getIconClassForCurrentUser(user);
+           expect(iconClass).toBe('fa fa-google-plus-square color-google-plus');
+       });
+
+       it('check get icon for Facebook user', function() {
+    	   var user = {
+                   id: 2,
+                   socialSignInProvider: 'FACEBOOK'
+        	   };
+           var iconClass = testSessionService.getIconClassForCurrentUser(user);
+           expect(iconClass).toBe('fa fa-facebook-square color-facebook');
+       });
+
+       it('check get icon for VContakte user', function() {
+    	   var user = {
+                   id: 2,
+                   socialSignInProvider: 'VKONTAKTE'
+        	   };
+           var iconClass = testSessionService.getIconClassForCurrentUser(user);
+           expect(iconClass).toBe('fa fa-vk color-vk');
+       });
+
+       it('check get icon for idea user', function() {
+    	   var user = {
+                   id: 2,
+                   socialSignInProvider: 'NONE'
+        	   };
+           var iconClass = testSessionService.getIconClassForCurrentUser(user);
+           expect(iconClass).toBe('fa fa-user');
+       });
+
+
+    });
+
 	/*beforeEach(inject(function(detailsService) {
 		details = detailsService;
 	}));*/

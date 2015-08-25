@@ -5,9 +5,9 @@
         .module('app.services')
         .service('sessionService',sessionService);
 
-         sessionService.$inject = ['sessionFactory', '$rootScope'];
+         sessionService.$inject = ['$rootScope'];
 
-        function sessionService(sessionFactory, $rootScope) {
+        function sessionService($rootScope) {
             var sessionID = '';
             var user = {};
             var publicMethod = {
@@ -15,7 +15,8 @@
                 setSessionId: setSessionId,
                 getUser: getUser,
                 setUser: setUser,
-                hasRole: hasRole
+                hasRole: hasRole,
+                getIconClassForCurrentUser: getIconClassForCurrentUser
             };
             return publicMethod;
 
@@ -61,6 +62,22 @@
                 return false;
                 };
 
+            };
+
+            function getIconClassForCurrentUser(user) {
+                if(user.socialSignInProvider === 'GOOGLE') {
+                	return 'fa fa-google-plus-square color-google-plus';
+                } else {
+                	if(user.socialSignInProvider === 'FACEBOOK') {
+                		return 'fa fa-facebook-square color-facebook';
+                	} else {
+                		if(user.socialSignInProvider === 'VKONTAKTE') {
+                			return 'fa fa-vk color-vk';
+                		} else {
+                			return 'fa fa-user';
+                		}
+                	}
+                }
             };
     };
 })();

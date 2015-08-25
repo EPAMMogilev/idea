@@ -74,7 +74,7 @@
 		        <ul class="nav navbar-nav navbar-right">
 		            <li class="dropdown">
 		                <a id="username" ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
-			                <i ng-if="currentUser.socialSignInProvider == null || currentUser.socialSignInProvider == 'NONE'" class="fa fa-user"></i><i ng-if="currentUser.socialSignInProvider === 'GOOGLE'" class="fa fa-google-plus-square color-google-plus"></i><i ng-if="currentUser.socialSignInProvider === 'FACEBOOK'" class="fa fa-facebook-square color-facebook"></i><i ng-if="currentUser.socialSignInProvider === 'VKONTAKTE'" class="fa fa-vk color-vk"></i>
+			                <i class="{{sessionCtrl.getIconClassForCurrentUser()}}"></i>
 			                   {{currentUser.username}}
 			                   <b class="caret"></b>
 			            </a>
