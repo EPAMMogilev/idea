@@ -55,55 +55,54 @@
 </head>
 
 <body>
-
-	<div class = "head-container">
-
-	    <div class = "container" ng-controller="sessionCtrl as sessionCtrl">
+    <header>
+		<div class = "head-container" ng-controller="sessionCtrl as sessionCtrl">
 	        <div class = "head-title title-font" id="IHaveIdeaDiv">
 	            <p> <a href="#ideaAddNew"><i class="fa fa-child"></i> <span translate="I_HAVE_IDEA"></span></a></p>
 	        </div>
-	    </div>
-	</div>
-	<nav class="navbar navbar-default">
-	    <div ng-controller="sessionCtrl as sessionCtrl">
-	        <ul class="nav navbar-nav">
-	            <li><a href="#/home" translate="HOME"></a></li>
-	            <li ng-controller="ideasSearchCtrl as ideasSearchCtrl" ng-show="ideasSearchCtrl.isSearchVisible()">
-	                <input placeholder="&#57347; {{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasSearchCtrl.changeQuery()" class="form-control input-lg searcher glyphicon" type="search"/>
-	            </li>
-	            <li ng-if="authenticated"><a id="ideaAddNew" href="#ideaAddNew" translate="I_HAVE_IDEA"></a></li>
-	        </ul>
+		</div>
+		<nav class="navbar navbar-default">
+		    <div ng-controller="sessionCtrl as sessionCtrl">
+		        <ul class="nav navbar-nav">
+		            <li><a href="#/home" translate="HOME"></a></li>
+		            <li ng-controller="ideasSearchCtrl as ideasSearchCtrl" ng-show="ideasSearchCtrl.isSearchVisible()">
+		                <input placeholder="&#57347; {{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasSearchCtrl.changeQuery()" class="form-control input-lg searcher glyphicon" type="search"/>
+		            </li>
+		            <li ng-if="authenticated"><a id="ideaAddNew" href="#ideaAddNew" translate="I_HAVE_IDEA"></a></li>
+		        </ul>
 
-	        <ul class="nav navbar-nav navbar-right">
-	            <li class="dropdown">
-	                <a id="username" ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
-		                <i ng-if="currentUser.socialSignInProvider == null || currentUser.socialSignInProvider == 'NONE'" class="fa fa-user"></i><i ng-if="currentUser.socialSignInProvider === 'GOOGLE'" class="fa fa-google-plus-square color-google-plus"></i><i ng-if="currentUser.socialSignInProvider === 'FACEBOOK'" class="fa fa-facebook-square color-facebook"></i><i ng-if="currentUser.socialSignInProvider === 'VKONTAKTE'" class="fa fa-vk color-vk"></i>
-		                   {{currentUser.username}}
-		                   <b class="caret"></b>
-		            </a>
-		            <ul class="dropdown-menu">
-	                    <li><a href="#/account" translate="PROFILE"></a></li>
-	                    <li><a id="myideas" href="#/myideas" translate="MY_IDEAS">Мои идеи</a></li>
-	                    <li><a id="myideas" href="" ng-click="sessionCtrl.logout()" translate="LOGOUT"></a></li>
-	                </ul>
-	            </li>
-	            <li ng-if="!authenticated"><a id="words" class="words" href="#login" translate="LOGIN"></a></li>
-	            <li ng-if="!authenticated"><a href="#/register" translate="REGISTER"></a></li>
-			    <li>
-			        <a class="dropdown-toggle ng-binding uppercase" data-toggle="dropdown" aria-haspopup="true"  href="">
-		                {{sessionCtrl.getCurrentLang()}}
-		                <b class="caret"></b>
-		            </a>
-		            <ul class="dropdown-menu">
-		                <li><a href="" class="uppercase" ng-click="sessionCtrl.useLang('en')" >en</a></li>
-		                <li><a href="" class="uppercase" ng-click="sessionCtrl.useLang('ru')">ru</a></li>
-	                </ul>
-	            </li>
-	        </ul>
-	    </div>
-	</nav>
+		        <ul class="nav navbar-nav navbar-right">
+		            <li class="dropdown">
+		                <a id="username" ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true" >
+			                <i ng-if="currentUser.socialSignInProvider == null || currentUser.socialSignInProvider == 'NONE'" class="fa fa-user"></i><i ng-if="currentUser.socialSignInProvider === 'GOOGLE'" class="fa fa-google-plus-square color-google-plus"></i><i ng-if="currentUser.socialSignInProvider === 'FACEBOOK'" class="fa fa-facebook-square color-facebook"></i><i ng-if="currentUser.socialSignInProvider === 'VKONTAKTE'" class="fa fa-vk color-vk"></i>
+			                   {{currentUser.username}}
+			                   <b class="caret"></b>
+			            </a>
+			            <ul class="dropdown-menu">
+		                    <li><a href="#/account" translate="PROFILE"></a></li>
+		                    <li><a id="myideas" href="#/myideas" translate="MY_IDEAS">Мои идеи</a></li>
+		                    <li><a id="myideas" href="" ng-click="sessionCtrl.logout()" translate="LOGOUT"></a></li>
+		                </ul>
+		            </li>
+		            <li ng-if="!authenticated"><a id="words" class="words" href="#login" translate="LOGIN"></a></li>
+		            <li ng-if="!authenticated"><a href="#/register" translate="REGISTER"></a></li>
+				    <li>
+				        <a class="dropdown-toggle ng-binding uppercase" data-toggle="dropdown" aria-haspopup="true"  href="">
+			                {{sessionCtrl.getCurrentLang()}}
+			                <b class="caret"></b>
+			            </a>
+			            <ul class="dropdown-menu">
+			                <li><a href="" class="uppercase" ng-click="sessionCtrl.useLang('en')" >en</a></li>
+			                <li><a href="" class="uppercase" ng-click="sessionCtrl.useLang('ru')">ru</a></li>
+		                </ul>
+		            </li>
+		        </ul>
+		    </div>
+		</nav>
+	</header>
 	<div class = "container" ng-controller="sessionCtrl as sessionCtrl">
 	    <div data-ui-view='main' autoscroll='false'></div>
 	</div>
+	<footer class="copyright">&copy; EPAM Systems 2015</footer>
 </body>
 </html>
