@@ -93,7 +93,7 @@ button {
 
 .searcher {
    font-size: 14px;
-   margin-top: 2px;
+   margin-top: 1px;
    min-width: 500px;
 }
 
@@ -375,17 +375,21 @@ button {
 .uppercase {
    text-transform: uppercase;
 }
-.navbar-container {
+.navbar {
    margin-bottom: 20px;
-   background-color: #4a9ee3;
+   background-color: #69a5d6;
 }
 
 .navbar-default .navbar-nav > li > a {
-    color: #0059b3;
+    color: #ffffff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-    color: #ffffff;
+    color: #0059b3;
+}
+
+.navbar-right {
+   margin-right: 10px;
 }
 
 #imageLoader
