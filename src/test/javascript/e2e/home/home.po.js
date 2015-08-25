@@ -6,7 +6,7 @@ HomePage.prototype = Object.create({}, {
 	latestIdeas:    { get: function() { return element.all(by.repeater('idea in ideasCtrl.latest')); }},
 
 	loginButton:    { get: function() { return element(by.id('words')); }},
-	addButton:      { get: function() { return element(by.id('addIdeaButton')); }},
+	addButton:      { get: function() { return element(by.id('ideaAddNew')); }},
 	allButton:      { get: function() { return element(by.id('all')); }},
 	tagButtons:     { get: function() { return element.all(by.repeater('tag in tagsCtrl.tagsTop')); }},
 	likeButtons:    { get: function() { return element.all(by.css('.btn-thumbs')); }},

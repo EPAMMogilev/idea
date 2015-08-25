@@ -35,17 +35,21 @@ button {
 }
 
 .head-container {
-    height: 150px;
+    height: 100px;
     width: 100%;
     background: url(images/header.jpg);
     background-repeat: no-repeat;
-    background-size: 100%;
-    padding: 25px 0;
+    background-size: 100% 100%;
 }
 
 .head-container a {
    padding: 10px 15px;
    /*display: block;*/
+}
+
+.head-container a:link {
+   text-decoration: none;
+   color: #337ab7;
 }
 
 .head-container a:visited {
@@ -55,13 +59,12 @@ button {
 
 .head-container a:hover {
    text-decoration: none;
-   background: rgb(255,255,255);
-   background: rgba(255,255,255,0.5);
+   color: #5a9cd1;
 }
 
-.head-container a:link {
+.head-container a:active {
    text-decoration: none;
-//   color: #337ab7;
+   color: #5a9cd1;
 }
 
 .body-container {
@@ -87,16 +90,11 @@ button {
    float:right;
    text-transform: uppercase;
 }
-.searcher input {
-  width : 100%;
-  height: auto;
-  font-size: 14px;
-  padding: 10px;
-}
 
 .searcher {
-   padding: 20px 0;
-
+   font-size: 14px;
+   margin-top: 2px;
+   min-width: 500px;
 }
 
 .latestIdeas {
@@ -341,24 +339,13 @@ button {
 #IHaveIdeaDiv
 {
 	width: 33%;
-	height: 100px;
+	height: 60px;
 	text-align: center;
 	float: left;
 	display:inline-block;
 	vertical-align:middle;
 	horizontal-align:middle;
-}
-
-#AddIdeaDiv
-{
-	width: 33%;
-	height: 100px;
-	text-align: center;
-	float: center;
-	display:inline-block;
-	vertical-align:middle;
-	line-height: 100px;
-	padding: 10px 50px;
+	margin-top: px;
 }
 
 #LoginIdeaDiv
@@ -372,57 +359,12 @@ button {
 	padding: 10px 50px;
 }
 
-/* new button */
-#addIdeaButton
-{
-	/*color: #ffffff;*/
-}
-#addIdeaButton a
-{
-	vertical-align:middle;
-}
 
 #mapDiv
 {
 	width: 39%;
 }
 
-
-/*.addIdeaButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
-	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
-	background-color:#60b5f2;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #84bbf3;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;*/
-	/*text-shadow:0px 1px 0px #528ecc;*/
-	/*height: 40px;
-	line-height: initial;
-	width: 150px;
-}*/
-.addIdeaButton:hover {
-	/*background-color:#378de5;*/
-	background-color:#60B5F2;
-}
-.addIdeaButton:active {
-	position:relative;
-	top:1px;
-}
-
-#AddIdeaDiv a:hover
-{
-    color: #84BBF3;
-}
 
 .rating
 {
@@ -434,12 +376,10 @@ button {
    text-transform: uppercase;
 }
 .navbar-container {
-   border-bottom: 1px solid #DDD;
    margin-bottom: 20px;
    background-color: #4a9ee3;
 }
 
-/* link */
 .navbar-default .navbar-nav > li > a {
     color: #0059b3;
 }
