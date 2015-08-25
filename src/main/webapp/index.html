@@ -69,7 +69,7 @@
 	        <ul class="nav navbar-nav">
 	            <li><a href="#/home" translate="HOME"></a></li>
 	            <li ng-controller="ideasSearchCtrl as ideasSearchCtrl" ng-show="ideasSearchCtrl.isSearchVisible()">
-	                <input placeholder="{{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasSearchCtrl.changeQuery()" class="form-control input-lg searcher"/>
+	                <input placeholder="&#57347; {{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasSearchCtrl.changeQuery()" class="form-control input-lg searcher glyphicon" type="search"/>
 	            </li>
 	            <li ng-if="authenticated"><a id="ideaAddNew" href="#ideaAddNew" translate="I_HAVE_IDEA"></a></li>
 	        </ul>
