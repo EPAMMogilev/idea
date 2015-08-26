@@ -12,6 +12,7 @@ LoginPage.prototype = Object.create({}, {
 	}},
 
 	getPage: {value: function() { browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea/#/login'); }}
+	//getPage: {value: function() { browser.get('http://localhost:9090/Idea/#/login'); }}
 });
 
 module.exports = LoginPage;

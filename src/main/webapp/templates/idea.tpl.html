@@ -5,15 +5,15 @@
 
 	<div class="middle">
 		<strong class ="head-text">
-			<a ng-click="details()"><p class="clip">{{idea.title}}</p></a>
+			<a ng-click="details()"><p id="title" class="clip">{{idea.title}}</p></a>
 		</strong>
 		<p class ="body-text">
-			<span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ngModel"></span>
+			<span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ngModel" id="description"></span>
 		</p>
 		<p class ="end-text">
 			<span class ="small-area"><span class="glyphicon glyphicon-time"></span>{{idea.createdAt | date:'dd.MM.yy'}}</span>
 			<span id="author" class ="small-area"><span class="glyphicon glyphicon-user"></span>{{idea.author.username}}</span>
-			<span class ="small-area"><span class="glyphicon glyphicon-tag"></span>{{idea.tags[0].name}}</span>
+			<span id="tag" class ="small-area"><span class="glyphicon glyphicon-tag"></span>{{idea.tags[0].name}}</span>
 		</p>
 	</div>
 
