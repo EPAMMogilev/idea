@@ -52,6 +52,11 @@
          vm.hasRole = function (role, user) {
                return sessionService.hasRole(role, user);
          }
+
+         vm.getIconClassForCurrentUser = function () {
+        	var user = $rootScope.currentUser;
+        	return sessionService.getIconClassForCurrentUser(user);
+         }
     }
 
 

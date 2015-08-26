@@ -12,7 +12,7 @@
 		var userId = null;
 		$scope.geoObjects = null;
 		$scope.criteria = null;
-		$scope.query = null;
+		vm.query = null;
 
 		vm.paramsForPopular = {
 			page: 0,
@@ -37,6 +37,8 @@
             } else {
             	userId = null;
             }
+            vm.query = null;
+            $rootScope.$broadcast('query-clean');
         }
 
 		this.loadPageForPopular = function(){
@@ -83,23 +85,23 @@
 			vm.paramsForLatest.page = 0;
 			vm.paramsForPopular.page = 0;
 
-			ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, $scope.query).then(function (ideas) {
+			ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, vm.query).then(function (ideas) {
 				vm.popular = ideas;
 				$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 			});
 
-			ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, $scope.query).then(function (ideas) {
+			ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, vm.query).then(function (ideas) {
 				vm.latest = ideas;
 			});
 		}
 
-		ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, $scope.query).then(function (ideas) {
+		ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, vm.query).then(function (ideas) {
 			vm.popular = ideas;
 
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 		});
 
-		ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, $scope.query).then(function (ideas) {
+		ideasFactory.getPage(vm.paramsForLatest, userId, vm.tag, vm.query).then(function (ideas) {
 			vm.latest = ideas;
 
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
@@ -110,6 +112,11 @@
 			vm.ideas = ideas;
 			$scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
 			});
+		});
+
+		$scope.$on('query-update', function(event, query) {
+			vm.query = query;
+			vm.selectByQuery();
 		});
 
 		vm.details = function(idea){

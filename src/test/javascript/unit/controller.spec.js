@@ -274,3 +274,58 @@ describe('Idea controllers testing', function(){
 
 
 });
+
+//------------------------------------------------------------------------------------------------
+//ideasSearchCtrlTest
+//------------------------------------------------------------------------------------------------
+
+describe('Ideas Search controllers testing', function(){
+
+	var ideasSearchCtrlTest, rootScope, location, scope;
+
+	beforeEach(angular.mock.module('app.controllers'));
+
+	beforeEach(inject(function($rootScope, $controller, $location) {
+		scope = $rootScope.$new();
+		rootScope = $rootScope;
+		location = $location;
+
+		//ideasSearchCtrl
+		ideasSearchCtrlTest  = function(){
+				return $controller('ideasSearchCtrl', {
+					$scope:scope,
+					$rootScope: rootScope,
+					$location: location
+				});
+		};
+	}));
+
+	// Verify that the factory can be instantiated
+	it('ideas search controller should be instantiable', function () {
+		expect(ideasSearchCtrlTest).toBeDefined();
+	});
+
+
+	it('ideas search controller should change query', function () {
+		var ctrl = ideasSearchCtrlTest();
+		spyOn(rootScope, '$broadcast');
+		ctrl.changeQuery();
+		expect(rootScope.$broadcast).toHaveBeenCalledWith('query-update', null);
+	});
+
+	it('ideas search controller should check that search is visible', function () {
+		location.path('/home');
+		var ctrl = ideasSearchCtrlTest();
+		expect(ctrl.isSearchVisible()).toBe(true);
+	});
+
+	it('ideas search controller should check that search is not visible', function () {
+		location.path('/login');
+		var ctrl = ideasSearchCtrlTest();
+		expect(ctrl.isSearchVisible()).toBe(false);
+	});
+
+
+});
+
+

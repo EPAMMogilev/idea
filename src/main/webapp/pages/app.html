@@ -3,9 +3,6 @@
         <tag-button identifier="all" ng-click="ideasCtrl.selectByCategory(null)" active="true">Все</tag-button>
         <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag)">{{tag.name}}</tag-button>
     </div>
-    <div class = "searcher">
-        <input placeholder="{{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasCtrl.selectByQuery()" class="form-control">
-    </div>
     <div class="dataContainer">
         <div id="lstMostRating" class="popularIdeas" ideas-list update-function="ideasCtrl.loadPageForPopular()" div-name="#lstMostRating">
             <ul>
