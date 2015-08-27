@@ -147,7 +147,7 @@ module.exports = function (grunt) {
                 }
             }
        },
-	   
+
 		karma: {
 			unit: {
 				configFile: 'src/test/javascript/karma.conf.js',
@@ -155,7 +155,7 @@ module.exports = function (grunt) {
 				singleRun: true
 			}
 		},
-		
+
 		connect: {
 			options: {
 				port: 8282,
@@ -172,18 +172,21 @@ module.exports = function (grunt) {
                 }
             }
 		},
-		
+
         protractor : {
             options : {
-				configFile : 'src/test/javascript/protractor.conf.js',			
+				configFile : 'src/test/javascript/protractor.conf.js',
                 noColor : false,
             },
 			e2e: {
 				options: {
-					keepAlive: false
+					keepAlive: false,
+	                args: {
+	                	baseUrl: '<%= protractor_base_url %>'
+	                }
 				}
 			}
-        },		
+        },
 
      bower: {
             install: {

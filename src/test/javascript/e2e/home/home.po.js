@@ -45,8 +45,7 @@ HomePage.prototype = Object.create({}, {
 		return this.myIdeasButton.click();
 	}},
 
-	getPage:    { value: function() { browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea'); }}
-	//getPage:    { value: function() { browser.get('http://localhost:9090/Idea'); }}
+	getPage:    { value: function() { browser.get(''); }}
 });
 
 module.exports = HomePage;
