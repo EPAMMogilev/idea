@@ -11,7 +11,7 @@ LoginPage.prototype = Object.create({}, {
 		this.loginButton.click();
 	}},
 
-	getPage: {value: function() { browser.get('http://evbymogsd0030.minsk.epam.com:7080/idea/#/login'); }}
+	getPage: {value: function() { browser.get('#/login'); }}
 });
 
 module.exports = LoginPage;
