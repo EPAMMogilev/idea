@@ -16,15 +16,15 @@
                     </div>
                 </div>
                 <!-- descr -->
-                <div id="divData">
-                    <div id="tdCaption" translate="IDEA"></div>
+                <div id="divData" class="form-group">
+                    <div id="tdCaption" class="requiredField"><label>{{ 'IDEA' | translate }}</label></div>
                     <div id="tdDataInsert">
                         <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title">
                     </div>
                 </div>
                 <!-- created -->
-                <div id="divData">
-                    <div id="tdCaption" translate="DESCRIPTION"></div>
+                <div id="divData" class="form-group">
+                    <div id="tdCaption" class="requiredField"><label>{{ 'DESCRIPTION' | translate }}</label></div>
                     <div id="tdDataInsert">
                         <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description"></textarea>
                     </div>
