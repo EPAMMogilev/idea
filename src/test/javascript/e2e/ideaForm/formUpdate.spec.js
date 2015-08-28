@@ -30,4 +30,11 @@ describe('update idea page test', function() {
 		});
 	});
 
+	it('should error messages when title and description are empty', function() {
+		formPage.clearTitle();
+		formPage.clearDesc();
+		expect(formPage.titleError.isDisplayed()).toBeTruthy();
+		expect(formPage.descError.isDisplayed()).toBeTruthy();
+	});
+
 });

@@ -21,7 +21,7 @@
                     <div id="tdDataInsert" class="controls form-inline">
                         <input type="text" id="searchLine" class="form-control" name="edtIdea" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title" required>
                         <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtIdea.$dirty" ng-messages="ideaForm.edtIdea.$error">
-                            <span ng-message="required"><span translate="TITLE_REQUIRED"/></span>
+                            <span ng-message="required"><span id="ideaRequiredMessage" translate="TITLE_REQUIRED"/></span>
                         </span>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     <div id="tdDataInsert" class="controls form-inline">
                         <textarea class="form-control" id="searchLine" name="edtDescription" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description" required></textarea>
                         <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtDescription.$dirty" ng-messages="ideaForm.edtDescription.$error">
-                            <span ng-message="required"><span translate="DESCRIPTION_REQUIRED"/></span>
+                            <span ng-message="required"><span id="descRequiredMessage" translate="DESCRIPTION_REQUIRED"/></span>
                         </span>
                     </div>
                 </div>
