@@ -1,4 +1,4 @@
-<div id="mainDiv">
+<form id="mainDiv" name="ideaForm" novalidate>
     <div id="shadowBox">
         <div id="topDiv">
             <p id="p" translate="ADD_IDEA"></p>
@@ -16,17 +16,23 @@
                     </div>
                 </div>
                 <!-- descr -->
-                <div id="divData" class="form-group">
+                <div id="divData" class="form-group"  ng-class="{ 'has-error' : ideaForm.edtIdea.$invalid && (submitted || ideaForm.edtIdea.$dirty)}">
                     <div id="tdCaption" class="requiredField"><label>{{ 'IDEA' | translate }}</label></div>
                     <div id="tdDataInsert">
-                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title" required>
+                        <div class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtIdea.$dirty" ng-messages="ideaForm.edtIdea.$error">
+                            <div ng-message="required"><span translate="TITLE_REQUIRED"/></div>
+                        </div>
                     </div>
                 </div>
                 <!-- created -->
-                <div id="divData" class="form-group">
+                <div id="divData" class="form-group" ng-class="{ 'has-error' : ideaForm.edtDescription.$invalid && (submitted || ideaForm.edtDescription.$dirty)}">
                     <div id="tdCaption" class="requiredField"><label>{{ 'DESCRIPTION' | translate }}</label></div>
                     <div id="tdDataInsert">
-                        <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description"></textarea>
+                        <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description" required></textarea>
+                        <div class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtDescription.$dirty" ng-messages="ideaForm.edtDescription.$error">
+                            <div ng-message="required"><span translate="DESCRIPTION_REQUIRED"/></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,7 +64,7 @@
                 <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK"/> </button>
             </div>
             <div id="divRight">
-                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
+                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
             </div>
         </div>
     </div>
@@ -75,4 +81,4 @@
             </div>
         </div>
     </script>
-</div>
+</form>

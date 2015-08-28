@@ -47,6 +47,8 @@
     "ACCESS_DENIED_MSG": "Access Denied",
     "ACCESS_DENIED_DESC": "You are not allowed to do this operation.",
     "HOME": "Home",
-    "REGISTER": "Register"
+    "REGISTER": "Register",
+    "TITLE_REQUIRED": "Idea is required",
+    "DESCRIPTION_REQUIRED": "Description is required"
 }
 

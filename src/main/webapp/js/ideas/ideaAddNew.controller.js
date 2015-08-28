@@ -12,6 +12,7 @@
         this.categories =  detailsService.getCategories();
         $scope.bottomButtonName = 'ADD';
         $scope.data = null;
+        $scope.submitted = false;
 
         $scope.imageExist = false;
         $scope.imageFile;
@@ -106,6 +107,8 @@
 		$scope.doWork = function(data){
 		    //find tag name
 			//todo:make more input fields for more tags and use this for
+			$scope.submitted = true;
+			if ($scope.ideaForm.$invalid) {return;}
 			var tags = new Array();
 			for(var i=0; i<1; i++){
 				if (tags[i] != null && tags[i] != undefined) {
