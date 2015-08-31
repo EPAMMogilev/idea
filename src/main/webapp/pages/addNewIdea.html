@@ -1,4 +1,4 @@
-<div id="mainDiv">
+<form id="mainDiv" name="ideaForm" novalidate>
     <div id="shadowBox">
         <div id="topDiv">
             <p id="p" translate="ADD_IDEA"></p>
@@ -12,21 +12,27 @@
                         <!--select class="form-control" ng-model="data.tagId" >
                             <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
                         </select-->
-                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'CATEGORY' | translate }}" ng-model="data.tagName">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" placeholder="{{ 'CATEGORY' | translate }}" ng-model="data.tagName">
                     </div>
                 </div>
                 <!-- descr -->
-                <div id="divData">
-                    <div id="tdCaption" translate="IDEA"></div>
-                    <div id="tdDataInsert">
-                        <input type="text" id="searchLine" class="form-control" name="edtIdea" width="100%" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title">
+                <div id="divData" class="form-group"  ng-class="{ 'has-error' : ideaForm.edtIdea.$invalid && (submitted || ideaForm.edtIdea.$dirty)}">
+                    <div id="tdCaption" class="requiredField"><label>{{ 'IDEA' | translate }}</label></div>
+                    <div id="tdDataInsert" class="controls form-inline">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title" required>
+                        <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtIdea.$dirty" ng-messages="ideaForm.edtIdea.$error">
+                            <span ng-message="required"><span id="ideaRequiredMessage" translate="TITLE_REQUIRED"/></span>
+                        </span>
                     </div>
                 </div>
                 <!-- created -->
-                <div id="divData">
-                    <div id="tdCaption" translate="DESCRIPTION"></div>
-                    <div id="tdDataInsert">
-                        <textarea class="form-control" id="searchLine" name="edtDescription" width="100%" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description"></textarea>
+                <div id="divData" class="form-group" ng-class="{ 'has-error' : ideaForm.edtDescription.$invalid && (submitted || ideaForm.edtDescription.$dirty)}">
+                    <div id="tdCaption" class="requiredField"><label>{{ 'DESCRIPTION' | translate }}</label></div>
+                    <div id="tdDataInsert" class="controls form-inline">
+                        <textarea class="form-control" id="searchLine" name="edtDescription" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description" required></textarea>
+                        <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtDescription.$dirty" ng-messages="ideaForm.edtDescription.$error">
+                            <span ng-message="required"><span id="descRequiredMessage" translate="DESCRIPTION_REQUIRED"/></span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -58,7 +64,7 @@
                 <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK"/> </button>
             </div>
             <div id="divRight">
-                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
+                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
             </div>
         </div>
     </div>
@@ -75,4 +81,4 @@
             </div>
         </div>
     </script>
-</div>
+</form>

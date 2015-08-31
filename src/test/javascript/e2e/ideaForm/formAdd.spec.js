@@ -26,4 +26,18 @@ describe('add idea page test', function() {
 			expect(url.split('%')[0].split('#')[1]).toContain('/home');
 		});
 	});
+
+	it('should display error messages when try to add idea without description and title', function() {
+		formPage.fillTitle('Caption1');
+		formPage.clearTitle();
+		formPage.fillDesc('Text1');
+		formPage.clearDesc();
+		expect(formPage.titleError.isDisplayed()).toBeTruthy();
+		expect(formPage.descError.isDisplayed()).toBeTruthy();
+	});
+
+	it('should display error messages when description and title are dirty but not filled', function() {
+		formPage.addIdea('', '', '');
+		expect(formPage.titleError.isDisplayed()).toBeTruthy();
+	});
 });

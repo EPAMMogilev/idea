@@ -46,6 +46,8 @@
     "ACCESS_DENIED_MSG": "Доступ запрещен",
     "ACCESS_DENIED_DESC": "Вам не разрешено выполнять данную операцию",
     "HOME": "На главную",
-    "REGISTER": "Регистрация"
+    "REGISTER": "Регистрация",
+    "TITLE_REQUIRED": "Требуется идея",
+    "DESCRIPTION_REQUIRED": "Требуется описание"
 }
 

@@ -113,6 +113,7 @@
 		};
 
 		$scope.doWork = function(data){
+			if ($scope.ideaForm.$invalid) {return;}
 			var idea = ideasFactory.getIdeaById(data.id);
 
 			//todo:make more input fields for more tags and use this for
