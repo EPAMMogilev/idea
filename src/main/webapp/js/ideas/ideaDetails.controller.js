@@ -10,6 +10,7 @@
 	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService) {
 
 		$scope.idea = ideaDetails;
+		$scope.likedUsersList = null;
 		$scope.data = null;
 		$scope.myMap = null;
 
@@ -22,6 +23,9 @@
 			function( value )
 			{
 				$scope.data = value;
+				if($scope.data != null) {
+					$scope.likedUsersList = getlikedUsersListAsString();
+				}
 
 				//set geo point
 				if($scope.data && $scope.data.latitude && $scope.data.longitude){
@@ -39,12 +43,6 @@
 			}
 		);
 
-		//this.data = ideaDetails;
-
-		$scope.back = function(){
-			$window.location.href = '#home';
-		};
-
 		$scope.edit = function(){
 			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.idea) });
 		};
@@ -57,6 +55,18 @@
 					$state.go('home');
 				});
 		};
+
+		$scope.changeMapVisibility = function(){
+			$("#map").toggle();
+		};
+
+		function getlikedUsersListAsString(){
+			var users = [];
+			for(var i = 0; i < $scope.data.likedUsers.length; i++) {
+				users.push($scope.data.likedUsers[i].username);
+			}
+			return users.join(", ");
+		}
 
 		//init function: load map point
 		$scope.init = function(){
