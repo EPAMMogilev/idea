@@ -200,6 +200,18 @@ task integrationTest(type: Test) {
 
 check.dependsOn integrationTest
 
+//--------------------------- Select Runway --------------------------------------------------//
+
+war { 
+	webXml = file("src/main/webapp/webxml-templates/" + "web-" + getRunway() + ".xml")
+	excludes = ['webxml-templates']
+} 
+
+def getRunway() {
+	def runway = System.getProperty("runway") ?: 'dev'; //available: dev, test, prod
+	println "-----------------\n[Runway: " + runway + "]\n-----------------";
+	return runway;
+}
 //---------------------------Gradle wrapper--------------------------------------------------//
 
 // The Gradle Wrapper is the preferred way of starting a Gradle build

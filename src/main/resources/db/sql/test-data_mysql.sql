@@ -1,13 +1,15 @@
+USE `ihaveidea`;
+
 SET FOREIGN_KEY_CHECKS = 0;
 
-truncate table idea.USER;
-truncate table idea.IDEA;
-truncate table idea.ROLE;
-truncate table idea.USER_ROLE;
-truncate table idea.TAG;
-truncate table idea.IDEA_TAG;
-truncate table idea.IDEA_LIKES;
-truncate table idea.COMMENT;
+truncate table ihaveidea.USER;
+truncate table ihaveidea.IDEA;
+truncate table ihaveidea.ROLE;
+truncate table ihaveidea.USER_ROLE;
+truncate table ihaveidea.TAG;
+truncate table ihaveidea.IDEA_TAG;
+truncate table ihaveidea.IDEA_LIKES;
+truncate table ihaveidea.COMMENT;
 
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2015-02-28 00:00:00'); -- pass :'admin'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('FirstUser', 'first@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'

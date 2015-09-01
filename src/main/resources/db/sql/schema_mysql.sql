@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `ihaveidea` CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `ihaveidea`;
+
 CREATE TABLE IF NOT EXISTS `USER` (
   `ID` BIGINT NOT NULL AUTO_INCREMENT
   , `USERNAME` VARCHAR(50) NOT NULL
@@ -52,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `IDEA_TAG` (
   , CONSTRAINT `IDEA_TAGS_fk2` FOREIGN KEY (`TAG_ID`) REFERENCES TAG(`ID`)
 );
 
-CREATE TABLE `IDEA_LIKES` (
+CREATE TABLE IF NOT EXISTS `IDEA_LIKES` (
   `IDEA_ID` BIGINT NOT NULL
   , `USER_ID` BIGINT NOT NULL
   , PRIMARY KEY (`IDEA_ID`,`USER_ID`)
@@ -86,5 +89,6 @@ CREATE TABLE IF NOT EXISTS `UserConnection` (
     refreshToken varchar(255),
     expireTime bigint,
     primary key (userId, providerId, providerUserId),
-    unique index UserConnectionRank(userId, providerId, rank));
+    unique index UserConnectionRank(userId, providerId, rank)
+);
 

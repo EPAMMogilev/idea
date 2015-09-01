@@ -48,7 +48,7 @@ public class ProdDatabaseConfig implements DatabaseConfig {
         }catch (Exception e){
             dataSource.setMaximumPoolSize(1000);
         }
-        DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+        //DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
 		return dataSource;
 	}
 
