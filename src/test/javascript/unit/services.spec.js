@@ -139,6 +139,35 @@ describe("app.services module", function() {
 
     });
 
+   describe('ideaDetailsService', function () {
+
+       var testIdeaDetailsService;
+
+       beforeEach(inject(function (ideaDetailsService) {
+           testIdeaDetailsService = ideaDetailsService;
+       }));
+
+
+       it('check get liked users as string', function() {
+    	   var user1 = {
+                   id: 1,
+                   username: 'FirstUser'
+        	   };
+    	   var user2 = {
+                   id: 2,
+                   username: 'SecondUser'
+        	   };
+    	   var idea = {
+                   id: 2,
+                   likedUsers: [user1, user2]
+        	   };
+           var likedUsers = testIdeaDetailsService.getlikedUsersListAsString(idea);
+           expect(likedUsers).toBe('FirstUser, SecondUser');
+       });
+
+    });
+
+
 	/*beforeEach(inject(function(detailsService) {
 		details = detailsService;
 	}));*/

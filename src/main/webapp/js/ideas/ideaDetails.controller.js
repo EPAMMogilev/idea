@@ -5,9 +5,9 @@
 		.module('app.controllers')
 		.controller('detailsCtrl', detailsCtrl);
 
-	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService'];
+	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService'];
 
-	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService) {
+	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService) {
 
 		$scope.idea = ideaDetails;
 		$scope.likedUsersList = null;
@@ -24,7 +24,7 @@
 			{
 				$scope.data = value;
 				if($scope.data != null) {
-					$scope.likedUsersList = getlikedUsersListAsString();
+					$scope.likedUsersList = ideaDetailsService.getlikedUsersListAsString($scope.data);
 				}
 
 				//set geo point
@@ -59,14 +59,6 @@
 		$scope.changeMapVisibility = function(){
 			$("#map").toggle();
 		};
-
-		function getlikedUsersListAsString(){
-			var users = [];
-			for(var i = 0; i < $scope.data.likedUsers.length; i++) {
-				users.push($scope.data.likedUsers[i].username);
-			}
-			return users.join(", ");
-		}
 
 		//init function: load map point
 		$scope.init = function(){
