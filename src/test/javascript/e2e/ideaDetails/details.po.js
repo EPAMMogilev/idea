@@ -5,10 +5,18 @@ var DetailsPage = function() {};
 DetailsPage.prototype = Object.create({}, {
 	updateButton: { get: function() { return element(by.id('btnUpdate')); }},
 
-	title:   { get: function() { return element.all(by.id('tdData')).get(0).getText(); }},
-	desc:    { get: function() { return element.all(by.id('tdData')).get(1).getText(); }},
-	author:  { get: function() { return element.all(by.id('tdData')).get(2).getText(); }},
-	rating:  { get: function() { return ConversionUtility.getIntValue(element.all(by.id('divRating'))); }},
+	title:   { get: function() { return element.all(by.id('tdData')).get(0); }},
+	desc:    { get: function() { return element.all(by.id('tdData')).get(1); }},
+	author:  { get: function() { return element.all(by.id('tdData')).get(2); }},
+	rating:  { get: function() { return element(by.id('rating')); }},
+
+	getTitle:   { value: function() { return this.title.getText(); }},
+	getDesc:    { value: function() { return this.desc.getText(); }},
+	getAuthor:  { value: function() { return this.author.getText(); }},
+	getRating:  { value: function() { return ConversionUtility.getIntValue(this.rating); }},
+
+	likeButton:    { get: function() { return element(by.css('.btn-thumbs')); }},
+	like:          { value: function() { return this.likeButton.click(); }},
 
 	update: { value: function() { this.updateButton.click(); }}
 });
