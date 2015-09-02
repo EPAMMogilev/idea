@@ -46,11 +46,6 @@ describe('details idea page test', function() {
 
 	it('should increment and decrement idea rating', function() {
 		TestLikesUtility.testIncrementAndDecrementRating(detailsPage);
-		/*var initialRating = detailsPage.rating;
-		detailsPage.like();
-		expect(detailsPage.rating).toBeChangedByOne(initialRating);
-		detailsPage.like();
-		expect(detailsPage.rating).toBe(initialRating);*/
 	});
 
 
