@@ -60,6 +60,16 @@
 			$("#map").toggle();
 		};
 
+		$scope.changeLike = function() {
+			ideasFactory.changeIdeaLike($scope.idea.id).then(
+				function (idea) {
+					$scope.data.rating = idea.rating;
+					$scope.data.liked = !$scope.data.liked;
+					$scope.likedUsersList = ideaDetailsService.getlikedUsersListAsString(idea);
+				}
+			);
+		};
+
 		//init function: load map point
 		$scope.init = function(){
 			$scope.myMap = new ymaps.Map("map", {

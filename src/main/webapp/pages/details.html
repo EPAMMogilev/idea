@@ -33,7 +33,15 @@
 	                    <div id="tdData" class="col-md-10">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
 	                </div>
 	                <div id="divData" class="row">
-	                    <div id="divRating" class="col-md-12"><span content="{{likedUsersList}}" hover-popover>{{data.rating}}</span></div>
+	                    <div id="divRating" class="col-md-12" >
+	                        <span content="{{likedUsersList}}" hover-popover>
+	                            <span id="rating">{{data.rating}}</span>
+			                    <span class="btn btn-thumbs font-cenralbig" ng-click="changeLike();" ng-show="authenticated">
+				                    <i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="data.liked"></i>
+				                    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="data.liked"></i>
+			                    </span>
+			                </span>
+	                    </div>
 	                </div>
 	            </div>
 	        </div>
