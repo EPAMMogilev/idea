@@ -5,11 +5,12 @@
 		.module('app.controllers')
 		.controller('detailsCtrl', detailsCtrl);
 
-	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService'];
+	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService'];
 
-	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService) {
+	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService) {
 
 		$scope.idea = ideaDetails;
+		$scope.likedUsersList = null;
 		$scope.data = null;
 		$scope.myMap = null;
 
@@ -22,6 +23,9 @@
 			function( value )
 			{
 				$scope.data = value;
+				if($scope.data != null) {
+					$scope.likedUsersList = ideaDetailsService.getlikedUsersListAsString($scope.data);
+				}
 
 				//set geo point
 				if($scope.data && $scope.data.latitude && $scope.data.longitude){
@@ -39,12 +43,6 @@
 			}
 		);
 
-		//this.data = ideaDetails;
-
-		$scope.back = function(){
-			$window.location.href = '#home';
-		};
-
 		$scope.edit = function(){
 			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.idea) });
 		};
@@ -56,6 +54,20 @@
 					alert("Удалено");
 					$state.go('home');
 				});
+		};
+
+		$scope.changeMapVisibility = function(){
+			$("#map").toggle();
+		};
+
+		$scope.changeLike = function() {
+			ideasFactory.changeIdeaLike($scope.idea.id).then(
+				function (idea) {
+					$scope.data.rating = idea.rating;
+					$scope.data.liked = !$scope.data.liked;
+					$scope.likedUsersList = ideaDetailsService.getlikedUsersListAsString(idea);
+				}
+			);
 		};
 
 		//init function: load map point

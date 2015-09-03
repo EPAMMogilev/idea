@@ -23,11 +23,10 @@
 #dataDiv
 {
 	width: 100% auto;
-	height: 35%;
-	margin: 0 auto;
+	margin-top: 10px;
 	background-color: #FFFFFF;
 	vertical-align: top;
-	overflow: auto;
+	overflow: visible;
 }
 
 #footerDiv
@@ -70,6 +69,18 @@
 }
 
 .mapDetails
+{
+	width: 150px;
+	height: 150px;
+    display: block;
+}
+
+.showMapLink
+{
+	padding-left: 0;
+}
+
+.mapDetailsInsert
 {
 	margin-top: 15px;
 	width: 100%;
@@ -123,6 +134,7 @@ table
 	text-align: left;
 	padding-left: 15px;
 	padding-right: 15px;
+	margin-top: 10px;
 }
 
 #footerAddDiv
@@ -149,14 +161,21 @@ table
 	float: left;
 }
 
-#tdData
+#tdCaptionDetails
 {
-	width: 90% auto;
-	min-width: 200px;
+	font-weight: bold;
 	text-align: left;
 	padding-left: 15px;
+}
+
+#tdData
+{
+	/*width: 90% auto;*/
+	/*min-width: 200px;*/
+	text-align: left;
+	/*padding-left: 15px;*/
 	padding-right: 15px;
-	float: left;
+	/*float: left;*/
 }
 
 #tdDataInsert
@@ -244,14 +263,9 @@ table
 
 #imgBlock
 {
+	margin-top: 10px;
 	width: 100%;
 	height: 100%;
-}
-
-#mainDiv
-{
-	padding-left: 10px;
-	padding-right: 10px;
 }
 
 #divLeft
@@ -268,6 +282,13 @@ table
 	width: 55%;
 	float: right;
 	text-align: left;
+}
+
+#divRating
+{
+	text-align: right;
+	font-size: 30;
+	margin-right: 15px;
 }
 
 #divRightAlignRight
@@ -309,4 +330,9 @@ table
 #searchLine
 {
 	width: 85%;
+}
+
+.popover-content {
+    height: 150px;
+    overflow-y: auto;
 }
