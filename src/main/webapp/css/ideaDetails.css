@@ -23,11 +23,10 @@
 #dataDiv
 {
 	width: 100% auto;
-	height: 50%;
 	margin-top: 10px;
 	background-color: #FFFFFF;
 	vertical-align: top;
-	overflow: auto;
+	overflow: visible;
 }
 
 #footerDiv
