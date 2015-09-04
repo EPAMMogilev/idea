@@ -1,0 +1,84 @@
+<form id="mainDiv" name="ideaForm" novalidate>
+    <div id="shadowBox">
+        <div id="topDiv">
+            <p id="p" translate="ADD_IDEA"></p>
+        </div>
+        <div id="dataDivInsert">
+            <div id="lineDivsLeftInsert">
+                <!-- idea -->
+                <div id="divData">
+                    <div id="tdCaption"translate="CATEGORY"></div>
+                    <div id="tdDataInsert">
+                        <!--select class="form-control" ng-model="data.tagId" >
+                            <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
+                        </select-->
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" placeholder="{{ 'CATEGORY' | translate }}" ng-model="data.tagName">
+                    </div>
+                </div>
+                <!-- descr -->
+                <div id="divData" class="form-group"  ng-class="{ 'has-error' : ideaForm.edtIdea.$invalid && (submitted || ideaForm.edtIdea.$dirty)}">
+                    <div id="tdCaption" class="requiredField"><label>{{ 'IDEA' | translate }}</label></div>
+                    <div id="tdDataInsert" class="controls form-inline">
+                        <input type="text" id="searchLine" class="form-control" name="edtIdea" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title" required>
+                        <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtIdea.$dirty" ng-messages="ideaForm.edtIdea.$error">
+                            <span ng-message="required"><span id="ideaRequiredMessage" translate="TITLE_REQUIRED"/></span>
+                        </span>
+                    </div>
+                </div>
+                <!-- created -->
+                <div id="divData" class="form-group" ng-class="{ 'has-error' : ideaForm.edtDescription.$invalid && (submitted || ideaForm.edtDescription.$dirty)}">
+                    <div id="tdCaption" class="requiredField"><label>{{ 'DESCRIPTION' | translate }}</label></div>
+                    <div id="tdDataInsert" class="controls form-inline">
+                        <textarea class="form-control" id="searchLine" name="edtDescription" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description" required></textarea>
+                        <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtDescription.$dirty" ng-messages="ideaForm.edtDescription.$error">
+                            <span ng-message="required"><span id="descRequiredMessage" translate="DESCRIPTION_REQUIRED"/></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="lineDivsRightInsert">
+                <img id="imgDetailsInsert" ng-src="{{imageUrl}}" class="img-rounded" id="imgBlock">
+            </div>
+        </div>
+
+        <div id="bottomButtonsBar" ngf-drop ng-model="files" class="drop-box"  ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="false" accept="image/*">
+            <button class="btn btn-default" ng-click="chooseFile()" translate="UPLOAD_FILE"/> <b translate="OR"/> <span translate="DRAG_FILE"/>
+            <p id="pFileName"></p>
+            <input type="file" id="imageLoader"/>
+        </div>
+    </div>
+
+    <!-- map for this idea -->
+    <div id="shadowBox">
+        <!--div id="map" class="mapDetails"></div-->
+        <ya-map ya-zoom="11" ya-center="{{center}}" class="mapDetailsInsert" ya-controls="smallMapDefaultSet" ya-before-init="beforeInit()"  ya-after-init="afterInit($target)" ya-event-click="mapClick($event)">
+            <ya-toolbar ya-name="zoomControl"></ya-toolbar>
+            <ya-toolbar ya-name="scaleLine"></ya-toolbar>
+            <ya-toolbar ya-name="typeSelector"></ya-toolbar>
+        </ya-map>
+    </div>
+
+    <div id="shadowBox">
+        <div id="bottomButtonsBar">
+            <div id="divLeft">
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK"/> </button>
+            </div>
+            <div id="divRight">
+                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div id="modalWindow" class="div-main clear-fix">
+            <div>
+                <img src="images/idea.png" id="modalImg">
+                <h2 class="modalWindowCaption">{{caption}}</h2>
+            </div>
+            <hr class="modalHR">
+            <div>
+                <div id="progressBar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
+            </div>
+        </div>
+    </script>
+</form>

@@ -1,0 +1,36 @@
+<div class ="idea">
+	<div class="left">
+		<a ng-click="details()"><img id="imgIdeaLogo" ng-src="{{photo}}" class="img-rounded"/></a>
+	</div>
+
+	<div class="middle">
+		<strong class ="head-text">
+			<a ng-click="details()"><p id="title" class="clip">{{idea.title}}</p></a>
+		</strong>
+		<p class ="body-text">
+			<span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ngModel" id="description"></span>
+		</p>
+		<p class ="end-text">
+			<span class ="small-area"><span class="glyphicon glyphicon-time"></span>{{idea.createdAt | date:'dd.MM.yy'}}</span>
+			<span id="author" class ="small-area"><span class="glyphicon glyphicon-user"></span>{{idea.author.username}}</span>
+			<span id="tag" class ="small-area"><span class="glyphicon glyphicon-tag"></span>{{idea.tags[0].name}}</span>
+		</p>
+	</div>
+
+	<!--div class="right font-cenralbig">
+		<div ng-click="changeRating(1)" class="vote"><i class="glyphicon glyphicon-menu-up"></i></div>
+		<div id="rating" class="rating">{{idea.rating}}</div>
+		<div ng-click="changeRating(-1)" class="vote"><i class="glyphicon glyphicon-menu-down"></i></div>
+	</div-->
+	<div class="right">
+		<div class="font-cenralbig">
+			<div id="rating" class="rating">{{idea.rating}}</div>
+		</div>
+		<div class="font-cenralbig" id="btnLikeIdea" ng-show="isAuthenticated">
+			<span class="btn btn-thumbs" ng-click="changeLike()">
+				<i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="idea.liked"></i>
+				<i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="idea.liked"></i>
+			</span>
+		</div>
+	</div>
+</div>

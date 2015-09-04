@@ -1,0 +1,69 @@
+﻿<div class="row">
+<div class="col-md-8 col-md-offset-2" ng-init="init()">
+    <div id="shadowBox" class="row">
+        <div id="topDiv" class="container">
+            <p id="p">#{{data.id}} - {{data.title}}</p>
+        </div>
+        <!-- details -->
+        <div id="dataDiv" class="container">
+	        <div class="row">
+	            <div class="col-md-3">
+	                <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
+	                <button type="button" class="btn btn-link showMapLink" ng-click="changeMapVisibility();">{{ 'SHOW_HIDE_MAP' | translate }}</button>
+	                <div id="map" class="mapDetails"></div>
+	            </div>
+	            <div class="col-md-9">
+	                <div id="divData" class="row">
+	                    <div id="tdCaptionDetails" class="col-md-2" translate="IDEA"></div>
+	                    <div id="tdData" class="col-md-10">{{data.title}}</div>
+	                </div>
+	                <!-- descr -->
+	                <div id="divData" class="row">
+	                    <div id="tdCaptionDetails" class="col-md-2" translate="DESCRIPTION"></div>
+	                    <div id="tdData" class="col-md-10">{{data.description}}</div>
+	                </div>
+	                <!-- author -->
+	                <div id="divData" class="row">
+	                    <div id="tdCaptionDetails" class="col-md-2" translate="AUTHOR"></div>
+	                    <div id="tdData" class="col-md-10" >{{data.author.username}}</div>
+	                </div>
+	                <!-- created -->
+	                <div id="divData" class="row">
+	                    <div id="tdCaptionDetails" class="col-md-2" translate="CREATED"></div>
+	                    <div id="tdData" class="col-md-10">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+	                </div>
+	                <div id="divData" class="row">
+	                    <div id="divRating" class="col-md-12" >
+	                        <span content="{{likedUsersList}}" hover-popover>
+	                            <span id="rating">{{data.rating}}</span>
+			                    <span class="btn btn-thumbs font-cenralbig" ng-click="changeLike();" ng-show="authenticated">
+				                    <i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="data.liked"></i>
+				                    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="data.liked"></i>
+			                    </span>
+			                </span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+
+        <div id="bottomButtonsBar" class="container">
+            <div id="divRightAlignRight" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
+                <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
+                <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- suggestions for this idea -->
+    <div id="shadowBox" class="row">
+        <div id="likeDiv">
+            <p id="p" translate="COMMENTS"></p>
+        </div>
+        <div id="commentsDiv">
+            <input type="text" id="searchLine" class="form-control" name="edtComment" width="100%" placeholder="{{ 'YOUR_SUGGESTION' | translate }}">
+        </div>
+    </div>
+
+</div>
+</div>

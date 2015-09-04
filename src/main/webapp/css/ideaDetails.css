@@ -1,0 +1,338 @@
+#shadowBox
+{
+	box-shadow: 0 0 30px gray;
+	width: 100%;
+	padding-top: 10px;
+}
+
+#topDiv
+{
+	width: 100%;
+	height: 3% auto;
+	margin: 0 auto;
+	background-color: #337AB7;
+	color: #FFFFFF;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 4px;
+
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+#dataDiv
+{
+	width: 100% auto;
+	margin-top: 10px;
+	background-color: #FFFFFF;
+	vertical-align: top;
+	overflow: visible;
+}
+
+#footerDiv
+{
+	width: 100%;
+	height: 12% auto;
+	margin: 0 auto;
+	background-color: #F5F5F5;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 4px;
+}
+
+#likeDiv
+{
+	width: 100%;
+	height: 3% auto;
+	margin: 0 auto;
+	background-color: #337AB7;
+	color: #FFFFFF;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 15px;
+
+	border: 2px solid #337AB7;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+#likeDivList
+{
+	width: 100%;
+	height: 5% auto;
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.mapDetails
+{
+	width: 150px;
+	height: 150px;
+    display: block;
+}
+
+.showMapLink
+{
+	padding-left: 0;
+}
+
+.mapDetailsInsert
+{
+	margin-top: 15px;
+	width: 100%;
+	height: 350px;
+    display: block;
+}
+
+#p
+{
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+#tdImage
+{
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+table
+{
+	width: 100%;
+	height: auto;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#SearchLineHighlight{
+	background-color:#FF9;
+	color:RED;
+	width: 100%;
+}
+
+#commentsDiv
+{
+	resize: horizontal;
+	width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#divData
+{
+	width: 100% auto;
+	min-height: 50px;
+	text-align: left;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-top: 10px;
+}
+
+#footerAddDiv
+{
+	width: 100%;
+	height: 5%;
+	margin: 0 auto;
+	background-color: #F5F5F5;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	display: inline-block;
+}
+
+#tdCaption
+{
+	width: 15% auto;
+	min-width: 120px;
+	font-weight: bold;
+	text-align: left;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 10%;
+	float: left;
+}
+
+#tdCaptionDetails
+{
+	font-weight: bold;
+	text-align: left;
+	padding-left: 15px;
+}
+
+#tdData
+{
+	/*width: 90% auto;*/
+	/*min-width: 200px;*/
+	text-align: left;
+	/*padding-left: 15px;*/
+	padding-right: 15px;
+	/*float: left;*/
+}
+
+#tdDataInsert
+{
+	width: 100%;
+	min-width: 200px;
+	text-align: left;
+	padding-left: 15px;
+	padding-right: 15px;
+	float: left;
+}
+
+#mainDivInsert
+{
+	width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#dataDivInsert
+{
+	width: 100% auto;
+	height: 35%;
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	vertical-align: top;
+	overflow: auto;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#lineDivsLeft
+{
+	width: 75% auto;
+	height: 90%;
+	float: left;
+	min-width: 60%;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+        text-align:center;
+}
+
+#lineDivsRight
+{
+	width: 20% auto;
+	height: 90%;
+	float: right;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+    text-align:center;
+}
+
+#lineDivsLeftInsert
+{
+	width: 85%;
+	height: 90%;
+	float: left;
+	min-width: 70%;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+        text-align:center;
+}
+
+#lineDivsRightInsert
+{
+	width: auto;
+	height: auto;
+/*	max-width: 300px;
+	max-height: 300px;
+	float: right;*/
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+    text-align:center;
+}
+
+#imgBlock
+{
+	margin-top: 10px;
+	width: 100%;
+	height: 100%;
+}
+
+#divLeft
+{
+	height: 100%;
+	width: 45%;
+	float: left;
+	text-align: left;
+}
+
+#divRight
+{
+	height: 100%;
+	width: 55%;
+	float: right;
+	text-align: left;
+}
+
+#divRating
+{
+	text-align: right;
+	font-size: 30;
+	margin-right: 15px;
+}
+
+#divRightAlignRight
+{
+	height: 100%;
+	width: 250px;
+	float: right;
+	text-align: right;
+	padding-right: 5px;
+}
+
+#bottomButtonsBar
+{
+	width: 100%;
+	height: 50px;
+	margin: 0 auto;
+	background-color: #F5F5F5;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 4px;
+}
+
+.drop-box
+{
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+
+.requiredField label:after {
+    color: #ff0000;
+    content: ' *';
+    display:inline;
+}
+
+#searchLine
+{
+	width: 85%;
+}
+
+.popover-content {
+    height: 150px;
+    overflow-y: auto;
+}
