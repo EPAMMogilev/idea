@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,215 +25,219 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
+import com.epam.idea.core.util.State;
+
 @Entity
 @Table(name = "IDEA")
 public class Idea implements Serializable {
 
-	public static final int MIN_LENGTH_TITLE = 1;
-	public static final int MAX_LENGTH_TITLE = 150;
-	public static final int MAX_LENGTH_DESCRIPTION = 500;
+    public static final int MIN_LENGTH_TITLE = 1;
+    public static final int MAX_LENGTH_TITLE = 150;
+    public static final int MAX_LENGTH_DESCRIPTION = 500;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID")
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private long id;
 
-	@Column(name = "TITLE", nullable = false)
-	private String title;
+    @Column(name = "TITLE", nullable = false)
+    private String title;
 
-	@Column(name = "DESCRIPTION", nullable = false)
-	private String description;
+    @Column(name = "DESCRIPTION", nullable = false)
+    private String description;
 
-	@Column(name = "CREATION_TIME", nullable = false)
-	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
-	private ZonedDateTime creationTime;
+    @Column(name = "CREATION_TIME", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+    private ZonedDateTime creationTime;
 
-	@Column(name = "MODIFICATION_TIME", nullable = false)
-	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
-	private ZonedDateTime modificationTime;
+    @Column(name = "MODIFICATION_TIME", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+    private ZonedDateTime modificationTime;
 
-	@Column(name = "RATING", nullable = false)
-	private int rating;
+    @Column(name = "RATING", nullable = false)
+    private int rating;
 
-	@Column(name = "LATITUDE", nullable = true)
-	private BigDecimal latitude;
+    @Column(name = "LATITUDE", nullable = true)
+    private BigDecimal latitude;
 
-	@Column(name = "LONGITUDE", nullable = true)
-	private BigDecimal longitude;
+    @Column(name = "LONGITUDE", nullable = true)
+    private BigDecimal longitude;
 
-	@Column(name = "IMAGE_URL", nullable = true)
-	private String imageUrl;
+    @Column(name = "IMAGE_URL", nullable = true)
+    private String imageUrl;
 
-	@ManyToOne
-	@JoinColumn(name = "USER_ID")
-	private User author;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User author;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "IDEA_TAG",
-			joinColumns = @JoinColumn(name = "IDEA_ID"),
-			inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-	private List<Tag> relatedTags;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "IDEA_TAG", joinColumns = @JoinColumn(name = "IDEA_ID") , inverseJoinColumns = @JoinColumn(name = "TAG_ID") )
+    private List<Tag> relatedTags;
 
-	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-	private List<Comment> comments;
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "IDEA_LIKES",
-			joinColumns = @JoinColumn(name = "IDEA_ID"),
-			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-	private List<User> likedUsers;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "IDEA_LIKES", joinColumns = @JoinColumn(name = "IDEA_ID") , inverseJoinColumns = @JoinColumn(name = "USER_ID") )
+    private List<User> likedUsers;
 
-	@Transient
-	private boolean liked;
+    @Enumerated(EnumType.STRING)
+    private State state;
 
-	public Idea() {
-		this.relatedTags = new ArrayList<>();
-		this.comments = new ArrayList<>();
-		this.likedUsers = new ArrayList<>();
-	}
+    @Transient
+    private boolean liked;
 
-	public long getId() {
-		return id;
-	}
+    public Idea() {
+        this.relatedTags = new ArrayList<>();
+        this.comments = new ArrayList<>();
+        this.likedUsers = new ArrayList<>();
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public ZonedDateTime getCreationTime() {
-		return creationTime;
-	}
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
-	public ZonedDateTime getModificationTime() {
-		return modificationTime;
-	}
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
 
-	public int getRating() {
-		return rating;
-	}
+    public ZonedDateTime getModificationTime() {
+        return modificationTime;
+    }
 
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
+    public int getRating() {
+        return rating;
+    }
 
-	public User getAuthor() {
-		return author;
-	}
+    public void setRating(final int rating) {
+        this.rating = rating;
+    }
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
+    public User getAuthor() {
+        return author;
+    }
 
-	public List<Tag> getRelatedTags() {
-		return relatedTags;
-	}
+    public void setAuthor(final User author) {
+        this.author = author;
+    }
 
-	public void setRelatedTags(List<Tag> relatedTags) {
-		this.relatedTags = relatedTags;
-	}
+    public List<Tag> getRelatedTags() {
+        return relatedTags;
+    }
 
-	public void addTag(Tag tag) {
-		this.relatedTags.add(tag);
-	}
+    public void setRelatedTags(final List<Tag> relatedTags) {
+        this.relatedTags = relatedTags;
+    }
 
-	public List<Comment> getComments() {
-		return comments;
-	}
+    public void addTag(final Tag tag) {
+        this.relatedTags.add(tag);
+    }
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-	public void addComment(Comment comment) {
-		this.comments.add(comment);
-	}
+    public void setComments(final List<Comment> comments) {
+        this.comments = comments;
+    }
 
-	public void updateWith(final Idea source) {
-		this.title = source.title;
-		this.description = source.description;
-		this.rating = source.rating;
-		this.liked = source.liked;
-		this.likedUsers = source.likedUsers;
-		this.latitude = source.latitude;
-		this.longitude = source.longitude;
+    public void addComment(final Comment comment) {
+        this.comments.add(comment);
+    }
 
-		if(source.imageUrl != null) {
-			this.imageUrl = source.imageUrl;
-		}//if
-	}
+    public void updateWith(final Idea source) {
+        this.title = source.title;
+        this.description = source.description;
+        this.rating = source.rating;
+        this.liked = source.liked;
+        this.likedUsers = source.likedUsers;
+        this.latitude = source.latitude;
+        this.longitude = source.longitude;
 
-	public BigDecimal getLatitude() {
-		return latitude;
-	}
+        if (source.imageUrl != null) {
+            this.imageUrl = source.imageUrl;
+        } // if
+    }
 
-	public void setLatitude(BigDecimal latitude) {
-		this.latitude = latitude;
-	}
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
 
-	public BigDecimal getLongitude() {
-		return longitude;
-	}
+    public void setLatitude(final BigDecimal latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setLongitude(BigDecimal longitude) {
-		this.longitude = longitude;
-	}
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
+    public void setLongitude(final BigDecimal longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-	@PreUpdate
-	public void preUpdate() {
-		this.modificationTime = ZonedDateTime.now();
-	}
+    public void setImageUrl(final String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-	@PrePersist
-	public void prePersist() {
-		ZonedDateTime now = ZonedDateTime.now();
-		this.creationTime = now;
-		this.modificationTime = now;
-	}
+    @PreUpdate
+    public void preUpdate() {
+        this.modificationTime = ZonedDateTime.now();
+    }
 
-	@Override
-	public String toString() {
-		return "Idea{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", description='" + description + '\'' +
-				", rating=" + rating +
-				", GPS [" + latitude + "; " + longitude + "]" +
-				'}';
-	}
+    @PrePersist
+    public void prePersist() {
+        final ZonedDateTime now = ZonedDateTime.now();
+        this.creationTime = now;
+        this.modificationTime = now;
+    }
 
-	public List<User> getLikedUsers() {
-		return likedUsers;
-	}
+    @Override
+    public String toString() {
+        return "Idea{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' + ", rating="
+                + rating + "state=" + state + ", GPS [" + latitude + "; " + longitude + "]" + '}';
+    }
 
-	public void setLikedUsers(List<User> likedUsers) {
-		this.likedUsers = likedUsers;
-	}
+    public List<User> getLikedUsers() {
+        return likedUsers;
+    }
 
-	public boolean getLiked() {
-		return liked;
-	}
+    public void setLikedUsers(final List<User> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
 
-	public void setLiked(boolean liked) {
-		this.liked = liked;
-	}
+    public boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(final boolean liked) {
+        this.liked = liked;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(final State state) {
+        this.state = state;
+    }
 }
