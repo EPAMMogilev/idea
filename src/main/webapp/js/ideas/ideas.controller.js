@@ -46,6 +46,7 @@
 			var promiseResponse = ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, null);
 			promiseResponse.then(function (ideas) {
 				if (ideas) {
+					console.log(ideas);
 					vm.popular = vm.popular.concat(ideas);
 				}
 			$scope.geoObjects = mapGeoService.generateGeoObjects(vm.popular);

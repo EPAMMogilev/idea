@@ -7,14 +7,14 @@
         <div id="lstMostRating" class="popularIdeas" ideas-list update-function="ideasCtrl.loadPageForPopular()" div-name="#lstMostRating">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.popular"  class = "idea-li" >
-                    <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
+                    <show-idea idea="idea" ng-hide="idea.state=='Draft' || idea.state=='Deleted'" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>
         <div id="lstNewIdeas" class="latestIdeas" ideas-list update-function="ideasCtrl.loadPageForLatest()" div-name="#lstNewIdeas">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.latest" class = "idea-li" >
-                    <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
+                    <show-idea idea="idea" ng-hide="idea.state=='Draft' || idea.state=='Deleted'" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>

@@ -209,6 +209,8 @@ public class Idea implements Serializable {
         final ZonedDateTime now = ZonedDateTime.now();
         this.creationTime = now;
         this.modificationTime = now;
+        if (this.state == null)
+            this.state = State.Draft;
     }
 
     @Override

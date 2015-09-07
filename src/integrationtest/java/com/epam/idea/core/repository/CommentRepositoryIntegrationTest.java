@@ -1,20 +1,20 @@
 package com.epam.idea.core.repository;
 
+import static com.epam.idea.assertion.IdeaProjectAssertions.assertThatComment;
+import static com.epam.idea.assertion.IdeaProjectAssertions.assertThatUser;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
-import com.epam.idea.annotation.TransactionalIntegrationTest;
-import com.epam.idea.core.model.Comment;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
-
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static com.epam.idea.assertion.IdeaProjectAssertions.assertThatComment;
-import static com.epam.idea.assertion.IdeaProjectAssertions.assertThatUser;
-import static org.assertj.core.api.Assertions.assertThat;
+import com.epam.idea.annotation.TransactionalIntegrationTest;
+import com.epam.idea.core.model.Comment;
+import com.epam.idea.core.util.State;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionalIntegrationTest
