@@ -1,11 +1,14 @@
 package com.epam.idea.core.service.impl;
 
 import com.epam.idea.builder.model.TestCommentBuilder;
+import com.epam.idea.builder.model.TestIdeaBuilder;
 import com.epam.idea.builder.model.TestUserBuilder;
 import com.epam.idea.core.model.Comment;
+import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.CommentRepository;
 import com.epam.idea.core.service.CommentService;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,11 +80,20 @@ public class CommentServiceImplTest {
     }//shouldAddNewComment
 
     @Test
-    public  void souldfindCommentsByUserIdComment(){
+    public  void shouldfindCommentsByUserIdComment(){
         User userToFind = TestUserBuilder.aUser().build();
 
         //findCommentsByUserId
         List<Comment> comments = this.commentService.findCommentsByUserId(userToFind.getId());
         assertThat(comments).isNotNull();
-    }//souldfindCommentsByUserIdComment
+    }//shouldfindCommentsByUserIdComment
+
+    @Test
+    public  void shouldfindCommentsByIdeaIdComment(){
+        Idea ideaToFind = TestIdeaBuilder.anIdea().build();
+
+        //findCommentsByIdeaId
+        List<Comment> comments = this.commentService.findCommentsByIdeaId(ideaToFind.getId());
+        assertThat(comments).isNotNull();
+    }//shouldfindCommentsByIdeaIdComment
 }
