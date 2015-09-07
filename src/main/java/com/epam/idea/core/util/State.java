@@ -1,7 +1,8 @@
 package com.epam.idea.core.util;
 
 public enum State {
-    Draft("Draft"), New("New"), Assigned("Assigned"), InProgress("In Progress"), Done("Done"), Verified("Verified");
+    Draft("Draft"), New("New"), Assigned("Assigned"), InProgress("In Progress"), Done("Done"), Verified(
+            "Verified"), Deleted("Deleted");
 
     private final String title;
 
