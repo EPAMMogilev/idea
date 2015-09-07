@@ -3,6 +3,7 @@
 	box-shadow: 0 0 30px gray;
 	width: 100%;
 	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 #topDiv
@@ -115,16 +116,6 @@ table
 	background-color:#FF9;
 	color:RED;
 	width: 100%;
-}
-
-#commentsDiv
-{
-	resize: horizontal;
-	width: 100%;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
 }
 
 #divData
@@ -335,4 +326,57 @@ table
 .popover-content {
     height: 150px;
     overflow-y: auto;
+}
+
+#commentsDiv
+{
+	width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-bottom: 2px solid #0080ff;
+}
+
+.commentDate {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 5px;
+}
+
+.commentAuthor {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-right: 5px;
+}
+
+.commentBody {
+    width: 100%;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+}
+
+.comment {
+    display: table;
+    width: 100%;
+}
+
+.comment [class*="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+}
+
+.commentsFirstColumn {
+    border-right: 2px solid #0080ff;
+}
+
+#divCommentRating
+{
+	text-align: right;
+	font-size: 22;
+	padding-right: 15px;
+	width: 100%;
 }

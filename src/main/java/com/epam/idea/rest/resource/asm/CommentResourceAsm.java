@@ -1,8 +1,10 @@
 package com.epam.idea.rest.resource.asm;
 
 import com.epam.idea.core.model.Comment;
+import com.epam.idea.core.model.User;
 import com.epam.idea.rest.controller.CommentController;
 import com.epam.idea.rest.resource.CommentResource;
+
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import static java.util.Objects.requireNonNull;
@@ -22,6 +24,8 @@ public class CommentResourceAsm extends ResourceAssemblerSupport<Comment, Commen
 		commentResource.setCreationTime(original.getCreationTime());
 		commentResource.setModificationTime(original.getModificationTime());
 		commentResource.setRating(original.getRating());
+		final User author = original.getAuthor();
+		commentResource.setAuthor(new UserResourceAsm().toResource(author));
 //		final User author = original.getAuthor();
 //		if (author != null && isInitialized(author)) {
 //			commentResource.setAuthor(new UserResourceAsm().toResource(author));
