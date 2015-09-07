@@ -11,42 +11,57 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface IdeaService extends BaseService<Idea, Long> {
 
-	/**
-	 * Deletes an idea.
-	 *
-	 * @param ideaId The id of the deleted idea.
-	 * @return The deleted idea.
-	 * @throws com.epam.idea.core.service.exception.IdeaNotFoundException if no idea was found with the given id.
-	 */
-	@PostAuthorize("hasRole('ADMIN') or returnObject.author.id == principal.id")
-	Idea deleteById(long ideaId);
+    /**
+     * Deletes an idea.
+     *
+     * @param ideaId
+     *            The id of the deleted idea.
+     * @return The deleted idea.
+     * @throws com.epam.idea.core.service.exception.IdeaNotFoundException
+     *             if no idea was found with the given id.
+     */
+    @PostAuthorize("hasRole('ADMIN') or returnObject.author.id == principal.id")
+    Idea deleteById(long ideaId);
 
-	/**
-	 * Updates the information of an idea.
-	 *
-	 * @param ideaId The id of the idea to update.
-	 * @param source The information of the updated idea.
-	 * @return The updated idea.
-	 * @throws com.epam.idea.core.service.exception.IdeaNotFoundException If no idea was found with the given id.
-	 */
-	//@PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
-	Idea update(long ideaId, @Param("idea") Idea source);
+    /**
+     * Updates the information of an idea.
+     *
+     * @param ideaId
+     *            The id of the idea to update.
+     * @param source
+     *            The information of the updated idea.
+     * @return The updated idea.
+     * @throws com.epam.idea.core.service.exception.IdeaNotFoundException
+     *             If no idea was found with the given id.
+     */
 
-	@PreAuthorize("hasRole('ADMIN') or userId == principal.id")
-	Idea saveForUser(@Param("userId") long userId, Idea idea);
+    // @PreAuthorize("hasRole('ADMIN') or #idea.author.id == principal.id")
+    Idea update(long ideaId, @Param("idea") Idea source);
 
-	@PreAuthorize("isFullyAuthenticated()")
-	Idea changeIdeaLike(long ideaId);
+    /**
+     * Creates new idea and set it state to 'Draft'.
+     *
+     * @param sourse
+     *            Information about creating ideas.
+     * @return The created idea.
+     */
+    Idea create(@Param("idea") Idea source);
 
-	@PreAuthorize("isFullyAuthenticated()")
-	boolean isCurrentUserLikedIdea(long ideaId);
+    @PreAuthorize("hasRole('ADMIN') or userId == principal.id")
+    Idea saveForUser(@Param("userId") long userId, Idea idea);
 
-	List<Idea> findAll(Pageable pageable);
+    @PreAuthorize("isFullyAuthenticated()")
+    Idea changeIdeaLike(long ideaId);
 
-	List<Idea> findAllByUserId(Pageable pageable, Long userId);
+    @PreAuthorize("isFullyAuthenticated()")
+    boolean isCurrentUserLikedIdea(long ideaId);
 
-	List<Idea> findAllByTagId(Pageable pageable, Long tag);
+    List<Idea> findAll(Pageable pageable);
 
-	List<Idea> findAllByUserIdQueryAndTagId(Pageable pageable, Long user, String query, Long tag);
+    List<Idea> findAllByUserId(Pageable pageable, Long userId);
+
+    List<Idea> findAllByTagId(Pageable pageable, Long tag);
+
+    List<Idea> findAllByUserIdQueryAndTagId(Pageable pageable, Long user, String query, Long tag);
 
 }
