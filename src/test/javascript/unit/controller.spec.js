@@ -328,4 +328,75 @@ describe('Ideas Search controllers testing', function(){
 
 });
 
+//------------------------------------------------------------------------------------------------
+//commentsTest
+//------------------------------------------------------------------------------------------------
+describe('Comments controllers testing', function(){
 
+	//controllers;
+	var commentsCtrlTest;
+
+	//service mock
+	var serviceInvoke, myServiceInvoke;
+
+	//scopes
+	var commentsScope;
+
+	var defered;
+
+	var comments = [{
+		id: 11
+	},
+	{
+		id: 12
+	}];
+
+	beforeEach(angular.mock.module('app.controllers'));
+	beforeEach(angular.mock.module('app.services'));
+
+
+	beforeEach(inject(function($rootScope, $controller, $q) {
+		commentsScope = $rootScope.$new();
+		commentsScope.idea = {id : 1};
+
+		defered = $q.defer();
+		defered.resolve(comments);
+
+		//init serviceInvoke
+		serviceInvoke = function (ideaId) {
+		    return defered.promise;
+		};
+
+		myServiceInvoke = {
+			getCommentsByIdeaId: serviceInvoke
+		};
+
+		//commentsCtrlCtrl
+		commentsCtrlTest  = function(){
+				return $controller('commentsCtrl', {
+					$scope:commentsScope,
+					commentsFactory: myServiceInvoke
+				});
+		};
+	}));
+
+	// Verify that the factory can be instantiated
+	it('comments controller should be instantiable', function () {
+		expect(commentsCtrlTest).toBeDefined();
+	});
+
+	it('comments controller check scope', function () {
+		expect(commentsCtrlTest).toBeDefined();
+
+		var ctrl = commentsCtrlTest();
+		expect(ctrl).toBeDefined();
+		expect(commentsScope.comments).toBeNull();
+
+		commentsScope.$root.$digest();
+		expect(commentsScope.comments.length).toBe(2);
+		expect(commentsScope.comments[0].id).toBe(11);
+		expect(commentsScope.comments[1].id).toBe(12);
+
+	});
+
+});
