@@ -3,6 +3,9 @@ package com.epam.idea.core.repository.config.db;
 import java.util.Properties;
 import javax.sql.DataSource;
 
+import java.util.Properties;
+import javax.sql.DataSource;
+
 import com.epam.idea.core.repository.config.support.DatabaseConfigProfile;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -19,11 +22,12 @@ import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-@Profile(DatabaseConfigProfile.PROD)
+@Profile(DatabaseConfigProfile.LOCAL)
 @Configuration
-@PropertySource("classpath:/db/prod.properties")
-public class ProdDatabaseConfig implements DatabaseConfig {
+@PropertySource("classpath:/db/local.properties")
+public class LocalDatabaseConfig implements DatabaseConfig {
 
+	/** The runtime environment of our application. */
 	@Autowired
 	private Environment env;
 
