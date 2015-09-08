@@ -160,41 +160,63 @@ describe('Idea details controllers testing', function(){
 	var detailsIdeaTest;
 
 	//service mock
-	var serviceInvoke;
-	var myServiceInvoke;
+	var ideaByIdInvoke, commentsByIdeaIdInvoke, getlikedUsersInvoke;
+	var myServiceInvoke, myIdeaDetailsService;
 
 	//scopes
 	var detailsIdeaScope;
 
+	var comments = [{
+		id: 11
+	},
+	{
+		id: 12
+	}];
+
+	var vIdeaDetails = {
+			id:1,
+			description: 'Some text',
+			likedUsers: []
+		};
+
+	var deferedIdeaById, deferedCommentsByIdeaId;
+
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
 	beforeEach(angular.mock.module('app.services'));
-	//beforeEach(angular.mock.module('ideasFactory'));
-	//beforeEach(angular.mock.module('ideaApp'));
 
 
-	beforeEach(inject(function($state, $rootScope, $controller) {
+	beforeEach(inject(function($state, $rootScope, $controller, $q) {
 		detailsIdeaScope = $rootScope.$new();
 
 		state = $state;
+		deferedIdeaById = $q.defer();
+		deferedIdeaById.resolve(vIdeaDetails);
+		deferedCommentsByIdeaId = $q.defer();
+		deferedCommentsByIdeaId.resolve(comments);
 
-		var vIdeaDetails = {
-				id:1,
-				description: 'Some text'
-			};
+		//init ideaByIdInvoke
+		ideaByIdInvoke = function(aId){
+			return deferedIdeaById.promise;
+		};
 
-		//init serviceInvoke
-		serviceInvoke = function(aId){
-			return{
-				then: function(func1){
-					func1.apply(vIdeaDetails);
-				}
-			}
+		//init commentsByIdeaIdInvoke
+		commentsByIdeaIdInvoke = function(aId){
+			return deferedCommentsByIdeaId.promise;
+		};
+
+		getlikedUsersInvoke = function(aId){
+			return "";
 		};
 
 		myServiceInvoke = {
-			getIdeaById: serviceInvoke
+			getIdeaById: ideaByIdInvoke,
+			getCommentsByIdeaId: commentsByIdeaIdInvoke
 		};
+
+		myIdeaDetailsService = {
+				getlikedUsersListAsString: getlikedUsersInvoke
+			};
 
 		//detailsCtrl
 		detailsIdeaTest  = function(){
@@ -202,6 +224,7 @@ describe('Idea details controllers testing', function(){
 					$scope:detailsIdeaScope,
 					$state:state,
 					ideasFactory: myServiceInvoke,
+					ideaDetailsService: myIdeaDetailsService,
 					ideaDetails: vIdeaDetails
 				});
 		};
@@ -218,9 +241,15 @@ describe('Idea details controllers testing', function(){
 
 		var ctrl = detailsIdeaTest();
 		expect(ctrl).toBeDefined();
-		// Make our assertions
-		//expect(data).toBeDefined();
-		expect(detailsIdeaScope.data).toBeUndefined();
+		expect(detailsIdeaScope.data).toBeNull();
+		expect(detailsIdeaScope.comments).toBeNull();
+
+		detailsIdeaScope.$root.$digest();
+		expect(detailsIdeaScope.comments.length).toBe(comments.length);
+		expect(detailsIdeaScope.comments[0].id).toBe(comments[0].id);
+		expect(detailsIdeaScope.comments[1].id).toBe(comments[1].id);
+		expect(detailsIdeaScope.data.id).toBe(vIdeaDetails.id);
+		expect(detailsIdeaScope.likedUsersList).toBe("");
 	});
 
 });
@@ -328,75 +357,3 @@ describe('Ideas Search controllers testing', function(){
 
 });
 
-//------------------------------------------------------------------------------------------------
-//commentsTest
-//------------------------------------------------------------------------------------------------
-describe('Comments controllers testing', function(){
-
-	//controllers;
-	var commentsCtrlTest;
-
-	//service mock
-	var serviceInvoke, myServiceInvoke;
-
-	//scopes
-	var commentsScope;
-
-	var defered;
-
-	var comments = [{
-		id: 11
-	},
-	{
-		id: 12
-	}];
-
-	beforeEach(angular.mock.module('app.controllers'));
-	beforeEach(angular.mock.module('app.services'));
-
-
-	beforeEach(inject(function($rootScope, $controller, $q) {
-		commentsScope = $rootScope.$new();
-		commentsScope.idea = {id : 1};
-
-		defered = $q.defer();
-		defered.resolve(comments);
-
-		//init serviceInvoke
-		serviceInvoke = function (ideaId) {
-		    return defered.promise;
-		};
-
-		myServiceInvoke = {
-			getCommentsByIdeaId: serviceInvoke
-		};
-
-		//commentsCtrlCtrl
-		commentsCtrlTest  = function(){
-				return $controller('commentsCtrl', {
-					$scope:commentsScope,
-					commentsFactory: myServiceInvoke
-				});
-		};
-	}));
-
-	// Verify that the factory can be instantiated
-	it('comments controller should be instantiable', function () {
-		expect(commentsCtrlTest).toBeDefined();
-	});
-
-	it('comments controller check scope', function () {
-		expect(commentsCtrlTest).toBeDefined();
-
-		var ctrl = commentsCtrlTest();
-		expect(ctrl).toBeDefined();
-		expect(commentsScope.comments).toBeNull();
-
-		commentsScope.$root.$digest();
-		expect(commentsScope.comments.length).toBe(2);
-		expect(commentsScope.comments[0].id).toBe(11);
-		expect(commentsScope.comments[1].id).toBe(12);
-
-	});
-
-});

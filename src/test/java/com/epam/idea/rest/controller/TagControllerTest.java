@@ -152,7 +152,7 @@ public class TagControllerTest {
 				.andExpect(jsonPath("$[0].tags[0].links[0].href").value(containsString("/api/v1/tags/" + tag.getId())))
 				.andExpect(jsonPath("$[0].tags[0].links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$[0].tags[0].links[1].href").value(containsString("/api/v1/tags/" + tag.getId() + "/ideas")))
-				.andExpect(jsonPath("$[0].links", hasSize(1)))
+				.andExpect(jsonPath("$[0].links", hasSize(2)))
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + idea.getId())));
 

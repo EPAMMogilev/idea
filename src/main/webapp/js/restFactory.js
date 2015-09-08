@@ -11,8 +11,7 @@
 		var factory = {
 			ideas: ideas,
 			tags: tags,
-			users: users,
-			comments: comments
+			users: users
 		};
 
 		return factory;
@@ -32,6 +31,7 @@
 				create: {method: 'POST', url: 'api/v1/ideas/'},
 				delete: {method: 'DELETE', url: 'api/v1/ideas/:id/'},
 				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/ideas/:id/like/'},
+				getComments: {method: 'GET', params: {id: '@id'}, url: 'api/v1/ideas/:id/comments/', isArray: true},
 				getPage: {method: 'GET', params: {userId: '@userId', page: '@page', size: '@size', sort: '@sort', tagId: '@tagId', query: "@query"}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&userId=:userId&tagId=:tagId&query=:query', isArray: true}
 			});
 		}
@@ -43,12 +43,6 @@
 				create: {method: 'POST', url: 'user/register/'},
 				getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
 
-			});
-		}
-
-		function comments() {
-			return $resource('api/v1/comments/', {}, {
-				get: {method: 'GET', params: {ideaId: '@ideaId'}, url: 'api/v1/comments?ideaId=:ideaId', isArray: true}
 			});
 		}
 	}

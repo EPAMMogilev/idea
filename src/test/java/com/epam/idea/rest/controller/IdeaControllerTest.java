@@ -1,14 +1,19 @@
 package com.epam.idea.rest.controller;
 
+import com.epam.idea.builder.model.TestCommentBuilder;
 import com.epam.idea.builder.model.TestIdeaBuilder;
 import com.epam.idea.builder.model.TestUserBuilder;
 import com.epam.idea.builder.resource.TestIdeaResourceBuilder;
+import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
+import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
+import com.google.common.collect.Lists;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +35,7 @@ import java.util.Arrays;
 import static com.epam.idea.builder.model.TestIdeaBuilder.DEFAULT_IDEA_ID;
 import static com.epam.idea.core.service.exception.IdeaNotFoundException.ERROR_MSG_PATTERN_IDEA_NOT_FOUND;
 import static com.epam.idea.rest.controller.RestErrorHandler.IDEA_NOT_FOUND_LOGREF;
+import static com.epam.idea.rest.resource.support.JsonPropertyName.ID;
 import static com.epam.idea.util.TestUtils.APPLICATION_JSON_UTF8;
 import static com.epam.idea.util.TestUtils.EMPTY;
 import static com.epam.idea.util.TestUtils.convertObjectToJsonBytes;
@@ -41,7 +47,6 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -65,6 +70,9 @@ public class IdeaControllerTest {
 
 	@Autowired
 	private IdeaService ideaServiceMock;
+
+	@Autowired
+	private CommentService commentServiceMock;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -95,7 +103,7 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$.rating").value(foundIdea.getRating()))
 				.andExpect(jsonPath("$.likedUsers", hasSize(1)))
 				.andExpect(jsonPath("$.likedUsers[0].username").value(foundLikedUser.getUsername()))
-				.andExpect(jsonPath("$.links", hasSize(1)))
+				.andExpect(jsonPath("$.links", hasSize(2)))
 				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));
 
@@ -135,7 +143,7 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$[0].title").value(foundIdea.getTitle()))
 				.andExpect(jsonPath("$[0].description").value(foundIdea.getDescription()))
 				.andExpect(jsonPath("$[0].rating").value(foundIdea.getRating()))
-				.andExpect(jsonPath("$[0].links", hasSize(1)))
+				.andExpect(jsonPath("$[0].links", hasSize(2)))
 				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + foundIdea.getId())));
 
@@ -164,7 +172,7 @@ public class IdeaControllerTest {
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
 				.andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
-				.andExpect(jsonPath("$.links", hasSize(1)))
+				.andExpect(jsonPath("$.links", hasSize(2)))
 				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())));
 
@@ -264,7 +272,7 @@ public class IdeaControllerTest {
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.title").value(updatedIdea.getTitle()))
 				.andExpect(jsonPath("$.description").value(updatedIdea.getDescription()))
-				.andExpect(jsonPath("$.links", hasSize(1)))
+				.andExpect(jsonPath("$.links", hasSize(2)))
 				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + updatedIdea.getId())));
 
@@ -326,7 +334,7 @@ public class IdeaControllerTest {
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.title").value(changedLikeIdea.getTitle()))
 				.andExpect(jsonPath("$.description").value(changedLikeIdea.getDescription()))
-				.andExpect(jsonPath("$.links", hasSize(1)))
+				.andExpect(jsonPath("$.links", hasSize(2)))
 				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + changedLikeIdea.getId())))
 				.andExpect(jsonPath("$.liked").value(true));
@@ -338,5 +346,32 @@ public class IdeaControllerTest {
 //		Idea ideaArgument = ideaCaptor.getValue();
 //		assertThat(ideaArgument.getTitle()).isEqualTo(source.getTitle());
 //		assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
+	}
+
+	@Test
+	public void shouldReturnAllFoundCommentsForGivenIdea() throws Exception {
+		long ideaId = 1L;
+		Comment comment = TestCommentBuilder.aComment().build();
+		User user = TestUserBuilder.aUser().build();
+		Idea idea = TestIdeaBuilder.anIdea().build();
+		comment.setAuthor(user);
+		comment.setSubject(idea);
+		user.addComment(comment);
+		idea.addComment(comment);
+
+		when(this.commentServiceMock.findCommentsByIdeaId(ideaId)).thenReturn(Lists.newArrayList(comment));
+
+		this.mockMvc.perform(get("/api/v1/ideas/{ideaId}/comments", ideaId)
+				.accept(APPLICATION_JSON_UTF8))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0]." + ID).value((int) comment.getId()))
+				.andExpect(jsonPath("$[0].body").value(comment.getBody()))
+				.andExpect(jsonPath("$[0].rating").value(comment.getRating()))
+				.andExpect(jsonPath("$[0].links", hasSize(3)));
+
+		verify(this.commentServiceMock, times(1)).findCommentsByIdeaId(ideaId);
 	}
 }

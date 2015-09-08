@@ -17,7 +17,8 @@
             removeIdea: removeIdea,
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
-            isUserAuthorOfIdea: isUserAuthorOfIdea
+            isUserAuthorOfIdea: isUserAuthorOfIdea,
+            getCommentsByIdeaId: getCommentsByIdeaId
         };
         return publicMethod;
 
@@ -52,6 +53,11 @@
 
         function removeIdea(idea) {
             var promise = restFactory.ideas().delete(idea).$promise;
+            return promise;
+        };
+
+        function getCommentsByIdeaId(ideaId) {
+            var promise = restFactory.ideas().getComments({id: ideaId}).$promise;
             return promise;
         };
 

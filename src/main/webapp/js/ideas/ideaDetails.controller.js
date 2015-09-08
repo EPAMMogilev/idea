@@ -13,6 +13,7 @@
 		$scope.likedUsersList = null;
 		$scope.data = null;
 		$scope.myMap = null;
+    	$scope.comments = null;
 
 		$scope.isAuthor = function(idea) {
 			return ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, idea);
@@ -42,6 +43,14 @@
 				}//if
 			}
 		);
+
+		ideasFactory.getCommentsByIdeaId($scope.idea.id).then(
+				//success
+				function(comments)
+				{
+					$scope.comments = comments;
+				}
+			);
 
 		$scope.edit = function(){
 			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.idea) });

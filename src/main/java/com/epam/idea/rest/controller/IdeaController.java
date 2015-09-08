@@ -1,12 +1,18 @@
 package com.epam.idea.rest.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
 
+import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
+import com.epam.idea.rest.resource.CommentResource;
 import com.epam.idea.rest.resource.IdeaResource;
+import com.epam.idea.rest.resource.asm.CommentResourceAsm;
 import com.epam.idea.rest.resource.asm.IdeaResourceAsm;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -26,6 +32,9 @@ public class IdeaController {
 
 	@Autowired
 	private IdeaService ideaService;
+
+	@Autowired
+	private CommentService commentService;
 
 	@RequestMapping(value = "/{ideaId}", method = RequestMethod.GET)
 	public HttpEntity<IdeaResource> show(@PathVariable final long ideaId) {
@@ -64,5 +73,11 @@ public class IdeaController {
 	public HttpEntity<IdeaResource> changeLike(@PathVariable final long ideaId) {
 		final Idea updatedIdea = this.ideaService.changeIdeaLike(ideaId);
 		return new ResponseEntity<>(new IdeaResourceAsm().toResource(updatedIdea), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{ideaId}/comments", method = RequestMethod.GET)
+	public HttpEntity<List<CommentResource>> getIdeaComments(@PathVariable final long ideaId) {
+		final List<Comment> comments = this.commentService.findCommentsByIdeaId(ideaId);
+		return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
 	}
 }

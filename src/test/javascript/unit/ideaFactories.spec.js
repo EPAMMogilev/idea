@@ -49,8 +49,8 @@ describe('rest factory testing', function(){
     	{
     		id: 12
     	}];
-	    $httpBackend.expectGET('api/v1/comments?ideaId=1').respond(comments);
-	    ideaFactory.comments().get({ideaId: '1'})
+	    $httpBackend.expectGET('api/v1/ideas/1/comments').respond(comments);
+	    ideaFactory.ideas().getComments({id: '1'})
 	    	.$promise.then(function (response) {
 	    		expectResponse(response, comments);
 	    	});
