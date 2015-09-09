@@ -10,6 +10,7 @@ import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.IdeaResource;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -137,40 +138,32 @@ public class IdeaControllerTest {
     }
 
     @Test
-	public void shouldCreateIdeaAndReturnItWithHttpCode201() throws Exception {
-		final IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
-		final Idea createdIdea = new TestIdeaBuilder()
-				.withId(10L)
-				.withTitle(source.getTitle())
-				.withDescription(source.getDescription())
-				.withState(source.getState())
-				.withRating(source.getRating())
-				.build();
+    public void shouldCreateIdeaAndReturnItWithHttpCode201() throws Exception {
+        final IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
+        final Idea createdIdea = new TestIdeaBuilder().withId(10L).withTitle(source.getTitle())
+                .withDescription(source.getDescription()).withState(source.getState()).withRating(source.getRating())
+                .build();
 
-		when(this.ideaServiceMock.create(any(Idea.class))).thenReturn(createdIdea);
+        when(this.ideaServiceMock.create(any(Idea.class))).thenReturn(createdIdea);
 
-		this.mockMvc.perform(post("/api/v1/ideas")
-				.contentType(APPLICATION_JSON_UTF8)
-				.accept(APPLICATION_JSON_UTF8)
-				.content(convertObjectToJsonBytes(source)))
-				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
-				.andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
-				.andExpect(jsonPath("$.links", hasSize(1)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
-				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())));
+        this.mockMvc
+                .perform(post("/api/v1/ideas").contentType(APPLICATION_JSON_UTF8).accept(APPLICATION_JSON_UTF8)
+                        .content(convertObjectToJsonBytes(source)))
+                .andDo(print()).andExpect(status().isCreated()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
+                .andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
+                .andExpect(jsonPath("$.links", hasSize(1))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())));
 
-		final ArgumentCaptor<Idea> userCaptor = ArgumentCaptor.forClass(Idea.class);
-		verify(this.ideaServiceMock, times(1)).create(userCaptor.capture());
-		verifyNoMoreInteractions(this.ideaServiceMock);
+        final ArgumentCaptor<Idea> userCaptor = ArgumentCaptor.forClass(Idea.class);
+        verify(this.ideaServiceMock, times(1)).create(userCaptor.capture());
+        verifyNoMoreInteractions(this.ideaServiceMock);
 
-		final Idea ideaArgument = userCaptor.getValue();
-		assertThat(ideaArgument.getTitle()).isEqualTo(source.getTitle());
-		assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
-		assertThat(ideaArgument.getRating()).isEqualTo(source.getRating());
-	}
+        final Idea ideaArgument = userCaptor.getValue();
+        assertThat(ideaArgument.getTitle()).isEqualTo(source.getTitle());
+        assertThat(ideaArgument.getDescription()).isEqualTo(source.getDescription());
+        assertThat(ideaArgument.getRating()).isEqualTo(source.getRating());
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldReturnValidationErrorsForTooLongTitleAndDescription() throws Exception {

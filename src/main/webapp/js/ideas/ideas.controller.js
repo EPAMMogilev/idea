@@ -31,8 +31,17 @@
 
 		activate();
 
+		function onMyIdeasPage () {
+			var result = false;
+			if ($location.path().indexOf("/myideas") !== -1){
+				result = true;
+			}
+			console.log(result);/*RemoveLogging:skip*/
+			return result;
+		}
+		
         function activate() {
-            if($location.path().indexOf("/myideas") !== -1) {
+            if(onMyIdeasPage()) {
             	userId = $rootScope.currentUser.id;
             } else {
             	userId = null;
@@ -46,11 +55,11 @@
 			var promiseResponse = ideasFactory.getPage(vm.paramsForPopular, userId, vm.tag, null);
 			promiseResponse.then(function (ideas) {
 				if (ideas) {
-					console.log(ideas);
 					vm.popular = vm.popular.concat(ideas);
 				}
 			$scope.geoObjects = mapGeoService.generateGeoObjects(vm.popular);
 			});
+			
 			return promiseResponse;
 		};
 

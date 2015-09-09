@@ -1,8 +1,10 @@
 package com.epam.idea.rest.controller;
 
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 
+import com.epam.idea.core.model.CommonUserDetails;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.rest.resource.IdeaResource;
@@ -13,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -214,7 +214,7 @@ public class Idea implements Serializable {
     @Override
     public String toString() {
         return "Idea{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' + ", rating="
-                + rating + "state=" + state + ", GPS [" + latitude + "; " + longitude + "]" + '}';
+                + rating + ", state='" + state + '\'' + ", GPS [" + latitude + "; " + longitude + "]" + '}';
     }
 
     public List<User> getLikedUsers() {

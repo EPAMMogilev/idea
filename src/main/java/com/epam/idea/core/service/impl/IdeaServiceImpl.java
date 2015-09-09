@@ -128,8 +128,8 @@ public class IdeaServiceImpl implements IdeaService {
                     }
                 }
             }
-        } else {
-            ideas = findAllByQueryAndTagId(pageable, query, tagId);
+        } else {// не авторизирован "Гость"
+            ideas = findAllVisibleByQueryAndTagId(pageable, query, tagId);
         }
         ideas.forEach(idea -> {
             Hibernate.initialize(idea.getRelatedTags());
@@ -188,6 +188,24 @@ public class IdeaServiceImpl implements IdeaService {
         return allIdeas;
     }
 
+    public List<Idea> findAllVisibleByQueryAndTagId(final Pageable pageable, final String query, final Long tagId) {
+        List<Idea> ideas;
+        if (tagId != null && query != null) {
+            ideas = ideaRepository.findAllVisibleByTagIdAndByQuery(pageable, tagId, query.toUpperCase());
+        } else {
+            if (tagId != null) {
+                ideas = ideaRepository.findAllVisibleByTagId(pageable, tagId);
+            } else {
+                if (query != null && query != "") {
+                    ideas = ideaRepository.findAllVisibleByQuery(pageable, query.toUpperCase());
+                } else {
+                    ideas = ideaRepository.findAllVisible(pageable);
+                }
+            }
+        }
+        return ideas;
+    }
+
     public List<Idea> findAllByQueryAndTagId(final Pageable pageable, final String query, final Long tagId) {
         List<Idea> ideas;
         if (tagId != null && query != null) {
@@ -196,7 +214,7 @@ public class IdeaServiceImpl implements IdeaService {
             if (tagId != null) {
                 ideas = ideaRepository.findAllByTagId(pageable, tagId);
             } else {
-                if (query != null) {
+                if (query != null && query != "") {
                     ideas = ideaRepository.findAllByQuery(pageable, query.toUpperCase());
                 } else {
                     ideas = ideaRepository.findAll(pageable);
