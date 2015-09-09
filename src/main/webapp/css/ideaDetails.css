@@ -391,3 +391,8 @@ table
     margin-left:auto;
     margin-right:auto;
 }
+
+.withoutComments
+{
+	padding-left: 10px;
+}

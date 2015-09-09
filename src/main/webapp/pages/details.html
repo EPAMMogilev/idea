@@ -61,6 +61,7 @@
             <p id="p" translate="COMMENTS"></p>
         </div>
         <div id="commentsDiv" class="container">
+            <div class="row withoutComments" translate="WITHOUT_COMMENTS" ng-show="comments == null || comments.length == 0"></div>
             <div class="row comment" ng-repeat="comment in comments">
                 <div class="col-md-3 commentsFirstColumn">
                     <div class="commentAuthor">{{comment.author.username}}</div>
