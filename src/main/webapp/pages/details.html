@@ -60,15 +60,20 @@
         <div id="likeDiv" class="container">
             <p id="p" translate="COMMENTS"></p>
         </div>
-        <div id="commentsDiv" class="container" ng-repeat="comment in comments">
-            <div class="row comment">
+        <div id="commentsDiv" class="container">
+            <div class="row comment" ng-repeat="comment in comments">
                 <div class="col-md-3 commentsFirstColumn">
                     <div class="commentAuthor">{{comment.author.username}}</div>
                     <div class="commentDate">{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="commentBody">{{comment.body}}</div>
+                </div>
+                <div class="col-md-1">
                     <div id="divCommentRating">{{comment.rating}}</div>
+                    <div class="btn btn-thumbs likeButton" ng-show="authenticated">
+				        <i class="fa fa-thumbs-o-up fa-2x color-thumbs"></i>
+			        </div>
                 </div>
             </div>
         </div>
