@@ -366,7 +366,6 @@ table
 .comment [class*="col-"] {
     float: none;
     display: table-cell;
-    position: relative;
     border-bottom: 2px solid #0080ff;
     height: 70px;
 }
@@ -379,20 +378,20 @@ table
 {
 	text-align: center;
 	font-size: 22;
-	margin-bottom: 5px;
 }
 
 .likeButton
 {
-	bottom: 0;
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin-left:auto;
-    margin-right:auto;
+	text-align: center;
+	margin-top: 5px;
 }
 
 .withoutComments
 {
 	padding-left: 10px;
+}
+
+.likeDetails
+{
+	vertical-align: middle;
 }
