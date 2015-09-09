@@ -208,7 +208,7 @@ war {
 } 
 
 def getRunway() {
-	def runway = System.getProperty("runway") ?: 'dev'; //available: dev, test, prod
+	def runway = System.getProperty("runway") ?: 'dev'; //available: dev, test, prod, local
 	println "-----------------\n[Runway: " + runway + "]\n-----------------";
 	return runway;
 }
