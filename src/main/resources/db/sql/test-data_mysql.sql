@@ -197,4 +197,14 @@ insert into IDEA_LIKES (IDEA_ID, USER_ID) values (6, 20);
 
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (1, 1, 'Awesome!', '2014-08-02 00:00:00', '2014-12-24 00:00:00', 5);
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (2, 2, 'Super!', '2014-06-12 00:00:00', '2014-09-20 00:00:00', 10);
-insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (3, 3, 'Genius!', '2015-01-10 00:00:00', '2015-02-03 00:00:00', -6);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (3, 3, 'Genius!', '2015-01-10 00:00:00', '2015-02-03 00:00:00', 6);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (2, 1, 'Good', '2014-08-01 00:00:00', '2014-12-24 00:00:00', 1);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (3, 1, 'It is interesting!', '2014-08-03 00:00:00', '2015-03-24 00:00:00', 5);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (4, 1, 'It is very good idea', '2014-08-04 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (5, 1, 'I think it will be not very expensive to do. I am waiting when we will have good bicycle parking near the office. A lot of our employees will be happy', '2014-08-06 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (6, 1, 'Good!', '2014-08-05 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (7, 1, 'Very good', '2014-08-07 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (8, 1, 'Thank you for offering of this idea', '2014-08-08 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (9, 1, 'The idea is super', '2014-08-10 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (10, 1, 'I agree with previous commentee', '2014-08-09 00:00:00', '2015-02-24 00:00:00', 0);
+insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (11, 1, 'It will be very good', '2014-08-11 00:00:00', '2015-02-24 00:00:00', 0);
