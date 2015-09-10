@@ -359,7 +359,7 @@ public class IdeaControllerTest {
 		user.addComment(comment);
 		idea.addComment(comment);
 
-		when(this.commentServiceMock.findCommentsByIdeaId(ideaId)).thenReturn(Lists.newArrayList(comment));
+		when(this.commentServiceMock.findCommentsByIdeaId(defaultPageRequest, ideaId)).thenReturn(Lists.newArrayList(comment));
 
 		this.mockMvc.perform(get("/api/v1/ideas/{ideaId}/comments", ideaId)
 				.accept(APPLICATION_JSON_UTF8))
@@ -372,6 +372,6 @@ public class IdeaControllerTest {
 				.andExpect(jsonPath("$[0].rating").value(comment.getRating()))
 				.andExpect(jsonPath("$[0].links", hasSize(3)));
 
-		verify(this.commentServiceMock, times(1)).findCommentsByIdeaId(ideaId);
+		verify(this.commentServiceMock, times(1)).findCommentsByIdeaId(defaultPageRequest, ideaId);
 	}
 }

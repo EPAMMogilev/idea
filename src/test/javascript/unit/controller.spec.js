@@ -211,7 +211,7 @@ describe('Idea details controllers testing', function(){
 
 		myServiceInvoke = {
 			getIdeaById: ideaByIdInvoke,
-			getCommentsByIdeaId: commentsByIdeaIdInvoke
+			getCommentsPageByIdeaId: commentsByIdeaIdInvoke
 		};
 
 		myIdeaDetailsService = {
@@ -242,12 +242,12 @@ describe('Idea details controllers testing', function(){
 		var ctrl = detailsIdeaTest();
 		expect(ctrl).toBeDefined();
 		expect(detailsIdeaScope.data).toBeNull();
-		expect(detailsIdeaScope.comments).toBeNull();
+		expect(ctrl.comments).toBeNull();
 
 		detailsIdeaScope.$root.$digest();
-		expect(detailsIdeaScope.comments.length).toBe(comments.length);
-		expect(detailsIdeaScope.comments[0].id).toBe(comments[0].id);
-		expect(detailsIdeaScope.comments[1].id).toBe(comments[1].id);
+		expect(ctrl.comments.length).toBe(comments.length);
+		expect(ctrl.comments[0].id).toBe(comments[0].id);
+		expect(ctrl.comments[1].id).toBe(comments[1].id);
 		expect(detailsIdeaScope.data.id).toBe(vIdeaDetails.id);
 		expect(detailsIdeaScope.likedUsersList).toBe("");
 	});

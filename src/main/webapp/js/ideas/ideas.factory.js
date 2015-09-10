@@ -18,7 +18,7 @@
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
             isUserAuthorOfIdea: isUserAuthorOfIdea,
-            getCommentsByIdeaId: getCommentsByIdeaId
+            getCommentsPageByIdeaId: getCommentsPageByIdeaId
         };
         return publicMethod;
 
@@ -56,8 +56,8 @@
             return promise;
         };
 
-        function getCommentsByIdeaId(ideaId) {
-            var promise = restFactory.ideas().getComments({id: ideaId}).$promise;
+        function getCommentsPageByIdeaId(page, ideaId) {
+            var promise = restFactory.ideas().getCommentsPage({id: ideaId, page: page.page, size: page.size, sort: page.sort}).$promise;
             return promise;
         };
 

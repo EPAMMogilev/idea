@@ -3,6 +3,8 @@ package com.epam.idea.core.repository;
 import java.util.List;
 
 import com.epam.idea.core.model.Comment;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 public interface CommentRepository extends BaseRepository<Comment, Long> {
@@ -18,5 +20,5 @@ public interface CommentRepository extends BaseRepository<Comment, Long> {
 	List<Comment> findByUserId(Long userId);
 
 	@Query("select c from Comment c where c.subject.id = ?1")
-	List<Comment> findByIdeaId(Long ideaId);
+	List<Comment> findByIdeaId(Pageable pageable, Long ideaId);
 }

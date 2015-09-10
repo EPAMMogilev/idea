@@ -3,20 +3,19 @@
 
 	angular
 		.module('app.directives')
-		.directive('ideasList', ideasList);
+		.directive('scrollableList', scrollableList);
 
-	ideasList.$inject = [];
+	scrollableList.$inject = [];
 
-	function ideasList() {
+	function scrollableList() {
 		return {
 			restrict: 'A',
 			scope:{
-				updateFunction: '&',
-				divName: '@'
+				updateFunction: '&'
 			},
 			link: function(scope, element, attrs) {
 				var scrollFunc = function(){
-					var workDiv = $(scope.divName);
+					var workDiv = $(element);
 					if(workDiv){
 						if(workDiv[0].scrollHeight - workDiv.scrollTop() == workDiv.outerHeight())
 						{

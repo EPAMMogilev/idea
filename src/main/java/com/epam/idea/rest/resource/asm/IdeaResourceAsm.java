@@ -11,6 +11,7 @@ import com.epam.idea.rest.resource.IdeaResource;
 import com.epam.idea.rest.resource.TagResource;
 import com.epam.idea.rest.resource.UserResource;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import static java.util.Collections.emptyList;
@@ -64,7 +65,7 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
 		ideaResource.add(linkTo(methodOn(IdeaController.class).show(original.getId())).withSelfRel());
 		Optional.ofNullable(original.getAuthor()).ifPresent(author ->
 				ideaResource.add(linkTo(methodOn(UserController.class).getUser(author.getId())).withRel(REL_AUTHOR)));
-		ideaResource.add(linkTo(methodOn(IdeaController.class).getIdeaComments(original.getId())).withRel(COMMENTS_REL));
+		ideaResource.add(linkTo(methodOn(IdeaController.class).getIdeaComments(new PageRequest(0, 500), original.getId())).withRel(COMMENTS_REL));
 		return ideaResource;
 	}
 }

@@ -6,7 +6,9 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.repository.CommentRepository;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.exception.CommentDoesNotExistException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Comment> findCommentsByIdeaId(Long ideaId) {
-		return commentRepository.findByIdeaId(ideaId);
+	public List<Comment> findCommentsByIdeaId(Pageable pageable, Long ideaId) {
+		return commentRepository.findByIdeaId(pageable, ideaId);
 	}
 }

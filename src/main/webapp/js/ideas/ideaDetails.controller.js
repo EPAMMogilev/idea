@@ -13,7 +13,25 @@
 		$scope.likedUsersList = null;
 		$scope.data = null;
 		$scope.myMap = null;
-    	$scope.comments = null;
+
+    	var vm = this;
+    	vm.comments = null;
+		vm.paramsForComments = {
+				page: 0,
+				size: 10,
+				sort: 'creationTime,desc'
+			};
+
+		this.loadPageForComments = function(){
+			vm.paramsForComments.page++;
+			var promiseResponse = ideasFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id);
+			promiseResponse.then(function (comments) {
+				if (comments) {
+					vm.comments = vm.comments.concat(comments);
+				}
+			});
+			return promiseResponse;
+		};
 
 		$scope.isAuthor = function(idea) {
 			return ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, idea);
@@ -44,13 +62,13 @@
 			}
 		);
 
-		ideasFactory.getCommentsByIdeaId($scope.idea.id).then(
-				//success
-				function(comments)
-				{
-					$scope.comments = comments;
-				}
-			);
+		ideasFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id).then(
+			//success
+			function(comments)
+			{
+				vm.comments = comments;
+			}
+		);
 
 		$scope.edit = function(){
 			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.idea) });

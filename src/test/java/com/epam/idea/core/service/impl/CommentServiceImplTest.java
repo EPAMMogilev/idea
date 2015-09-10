@@ -17,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,7 +95,8 @@ public class CommentServiceImplTest {
         Idea ideaToFind = TestIdeaBuilder.anIdea().build();
 
         //findCommentsByIdeaId
-        List<Comment> comments = this.commentService.findCommentsByIdeaId(ideaToFind.getId());
+        Pageable defaultPageRequest = new PageRequest(0, 500, null);
+        List<Comment> comments = this.commentService.findCommentsByIdeaId(defaultPageRequest, ideaToFind.getId());
         assertThat(comments).isNotNull();
     }//shouldfindCommentsByIdeaIdComment
 }

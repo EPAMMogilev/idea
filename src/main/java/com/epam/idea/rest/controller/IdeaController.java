@@ -76,8 +76,9 @@ public class IdeaController {
 	}
 
 	@RequestMapping(value = "/{ideaId}/comments", method = RequestMethod.GET)
-	public HttpEntity<List<CommentResource>> getIdeaComments(@PathVariable final long ideaId) {
-		final List<Comment> comments = this.commentService.findCommentsByIdeaId(ideaId);
+	public HttpEntity<List<CommentResource>> getIdeaComments(@PageableDefault(page = 0, size = 500) Pageable pageable,
+			                                                 @PathVariable final long ideaId) {
+		final List<Comment> comments = this.commentService.findCommentsByIdeaId(pageable, ideaId);
 		return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
 	}
 }
