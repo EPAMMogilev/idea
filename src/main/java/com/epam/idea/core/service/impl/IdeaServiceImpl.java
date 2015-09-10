@@ -190,7 +190,7 @@ public class IdeaServiceImpl implements IdeaService {
 
     public List<Idea> findAllVisibleByQueryAndTagId(final Pageable pageable, final String query, final Long tagId) {
         List<Idea> ideas;
-        if (tagId != null && query != null) {
+        if (tagId != null && (query != null && query != "")) {
             ideas = ideaRepository.findAllVisibleByTagIdAndByQuery(pageable, tagId, query.toUpperCase());
         } else {
             if (tagId != null) {

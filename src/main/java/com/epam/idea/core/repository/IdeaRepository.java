@@ -20,7 +20,7 @@ public interface IdeaRepository extends BaseRepository<Idea, Long> {
     @Query("select i from Idea i where UPPER(i.title) like %?1% or UPPER(i.description) like %?1%")
     List<Idea> findAllByQuery(Pageable pageable, String query);
 
-    @Query("select i from Idea i where (i.state != 'Draft' or i.state != 'Deleted') and (UPPER(i.title) like %?1% or UPPER(i.description) like %?1%)")
+    @Query("select i from Idea i where (i.state != 'Draft' and i.state != 'Deleted') and (UPPER(i.title) like %?1% or UPPER(i.description) like %?1%)")
     List<Idea> findAllVisibleByQuery(Pageable pageable, String query);
 
     /**
@@ -35,13 +35,13 @@ public interface IdeaRepository extends BaseRepository<Idea, Long> {
     @Query("select i from Idea i left join i.relatedTags t where t.id = ?1")
     List<Idea> findAllByTagId(Pageable pageable, Long tagId);
 
-    @Query("select i from Idea i left join i.relatedTags t where t.id = ?1 and (i.state != 'Draft' or i.state != 'Deleted')")
+    @Query("select i from Idea i left join i.relatedTags t where t.id = ?1 and (i.state != 'Draft' and i.state != 'Deleted')")
     List<Idea> findAllVisibleByTagId(Pageable pageable, Long tagId);
 
     @Query("select i from Idea i left join i.relatedTags t where t.id = ?1 and (UPPER(i.title) like %?2% or UPPER(i.description) like %?2%)")
     List<Idea> findAllByTagIdAndByQuery(Pageable pageable, Long tagId, String query);
 
-    @Query("select i from Idea i left join i.relatedTags t where t.id = ?1 and (UPPER(i.title) like %?2% or UPPER(i.description) like %?2%) and (i.state != 'Draft' or i.state != 'Deleted')")
+    @Query("select i from Idea i left join i.relatedTags t where t.id = ?1 and (UPPER(i.title) like %?2% or UPPER(i.description) like %?2%) and (i.state != 'Draft' and i.state != 'Deleted')")
     List<Idea> findAllVisibleByTagIdAndByQuery(Pageable pageable, Long tagId, String query);
 
     @Query("select i from Idea i left join i.likedUsers u where i.id = ?1 and u.id = ?#{ principal?.id }")
