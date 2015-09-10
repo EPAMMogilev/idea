@@ -161,7 +161,7 @@ describe('Idea details controllers testing', function(){
 
 	//service mock
 	var ideaByIdInvoke, commentsByIdeaIdInvoke, getlikedUsersInvoke;
-	var myServiceInvoke, myIdeaDetailsService;
+	var myIdeasFactory, myCommentsFactory, myIdeaDetailsService;
 
 	//scopes
 	var detailsIdeaScope;
@@ -209,9 +209,12 @@ describe('Idea details controllers testing', function(){
 			return "";
 		};
 
-		myServiceInvoke = {
-			getIdeaById: ideaByIdInvoke,
+		myCommentsFactory = {
 			getCommentsPageByIdeaId: commentsByIdeaIdInvoke
+		};
+
+		myIdeasFactory = {
+			getIdeaById: ideaByIdInvoke
 		};
 
 		myIdeaDetailsService = {
@@ -223,7 +226,8 @@ describe('Idea details controllers testing', function(){
 				return $controller('detailsCtrl', {
 					$scope:detailsIdeaScope,
 					$state:state,
-					ideasFactory: myServiceInvoke,
+					ideasFactory: myIdeasFactory,
+					commentsFactory: myCommentsFactory,
 					ideaDetailsService: myIdeaDetailsService,
 					ideaDetails: vIdeaDetails
 				});

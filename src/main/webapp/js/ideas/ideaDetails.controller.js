@@ -5,9 +5,9 @@
 		.module('app.controllers')
 		.controller('detailsCtrl', detailsCtrl);
 
-	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService'];
+	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService', 'commentsFactory'];
 
-	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService) {
+	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService, commentsFactory) {
 
 		$scope.idea = ideaDetails;
 		$scope.likedUsersList = null;
@@ -24,7 +24,7 @@
 
 		this.loadPageForComments = function(){
 			vm.paramsForComments.page++;
-			var promiseResponse = ideasFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id);
+			var promiseResponse = commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id);
 			promiseResponse.then(function (comments) {
 				if (comments) {
 					vm.comments = vm.comments.concat(comments);
@@ -62,7 +62,7 @@
 			}
 		);
 
-		ideasFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id).then(
+		commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id).then(
 			//success
 			function(comments)
 			{

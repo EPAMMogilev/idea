@@ -17,8 +17,7 @@
             removeIdea: removeIdea,
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
-            isUserAuthorOfIdea: isUserAuthorOfIdea,
-            getCommentsPageByIdeaId: getCommentsPageByIdeaId
+            isUserAuthorOfIdea: isUserAuthorOfIdea
         };
         return publicMethod;
 
@@ -53,11 +52,6 @@
 
         function removeIdea(idea) {
             var promise = restFactory.ideas().delete(idea).$promise;
-            return promise;
-        };
-
-        function getCommentsPageByIdeaId(page, ideaId) {
-            var promise = restFactory.ideas().getCommentsPage({id: ideaId, page: page.page, size: page.size, sort: page.sort}).$promise;
             return promise;
         };
 
