@@ -25,6 +25,8 @@ public class CommentResource extends ResourceSupport {
 	//@JsonView({View.ExtendedBasic.class})
 	private UserResource author;
 
+	private IdeaResource subject;
+
 	public CommentResource() {
 		//empty
 	}
@@ -81,9 +83,18 @@ public class CommentResource extends ResourceSupport {
 		final Comment comment = new Comment();
 		comment.setBody(body);
 		comment.setRating(rating);
-//		if (author != null) {
-//			comment.setAuthor(author.toUser());
-//		}
+		comment.setSubject(subject.toIdea());
+		if (author != null) {
+			comment.setAuthor(author.toUser());
+		}
 		return comment;
+	}
+
+	public IdeaResource getSubject() {
+		return subject;
+	}
+
+	public void setSubject(IdeaResource subject) {
+		this.subject = subject;
 	}
 }

@@ -47,8 +47,8 @@
 	        </div>
         </div>
 
-        <div id="bottomButtonsBar" class="container">
-            <div id="divRightAlignRight" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
+        <div id="bottomButtonsBar" class="container" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
+            <div id="divRightAlignRight" >
                 <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
                 <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
             </div>
@@ -57,11 +57,28 @@
 
     <!-- suggestions for this idea -->
     <div id="shadowBox" class="row">
-        <div id="likeDiv">
+        <div id="likeDiv" class="container">
             <p id="p" translate="COMMENTS"></p>
         </div>
-        <div id="commentsDiv">
-            <input type="text" id="searchLine" class="form-control" name="edtComment" width="100%" placeholder="{{ 'YOUR_SUGGESTION' | translate }}">
+        <div id="scrollCommentsDiv" class="scrollable container" scrollable-list update-function="detailsCtrl.loadPageForComments()">
+	        <div id="commentsDiv" class="container">
+	            <div class="row withoutComments" translate="WITHOUT_COMMENTS" ng-show="detailsCtrl.comments == null || detailsCtrl.comments.length == 0"></div>
+	            <div class="row comment" ng-repeat="comment in detailsCtrl.comments">
+	                <div class="col-md-3 commentsFirstColumn">
+	                    <div class="commentAuthor">{{comment.author.username}}</div>
+	                    <div class="commentDate">{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+	                </div>
+	                <div class="col-md-8">
+	                    <div class="commentBody">{{comment.body}}</div>
+	                </div>
+	                <div class="col-md-1 likeDetails">
+	                    <div id="divCommentRating">{{comment.rating}}</div>
+	                    <div class="btn btn-thumbs likeButton" ng-show="authenticated">
+					        <i class="fa fa-thumbs-o-up fa-2x color-thumbs"></i>
+				        </div>
+	                </div>
+	            </div>
+	        </div>
         </div>
     </div>
 
