@@ -1,0 +1,14 @@
+<div class="col-md-3 commentsFirstColumn">
+ 	<div class="commentAuthor">{{comment.author.username}}</div>
+	<div class="commentDate">{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+</div>
+<div class="col-md-8">
+	<div class="commentBody">{{comment.body}}</div>
+</div>
+<div class="col-md-1 likeDetails">
+	<div id="divCommentRating"><span content="{{likedUsersList}}" container=".comment" hover-popover>{{comment.rating}}</span></div>
+	<div class="btn btn-thumbs likeButton" ng-show="isAuthenticated" content="{{likedUsersList}}" container="#details" hover-popover>
+		<i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="comment.liked"></i>
+		<i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="comment.liked"></i>
+	</div>
+</div>

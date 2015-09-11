@@ -1,10 +1,13 @@
 package com.epam.idea.rest.resource;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.hateoas.ResourceSupport;
 
 public class CommentResource extends ResourceSupport {
@@ -27,8 +30,12 @@ public class CommentResource extends ResourceSupport {
 
 	private IdeaResource subject;
 
+	private boolean liked;
+
+	private List<UserResource> likedUsers;
+
 	public CommentResource() {
-		//empty
+		this.setLikedUsers(new ArrayList<>());
 	}
 
 	public long getCommentId() {
@@ -96,5 +103,21 @@ public class CommentResource extends ResourceSupport {
 
 	public void setSubject(IdeaResource subject) {
 		this.subject = subject;
+	}
+
+	public boolean isLiked() {
+		return liked;
+	}
+
+	public void setLiked(boolean liked) {
+		this.liked = liked;
+	}
+
+	public List<UserResource> getLikedUsers() {
+		return likedUsers;
+	}
+
+	public void setLikedUsers(List<UserResource> likedUsers) {
+		this.likedUsers = likedUsers;
 	}
 }

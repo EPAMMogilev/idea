@@ -11,7 +11,8 @@
 		   return {
 		        restrict: 'A',
 		        scope: {
-		            content: '@'
+		            content: '@',
+		            container: '@'
 		        },
 		        controller: ['$scope', '$element',  function ($scope, $element) {
 		            $scope.attachEvents = function (element) {
@@ -28,7 +29,8 @@
 		            scope.$watch(function () { return scope.content; }, function () {
 		                $rootScope.insidePopover = false;
 		                var popover = $(element).popover({
-		                    placement: 'top'
+		                    placement: 'top',
+		                    container: scope.container
 		                });
 		                $(element).data("bs.popover").options.content = scope.content;
 		                $(element).bind('mouseenter', function (e) {

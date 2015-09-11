@@ -10,6 +10,7 @@ truncate table TAG;
 truncate table IDEA_TAG;
 truncate table IDEA_LIKES;
 truncate table COMMENT;
+truncate table COMMENT_LIKES;
 
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2015-02-28 00:00:00'); -- pass :'admin'
 insert into USER (USERNAME, EMAIL, PASSWORD, CREATION_TIME) values ('FirstUser', 'first@idea.com', '81dc9bdb52d04dc20036dbd8313ed055', '2015-05-03 00:00:00'); -- pass :'1234'
@@ -208,3 +209,31 @@ insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, R
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (9, 1, 'The idea is super', '2014-08-10 00:00:00', '2015-02-24 00:00:00', 0);
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (10, 1, 'I agree with previous commentee', '2014-08-09 00:00:00', '2015-02-24 00:00:00', 0);
 insert into COMMENT (USER_ID, IDEA_ID, BODY, CREATION_TIME, MODIFICATION_TIME, RATING) values (11, 1, 'It will be very good', '2014-08-11 00:00:00', '2015-02-24 00:00:00', 0);
+
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (1, 2);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (1, 3);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (1, 4);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (1, 5);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (1, 6);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 3);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 4);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 5);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 6);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 7);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 8);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 9);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 10);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 11);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (2, 12);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (3, 7);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (3, 8);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (3, 9);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (3, 10);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (3, 11);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (3, 12);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (4, 3);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (5, 4);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (5, 5);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (5, 6);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (5, 7);
+insert into COMMENT_LIKES (COMMENT_ID, USER_ID) values (5, 8);

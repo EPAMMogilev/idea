@@ -11,10 +11,10 @@
             };
             return publicMethod;
 
-    		function getlikedUsersListAsString(idea){
+    		function getlikedUsersListAsString(obj){
     			var users = [];
-    			for(var i = 0; i < idea.likedUsers.length; i++) {
-    				users.push(idea.likedUsers[i].username);
+    			for(var i = 0; i < obj.likedUsers.length; i++) {
+    				users.push(obj.likedUsers[i].username);
     			}
     			return users.join(", ");
     		};

@@ -1,5 +1,5 @@
 ﻿<div class="row">
-<div class="col-md-8 col-md-offset-2" ng-init="init()">
+<div class="col-md-8 col-md-offset-2" ng-init="init()" id="details">
     <div id="shadowBox" class="row">
         <div id="topDiv" class="container">
             <p id="p">#{{data.id}} - {{data.title}}</p>
@@ -34,7 +34,7 @@
 	                </div>
 	                <div id="divData" class="row">
 	                    <div id="divRating" class="col-md-12" >
-	                        <span content="{{likedUsersList}}" hover-popover>
+	                        <span content="{{likedUsersList}}" container="#divRating" hover-popover>
 	                            <span id="rating">{{data.rating}}</span>
 			                    <span class="btn btn-thumbs font-cenralbig" ng-click="changeLike();" ng-show="authenticated">
 				                    <i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="data.liked"></i>
@@ -63,20 +63,7 @@
         <div id="scrollCommentsDiv" class="scrollable container" scrollable-list update-function="detailsCtrl.loadPageForComments()">
 	        <div id="commentsDiv" class="container">
 	            <div class="row withoutComments" translate="WITHOUT_COMMENTS" ng-show="detailsCtrl.comments == null || detailsCtrl.comments.length == 0"></div>
-	            <div class="row comment" ng-repeat="comment in detailsCtrl.comments">
-	                <div class="col-md-3 commentsFirstColumn">
-	                    <div class="commentAuthor">{{comment.author.username}}</div>
-	                    <div class="commentDate">{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
-	                </div>
-	                <div class="col-md-8">
-	                    <div class="commentBody">{{comment.body}}</div>
-	                </div>
-	                <div class="col-md-1 likeDetails">
-	                    <div id="divCommentRating">{{comment.rating}}</div>
-	                    <div class="btn btn-thumbs likeButton" ng-show="authenticated">
-					        <i class="fa fa-thumbs-o-up fa-2x color-thumbs"></i>
-				        </div>
-	                </div>
+	            <div class="row comment" ng-repeat="comment in detailsCtrl.comments" show-comment comment="comment" is-authenticated="authenticated">
 	            </div>
 	        </div>
         </div>
