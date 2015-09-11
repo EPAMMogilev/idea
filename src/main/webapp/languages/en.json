@@ -10,6 +10,7 @@
     "DELETE": "Delete",
     "BACK": "Back",
     "COMMENTS": "Comments",
+    "WITHOUT_COMMENTS": "This idea hasn't been commented yet",
     "IDEA": "Idea",
     "DESCRIPTION": "Description",
     "CATEGORY": "Category",

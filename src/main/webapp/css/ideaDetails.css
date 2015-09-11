@@ -3,6 +3,7 @@
 	box-shadow: 0 0 30px gray;
 	width: 100%;
 	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 #topDiv
@@ -50,7 +51,6 @@
 	padding-left: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	margin-top: 15px;
 
 	border: 2px solid #337AB7;
 	border-top-left-radius: 15px;
@@ -115,16 +115,6 @@ table
 	background-color:#FF9;
 	color:RED;
 	width: 100%;
-}
-
-#commentsDiv
-{
-	resize: horizontal;
-	width: 100%;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
 }
 
 #divData
@@ -335,4 +325,79 @@ table
 .popover-content {
     height: 150px;
     overflow-y: auto;
+}
+
+#commentsDiv
+{
+	width: 100%;
+	display: table;
+}
+
+.scrollable
+{
+	padding-left: 0;
+	padding-right: 0;
+	max-height: 500px;
+    overflow-y: auto;
+}
+
+.commentDate {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 5px;
+}
+
+.commentAuthor {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-right: 5px;
+}
+
+.commentBody {
+    width: 100%;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+}
+
+.comment {
+    display: table-row;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.comment [class*="col-"] {
+    float: none;
+    display: table-cell;
+    border-bottom: 2px solid #0080ff;
+    height: 70px;
+}
+
+.commentsFirstColumn {
+    border-right: 2px solid #0080ff;
+}
+
+#divCommentRating
+{
+	text-align: center;
+	font-size: 22;
+}
+
+.likeButton
+{
+	text-align: center;
+	margin-top: 5px;
+}
+
+.withoutComments
+{
+	padding-left: 10px;
+}
+
+.likeDetails
+{
+	vertical-align: middle;
 }

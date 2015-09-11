@@ -5,14 +5,33 @@
 		.module('app.controllers')
 		.controller('detailsCtrl', detailsCtrl);
 
-	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService'];
+	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService', 'commentsFactory'];
 
-	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService) {
+	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService, commentsFactory) {
 
 		$scope.idea = ideaDetails;
 		$scope.likedUsersList = null;
 		$scope.data = null;
 		$scope.myMap = null;
+
+    	var vm = this;
+    	vm.comments = null;
+		vm.paramsForComments = {
+				page: 0,
+				size: 10,
+				sort: 'creationTime,desc'
+			};
+
+		this.loadPageForComments = function(){
+			vm.paramsForComments.page++;
+			var promiseResponse = commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id);
+			promiseResponse.then(function (comments) {
+				if (comments) {
+					vm.comments = vm.comments.concat(comments);
+				}
+			});
+			return promiseResponse;
+		};
 
 		$scope.isAuthor = function(idea) {
 			return ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, idea);
@@ -40,6 +59,14 @@
 				if($scope.data != null && $scope.data.imageUrl == null){
 				$scope.data.imageUrl = "images/300x300.png";
 				}//if
+			}
+		);
+
+		commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id).then(
+			//success
+			function(comments)
+			{
+				vm.comments = comments;
 			}
 		);
 
