@@ -220,8 +220,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
 
-    //grunt.registerTask('build', [ 'clean','removelogging', 'uglify',
-    
     grunt.registerTask('build', [ 'clean', 'removelogging', 'uglify', 'clean:cssmin', 'cssmin', 'index:build', 'copy','bower', 'karma', 'copy:lcov']);
     grunt.registerTask('e2e', ['protractor:e2e']);
 //    grunt.registerTask('p:test', ['clean:e2etests','processhtml:e2eTests', 'connect', 'protractor', 'processhtml:production']);
