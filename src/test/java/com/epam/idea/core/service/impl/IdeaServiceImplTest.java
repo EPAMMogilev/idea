@@ -243,52 +243,50 @@ public class IdeaServiceImplTest {
     public void shouldReturnListOfIdeasByTagId() throws Exception {
         // Given:
         final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
-        given(this.ideaRepositoryMock.findAllByTagId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
-
-        // When:
-        final List<Idea> actual = this.sut.findAllByTagId(defaultPageRequest, 1L);
-
-        // Then:
-        assertThat(actual).isEqualTo(ideas);
-        verify(this.ideaRepositoryMock, times(1)).findAllByTagId(any(PageRequest.class), any(Long.class));
-    }
-
-    @Ignore
-    @Test
-    public void shouldReturnListOfIdeasByTagIdAndQuery_whenQueryIsNull() throws Exception {
-        // Given:
-        final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
-        given(this.ideaRepositoryMock.findAllByTagId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
+        given(this.ideaRepositoryMock.findAllVisibleByTagId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
 
         // When:
         final List<Idea> actual = this.sut.findAllByUserIdQueryAndTagId(defaultPageRequest, null, null, 1L);
 
         // Then:
         assertThat(actual).isEqualTo(ideas);
-        verify(this.ideaRepositoryMock, times(1)).findAllByTagId(any(PageRequest.class), any(Long.class));
+        verify(this.ideaRepositoryMock, times(1)).findAllVisibleByTagId(any(PageRequest.class), any(Long.class));
     }
 
-    @Ignore
+    @Test
+    public void shouldReturnListOfIdeasByTagIdAndQuery_whenQueryIsNull() throws Exception {
+        // Given:
+        final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
+        given(this.ideaRepositoryMock.findAllVisibleByTagId(any(PageRequest.class), any(Long.class))).willReturn(ideas);
+
+        // When:
+        final List<Idea> actual = this.sut.findAllByUserIdQueryAndTagId(defaultPageRequest, null, null, 1L);
+
+        // Then:
+        assertThat(actual).isEqualTo(ideas);
+        verify(this.ideaRepositoryMock, times(1)).findAllVisibleByTagId(any(PageRequest.class), any(Long.class));
+    }
+
     @Test
     public void shouldReturnListOfIdeasByTagIdAndQuery_whenTagIdIsNull() throws Exception {
         // Given:
         final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
-        given(this.ideaRepositoryMock.findAllByQuery(any(PageRequest.class), any(String.class))).willReturn(ideas);
+        given(this.ideaRepositoryMock.findAllVisibleByQuery(any(PageRequest.class), any(String.class)))
+                .willReturn(ideas);
 
         // When:
         final List<Idea> actual = this.sut.findAllByUserIdQueryAndTagId(defaultPageRequest, null, "Bar", null);
 
         // Then:
         assertThat(actual).isEqualTo(ideas);
-        verify(this.ideaRepositoryMock, times(1)).findAllByQuery(any(PageRequest.class), any(String.class));
+        verify(this.ideaRepositoryMock, times(1)).findAllVisibleByQuery(any(PageRequest.class), any(String.class));
     }
 
-    @Ignore
     @Test
     public void shouldReturnListOfIdeasByTagIdAndQuery() throws Exception {
         // Given:
         final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
-        given(this.ideaRepositoryMock.findAllByTagIdAndByQuery(any(PageRequest.class), any(Long.class),
+        given(this.ideaRepositoryMock.findAllVisibleByTagIdAndByQuery(any(PageRequest.class), any(Long.class),
                 any(String.class))).willReturn(ideas);
 
         // When:
@@ -296,8 +294,8 @@ public class IdeaServiceImplTest {
 
         // Then:
         assertThat(actual).isEqualTo(ideas);
-        verify(this.ideaRepositoryMock, times(1)).findAllByTagIdAndByQuery(any(PageRequest.class), any(Long.class),
-                any(String.class));
+        verify(this.ideaRepositoryMock, times(1)).findAllVisibleByTagIdAndByQuery(any(PageRequest.class),
+                any(Long.class), any(String.class));
     }
 
     @Test
@@ -366,10 +364,10 @@ public class IdeaServiceImplTest {
     public void shouldReturnPageWithListOfIdeas() throws Exception {
         // Given:
         final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
-        given(this.ideaRepositoryMock.findAll(defaultPageRequest)).willReturn(ideas);
+        given(this.ideaRepositoryMock.findAll()).willReturn(ideas);
 
         // When:
-        final List<Idea> actual = this.sut.findAll(defaultPageRequest);
+        final List<Idea> actual = this.sut.findAll();
 
         // Then:
         assertThat(actual).isEqualTo(ideas);

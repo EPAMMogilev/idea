@@ -36,7 +36,6 @@
 			if ($location.path().indexOf("/myideas") !== -1){
 				result = true;
 			}
-			console.log(result);/*RemoveLogging:skip*/
 			return result;
 		}
 		

@@ -106,29 +106,12 @@ public class IdeaServiceImpl implements IdeaService {
     }
 
     @Override
-    public List<Idea> findAllByTagId(final Pageable pageable, final Long tagId) {
-        return findAllByQueryAndTagId(pageable, null, tagId);
-    }
-
-    @Override
     public List<Idea> findAllByUserIdQueryAndTagId(final Pageable pageable, final Long userId, final String query,
             final Long tagId) {
         List<Idea> ideas;
         if (userId != null) {
-            if (tagId != null && query != null) {
-                ideas = ideaRepository.findAllByUserIdByTagIdAndByQuery(pageable, userId, tagId, query.toUpperCase());
-            } else {
-                if (tagId != null) {
-                    ideas = ideaRepository.findAllByUserIdAndByTagId(pageable, userId, tagId);
-                } else {
-                    if (query != null) {
-                        ideas = ideaRepository.findAllByUserIdAndByQuery(pageable, userId, query.toUpperCase());
-                    } else {
-                        ideas = ideaRepository.findAllByUserId(pageable, userId);
-                    }
-                }
-            }
-        } else {// не авторизирован "Гость"
+            ideas = findAllByUserIdAndQueryAndTagId(pageable, userId, query, tagId);
+        } else {
             ideas = findAllVisibleByQueryAndTagId(pageable, query, tagId);
         }
         ideas.forEach(idea -> {
@@ -178,16 +161,6 @@ public class IdeaServiceImpl implements IdeaService {
         return isCurrentUserLikedIdea;
     }
 
-    @Override
-    public List<Idea> findAll(final Pageable pageable) {
-        final List<Idea> allIdeas = ideaRepository.findAll(pageable);
-        allIdeas.forEach(idea -> {
-            Hibernate.initialize(idea.getRelatedTags());
-            idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
-        });
-        return allIdeas;
-    }
-
     public List<Idea> findAllVisibleByQueryAndTagId(final Pageable pageable, final String query, final Long tagId) {
         List<Idea> ideas;
         if (tagId != null && (query != null && query != "")) {
@@ -206,21 +179,38 @@ public class IdeaServiceImpl implements IdeaService {
         return ideas;
     }
 
-    public List<Idea> findAllByQueryAndTagId(final Pageable pageable, final String query, final Long tagId) {
+    public List<Idea> findAllByUserIdAndQueryAndTagId(final Pageable pageable, final Long userId, final String query,
+            final Long tagId) {
         List<Idea> ideas;
-        if (tagId != null && query != null) {
-            ideas = ideaRepository.findAllByTagIdAndByQuery(pageable, tagId, query.toUpperCase());
+        if (tagId != null && (query != null && query != "")) {
+            ideas = ideaRepository.findAllByUserIdByTagIdAndByQuery(pageable, userId, tagId, query.toUpperCase());
         } else {
             if (tagId != null) {
-                ideas = ideaRepository.findAllByTagId(pageable, tagId);
+                ideas = ideaRepository.findAllByUserIdAndByTagId(pageable, userId, tagId);
             } else {
                 if (query != null && query != "") {
-                    ideas = ideaRepository.findAllByQuery(pageable, query.toUpperCase());
+                    ideas = ideaRepository.findAllByUserIdAndByQuery(pageable, userId, query.toUpperCase());
                 } else {
-                    ideas = ideaRepository.findAll(pageable);
+                    ideas = ideaRepository.findAllByUserId(pageable, userId);
                 }
             }
         }
         return ideas;
+
+    }
+
+    @Override
+    public List<Idea> findAll(final Pageable pageable) {
+        final List<Idea> allIdeas = ideaRepository.findAll(pageable);
+        allIdeas.forEach(idea -> {
+            Hibernate.initialize(idea.getRelatedTags());
+            idea.setLiked(isCurrentUserLikedIdea(idea.getId()));
+        });
+        return allIdeas;
+    }
+
+    @Override
+    public List<Idea> findAllByTagId(final Pageable pageable, final Long tagId) {
+        return findAllVisibleByQueryAndTagId(pageable, null, tagId);
     }
 }
