@@ -29,7 +29,7 @@ public class TestCommentBuilder {
     private boolean liked;
     private List<User> likedUsers;
 
-	private TestCommentBuilder() {
+	public TestCommentBuilder() {
 		this.likedUsers = new ArrayList<>();
 	}
 
@@ -99,8 +99,8 @@ public class TestCommentBuilder {
 				.withRating(rating)
 				.withAuthor(author)
 				.withSubject(subject)
-				.withLiked(liked).
-				withLikedUsers(likedUsers);
+				.withLiked(liked)
+				.withLikedUsers(likedUsers);
 	}
 
 	public Comment build() {
