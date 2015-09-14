@@ -149,9 +149,9 @@ public class IdeaControllerTest {
     public void shouldCreateIdeaAndReturnItWithHttpCode201() throws Exception {
         final IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
         final Idea createdIdea = new TestIdeaBuilder().withId(10L).withTitle(source.getTitle())
-                .withDescription(source.getDescription()).withRating(source.getRating()).build();
+                .withDescription(source.getDescription()).withState(source.getState()).withRating(source.getRating()).build();
 
-        when(this.ideaServiceMock.save(any(Idea.class))).thenReturn(createdIdea);
+        when(this.ideaServiceMock.create(any(Idea.class))).thenReturn(createdIdea);
 
         this.mockMvc
                 .perform(post("/api/v1/ideas").contentType(APPLICATION_JSON_UTF8).accept(APPLICATION_JSON_UTF8)
@@ -163,7 +163,7 @@ public class IdeaControllerTest {
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())));
 
         final ArgumentCaptor<Idea> userCaptor = ArgumentCaptor.forClass(Idea.class);
-        verify(this.ideaServiceMock, times(1)).save(userCaptor.capture());
+        verify(this.ideaServiceMock, times(1)).create(userCaptor.capture());
         verifyNoMoreInteractions(this.ideaServiceMock);
 
         final Idea ideaArgument = userCaptor.getValue();
