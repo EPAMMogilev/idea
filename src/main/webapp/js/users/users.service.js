@@ -3,9 +3,9 @@
 
     angular
         .module('app.services')
-        .service('ideaDetailsService',ideaDetailsService);
+        .service('usersService',usersService);
 
-        function ideaDetailsService() {
+        function usersService() {
             var publicMethod = {
             	getlikedUsersListAsString: getlikedUsersListAsString
             };

@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.epam.idea.core.model.Comment;
+import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.CommentRepository;
+import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.exception.CommentDoesNotExistException;
+import com.epam.idea.core.service.exception.IdeaNotFoundException;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentRepository commentRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public void delete(Comment deleted) {
@@ -83,5 +90,22 @@ public class CommentServiceImpl implements CommentService {
 			isCurrentUserLikedComment = comment != null;
 		}
 		return isCurrentUserLikedComment;
+	}
+
+	@Override
+	public Comment changeCommentLike(long commentId) {
+		Comment comment = commentRepository.findByIdAndLikedByCurrentUser(commentId);
+		User currentUser = userRepository.findCurrentUser();
+
+		if (comment == null) {
+			comment = commentRepository.findOne(commentId).orElseThrow(() -> new CommentDoesNotExistException());
+			comment.getLikedUsers().add(currentUser);
+			comment.setRating(comment.getRating() + 1);
+		} else {
+			comment.getLikedUsers().remove(currentUser);
+			comment.setRating(comment.getRating() - 1);
+		}
+
+		return commentRepository.save(comment);
 	}
 }

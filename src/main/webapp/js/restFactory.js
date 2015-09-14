@@ -11,7 +11,8 @@
 		var factory = {
 			ideas: ideas,
 			tags: tags,
-			users: users
+			users: users,
+			comments: comments
 		};
 
 		return factory;
@@ -43,6 +44,12 @@
 				create: {method: 'POST', url: 'user/register/'},
 				getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
 
+			});
+		}
+
+		function comments() {
+			return $resource('api/v1/comments/', {}, {
+				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/comments/:id/like/'}
 			});
 		}
 	}

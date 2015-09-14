@@ -5,9 +5,9 @@
 		.module('app.controllers')
 		.controller('detailsCtrl', detailsCtrl);
 
-	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'ideaDetailsService', 'commentsFactory'];
+	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'usersService', 'commentsFactory'];
 
-	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, ideaDetailsService, commentsFactory) {
+	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, usersService, commentsFactory) {
 
 		$scope.idea = ideaDetails;
 		$scope.likedUsersList = null;
@@ -43,7 +43,7 @@
 			{
 				$scope.data = value;
 				if($scope.data != null) {
-					$scope.likedUsersList = ideaDetailsService.getlikedUsersListAsString($scope.data);
+					$scope.likedUsersList = usersService.getlikedUsersListAsString($scope.data);
 				}
 
 				//set geo point
@@ -92,7 +92,7 @@
 				function (idea) {
 					$scope.data.rating = idea.rating;
 					$scope.data.liked = !$scope.data.liked;
-					$scope.likedUsersList = ideaDetailsService.getlikedUsersListAsString(idea);
+					$scope.likedUsersList = usersService.getlikedUsersListAsString(idea);
 				}
 			);
 		};
