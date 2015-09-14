@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.epam.idea.core.model.Comment;
-import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.CommentRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.exception.CommentDoesNotExistException;
-import com.epam.idea.core.service.exception.IdeaNotFoundException;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;

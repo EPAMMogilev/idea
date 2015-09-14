@@ -57,5 +57,18 @@ describe('rest factory testing', function(){
         $httpBackend.flush();
     });
 
+    it('like comment', function() {
+    	var comment = {
+    		id: 1,
+    		liked: true
+    	};
+	    $httpBackend.expectPOST('api/v1/comments/1/like').respond(200, comment);
+	    ideaFactory.comments().changeLike({id: '1'}) .$promise.then(function (response) {
+	    	expect(response.id).toBe(comment.id);
+	    	expect(response.liked).toBe(comment.liked);
+	    });
+        $httpBackend.flush();
+    });
+
 });
 

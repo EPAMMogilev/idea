@@ -7,6 +7,7 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.CommentRepository;
+import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.CommentService;
 
 import org.junit.Before;
@@ -41,6 +42,9 @@ public class CommentServiceImplTest {
 
     @InjectMocks
     private CommentService commentService = new CommentServiceImpl();
+
+    @Mock
+    private UserRepository userRepositoryMock;
 
     @Before
     public void setUp() throws Exception {
@@ -99,4 +103,43 @@ public class CommentServiceImplTest {
         List<Comment> comments = this.commentService.findCommentsByIdeaId(defaultPageRequest, ideaToFind.getId());
         assertThat(comments).isNotNull();
     }//shouldfindCommentsByIdeaIdComment
+
+    @Test
+    public void shouldChangeLikedForUserAndComment_whenLikedIsFalse() {
+        final long commentId = 1L;
+        final User user = new User();
+        final Comment comment = TestCommentBuilder.aComment().withId(commentId).build();
+
+        final int ratingBefore = comment.getRating();
+        final int likedUsersBefore = comment.getLikedUsers().size();
+
+        given(commentRepositoryMock.findByIdAndLikedByCurrentUser(commentId)).willReturn(null);
+        given(userRepositoryMock.findCurrentUser()).willReturn(user);
+        given(commentRepositoryMock.findOne(commentId)).willReturn(Optional.of(comment));
+        given(commentRepositoryMock.save(comment)).willReturn(comment);
+
+        final Comment changedLikeComment = this.commentService.changeCommentLike(commentId);
+
+        assertThat(changedLikeComment.getLikedUsers().size()).isEqualTo(likedUsersBefore + 1);
+        assertThat(changedLikeComment.getRating()).isEqualTo(ratingBefore + 1);
+    }
+
+    @Test
+    public void shouldChangeLikedForUserAndIdea_whenLikedIsTrue() {
+        final long commentId = 1L;
+        final User user = new User();
+        final Comment likedComment = TestCommentBuilder.aComment().withId(commentId).withLikedUser(user).withLiked(true).build();
+
+        final int ratingBefore = likedComment.getRating();
+        final int likedUsersBefore = likedComment.getLikedUsers().size();
+
+        given(commentRepositoryMock.findByIdAndLikedByCurrentUser(commentId)).willReturn(likedComment);
+        given(userRepositoryMock.findCurrentUser()).willReturn(user);
+        given(commentRepositoryMock.save(likedComment)).willReturn(likedComment);
+
+        final Comment changedLikeComment = this.commentService.changeCommentLike(commentId);
+
+        assertThat(changedLikeComment.getLikedUsers().size()).isEqualTo(likedUsersBefore - 1);
+        assertThat(changedLikeComment.getRating()).isEqualTo(ratingBefore - 1);
+    }
 }
