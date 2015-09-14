@@ -31,8 +31,16 @@
 
 		activate();
 
+		function onMyIdeasPage () {
+			var result = false;
+			if ($location.path().indexOf("/myideas") !== -1){
+				result = true;
+			}
+			return result;
+		}
+		
         function activate() {
-            if($location.path().indexOf("/myideas") !== -1) {
+            if(onMyIdeasPage()) {
             	userId = $rootScope.currentUser.id;
             } else {
             	userId = null;
@@ -50,6 +58,7 @@
 				}
 			$scope.geoObjects = mapGeoService.generateGeoObjects(vm.popular);
 			});
+			
 			return promiseResponse;
 		};
 

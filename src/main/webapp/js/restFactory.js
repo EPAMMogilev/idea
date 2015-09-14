@@ -32,8 +32,12 @@
 				create: {method: 'POST', url: 'api/v1/ideas/'},
 				delete: {method: 'DELETE', url: 'api/v1/ideas/:id/'},
 				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/ideas/:id/like/'},
+<<<<<<< HEAD
+				getPage: {method: 'GET', params: {userId: '@userId', page: '@page', size: '@size', sort: '@sort', tagId: '@tagId', query: '@query'}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&userId=:userId&tagId=:tagId&query=:query', isArray: true}
+=======
 				getCommentsPage: {method: 'GET', params: {id: '@id', page: '@page', size: '@size', sort: '@sort'}, url: 'api/v1/ideas/:id/comments?page=:page&size=:size&sort=:sort', isArray: true},
 				getPage: {method: 'GET', params: {userId: '@userId', page: '@page', size: '@size', sort: '@sort', tagId: '@tagId', query: "@query"}, url: 'api/v1/ideas?page=:page&size=:size&sort=:sort&sort=title,asc&userId=:userId&tagId=:tagId&query=:query', isArray: true}
+>>>>>>> b2ac61c0b72fe51905655aa83a15867ca7fbce3b
 			});
 		}
 

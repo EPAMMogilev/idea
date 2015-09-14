@@ -1,179 +1,184 @@
 package com.epam.idea.rest.resource;
 
-
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.Size;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.util.State;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.springframework.hateoas.ResourceSupport;
-
 public class IdeaResource extends ResourceSupport {
 
-	@JsonProperty(JsonPropertyName.ID)
-	private long ideaId;
+    @JsonProperty(JsonPropertyName.ID)
+    private long ideaId;
 
-	@Size(min = Idea.MIN_LENGTH_TITLE, max = Idea.MAX_LENGTH_TITLE)
-	private String title;
+    @Size(min = Idea.MIN_LENGTH_TITLE, max = Idea.MAX_LENGTH_TITLE)
+    private String title;
 
-	@Size(max = Idea.MAX_LENGTH_DESCRIPTION)
-	private String description;
+    @Size(max = Idea.MAX_LENGTH_DESCRIPTION)
+    private String description;
 
-	@JsonProperty(JsonPropertyName.CREATION_TIME)
-	private ZonedDateTime creationTime;
+    @JsonProperty(JsonPropertyName.CREATION_TIME)
+    private ZonedDateTime creationTime;
 
-	@JsonProperty(JsonPropertyName.MODIFICATION_TIME)
-	private ZonedDateTime modificationTime;
+    @JsonProperty(JsonPropertyName.MODIFICATION_TIME)
+    private ZonedDateTime modificationTime;
 
-	private BigDecimal latitude;
-	private BigDecimal longitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 
-	private String imageUrl;
+    private String imageUrl;
 
-	//@JsonView({View.Basic.class})
-	private int rating;
+    // @JsonView({View.Basic.class})
+    private int rating;
 
-	private boolean liked;
+    private boolean liked;
 
-	private UserResource author;
+    private UserResource author;
 
-	private List<TagResource> tags;
+    private List<TagResource> tags;
 
-	private List<UserResource> likedUsers;
+    private List<UserResource> likedUsers;
 
-	public IdeaResource() {
-		this.tags = new ArrayList<>();
-		this.setLikedUsers(new ArrayList<>());
-	}
+    private State state;
 
-	public long getIdeaId() {
-		return ideaId;
-	}
+    public IdeaResource() {
+        this.tags = new ArrayList<>();
+        this.setLikedUsers(new ArrayList<>());
+    }
 
-	public void setIdeaId(long ideaId) {
-		this.ideaId = ideaId;
-	}
+    public long getIdeaId() {
+        return ideaId;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setIdeaId(final long ideaId) {
+        this.ideaId = ideaId;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public ZonedDateTime getCreationTime() {
-		return creationTime;
-	}
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
-	public void setCreationTime(ZonedDateTime creationTime) {
-		this.creationTime = creationTime;
-	}
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
 
-	public ZonedDateTime getModificationTime() {
-		return modificationTime;
-	}
+    public void setCreationTime(final ZonedDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
 
-	public void setModificationTime(ZonedDateTime modificationTime) {
-		this.modificationTime = modificationTime;
-	}
+    public ZonedDateTime getModificationTime() {
+        return modificationTime;
+    }
 
-	public int getRating() {
-		return rating;
-	}
+    public void setModificationTime(final ZonedDateTime modificationTime) {
+        this.modificationTime = modificationTime;
+    }
 
-	public UserResource getAuthor() {
-		return author;
-	}
+    public int getRating() {
+        return rating;
+    }
 
-	public void setAuthor(UserResource author) {
-		this.author = author;
-	}
+    public UserResource getAuthor() {
+        return author;
+    }
 
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
+    public void setAuthor(final UserResource author) {
+        this.author = author;
+    }
 
-	public List<TagResource> getTags() {
-		return tags;
-	}
+    public void setRating(final int rating) {
+        this.rating = rating;
+    }
 
-	public void setTags(List<TagResource> tags) {
-		this.tags = tags;
-	}
+    public List<TagResource> getTags() {
+        return tags;
+    }
 
-	public BigDecimal getLatitude() {
-		return latitude;
-	}
+    public void setTags(final List<TagResource> tags) {
+        this.tags = tags;
+    }
 
-	public void setLatitude(BigDecimal latitude) {
-		this.latitude = latitude;
-	}
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
 
-	public BigDecimal getLongitude() {
-		return longitude;
-	}
+    public void setLatitude(final BigDecimal latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setLongitude(BigDecimal longitude) {
-		this.longitude = longitude;
-	}
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
+    public void setLongitude(final BigDecimal longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-	public Idea toIdea() {
-		final Idea idea = new Idea();
-		idea.setTitle(title);
-		idea.setDescription(description);
-		idea.setRating(rating);
-		idea.setRelatedTags(tags.parallelStream()
-				.map(TagResource::toTag)
-				.collect(Collectors.toList()));
-		idea.setLikedUsers(likedUsers.stream()
-				.map(UserResource::toUser)
-				.collect(Collectors.toList()));
-		idea.setLatitude(latitude);
-		idea.setLongitude(longitude);
-		idea.setImageUrl(imageUrl);
-		idea.setLiked(liked);
-		return idea;
-	}
+    public void setImageUrl(final String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-	public boolean getLiked() {
-		return liked;
-	}
+    public Idea toIdea() {
+        final Idea idea = new Idea();
+        idea.setTitle(title);
+        idea.setDescription(description);
+        idea.setRating(rating);
+        idea.setRelatedTags(tags.parallelStream().map(TagResource::toTag).collect(Collectors.toList()));
+        idea.setLikedUsers(likedUsers.stream().map(UserResource::toUser).collect(Collectors.toList()));
+        idea.setLatitude(latitude);
+        idea.setLongitude(longitude);
+        idea.setImageUrl(imageUrl);
+        idea.setLiked(liked);
+        return idea;
+    }
 
-	public void setLiked(boolean liked) {
-		this.liked = liked;
-	}
+    public boolean getLiked() {
+        return liked;
+    }
 
-	public List<UserResource> getLikedUsers() {
-		return likedUsers;
-	}
+    public void setLiked(final boolean liked) {
+        this.liked = liked;
+    }
 
-	public void setLikedUsers(List<UserResource> likedUsers) {
-		this.likedUsers = likedUsers;
-	}
+    public List<UserResource> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(final List<UserResource> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(final State state) {
+        this.state = state;
+    }
 
 }
