@@ -3,17 +3,13 @@ package com.epam.idea.rest.controller;
 import java.util.Arrays;
 
 import com.epam.idea.builder.model.TestCommentBuilder;
-import com.epam.idea.builder.model.TestIdeaBuilder;
 import com.epam.idea.builder.model.TestUserBuilder;
 import com.epam.idea.builder.resource.TestCommentResourceBuilder;
-import com.epam.idea.builder.resource.TestIdeaResourceBuilder;
 import com.epam.idea.core.model.Comment;
-import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.CommentResource;
-import com.epam.idea.rest.resource.IdeaResource;
 
 import org.junit.Before;
 import org.junit.Test;
