@@ -4,7 +4,7 @@
 	angular
 		.module('app.directives')
 		.directive('showIdea', showIdea);
-		
+
 	showIdea.$inject = ['ideasFactory', '$state'];
 
 	function showIdea(ideasFactory, $state) {
@@ -13,9 +13,9 @@
 			replace: true,
 			scope: {
 				photo: '@',
-				idea: '=',			
+				idea: '=',
 				ngModel: '=',
-				details: '&',				
+				details: '&',
 				changeRating: '&',
 				changeLike: '&',
 				isAuthenticated: '='

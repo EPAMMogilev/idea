@@ -21,4 +21,7 @@ public interface CommentRepository extends BaseRepository<Comment, Long> {
 
 	@Query("select c from Comment c where c.subject.id = ?1")
 	List<Comment> findByIdeaId(Pageable pageable, Long ideaId);
+
+	@Query("select c from Comment c left join c.likedUsers u where c.id = ?1 and u.id = ?#{ principal?.id }")
+	Comment findByIdAndLikedByCurrentUser(long commentId);
 }

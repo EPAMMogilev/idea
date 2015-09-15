@@ -26,4 +26,10 @@ public class CommentController {
 		final Comment foundComment = this.commentService.findOne(commentId);
 		return new ResponseEntity<>(new CommentResourceAsm().toResource(foundComment), HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/{commentId}/like", method = RequestMethod.POST)
+	public HttpEntity<CommentResource> changeLike(@PathVariable final long commentId) {
+		final Comment updatedComment = this.commentService.changeCommentLike(commentId);
+		return new ResponseEntity<>(new CommentResourceAsm().toResource(updatedComment), HttpStatus.OK);
+	}
 }

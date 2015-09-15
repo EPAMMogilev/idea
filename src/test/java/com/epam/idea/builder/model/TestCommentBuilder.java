@@ -2,10 +2,13 @@ package com.epam.idea.builder.model;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
+
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class TestCommentBuilder {
@@ -23,9 +26,11 @@ public class TestCommentBuilder {
 	private ZonedDateTime modificationTime;
 	private User author;
 	private Idea subject;
+    private boolean liked;
+    private List<User> likedUsers;
 
-	private TestCommentBuilder() {
-		//empty
+	public TestCommentBuilder() {
+		this.likedUsers = new ArrayList<>();
 	}
 
 	public static TestCommentBuilder aComment() {
@@ -34,7 +39,8 @@ public class TestCommentBuilder {
 				.withModificationTime(DEFAULT_MODIFICATION_TIME)
 				.withCreationTime(DEFAULT_CREATION_TIME)
 				.withBody(DEFAULT_BODY)
-				.withRating(DEFAULT_RATING);
+				.withRating(DEFAULT_RATING)
+				.withLikedUsers(new ArrayList<>()).withLiked(false);
 	}
 
 	public TestCommentBuilder withId(final long id) {
@@ -72,12 +78,29 @@ public class TestCommentBuilder {
 		return this;
 	}
 
+    public TestCommentBuilder withLiked(final boolean liked) {
+        this.liked = liked;
+        return this;
+    }
+
+    public TestCommentBuilder withLikedUsers(final List<User> likedUsers) {
+        this.likedUsers = likedUsers;
+        return this;
+    }
+
+    public TestCommentBuilder withLikedUser(final User likedUser) {
+        this.likedUsers.add(likedUser);
+        return this;
+    }
+
 	public TestCommentBuilder but() {
 		return aComment()
 				.withBody(body)
 				.withRating(rating)
 				.withAuthor(author)
-				.withSubject(subject);
+				.withSubject(subject)
+				.withLiked(liked)
+				.withLikedUsers(likedUsers);
 	}
 
 	public Comment build() {
@@ -89,6 +112,8 @@ public class TestCommentBuilder {
 		comment.setSubject(subject);
 		comment.setAuthor(author);
 		comment.setRating(rating);
+        comment.setLiked(liked);
+        comment.setLikedUsers(likedUsers);
 		return comment;
 	}
 }

@@ -2,16 +2,23 @@ package com.epam.idea.core.model;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -46,8 +53,17 @@ public class Comment implements Serializable {
 	@JoinColumn(name = "IDEA_ID")
 	private Idea subject;
 
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "COMMENT_LIKES",
+			joinColumns = @JoinColumn(name = "COMMENT_ID"),
+			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+	private List<User> likedUsers;
+
+	@Transient
+	private boolean liked;
+
 	public Comment() {
-		//empty
+		this.likedUsers = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -113,5 +129,21 @@ public class Comment implements Serializable {
 				", body='" + body + '\'' +
 				", rating=" + rating +
 				'}';
+	}
+
+	public List<User> getLikedUsers() {
+		return likedUsers;
+	}
+
+	public void setLikedUsers(List<User> likedUsers) {
+		this.likedUsers = likedUsers;
+	}
+
+	public boolean getLiked() {
+		return liked;
+	}
+
+	public void setLiked(boolean liked) {
+		this.liked = liked;
 	}
 }

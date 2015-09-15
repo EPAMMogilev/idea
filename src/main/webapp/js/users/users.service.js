@@ -3,18 +3,18 @@
 
     angular
         .module('app.services')
-        .service('ideaDetailsService',ideaDetailsService);
+        .service('usersService',usersService);
 
-        function ideaDetailsService() {
+        function usersService() {
             var publicMethod = {
             	getlikedUsersListAsString: getlikedUsersListAsString
             };
             return publicMethod;
 
-    		function getlikedUsersListAsString(idea){
+    		function getlikedUsersListAsString(obj){
     			var users = [];
-    			for(var i = 0; i < idea.likedUsers.length; i++) {
-    				users.push(idea.likedUsers[i].username);
+    			for(var i = 0; i < obj.likedUsers.length; i++) {
+    				users.push(obj.likedUsers[i].username);
     			}
     			return users.join(", ");
     		};

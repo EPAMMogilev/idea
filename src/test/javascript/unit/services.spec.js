@@ -139,12 +139,12 @@ describe("app.services module", function() {
 
     });
 
-   describe('ideaDetailsService', function () {
+   describe('usersService', function () {
 
-       var testIdeaDetailsService;
+       var testUsersService;
 
-       beforeEach(inject(function (ideaDetailsService) {
-           testIdeaDetailsService = ideaDetailsService;
+       beforeEach(inject(function (usersService) {
+           testUsersService = usersService;
        }));
 
 
@@ -161,7 +161,7 @@ describe("app.services module", function() {
                    id: 2,
                    likedUsers: [user1, user2]
         	   };
-           var likedUsers = testIdeaDetailsService.getlikedUsersListAsString(idea);
+           var likedUsers = testUsersService.getlikedUsersListAsString(idea);
            expect(likedUsers).toBe('FirstUser, SecondUser');
        });
 

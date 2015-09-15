@@ -161,7 +161,7 @@ describe('Idea details controllers testing', function(){
 
 	//service mock
 	var ideaByIdInvoke, commentsByIdeaIdInvoke, getlikedUsersInvoke;
-	var myIdeasFactory, myCommentsFactory, myIdeaDetailsService;
+	var myIdeasFactory, myCommentsFactory, myUsersService;
 
 	//scopes
 	var detailsIdeaScope;
@@ -217,7 +217,7 @@ describe('Idea details controllers testing', function(){
 			getIdeaById: ideaByIdInvoke
 		};
 
-		myIdeaDetailsService = {
+		myUsersService = {
 				getlikedUsersListAsString: getlikedUsersInvoke
 			};
 
@@ -228,7 +228,7 @@ describe('Idea details controllers testing', function(){
 					$state:state,
 					ideasFactory: myIdeasFactory,
 					commentsFactory: myCommentsFactory,
-					ideaDetailsService: myIdeaDetailsService,
+					usersService: myUsersService,
 					ideaDetails: vIdeaDetails
 				});
 		};
