@@ -204,7 +204,7 @@ check.dependsOn integrationTest
 
 war { 
 	webXml = file("src/main/webapp/webxml-templates/" + "web-" + getRunway() + ".xml")
-	excludes = ['webxml-templates']
+	excludes = ['webxml-templates', 'css', 'fonts','images','js', 'languages', 'pages', 'templates']
 } 
 
 def getRunway() {
