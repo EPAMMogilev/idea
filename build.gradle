@@ -42,6 +42,10 @@ targetCompatibility = 1.8
 httpPort = 9090
 war.archiveName = 'idea.war'
 
+compileJava { 
+	options.encoding = "UTF-8"
+}
+
 repositories {
     mavenCentral()
     jcenter()
@@ -297,8 +301,8 @@ task prepeareOpenShift {
 
 openShiftRelease.dependsOn prepeareOpenShift, build;*/
 
-/*--- Server in Eclipse ---*/
-apply plugin: "eclipse-wtp"
+//--- Server in Eclipse ---
+/*apply plugin: "eclipse-wtp"
 eclipse {
     wtp {
         facet {
@@ -308,4 +312,4 @@ eclipse {
         }
     }
 }
-/*------------------------*/
+*/

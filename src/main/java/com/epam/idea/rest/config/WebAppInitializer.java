@@ -33,6 +33,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		encodingFilter.setEncoding("UTF-8");
 		encodingFilter.setForceEncoding(true);
 		final DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy("springSecurityFilterChain");
-		return new Filter[]{encodingFilter,  new DelegatingFilterProxy("springSecurityFilterChain")};
+		return new Filter[]{encodingFilter, delegatingFilterProxy};
 	}
 }
