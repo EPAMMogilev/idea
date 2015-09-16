@@ -388,9 +388,11 @@ table
 
 .likeButton
 {
-	text-align: center;
+	display: block;
 	margin-top: 5px;
+	text-align: center;
 }
+
 
 .withoutComments
 {
