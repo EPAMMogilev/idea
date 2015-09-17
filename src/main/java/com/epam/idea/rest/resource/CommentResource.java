@@ -4,8 +4,11 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import com.epam.idea.core.model.Comment;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.hateoas.ResourceSupport;
@@ -15,12 +18,15 @@ public class CommentResource extends ResourceSupport {
 	@JsonProperty(JsonPropertyName.ID)
 	private long commentId;
 
+	@Size(min = Comment.MIN_LENGTH_BODY)
 	private String body;
 
 	@JsonProperty(JsonPropertyName.CREATION_TIME)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private ZonedDateTime creationTime;
 
 	@JsonProperty(JsonPropertyName.MODIFICATION_TIME)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private ZonedDateTime modificationTime;
 
 	private int rating;
@@ -90,10 +96,6 @@ public class CommentResource extends ResourceSupport {
 		final Comment comment = new Comment();
 		comment.setBody(body);
 		comment.setRating(rating);
-		comment.setSubject(subject.toIdea());
-		if (author != null) {
-			comment.setAuthor(author.toUser());
-		}
 		return comment;
 	}
 

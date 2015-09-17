@@ -79,8 +79,8 @@ public class UserControllerTest {
 	public static final String EXPECTED_USER_CREATION_TIME = "2015-01-12T00:00Z";
 	public static final String EXPECTED_IDEA_CREATION_TIME = "2014-02-12T10:00Z";
 	public static final String EXPECTED_IDEA_MODIFICATION_TIME = "2014-10-05T00:00Z";
-	public static final String EXPECTED_COMMENT_CREATION_TIME = "2014-05-05T00:00Z";
-	public static final String EXPECTED_COMMENT_MODIFICATION_TIME = "2014-07-08T00:00Z";
+	public static final String EXPECTED_COMMENT_CREATION_TIME = "2014-05-05T00:00:00.000+0000";
+	public static final String EXPECTED_COMMENT_MODIFICATION_TIME = "2014-07-08T00:00:00.000+0000";
 
 	@Autowired
 	private UserController userController;

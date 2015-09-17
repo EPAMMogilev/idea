@@ -26,6 +26,8 @@ import org.hibernate.annotations.Type;
 @Table(name = "COMMENT")
 public class Comment implements Serializable {
 
+    public static final int MIN_LENGTH_BODY = 1;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")

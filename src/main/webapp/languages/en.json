@@ -11,6 +11,8 @@
     "BACK": "Back",
     "COMMENTS": "Comments",
     "WITHOUT_COMMENTS": "This idea hasn't been commented yet",
+    "ENTER_COMMENT": "Enter comment",
+    "CANCEL": "Cancel",
     "IDEA": "Idea",
     "DESCRIPTION": "Description",
     "CATEGORY": "Category",

@@ -14,6 +14,8 @@
 		$scope.data = null;
 		$scope.myMap = null;
 
+		$scope.commentBody = null;
+
     	var vm = this;
     	vm.comments = null;
 		vm.paramsForComments = {
@@ -105,6 +107,26 @@
 				zoom: 11
 			});
 		}
+
+		$scope.addComment = function(){
+			var request = {
+					id: null,
+					body: $scope.commentBody,
+					subject: {
+						id: $scope.idea.id
+					}
+				};
+			commentsFactory.createComment(request).then(
+				function (addedComment) {
+					vm.comments.unshift(addedComment);
+					$scope.commentBody = null;
+				}
+			);
+		};
+
+		$scope.cancelAddComment = function(){
+			$scope.commentBody = null;
+		};
 	}
 
 
