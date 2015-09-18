@@ -404,16 +404,6 @@ table
 	vertical-align: middle;
 }
 
-.resize-input
-{
-	resize: vertical;
-}
-
-.addCommentForm
-{
-	/*margin-top: 30px;*/
-}
-
 .addCommentForm {
 	margin-top: 30px;
 	float: left;
