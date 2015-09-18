@@ -8,10 +8,10 @@ exports.toBeChangedByOne = function() {
     };
 }
 
-exports.testIncrementAndDecrementRating = function (page, param) {
-	var initialRating = page.getRating(param);
-	page.like(param);
-	expect(page.getRating(param)).toBeChangedByOne(initialRating);
-	page.like(param);
-	expect(page.getRating(param)).toBe(initialRating);
+exports.testIncrementAndDecrementRating = function (pageOrElem, param) {
+	var initialRating = pageOrElem.getRating(param);
+	pageOrElem.like(param);
+	expect(pageOrElem.getRating(param)).toBeChangedByOne(initialRating);
+	pageOrElem.like(param);
+	expect(pageOrElem.getRating(param)).toBe(initialRating);
 }
