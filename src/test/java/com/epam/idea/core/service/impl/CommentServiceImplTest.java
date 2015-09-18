@@ -7,6 +7,7 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.CommentRepository;
+import com.epam.idea.core.repository.IdeaRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.CommentService;
 
@@ -45,6 +46,9 @@ public class CommentServiceImplTest {
 
     @Mock
     private UserRepository userRepositoryMock;
+
+    @Mock
+    private IdeaRepository ideaRepositoryMock;
 
     @Before
     public void setUp() throws Exception {
@@ -141,5 +145,24 @@ public class CommentServiceImplTest {
 
         assertThat(changedLikeComment.getLikedUsers().size()).isEqualTo(likedUsersBefore - 1);
         assertThat(changedLikeComment.getRating()).isEqualTo(ratingBefore - 1);
+    }
+
+    @Test
+    public void shouldCreateOneComment(){
+        Comment comment = TestCommentBuilder.aComment().build();
+        final Long ideaId = 1L;
+        final User user = TestUserBuilder.aUser().build();
+        final Optional<Idea> subject = Optional.of(new Idea());
+
+        given(this.commentRepositoryMock.save(comment)).willReturn(comment);
+        given(userRepositoryMock.findCurrentUser()).willReturn(user);
+        given(ideaRepositoryMock.findOne(ideaId)).willReturn(subject);
+
+        Comment actualComment = this.commentService.create(comment, ideaId);
+
+        assertThat(actualComment.getBody()).isEqualTo(comment.getBody());
+        assertThat(actualComment.getSubject()).isEqualTo(subject.get());
+        assertThat(actualComment.getAuthor()).isEqualTo(user);
+        assertThat(actualComment.getId()).isEqualTo(comment.getId());
     }
 }

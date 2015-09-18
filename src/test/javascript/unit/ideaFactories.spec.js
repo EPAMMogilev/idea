@@ -70,5 +70,18 @@ describe('rest factory testing', function(){
         $httpBackend.flush();
     });
 
+    it('create comment', function() {
+    	var comment = {
+    		id: 1,
+    		body: "text"
+    	};
+	    $httpBackend.expectPOST('api/v1/ideas/1/comments').respond(201, comment);
+	    ideaFactory.ideas().createComment({id: '1'}) .$promise.then(function (response) {
+	    	expect(response.id).toBe(comment.id);
+	    	expect(response.body).toBe(comment.body);
+	    });
+        $httpBackend.flush();
+    });
+
 });
 
