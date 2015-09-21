@@ -6,6 +6,7 @@ var DetailsPage = require('../ideaDetails/details.po.js');
 var HomePage = require('../home/home.po.js');
 var LoginPage = require('../login/login.po.js');
 
+
 describe('details idea page test', function() {
 
 	var detailsPage = new DetailsPage();
@@ -47,6 +48,19 @@ describe('details idea page test', function() {
 	it('should increment and decrement idea rating', function() {
 		TestLikesUtility.testIncrementAndDecrementRating(detailsPage);
 	});
+
+	it('should add comment', function() {
+		var body = "Test";
+		detailsPage.addComment(body);
+		expect(detailsPage.comments.getBody(0)).toBe(body);
+		expect(detailsPage.comments.getAuthor(0)).toBe("admin");
+		expect(detailsPage.comments.getRating(0)).toBe(0);
+	});
+
+	it('should increment and decrement comment rating', function() {
+		detailsPage.addComment("New");
+		TestLikesUtility.testIncrementAndDecrementRating(detailsPage.comments, 0);
+	})
 
 
 });

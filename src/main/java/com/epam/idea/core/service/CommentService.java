@@ -16,4 +16,6 @@ public interface CommentService extends BaseService<Comment, Long> {
 
 	@PreAuthorize("isFullyAuthenticated()")
 	Comment changeCommentLike(long commentId);
+
+    Comment create(Comment source, final Long ideaId);
 }

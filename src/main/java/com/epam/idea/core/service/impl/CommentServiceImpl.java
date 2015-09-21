@@ -4,15 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import com.epam.idea.core.model.Comment;
+import com.epam.idea.core.model.Idea;
 import com.epam.idea.core.model.User;
 import com.epam.idea.core.repository.CommentRepository;
+import com.epam.idea.core.repository.IdeaRepository;
 import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.exception.CommentDoesNotExistException;
+import com.epam.idea.core.service.exception.IdeaNotFoundException;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+    @Autowired
+    private IdeaRepository ideaRepository;
 
 	@Override
 	public void delete(Comment deleted) {
@@ -54,6 +61,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
+	@PreAuthorize("isFullyAuthenticated()")
 	public Comment save(Comment persisted) {
 		return commentRepository.save(persisted);
 	}
@@ -105,5 +113,14 @@ public class CommentServiceImpl implements CommentService {
 		}
 
 		return commentRepository.save(comment);
+	}
+
+	@Override
+	public Comment create(Comment source, Long ideaId) {
+	    final User author = userRepository.findCurrentUser();
+	    source.setAuthor(author);
+	    final Idea subject = ideaRepository.findOne(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
+	    source.setSubject(subject);
+		return this.save(source);
 	}
 }

@@ -67,6 +67,14 @@
 	            </div>
 	        </div>
         </div>
+
+        <div class="container" ng-show="authenticated">
+	        <form name="addCommentForm" class="addCommentForm" role="form" novalidate>
+				<textarea id="newComment" placeholder="{{ 'ENTER_COMMENT' | translate }}" required ng-model="commentBody" style="height: 103px;"></textarea>
+				<button id="btnAddComment" class="btn btn-success green" type="submit" ng-disabled="addCommentForm.$invalid" ng-click="addComment()"><i class="fa fa-share"></i>{{ 'ADD' | translate }}</button>
+			</form>
+        </div>
+
     </div>
 
 </div>

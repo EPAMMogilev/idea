@@ -160,7 +160,7 @@ describe('Idea details controllers testing', function(){
 	var detailsIdeaTest;
 
 	//service mock
-	var ideaByIdInvoke, commentsByIdeaIdInvoke, getlikedUsersInvoke;
+	var ideaByIdInvoke, commentsByIdeaIdInvoke, getlikedUsersInvoke, addCommentInvoke;
 	var myIdeasFactory, myCommentsFactory, myUsersService;
 
 	//scopes
@@ -179,7 +179,7 @@ describe('Idea details controllers testing', function(){
 			likedUsers: []
 		};
 
-	var deferedIdeaById, deferedCommentsByIdeaId;
+	var deferedIdeaById, deferedCommentsByIdeaId, deferredAddComment;
 
 	beforeEach(angular.mock.module('ui.router'));
 	beforeEach(angular.mock.module('app.controllers'));
@@ -195,6 +195,8 @@ describe('Idea details controllers testing', function(){
 		deferedCommentsByIdeaId = $q.defer();
 		deferedCommentsByIdeaId.resolve(comments);
 
+		deferredAddComment = $q.defer();
+
 		//init ideaByIdInvoke
 		ideaByIdInvoke = function(aId){
 			return deferedIdeaById.promise;
@@ -204,6 +206,7 @@ describe('Idea details controllers testing', function(){
 		commentsByIdeaIdInvoke = function(aId){
 			return deferedCommentsByIdeaId.promise;
 		};
+
 
 		getlikedUsersInvoke = function(aId){
 			return "";
@@ -254,6 +257,27 @@ describe('Idea details controllers testing', function(){
 		expect(ctrl.comments[1].id).toBe(comments[1].id);
 		expect(detailsIdeaScope.data.id).toBe(vIdeaDetails.id);
 		expect(detailsIdeaScope.likedUsersList).toBe("");
+	});
+
+
+	it('add comment', function () {
+		var body = "new";
+		detailsIdeaScope.commentBody = body;
+		var comment = {id: 3, body: body};
+		deferredAddComment.resolve(comment);
+		myCommentsFactory.createComment = function(request) {
+			return deferredAddComment.promise;
+		}
+
+		var ctrl = detailsIdeaTest();
+
+		detailsIdeaScope.$root.$digest();
+		detailsIdeaScope.addComment();
+
+		detailsIdeaScope.$root.$digest();
+		expect(ctrl.comments.length).toBe(3);
+		expect(ctrl.comments[0].id).toBe(comment.id);
+		expect(ctrl.comments[0].body).toBe(body);
 	});
 
 });

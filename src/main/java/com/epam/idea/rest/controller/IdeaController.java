@@ -84,4 +84,12 @@ public class IdeaController {
         return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/{ideaId}/comments", method = RequestMethod.POST)
+    public HttpEntity<CommentResource> create(@Valid @RequestBody final CommentResource commentRes,
+            @PathVariable final long ideaId) {
+        final Comment createdComment = this.commentService.create(commentRes.toComment(), ideaId);
+        return new ResponseEntity<>(new CommentResourceAsm().toResource(createdComment), HttpStatus.CREATED);
+    }
+
 }
