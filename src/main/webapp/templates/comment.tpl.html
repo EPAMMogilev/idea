@@ -1,16 +1,18 @@
-<div class="col-md-3 commentsFirstColumn">
- 	<div class="commentAuthor">{{comment.author.username}}</div>
-	<div class="commentDate">{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
-</div>
-<div class="col-md-8">
-	<div class="commentBody">{{comment.body}}</div>
-</div>
-<div class="col-md-1 likeDetails">
-	<div id="divCommentRating"><span content="{{likedUsersList}}" container=".comment" hover-popover>{{comment.rating}}</span></div>
-	<div class="likeButton">
-		<span class="btn btn-thumbs" ng-show="isAuthenticated" ng-click="changeLike()" content="{{likedUsersList}}" container=".comment" hover-popover>
-			<i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="comment.liked"></i>
-			<i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="comment.liked"></i>
-		</span>
-	</div>
+<p class="pull-right"><small>{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</small></p>
+<p class="media-left">
+    <img class="smallImage" src="{{photo}}">
+</p>
+<div class="media-body">
+    <h4 class="media-heading user_name">{{comment.author.username}}</h4>
+        <span id="commentBody">{{comment.body}}</span>
+
+    <p>
+        <span content="{{likedUsersList}}" container=".media" hover-popover>
+	        <span id="commentRating" ng-show="comment.rating != 0"><small>{{comment.rating}}</small></span>
+		    <span id="likeButton" class="btn btn-thumbs btn-xs" ng-click="changeLike();" ng-show="isAuthenticated">
+		        <small><i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="comment.liked"></i>
+			    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="comment.liked"></i></small>
+		    </span>
+	    </span>
+	</p>
 </div>

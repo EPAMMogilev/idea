@@ -62,8 +62,8 @@
         </div>
         <div id="scrollCommentsDiv" class="scrollable container" scrollable-list update-function="detailsCtrl.loadPageForComments()">
 	        <div id="commentsDiv" class="container">
-	            <div class="row withoutComments" translate="WITHOUT_COMMENTS" ng-show="detailsCtrl.comments == null || detailsCtrl.comments.length == 0"></div>
-	            <div class="row comment" ng-repeat="comment in detailsCtrl.comments" show-comment comment="comment" is-authenticated="authenticated">
+	            <div class="withoutComments" translate="WITHOUT_COMMENTS" ng-show="detailsCtrl.comments == null || detailsCtrl.comments.length == 0"></div>
+	            <div class="media comment" ng-repeat="comment in detailsCtrl.comments" show-comment comment="comment" is-authenticated="authenticated">
 	            </div>
 	        </div>
         </div>

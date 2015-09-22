@@ -17,6 +17,7 @@
 				isAuthenticated: '='
 			},
 			link: function(scope, element, attrs) {
+				scope.photo = (scope.comment.author.imageUrl) ? scope.comment.author.imageUrl : 'images/no_user_photo.png';
 				scope.likedUsersList = usersService.getlikedUsersListAsString(scope.comment);
 				scope.changeLike = function() {
 					commentsFactory.changeCommentLike(scope.comment.id).then(

@@ -35,16 +35,25 @@ var CommentList = function() {};
 
 CommentList.prototype = Object.create({}, {
 
-	commentAuthors:        { get: function() { return element.all(by.css('.commentAuthor')); }},
-	commentBodies:         { get: function() { return element.all(by.css('.commentBody')); }},
-	commentRatings:        { get: function() { return element.all(by.id('divCommentRating')); }},
+	commentAuthors:        { get: function() { return element.all(by.css('.user_name')); }},
+	commentBodies:         { get: function() { return element.all(by.id('commentBody')); }},
+	commentRatings:        { get: function() { return element.all(by.id('commentRating')); }},
 
 	getAuthor:  { value: function(id) { return this.commentAuthors.get(id).getText(); }},
 	getBody:    { value: function(id) { return this.commentBodies.get(id).getText(); }},
-	getRating:  { value: function(id) { return ConversionUtility.getIntValue(this.commentRatings.get(id).getText()); }},
+	getRating:  { value: function(id) {
+		var rating = this.commentRatings.get(id);
+		return rating.getAttribute('class').then(function(elemClass) {
+		   if(elemClass.indexOf('ng-hide') !== -1) {
+			   return 0;
+		   } else {
+			   return ConversionUtility.getIntValue(rating.getText());
+		   }
+		});
+	}},
 
-	likeButtons:   { get: function() { return element.all(by.css('.likeButton')); }},
-	like:          { value: function(id) { return this.likeButtons.get(0).click(); }}
+	likeButtons:   { get: function() { return element.all(by.id('likeButton')); }},
+	like:          { value: function(id) { return this.likeButtons.get(id).click(); }}
 });
 
 module.exports = DetailsPage;
