@@ -60,7 +60,7 @@ describe('details idea page test', function() {
 	it('should increment and decrement comment rating', function() {
 		detailsPage.addComment("New");
 		TestLikesUtility.testIncrementAndDecrementRating(detailsPage.comments, 0);
-	})
+	});
 
 
 });

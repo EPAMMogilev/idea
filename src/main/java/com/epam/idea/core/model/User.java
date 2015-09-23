@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +71,9 @@ public class User implements Serializable {
 	@Column(name = "SOCIAL_ID")
 	private String socialId;
 
+    @Column(name = "IMAGE_URL", nullable = true)
+    private String imageUrl;
+
 	public User() {
 		this.socialMediaService = SocialMediaService.NONE;
 		this.ideas = new ArrayList<>();
@@ -81,6 +85,10 @@ public class User implements Serializable {
 		this.email = source.email;
 		this.password = source.password;
 		this.username = source.username;
+
+        if (source.imageUrl != null) {
+            this.imageUrl = source.imageUrl;
+        }
 	}
 
 	public long getId() {
@@ -166,6 +174,14 @@ public class User implements Serializable {
 	public void setSocialId(String socialId) {
 		this.socialId = socialId;
 	}
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(final String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
 	@PrePersist
 	public void prePersist() {

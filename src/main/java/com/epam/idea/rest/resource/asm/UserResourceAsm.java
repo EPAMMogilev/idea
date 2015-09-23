@@ -26,6 +26,7 @@ public class UserResourceAsm extends ResourceAssemblerSupport<User, UserResource
 		userResource.setUsername(original.getUsername());
 		userResource.setEmail(original.getEmail());
 		userResource.setCreationTime(original.getCreationTime());
+		userResource.setImageUrl(original.getImageUrl());
 		userResource.add(linkTo(methodOn(UserController.class).getUser(original.getId())).withSelfRel());
 		userResource.add(linkTo(methodOn(UserController.class).getUserIdeas(original.getId())).withRel(IDEAS_REL));
 		userResource.add(linkTo(methodOn(UserController.class).getUserComments(original.getId())).withRel(COMMENTS_REL));
