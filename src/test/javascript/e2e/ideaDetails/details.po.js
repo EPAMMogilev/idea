@@ -35,7 +35,7 @@ var CommentList = function() {};
 
 CommentList.prototype = Object.create({}, {
 
-	commentAuthors:        { get: function() { return element.all(by.css('.user_name')); }},
+	commentAuthors:        { get: function() { return element.all(by.css('.userName')); }},
 	commentBodies:         { get: function() { return element.all(by.id('commentBody')); }},
 	commentRatings:        { get: function() { return element.all(by.id('commentRating')); }},
 
