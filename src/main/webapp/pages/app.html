@@ -1,6 +1,7 @@
+<meta charset="utf-8"/>
 <div class = "ideas-container">
     <div id="tag-buttons" class="btn-group" ng-controller="tagsCtrl as tagsCtrl">
-        <tag-button identifier="all" ng-click="ideasCtrl.selectByCategory(null)" active="true">Все</tag-button>
+        <tag-button identifier="all" ng-click="ideasCtrl.selectByCategory(null)" active="true">{{ideasCtrl.tabAll}}</tag-button>
         <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag)">{{tag.name}}</tag-button>
     </div>
     <div class="dataContainer">
