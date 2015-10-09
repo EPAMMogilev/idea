@@ -169,6 +169,7 @@ public class Idea implements Serializable {
         this.likedUsers = source.likedUsers;
         this.latitude = source.latitude;
         this.longitude = source.longitude;
+        this.state = source.state;
 
         if (source.imageUrl != null) {
             this.imageUrl = source.imageUrl;
