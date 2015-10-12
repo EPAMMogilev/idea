@@ -13,7 +13,7 @@
 		var userId = null;
 		$scope.geoObjects = null;
 		$scope.criteria = null;
-		vm.tabAll = 'Все';
+		vm.tabAll = 'TAB_ALL';
 		vm.query = null;
 
 		vm.paramsForPopular = {
@@ -43,7 +43,7 @@
 		
 		function changeTabAllIdeas () {
 			if (onMyIdeasPage()) {
-				vm.tabAll = 'Все мои идеи';
+				vm.tabAll = 'TAB_ALL_MY';
 			}
 		}
 		
