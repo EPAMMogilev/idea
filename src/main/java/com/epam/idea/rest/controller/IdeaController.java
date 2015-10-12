@@ -60,7 +60,7 @@ public class IdeaController {
 
     @RequestMapping(value = "/{ideaId}", method = RequestMethod.DELETE)
     public HttpEntity<IdeaResource> delete(@PathVariable final long ideaId) {
-        this.ideaService.deleteById(ideaId);
+        this.ideaService.setDeletedStateById(ideaId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -83,7 +83,6 @@ public class IdeaController {
         final List<Comment> comments = this.commentService.findCommentsByIdeaId(pageable, ideaId);
         return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
     }
-
 
     @RequestMapping(value = "/{ideaId}/comments", method = RequestMethod.POST)
     public HttpEntity<CommentResource> create(@Valid @RequestBody final CommentResource commentRes,

@@ -93,6 +93,14 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     @PostAuthorize("hasRole('ADMIN') or returnObject.author.id == principal.id")
+    public Idea setDeletedStateById(final long ideaId) {
+        final Idea idea = findOne(ideaId);
+        idea.setState(State.Deleted);
+        return idea;
+    }
+
+    @Override
+    @PostAuthorize("hasRole('ADMIN') or returnObject.author.id == principal.id")
     public Idea update(final long ideaId, final Idea source) {
         final Idea target = findOne(ideaId);
         target.updateWith(source);
