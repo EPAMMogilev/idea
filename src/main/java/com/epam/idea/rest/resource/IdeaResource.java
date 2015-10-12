@@ -154,6 +154,7 @@ public class IdeaResource extends ResourceSupport {
         idea.setLongitude(longitude);
         idea.setImageUrl(imageUrl);
         idea.setLiked(liked);
+        idea.setState(state);
         return idea;
     }
 

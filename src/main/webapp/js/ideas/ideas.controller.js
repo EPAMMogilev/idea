@@ -8,10 +8,12 @@
 
 	function ideasCtrl($scope, $location, $rootScope, ideasFactory, tagsFactory, mapGeoService) {
 
+		
 		var vm = this;
 		var userId = null;
 		$scope.geoObjects = null;
 		$scope.criteria = null;
+		vm.tabAll = 'TAB_ALL';
 		vm.query = null;
 
 		vm.paramsForPopular = {
@@ -39,6 +41,12 @@
 			return result;
 		}
 		
+		function changeTabAllIdeas () {
+			if (onMyIdeasPage()) {
+				vm.tabAll = 'TAB_ALL_MY';
+			}
+		}
+		
         function activate() {
             if(onMyIdeasPage()) {
             	userId = $rootScope.currentUser.id;
@@ -46,6 +54,7 @@
             	userId = null;
             }
             vm.query = null;
+            changeTabAllIdeas();
             $rootScope.$broadcast('query-clean');
         }
 
@@ -133,7 +142,7 @@
 				id:idea.id
 			};
 
-			console.log('Go to Details');
+			console.log('Go to Details');/*RemoveLogging:skip*/
 			$state.go('ideaDetails', { 'idea': angular.toJson(ideaDetail) });
 		};
 

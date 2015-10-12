@@ -51,6 +51,8 @@
     "HOME": "На главную",
     "REGISTER": "Регистрация",
     "TITLE_REQUIRED": "Требуется идея",
-    "DESCRIPTION_REQUIRED": "Требуется описание"
+    "DESCRIPTION_REQUIRED": "Требуется описание",
+    "TAB_ALL": "Все",
+    "TAB_ALL_MY": "Все мои"
 }
 

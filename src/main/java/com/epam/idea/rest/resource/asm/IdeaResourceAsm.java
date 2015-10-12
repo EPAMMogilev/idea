@@ -42,6 +42,7 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
         ideaResource.setCreationTime(original.getCreationTime());
         ideaResource.setModificationTime(original.getModificationTime());
         ideaResource.setRating(original.getRating());
+        ideaResource.setState(original.getState());
         ideaResource.setLatitude(original.getLatitude());
         ideaResource.setLongitude(original.getLongitude());
         ideaResource.setImageUrl(original.getImageUrl());
