@@ -24,6 +24,18 @@ public interface IdeaService extends BaseService<Idea, Long> {
     Idea deleteById(long ideaId);
 
     /**
+     * Sets the idea state to 'deleted'.
+     *
+     * @param ideaId
+     *            The id of the deleted idea.
+     * @return The deleted idea.
+     * @throws com.epam.idea.core.service.exception.IdeaNotFoundException
+     *             if no idea was found with the given id.
+     */
+    @PostAuthorize("hasRole('ADMIN') or returnObject.author.id == principal.id")
+    Idea setDeletedStateById(long ideaId);
+
+    /**
      * Updates the information of an idea.
      *
      * @param ideaId
