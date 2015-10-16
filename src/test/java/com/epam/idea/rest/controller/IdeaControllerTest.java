@@ -11,6 +11,7 @@ import com.epam.idea.core.model.User;
 import com.epam.idea.core.service.CommentService;
 import com.epam.idea.core.service.IdeaService;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
+import com.epam.idea.core.util.State;
 import com.epam.idea.rest.annotation.WebAppUnitTest;
 import com.epam.idea.rest.resource.CommentResource;
 import com.epam.idea.rest.resource.IdeaResource;
@@ -48,6 +49,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -151,7 +153,8 @@ public class IdeaControllerTest {
     public void shouldCreateIdeaAndReturnItWithHttpCode201() throws Exception {
         final IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
         final Idea createdIdea = new TestIdeaBuilder().withId(10L).withTitle(source.getTitle())
-                .withDescription(source.getDescription()).withState(source.getState()).withRating(source.getRating()).build();
+                .withDescription(source.getDescription()).withState(source.getState()).withRating(source.getRating())
+                .build();
 
         when(this.ideaServiceMock.create(any(Idea.class))).thenReturn(createdIdea);
 
@@ -198,24 +201,25 @@ public class IdeaControllerTest {
 
     @Test
     public void shouldDeleteIdeaAndReturnHttpCode200() throws Exception {
-        final Idea deleted = TestIdeaBuilder.anIdea().build();
+        final Idea deleted = TestIdeaBuilder.anIdea().withState(State.Deleted).build();
 
-        when(this.ideaServiceMock.deleteById(deleted.getId())).thenReturn(deleted);
+        when(this.ideaServiceMock.setDeletedStateById(deleted.getId())).thenReturn(deleted);
 
         this.mockMvc
                 .perform(delete("/api/v1/ideas/{ideaId}", deleted.getId()).contentType(APPLICATION_JSON_UTF8)
                         .accept(APPLICATION_JSON_UTF8))
                 .andDo(print()).andExpect(status().isOk()).andExpect(content().string(EMPTY));
 
-        verify(this.ideaServiceMock, times(1)).deleteById(deleted.getId());
+        verify(this.ideaServiceMock, times(1)).setDeletedStateById(deleted.getId());
         verifyNoMoreInteractions(this.ideaServiceMock);
+        assertEquals("Check Idea has Deleted State", State.Deleted, deleted.getState());
     }
 
     @Test(expected = NestedServletException.class)
     public void shouldReturnErrorWithHttpStatus404WhenDeleteIdeaWhichDoesNotExist() throws Exception {
         final long ideaId = 6L;
 
-        when(this.ideaServiceMock.deleteById(ideaId)).thenThrow(new IdeaNotFoundException(ideaId));
+        when(this.ideaServiceMock.setDeletedStateById(ideaId)).thenThrow(new IdeaNotFoundException(ideaId));
 
         this.mockMvc
                 .perform(delete("/api/v1/ideas/{ideaId}", ideaId).accept(APPLICATION_JSON_UTF8)
@@ -225,7 +229,7 @@ public class IdeaControllerTest {
                 .andExpect(jsonPath("$[0].message").value("Could not find idea with id: " + ideaId + "."))
                 .andExpect(jsonPath("$[0].links", hasSize(0)));
 
-        verify(this.ideaServiceMock, times(1)).deleteById(ideaId);
+        verify(this.ideaServiceMock, times(1)).setDeletedStateById(ideaId);
         verifyNoMoreInteractions(this.ideaServiceMock);
     }
 
@@ -342,20 +346,21 @@ public class IdeaControllerTest {
     public void shouldCreateCommentAndReturnItWithHttpCode201() throws Exception {
         final CommentResource source = TestCommentResourceBuilder.aCommentResource().build();
         final Idea subject = TestIdeaBuilder.anIdea().build();
-        final Comment createdComment = new TestCommentBuilder().withId(10L).withBody("Some text").withSubject(subject).build();
+        final Comment createdComment = new TestCommentBuilder().withId(10L).withBody("Some text").withSubject(subject)
+                .build();
         final Long ideaId = 1L;
 
         when(this.commentServiceMock.create(any(Comment.class), eq(ideaId))).thenReturn(createdComment);
 
         this.mockMvc
-                .perform(post("/api/v1/ideas/{ideaId}/comments", ideaId).contentType(APPLICATION_JSON_UTF8).accept(APPLICATION_JSON_UTF8)
-                        .content(convertObjectToJsonBytes(source)))
+                .perform(post("/api/v1/ideas/{ideaId}/comments", ideaId).contentType(APPLICATION_JSON_UTF8)
+                        .accept(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(source)))
                 .andDo(print()).andExpect(status().isCreated()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.body").value(createdComment.getBody()))
                 .andExpect(jsonPath("$.rating").value(createdComment.getRating()))
-                .andExpect(jsonPath("$.links", hasSize(2)))
-                .andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
-                .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/comments/" + createdComment.getId())));
+                .andExpect(jsonPath("$.links", hasSize(2))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links[0].href")
+                        .value(containsString("/api/v1/comments/" + createdComment.getId())));
 
         final ArgumentCaptor<Comment> userCaptor = ArgumentCaptor.forClass(Comment.class);
         verify(this.commentServiceMock, times(1)).create(userCaptor.capture(), eq(ideaId));
