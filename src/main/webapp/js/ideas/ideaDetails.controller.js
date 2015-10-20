@@ -28,7 +28,7 @@
 			$scope.modalInstance = $modal.open({
 				animation: true,
 				templateUrl: 'pages/public/largeMap.html',
-				controller: 'loadModalLargeMap',
+				controller: 'modalLargeMap',
 				resolve: {
 					geo: function () {
 			            return $scope.geoPoints;
