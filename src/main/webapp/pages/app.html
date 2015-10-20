@@ -21,14 +21,14 @@
         </div>
         <!--div id="map" class="mapMainPage" -->
         <!--/div-->
-        <ya-map ya-zoom="11" ya-center="[30.331014, 53.894617]" ya-controls="smallMapDefaultSet" class="mapMainPage">
+        <ya-map ya-zoom="11" ya-center="{{mapCenter}}" ya-controls="smallMapDefaultSet" class="mapMainPage">
             <ya-toolbar ya-name="zoomControl"></ya-toolbar>
             <ya-toolbar ya-name="scaleLine"></ya-toolbar>
             <ya-toolbar ya-name="typeSelector"></ya-toolbar>
             <!-- list gps coords -->
             <ya-collection ya-options="{preset:'twirl#blueIcon'}">
                 <ya-cluster ya-options="{preset:'islands#invertedLightblueClusterIcons'}">
-                    <ya-geo-object ya-source="item"></ya-geo-object>
+                    <ya-geo-object ng-repeat="item in geoObjects" ya-source="item"></ya-geo-object>
                 </ya-cluster>
             </ya-collection>
         </ya-map>

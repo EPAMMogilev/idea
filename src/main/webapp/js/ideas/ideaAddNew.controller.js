@@ -31,19 +31,13 @@
             $window.location.href = '#home';
 		};
 
-		$scope.openModalWindow = function(){
+		$scope.openModalWindowLoadingProgress = function(){
 			$scope.modalInstance = $modal.open({
 				animation: true,
 				templateUrl: 'myModalContent.html',
-				controller: 'loadModalWindow',
-				size: 'lg'/*,
-				resolve: {
-				  caption: function () {
-					return $scope.caption;
-				  }
-				}*/
+				size: 'lg'
 			  });
-		};//openModalWindow
+		};//openModalWindowLoadingProgress
 
 		$scope.closeModalWindow = function(){
 			//$scope.modalInstance.dismiss('cancel');
@@ -68,7 +62,7 @@
 				if(input && input.files && input.files[0]){
 					$scope.imageFile = input.files[0];
 
-					$scope.openModalWindow();
+					$scope.openModalWindowLoadingProgress();
 					/*
 					//load file to imgur
 					imgur.setAPIKey('Client-ID c62cfae02efe4c0');

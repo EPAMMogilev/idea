@@ -24,18 +24,18 @@
 				sort: 'creationTime,desc'
 			};
 
-		$scope.openModalWindow = function(){
+		$scope.loadModalLargeMap = function(){
 			$scope.modalInstance = $modal.open({
 				animation: true,
-				templateUrl: 'myModalContent.html',
-				controller: 'loadModalWindow',
+				templateUrl: 'pages/public/largeMap.html',
+				controller: 'loadModalLargeMap',
 				resolve: {
 					geo: function () {
 			            return $scope.geoPoints;
 			        }
 			    }	
 			  });
-		};//openModalWindow
+		};//loadModalLargeMap
 		
 		this.loadPageForComments = function(){
 			vm.paramsForComments.page++;
@@ -115,8 +115,7 @@
 		//init function: load map point
 		$scope.init = function(){
 			$scope.myMap = new ymaps.Map("map", {
-				//[53.894617; 30.331014]
-				center: [30.331014, 53.894617],
+				center: mapGeoService.getMapCenter(),
 				zoom: 11
 			});
 		}

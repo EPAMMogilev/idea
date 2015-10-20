@@ -53,6 +53,7 @@
     "TITLE_REQUIRED": "Требуется идея",
     "DESCRIPTION_REQUIRED": "Требуется описание",
     "TAB_ALL": "Все",
-    "TAB_ALL_MY": "Все мои"
+    "TAB_ALL_MY": "Все мои",
+    "Img_Load_Progress_msg": "Идет загрузка изображения. Дождитесь окончания..."
 }
 

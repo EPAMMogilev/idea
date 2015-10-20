@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
-                        <div id="map" class="mapDetails" ng-click="openModalWindow()"></div>
+                        <div id="map" class="mapDetails" ng-click="loadModalLargeMap()"></div>
                     </div>
                     <div class="col-md-9">
                         <div id="divData" class="row">
@@ -78,14 +78,3 @@
 
     </div>
 </div>
-<script type="text/ng-template" id="myModalContent.html">
-    <div class="modal-header">
-        <h3>Map Detail</h3>
-    </div>
-    <div class="modal-body" ng-init="initModal()">
-        <div id="mapModal" class="fullMap"></div>
-    </div>
-    <div class="modal-footer">
-        <button id="btnClose" class="btn btn-warning" ng-click="close()">Close</button>
-    </div>
-</script>
