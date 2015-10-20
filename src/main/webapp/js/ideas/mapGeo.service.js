@@ -45,7 +45,10 @@
 					}//for
 				}//if
 				return geoObjects;
-			}//generateGeoObjects
+			},//generateGeoObjects
+			getMapCenter:function(){
+				return [30.331014, 53.894617];
+			},//getMapCenter
 		};
 	};
 })();

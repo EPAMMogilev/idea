@@ -5,10 +5,10 @@
 		.module('app.controllers')
 		.controller('detailsCtrl', detailsCtrl);
 
-	detailsCtrl.$inject = ['$scope', '$window', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'usersService', 'commentsFactory'];
+	detailsCtrl.$inject = ['$scope', '$window', '$modal', '$state', '$rootScope', 'ideasFactory', 'ideaDetails', 'mapGeoService', 'usersService', 'commentsFactory'];
 
-	function detailsCtrl($scope, $window, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, usersService, commentsFactory) {
-
+	function detailsCtrl($scope, $window, $modal, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, usersService, commentsFactory) {
+		$scope.modalInstance = null;
 		$scope.idea = ideaDetails;
 		$scope.likedUsersList = null;
 		$scope.data = null;
@@ -24,6 +24,19 @@
 				sort: 'creationTime,desc'
 			};
 
+		$scope.loadModalLargeMap = function(){
+			$scope.modalInstance = $modal.open({
+				animation: true,
+				templateUrl: 'pages/public/largeMap.html',
+				controller: 'loadModalLargeMap',
+				resolve: {
+					geo: function () {
+			            return $scope.geoPoints;
+			        }
+			    }	
+			  });
+		};//loadModalLargeMap
+		
 		this.loadPageForComments = function(){
 			vm.paramsForComments.page++;
 			var promiseResponse = commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id);
@@ -50,11 +63,11 @@
 
 				//set geo point
 				if($scope.data && $scope.data.latitude && $scope.data.longitude){
-					var geoPoints = {
+					$scope.geoPoints = {
 						latitude: $scope.data.latitude,
 						longitude: $scope.data.longitude
 					};
-					mapGeoService.setGeoCoordsSimpleMap($scope.myMap, geoPoints);
+					mapGeoService.setGeoCoordsSimpleMap($scope.myMap, $scope.geoPoints);
 				}//if
 
 				//set image
@@ -102,8 +115,7 @@
 		//init function: load map point
 		$scope.init = function(){
 			$scope.myMap = new ymaps.Map("map", {
-				//[53.894617; 30.331014]
-				center: [30.331014, 53.894617],
+				center: mapGeoService.getMapCenter(),
 				zoom: 11
 			});
 		}
@@ -127,7 +139,7 @@
 		$scope.cancelAddComment = function(){
 			$scope.commentBody = null;
 		};
+		
 	}
-
 
 })();

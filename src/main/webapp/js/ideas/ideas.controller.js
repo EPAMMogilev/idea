@@ -13,6 +13,8 @@
 		var userId = null;
 		$scope.geoObjects = null;
 		$scope.criteria = null;
+		$scope.mapCenter = mapGeoService.getMapCenter();
+		
 		vm.tabAll = 'TAB_ALL';
 		vm.query = null;
 

@@ -7,7 +7,7 @@
             <div id="lineDivsLeftInsert">
                 <!-- idea -->
                 <div id="divData">
-                    <div id="tdCaption"translate="CATEGORY"></div>
+                    <div id="tdCaption" translate="CATEGORY"></div>
                     <div id="tdDataInsert">
                         <!--select class="form-control" ng-model="data.tagId" >
                             <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}" >{{cat.descr}}</option>
@@ -16,8 +16,10 @@
                     </div>
                 </div>
                 <!-- descr -->
-                <div id="divData" class="form-group"  ng-class="{ 'has-error' : ideaForm.edtIdea.$invalid && (submitted || ideaForm.edtIdea.$dirty)}">
-                    <div id="tdCaption" class="requiredField"><label>{{ 'IDEA' | translate }}</label></div>
+                <div id="divData" class="form-group" ng-class="{ 'has-error' : ideaForm.edtIdea.$invalid && (submitted || ideaForm.edtIdea.$dirty)}">
+                    <div id="tdCaption" class="requiredField">
+                        <label>{{ 'IDEA' | translate }}</label>
+                    </div>
                     <div id="tdDataInsert" class="controls form-inline">
                         <input type="text" id="searchLine" class="form-control" name="edtIdea" placeholder="{{ 'IDEA' | translate }}" ng-model="data.title" required>
                         <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtIdea.$dirty" ng-messages="ideaForm.edtIdea.$error">
@@ -27,7 +29,9 @@
                 </div>
                 <!-- created -->
                 <div id="divData" class="form-group" ng-class="{ 'has-error' : ideaForm.edtDescription.$invalid && (submitted || ideaForm.edtDescription.$dirty)}">
-                    <div id="tdCaption" class="requiredField"><label>{{ 'DESCRIPTION' | translate }}</label></div>
+                    <div id="tdCaption" class="requiredField">
+                        <label>{{ 'DESCRIPTION' | translate }}</label>
+                    </div>
                     <div id="tdDataInsert" class="controls form-inline">
                         <textarea class="form-control" id="searchLine" name="edtDescription" placeholder="{{ 'DESCRIPTION' | translate }}" rows="5" ng-model="data.description" required></textarea>
                         <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtDescription.$dirty" ng-messages="ideaForm.edtDescription.$error">
@@ -41,17 +45,17 @@
             </div>
         </div>
 
-        <div id="bottomButtonsBar" ngf-drop ng-model="files" class="drop-box"  ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="false" accept="image/*">
-            <button class="btn btn-default" ng-click="chooseFile()" translate="UPLOAD_FILE"/> <b translate="OR"/> <span translate="DRAG_FILE"/>
+        <div id="bottomButtonsBar" ngf-drop ng-model="files" class="drop-box" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="false" accept="image/*">
+            <button class="btn btn-default" ng-click="chooseFile()" translate="UPLOAD_FILE" /> <b translate="OR" /> <span translate="DRAG_FILE" />
             <p id="pFileName"></p>
-            <input type="file" id="imageLoader"/>
+            <input type="file" id="imageLoader" />
         </div>
     </div>
 
     <!-- map for this idea -->
     <div id="shadowBox">
         <!--div id="map" class="mapDetails"></div-->
-        <ya-map ya-zoom="11" ya-center="{{center}}" class="mapDetailsInsert" ya-controls="smallMapDefaultSet" ya-before-init="beforeInit()"  ya-after-init="afterInit($target)" ya-event-click="mapClick($event)">
+        <ya-map ya-zoom="11" ya-center="{{center}}" class="mapDetailsInsert" ya-controls="smallMapDefaultSet" ya-before-init="beforeInit()" ya-after-init="afterInit($target)" ya-event-click="mapClick($event)">
             <ya-toolbar ya-name="zoomControl"></ya-toolbar>
             <ya-toolbar ya-name="scaleLine"></ya-toolbar>
             <ya-toolbar ya-name="typeSelector"></ya-toolbar>
@@ -61,10 +65,10 @@
     <div id="shadowBox">
         <div id="bottomButtonsBar">
             <div id="divLeft">
-                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK"/> </button>
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <span translate="BACK" /> </button>
             </div>
             <div id="divRight">
-                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}"/></button>
+                <button id="btnInsertUpdate" class="btn btn-primary" ng-click="doWork(data)" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span translate="{{bottomButtonName}}" /></button>
             </div>
         </div>
     </div>
@@ -73,7 +77,7 @@
         <div id="modalWindow" class="div-main clear-fix">
             <div>
                 <img src="images/idea.png" id="modalImg">
-                <h2 class="modalWindowCaption">{{caption}}</h2>
+                <h2 class="modalWindowCaption">{{ 'Img_Load_Progress_msg' | translate }}</h2>
             </div>
             <hr class="modalHR">
             <div>

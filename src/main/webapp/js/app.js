@@ -23,7 +23,7 @@ angular
 		'ngFileUpload',
         'ngMessages',
         'pascalprecht.translate',
-        'ngSanitize'
+        'ngSanitize'        
 	]);
 
 	angular.module('app.directives', []); // set Directives
