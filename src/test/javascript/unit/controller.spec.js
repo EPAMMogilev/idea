@@ -232,7 +232,8 @@ describe('Idea details controllers testing', function(){
 					ideasFactory: myIdeasFactory,
 					commentsFactory: myCommentsFactory,
 					usersService: myUsersService,
-					ideaDetails: vIdeaDetails
+					ideaDetails: vIdeaDetails,
+					$modal: {}
 				});
 		};
 	}));

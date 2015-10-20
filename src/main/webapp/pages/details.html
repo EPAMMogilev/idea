@@ -1,81 +1,95 @@
-﻿<div class="row">
-<div class="col-md-8 col-md-offset-2" ng-init="init()">
-    <div id="shadowBox" class="row">
-        <div id="topDiv" class="container">
-            <p id="p">#{{data.id}} - {{data.title}}</p>
-        </div>
-        <!-- details -->
-        <div id="dataDiv" class="container">
-	        <div class="row">
-	            <div class="col-md-3">
-	                <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
-	                <button type="button" class="btn btn-link showMapLink" ng-click="changeMapVisibility();">{{ 'SHOW_HIDE_MAP' | translate }}</button>
-	                <div id="map" class="mapDetails"></div>
-	            </div>
-	            <div class="col-md-9">
-	                <div id="divData" class="row">
-	                    <div id="tdCaptionDetails" class="col-md-2" translate="IDEA"></div>
-	                    <div id="tdData" class="col-md-10">{{data.title}}</div>
-	                </div>
-	                <!-- descr -->
-	                <div id="divData" class="row">
-	                    <div id="tdCaptionDetails" class="col-md-2" translate="DESCRIPTION"></div>
-	                    <div id="tdData" class="col-md-10">{{data.description}}</div>
-	                </div>
-	                <!-- author -->
-	                <div id="divData" class="row">
-	                    <div id="tdCaptionDetails" class="col-md-2" translate="AUTHOR"></div>
-	                    <div id="tdData" class="col-md-10" >{{data.author.username}}</div>
-	                </div>
-	                <!-- created -->
-	                <div id="divData" class="row">
-	                    <div id="tdCaptionDetails" class="col-md-2" translate="CREATED"></div>
-	                    <div id="tdData" class="col-md-10">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
-	                </div>
-	                <div id="divData" class="row">
-	                    <div id="divRating" class="col-md-12" >
-	                        <span content="{{likedUsersList}}" container="#divRating" hover-popover>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2" ng-init="init()">
+        <div id="shadowBox" class="row">
+            <div id="topDiv" class="container">
+                <p id="p">#{{data.id}} - {{data.title}}</p>
+            </div>
+            <!-- details -->
+            <div id="dataDiv" class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
+                        <button type="button" class="btn btn-link showMapLink" ng-click="changeMapVisibility();">{{ 'SHOW_HIDE_MAP' | translate }}</button>
+                        <div id="map" class="mapDetails" ng-click="openModalWindow()">map</div>
+
+                    </div>
+                    <div class="col-md-9">
+                        <div id="divData" class="row">
+                            <div id="tdCaptionDetails" class="col-md-2" translate="IDEA"></div>
+                            <div id="tdData" class="col-md-10">{{data.title}}</div>
+                        </div>
+                        <!-- descr -->
+                        <div id="divData" class="row">
+                            <div id="tdCaptionDetails" class="col-md-2" translate="DESCRIPTION"></div>
+                            <div id="tdData" class="col-md-10">{{data.description}}</div>
+                        </div>
+                        <!-- author -->
+                        <div id="divData" class="row">
+                            <div id="tdCaptionDetails" class="col-md-2" translate="AUTHOR"></div>
+                            <div id="tdData" class="col-md-10">{{data.author.username}}</div>
+                        </div>
+                        <!-- created -->
+                        <div id="divData" class="row">
+                            <div id="tdCaptionDetails" class="col-md-2" translate="CREATED"></div>
+                            <div id="tdData" class="col-md-10">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+                        </div>
+                        <div id="divData" class="row">
+                            <div id="divRating" class="col-md-12">
+                                <span content="{{likedUsersList}}" container="#divRating" hover-popover>
 	                            <span id="rating">{{data.rating}}</span>
-			                    <span class="btn btn-thumbs font-cenralbig" ng-click="changeLike();" ng-show="authenticated">
+                                <span class="btn btn-thumbs font-cenralbig" ng-click="changeLike();" ng-show="authenticated">
 				                    <i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="data.liked"></i>
 				                    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="data.liked"></i>
 			                    </span>
-			                </span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-        </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div id="bottomButtonsBar" class="container" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
-            <div id="divRightAlignRight" >
-                <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
-                <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
+            <div id="bottomButtonsBar" class="container" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
+                <div id="divRightAlignRight">
+                    <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
+                    <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>
+                </div>
             </div>
         </div>
+
+        <!-- suggestions for this idea -->
+        <div id="shadowBox" class="row">
+            <div id="likeDiv" class="container">
+                <p id="p" translate="COMMENTS"></p>
+            </div>
+            <div id="scrollCommentsDiv" class="scrollable container" scrollable-list update-function="detailsCtrl.loadPageForComments()">
+                <div id="commentsDiv" class="container">
+                    <div class="withoutComments" translate="WITHOUT_COMMENTS" ng-show="detailsCtrl.comments == null || detailsCtrl.comments.length == 0"></div>
+                    <div class="media comment" ng-repeat="comment in detailsCtrl.comments" show-comment comment="comment" is-authenticated="authenticated">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" ng-show="authenticated">
+                <form name="addCommentForm" class="addCommentForm" role="form" novalidate>
+                    <textarea id="newComment" placeholder="{{ 'ENTER_COMMENT' | translate }}" required ng-model="commentBody" style="height: 103px;"></textarea>
+                    <button id="btnAddComment" class="btn btn-success green" type="submit" ng-disabled="addCommentForm.$invalid" ng-click="addComment()"><i class="fa fa-share"></i>{{ 'ADD' | translate }}</button>
+                </form>
+            </div>
+
+        </div>
+
     </div>
-
-    <!-- suggestions for this idea -->
-    <div id="shadowBox" class="row">
-        <div id="likeDiv" class="container">
-            <p id="p" translate="COMMENTS"></p>
+</div>
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="col-md-8 col-md-offset-2" ng-init="initModal()">
+        <div class="modal-header">
+            <h3>Map Detail</h3>
         </div>
-        <div id="scrollCommentsDiv" class="scrollable container" scrollable-list update-function="detailsCtrl.loadPageForComments()">
-	        <div id="commentsDiv" class="container">
-	            <div class="withoutComments" translate="WITHOUT_COMMENTS" ng-show="detailsCtrl.comments == null || detailsCtrl.comments.length == 0"></div>
-	            <div class="media comment" ng-repeat="comment in detailsCtrl.comments" show-comment comment="comment" is-authenticated="authenticated">
-	            </div>
-	        </div>
+        <div class="modal-body">
+            <div id="mapModal" class="fullMap"></div>
         </div>
-
-        <div class="container" ng-show="authenticated">
-	        <form name="addCommentForm" class="addCommentForm" role="form" novalidate>
-				<textarea id="newComment" placeholder="{{ 'ENTER_COMMENT' | translate }}" required ng-model="commentBody" style="height: 103px;"></textarea>
-				<button id="btnAddComment" class="btn btn-success green" type="submit" ng-disabled="addCommentForm.$invalid" ng-click="addComment()"><i class="fa fa-share"></i>{{ 'ADD' | translate }}</button>
-			</form>
+        <div class="modal-footer">
+            <button id="btnClose" class="btn btn-warning" ng-click="close()">Close</button>
         </div>
-
     </div>
-
-</div>
-</div>
+</script>
