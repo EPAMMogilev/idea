@@ -33,6 +33,7 @@
     "I_HAVE_IDEA": "I Have Idea!",
     "SIGN_IN_WITH": "Sign in with",
     "ADD_IDEA": "Add Idea",
+    "CHANGE_IDEA": "Change Idea",
     "PROFILE": "Profile",
     "MY_IDEA": "My idea",
     "MY_IDEAS": "My ideas",
@@ -53,8 +54,10 @@
     "REGISTER": "Register",
     "TITLE_REQUIRED": "Idea is required",
     "DESCRIPTION_REQUIRED": "Description is required",
+    "STATE_REQUIRED": "State is required",
     "TAB_ALL": "All",
     "TAB_ALL_MY": "All my",
-    "Img_Load_Progress_msg": "Loading image. Please wait ..."
+    "Img_Load_Progress_msg": "Loading image. Please wait ...",
+    "Idea_State": "State"
 }
 

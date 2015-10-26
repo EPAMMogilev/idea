@@ -12,7 +12,8 @@
 			ideas: ideas,
 			tags: tags,
 			users: users,
-			comments: comments
+			comments: comments,
+			ideaStates: ideaStates
 		};
 
 		return factory;
@@ -51,6 +52,13 @@
 		function comments() {
 			return $resource('api/v1/comments/', {}, {
 				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/comments/:id/like/'}
+			});
+		}
+		
+		function ideaStates() {
+			return $resource('api/v1/states/', {}, {
+				get:  {method:'GET', isArray:true}
+			
 			});
 		}
 	}

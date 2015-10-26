@@ -32,6 +32,7 @@
     "I_HAVE_IDEA":"У меня есть идея!",
     "SIGN_IN_WITH":"Войти через",
     "ADD_IDEA":"Добавить идею",
+    "CHANGE_IDEA": "Изменить идею",
     "PROFILE":"Профиль",
     "MY_IDEA":"Мои идея",
     "MY_IDEAS":"Мои идеи",
@@ -52,8 +53,10 @@
     "REGISTER": "Регистрация",
     "TITLE_REQUIRED": "Требуется идея",
     "DESCRIPTION_REQUIRED": "Требуется описание",
+    "STATE_REQUIRED": "Требуется статус",
     "TAB_ALL": "Все",
     "TAB_ALL_MY": "Все мои",
-    "Img_Load_Progress_msg": "Идет загрузка изображения. Дождитесь окончания..."
+    "Img_Load_Progress_msg": "Идет загрузка изображения. Дождитесь окончания...",
+    "Idea_State": "Статус"
 }
 

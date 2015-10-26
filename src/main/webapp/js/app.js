@@ -23,7 +23,7 @@ angular
 		'ngFileUpload',
         'ngMessages',
         'pascalprecht.translate',
-        'ngSanitize'        
+        'ngSanitize'
 	]);
 
 	angular.module('app.directives', []); // set Directives
@@ -42,8 +42,9 @@ angular
     config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider'];
     function config($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider) {
 
-        $urlRouterProvider.otherwise('/home');
-
+    	
+    
+    $urlRouterProvider.otherwise('/home');
 
     $stateProvider.
         state('root', {
@@ -88,7 +89,6 @@ angular
 					resolve: {
 						ideaDetails: ['$stateParams',
 						  function ($stateParams) {
-
 							var idea = angular.fromJson($stateParams.idea);
 							return idea;
 						  }]
@@ -101,7 +101,7 @@ angular
         state('ideaAddNew', {
             url: '/ideaAddNew',
             views: {
-                'main@': { templateUrl: 'pages/addNewIdea.html', controller: 'addNewIdea as ctrl'}
+                'main@': { templateUrl: 'pages/createUpdateIdea.html', controller: 'addNewIdea as ctrl'}
             },/*
             onEnter:  function(){ ymaps.ready(mapInit)},*/
             //onEnter:  function(){ initLoadFile()},
@@ -118,7 +118,7 @@ angular
             url: '/ideaUpdate:idea',
             views: {
                 'main@': {
-                    templateUrl: 'pages/addNewIdea.html',
+                    templateUrl: 'pages/createUpdateIdea.html',
                     controller: 'updateIdea as ctrl',
                     resolve: {
                         ideaDetails: ['$stateParams',
@@ -145,9 +145,12 @@ angular
 
 
 
-       run.$inject = ['$rootScope', '$location', 'authorizationService'];
-           function run($rootScope, $location, authorizationService) {
-               $rootScope.previousPage;
+       run.$inject = ['$rootScope', '$location', 'authorizationService', 'stateService', '$q'];
+           function run($rootScope, $location, authorizationService, stateService, $q) {
+        	   
+        	   stateService.init().then(function() {$q.defer().resolve();});
+             
+        	   $rootScope.previousPage;
                $rootScope.$on('$locationChangeStart', function (event, next, current) {
                    var restrictedPage;
                    $rootScope.previousPage = current;
@@ -178,6 +181,7 @@ angular
 //                    if (loginPage && loggedIn) {
 //                        $location.path('/home');
                });
+           
            }
 
            $.inArrayRegEx = function(address, array) {
@@ -193,7 +197,10 @@ angular
         	   var stringIdea = path.substring(path.indexOf("{"), path.indexOf("}") + 1);
         	   return angular.fromJson(stringIdea);
            }
-
+           
+           
+          
+           
 
 })();
 
