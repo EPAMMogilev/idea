@@ -20,20 +20,8 @@ function stateService($http) {
         
         init:function(){
         	return promise;
-        },//init
-        
-        findStateIndex:function(state){
-        	var index = null;
-        	ideaStates.forEach(function(item, i, ideaStates) {
-        		  if(item === state){
-        			 index = i;
-        		  }
-        	});
-        	return index;
-        }//findStateIndex
-       
-      
-        
+        }//init
+         
     };
 };
 })();

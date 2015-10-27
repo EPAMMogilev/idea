@@ -79,9 +79,6 @@ public class IdeaControllerTest {
     @Autowired
     private CommentService commentServiceMock;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
     private MockMvc mockMvc;
 
     private final Pageable defaultPageRequest = new PageRequest(0, 500, null);

@@ -17,8 +17,7 @@
             removeIdea: removeIdea,
             changeIdeaLike: changeIdeaLike,
             getPage: getPage,
-            isUserAuthorOfIdea: isUserAuthorOfIdea,
-            getIdeaStates: getIdeaStates 
+            isUserAuthorOfIdea: isUserAuthorOfIdea 
         };
         return publicMethod;
 

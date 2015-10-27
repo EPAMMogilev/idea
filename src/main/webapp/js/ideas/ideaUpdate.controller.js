@@ -90,9 +90,7 @@
         		//success
         		function( value ) {
         			$scope.data = value;
-        			$scope.data.state = stateService.findStateIndex(value.state);
         			//set geo point
-        			
         			if($scope.data && $scope.data.latitude && $scope.data.longitude && map){
         				var geoPoints = {
         					latitude: $scope.data.latitude,
@@ -136,7 +134,7 @@
                 author:idea.author,
                 latitude: (ideaCoords)?ideaCoords[1]:0,
 				longitude: (ideaCoords)?ideaCoords[0]:0,
-				state: data.state
+				state: data.state.name
 		    };
 
 			if($scope.imageExist == true){

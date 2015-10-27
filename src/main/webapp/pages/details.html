@@ -15,11 +15,7 @@
                     <div class="col-md-9">
 
                         <!-- state -->
-                        <div id="divData" class="row">
-                            <div id="tdCaptionDetails" class="col-md-2" translate="Idea_State"></div>
-                            <div id="tdData" class="label label-default" ng-class="{'label label-success' : data.state == 'New', 'label label-warning' : data.state == 'Assigned', 'label label-danger' : data.state == 'Deleted', 'label label-info' : data.state == 'In Progress'}">{{data.state}}
-                            </div>
-                        </div>
+                        <show-idea-state></show-idea-state>
                         <!-- title -->
                         <div id="divData" class="row">
                             <div id="tdCaptionDetails" class="col-md-2" translate="IDEA"></div>

@@ -12,8 +12,7 @@
 			ideas: ideas,
 			tags: tags,
 			users: users,
-			comments: comments,
-			ideaStates: ideaStates
+			comments: comments
 		};
 
 		return factory;

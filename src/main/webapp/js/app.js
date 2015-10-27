@@ -123,7 +123,7 @@ angular
                     resolve: {
                         ideaDetails: ['$stateParams',
                           function ($stateParams) {
-
+                        	
                             var idea = angular.fromJson($stateParams.idea);
                             return idea;
                           }]
