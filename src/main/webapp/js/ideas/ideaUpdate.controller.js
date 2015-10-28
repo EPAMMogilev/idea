@@ -134,7 +134,7 @@
                 author:idea.author,
                 latitude: (ideaCoords)?ideaCoords[1]:0,
 				longitude: (ideaCoords)?ideaCoords[0]:0,
-				state: data.state.name
+				state: data.state
 		    };
 
 			if($scope.imageExist == true){

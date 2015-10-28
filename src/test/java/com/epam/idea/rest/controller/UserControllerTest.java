@@ -431,7 +431,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$." + ID).value((int) createdIdea.getId()))
                 .andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
                 .andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
-                .andExpect(jsonPath("$.state").value(createdIdea.getState()))
                 .andExpect(jsonPath("$.rating").value(createdIdea.getRating()))
                 .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())))

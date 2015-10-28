@@ -11,9 +11,11 @@ import javax.validation.constraints.Size;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.epam.idea.core.model.Idea;
+import com.epam.idea.core.util.StateDeserializer;
 import com.epam.idea.core.util.State;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class IdeaResource extends ResourceSupport {
 
@@ -48,6 +50,7 @@ public class IdeaResource extends ResourceSupport {
 
     private List<UserResource> likedUsers;
 
+    @JsonProperty("state")
     private State state;
 
     public IdeaResource() {
@@ -178,8 +181,9 @@ public class IdeaResource extends ResourceSupport {
         return state;
     }
 
-    public void setState(final State state) {
-        this.state = state;
+    @JsonDeserialize(using = StateDeserializer.class)
+    public void setState(final State value) {
+        this.state = value;
     }
 
 }
