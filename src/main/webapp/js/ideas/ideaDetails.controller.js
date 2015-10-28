@@ -9,9 +9,9 @@
 
 	function detailsCtrl($scope, $window, $modal, $state, $rootScope, ideasFactory, ideaDetails, mapGeoService, usersService, commentsFactory) {
 		$scope.modalInstance = null;
-		$scope.idea = ideaDetails;
+		$scope.ideaDetails = ideaDetails;
 		$scope.likedUsersList = null;
-		$scope.data = null;
+		$scope.idea = null;
 		$scope.myMap = null;
 
 		$scope.commentBody = null;
@@ -39,7 +39,7 @@
 		
 		this.loadPageForComments = function(){
 			vm.paramsForComments.page++;
-			var promiseResponse = commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id);
+			var promiseResponse = commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.ideaDetails.id);
 			promiseResponse.then(function (comments) {
 				if (comments) {
 					vm.comments = vm.comments.concat(comments);
@@ -48,36 +48,36 @@
 			return promiseResponse;
 		};
 
-		$scope.isAuthor = function(idea) {
-			return ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, idea);
+		$scope.isAuthor = function(ideaDetails) {
+			return ideasFactory.isUserAuthorOfIdea($rootScope.currentUser, ideaDetails);
 		};
 
-		this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
+		this.promises = ideasFactory.getIdeaById($scope.ideaDetails.id).then(
 			//success
 			function( value )
 			{
-				$scope.data = value;
-				if($scope.data != null) {
-					$scope.likedUsersList = usersService.getlikedUsersListAsString($scope.data);
+				$scope.idea = value;
+				if($scope.idea != null) {
+					$scope.likedUsersList = usersService.getlikedUsersListAsString($scope.idea);
 				}
 
 				//set geo point
-				if($scope.data && $scope.data.latitude && $scope.data.longitude){
+				if($scope.idea && $scope.idea.latitude && $scope.idea.longitude){
 					$scope.geoPoints = {
-						latitude: $scope.data.latitude,
-						longitude: $scope.data.longitude
+						latitude: $scope.idea.latitude,
+						longitude: $scope.idea.longitude
 					};
 					mapGeoService.setGeoCoordsSimpleMap($scope.myMap, $scope.geoPoints);
 				}//if
 
 				//set image
-				if($scope.data != null && $scope.data.imageUrl == null){
-				$scope.data.imageUrl = "images/300x300.png";
+				if($scope.idea != null && $scope.idea.imageUrl == null){
+				$scope.idea.imageUrl = "images/300x300.png";
 				}//if
 			}
 		);
 
-		commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.idea.id).then(
+		commentsFactory.getCommentsPageByIdeaId(vm.paramsForComments, $scope.ideaDetails.id).then(
 			//success
 			function(comments)
 			{
@@ -86,11 +86,11 @@
 		);
 
 		$scope.edit = function(){
-			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.idea) });
+			$state.go('ideaUpdate', { 'idea': angular.toJson($scope.ideaDetails) });
 		};
 
 		$scope.remove = function(){
-			ideasFactory.removeIdea($scope.idea).then(
+			ideasFactory.removeIdea($scope.ideaDetails).then(
 				function( value )
 				{
 					alert("Удалено");
@@ -103,11 +103,11 @@
 		};
 
 		$scope.changeLike = function() {
-			ideasFactory.changeIdeaLike($scope.idea.id).then(
-				function (idea) {
-					$scope.data.rating = idea.rating;
-					$scope.data.liked = !$scope.data.liked;
-					$scope.likedUsersList = usersService.getlikedUsersListAsString(idea);
+			ideasFactory.changeIdeaLike($scope.ideaDetails.id).then(
+				function (ideaDetails) {
+					$scope.idea.rating = ideaDetails.rating;
+					$scope.idea.liked = !$scope.idea.liked;
+					$scope.likedUsersList = usersService.getlikedUsersListAsString(ideaDetails);
 				}
 			);
 		};
@@ -125,7 +125,7 @@
 					id: null,
 					body: $scope.commentBody,
 					subject: {
-						id: $scope.idea.id
+						id: $scope.ideaDetails.id
 					}
 				};
 			commentsFactory.createComment(request).then(

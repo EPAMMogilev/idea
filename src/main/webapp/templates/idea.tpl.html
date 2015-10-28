@@ -10,7 +10,7 @@
         <p class="body-text">
             <span ng-bind-html="idea.description | highlightTextInDescriptionOfIdea:ngModel" id="description"></span>
         </p>
-        <p class="label label-default" ng-class="{'label label-success' : idea.state.name == 'New', 'label label-warning' : idea.state.name == 'Assigned', 'label label-danger' : idea.state.name == 'Deleted', 'label label-info' : idea.state.name == 'InProgress'}" id="state">{{idea.state.title}}</p>
+        <p id="state" idea-state-label>{{idea.state.title}}</p>
         <p class="end-text">
             <span class="small-area"><span class="glyphicon glyphicon-time"></span>{{idea.createdAt | date:'dd.MM.yy'}}</span>
             <span id="author" class="small-area"><span class="glyphicon glyphicon-user"></span>{{idea.author.username}}</span>

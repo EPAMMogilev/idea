@@ -249,14 +249,14 @@ describe('Idea details controllers testing', function(){
 
 		var ctrl = detailsIdeaTest();
 		expect(ctrl).toBeDefined();
-		expect(detailsIdeaScope.data).toBeNull();
+		expect(detailsIdeaScope.idea).toBeNull();
 		expect(ctrl.comments).toBeNull();
 
 		detailsIdeaScope.$root.$digest();
 		expect(ctrl.comments.length).toBe(comments.length);
 		expect(ctrl.comments[0].id).toBe(comments[0].id);
 		expect(ctrl.comments[1].id).toBe(comments[1].id);
-		expect(detailsIdeaScope.data.id).toBe(vIdeaDetails.id);
+		expect(detailsIdeaScope.idea.id).toBe(vIdeaDetails.id);
 		expect(detailsIdeaScope.likedUsersList).toBe("");
 	});
 
