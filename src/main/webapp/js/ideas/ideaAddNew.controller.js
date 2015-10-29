@@ -13,7 +13,7 @@
         $scope.bottomButtonName = 'ADD';
         $scope.data = null;
         $scope.submitted = false;
-
+        //$scope.isUpdating = false;
         $scope.imageExist = false;
         $scope.imageFile;
         //$scope.imageUrl = null;
@@ -21,7 +21,7 @@
         //$scope.caption = 'Идет загрузка изображения. Дождитесь окончания...';
         $scope.modalInstance = null;
         $scope.files = null;
-
+        $scope.windowTitle = 'ADD_IDEA';
         //maps data
 		$scope.center = [30.331014, 53.894617];
 		var map = null;

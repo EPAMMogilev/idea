@@ -5,21 +5,26 @@
         .module('app.controllers')
         .controller('updateIdea', updateIdea);
 
-    updateIdea.$inject = ['$scope', '$window', '$modal', 'ideasFactory', 'detailsService', 'ideaDetails', 'mapGeoService', 'imgur', 'Upload'];
+    updateIdea.$inject = ['$scope', '$window', '$modal', 'ideasFactory', 'stateService', 'ideaDetails', 'mapGeoService', 'imgur', 'Upload'];
 
-    function updateIdea($scope, $window, $modal, ideasFactory, detailsService, ideaDetails, mapGeoService, imgur, Upload) {
+    function updateIdea($scope, $window, $modal, ideasFactory, stateService, ideaDetails, mapGeoService, imgur, Upload) {
 
-        this.categories =  detailsService.getCategories();
+        $scope.states = stateService.getIdeaStates();
+    	
         $scope.bottomButtonName = 'UPDATE';
         $scope.idea = ideaDetails;
         $scope.data = null;
-
+        $scope.data
+        
         $scope.imageExist = false;
         $scope.imageFile;
         $scope.imageUrl = null;
         $scope.modalInstance = null;
         $scope.files = null;
-
+        $scope.windowTitle = 'CHANGE_IDEA';
+        
+        $scope.isUpdating = true;
+        
         //maps data
 		$scope.center = [30.331014, 53.894617];
 		var map = null;
@@ -29,13 +34,7 @@
 			$scope.modalInstance = $modal.open({
 				animation: true,
 				templateUrl: 'myModalContent.html',
-				controller: 'loadModalWindow',
-				size: 'lg'/*,
-				resolve: {
-				  caption: function () {
-					return $scope.caption;
-				  }
-				}*/
+				size: 'lg'
 			  });
 		};//openModalWindow
 
@@ -88,25 +87,20 @@
 		};//load2Imgur
 
         this.promises = ideasFactory.getIdeaById($scope.idea.id).then(
-                                       //success
-                                       function( value )
-                                       {
-                                        $scope.data = value;
-
-                                        //set geo point
-
-                                        if($scope.data && $scope.data.latitude && $scope.data.longitude && map){
-                                            var geoPoints = {
-                                                latitude: $scope.data.latitude,
-                                                longitude: $scope.data.longitude
-                                            };
-
-                                            $scope.imageUrl = $scope.data.imageUrl;
-
-                                            mapGeoService.setGeoCoordsDirective(map, geoPoints);
-                                        }//if
-                                       }
-                                     );
+        		//success
+        		function( value ) {
+        			$scope.data = value;
+        			//set geo point
+        			if($scope.data && $scope.data.latitude && $scope.data.longitude && map){
+        				var geoPoints = {
+        					latitude: $scope.data.latitude,
+        					longitude: $scope.data.longitude
+                        };
+        				$scope.imageUrl = $scope.data.imageUrl;
+        				mapGeoService.setGeoCoordsDirective(map, geoPoints);
+        			}//if
+        		}
+        );
 
 		$scope.back = function(){
             $window.location.href = '#home';
@@ -139,7 +133,8 @@
                 tags:tags,
                 author:idea.author,
                 latitude: (ideaCoords)?ideaCoords[1]:0,
-				longitude: (ideaCoords)?ideaCoords[0]:0
+				longitude: (ideaCoords)?ideaCoords[0]:0,
+				state: data.state
 		    };
 
 			if($scope.imageExist == true){

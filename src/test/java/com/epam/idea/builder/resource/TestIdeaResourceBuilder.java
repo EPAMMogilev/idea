@@ -33,8 +33,11 @@ public class TestIdeaResourceBuilder {
     }
 
     public static TestIdeaResourceBuilder anIdeaResource() {
-        return new TestIdeaResourceBuilder().withTitle(DEFAULT_TITLE).withState(DEFAULT_STATE)
-                .withRating(DEFAULT_RATING).withDescription(DEFAULT_DESCRIPTION).withState(DEFAULT_STATE)
+        return new TestIdeaResourceBuilder()
+                .withTitle(DEFAULT_TITLE)
+                .withState(DEFAULT_STATE)
+                .withRating(DEFAULT_RATING)
+                .withDescription(DEFAULT_DESCRIPTION)
                 .withLiked(false);
     }
 

@@ -2,42 +2,51 @@
     <div class="col-md-8 col-md-offset-2" ng-init="init()">
         <div id="shadowBox" class="row">
             <div id="topDiv" class="container">
-                <p id="p">#{{data.id}} - {{data.title}}</p>
+                <p id="p">#{{idea.id}} - {{idea.title}}</p>
             </div>
             <!-- details -->
             <div id="dataDiv" class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        <img id="imgDetails" ng-src="{{data.imageUrl}}" class="img-rounded" id="imgBlock">
+                        <img id="imgDetails" ng-src="{{idea.imageUrl}}" class="img-rounded" id="imgBlock">
                         <div id="map" class="mapDetails" ng-click="loadModalLargeMap()"></div>
                     </div>
+
                     <div class="col-md-9">
+
+                        <!-- state -->
+                        <div id="divData" class="row">
+                            <div id="tdCaptionDetails" class="col-md-2" translate="Idea_State"></div>
+                            <div id="tdData" idea-state-label>{{idea.state.title}}</div>
+                        </div>
+
+                        <!-- title -->
                         <div id="divData" class="row">
                             <div id="tdCaptionDetails" class="col-md-2" translate="IDEA"></div>
-                            <div id="tdData" class="col-md-10">{{data.title}}</div>
+                            <div id="tdData" class="col-md-10">{{idea.title}}</div>
                         </div>
                         <!-- descr -->
                         <div id="divData" class="row">
                             <div id="tdCaptionDetails" class="col-md-2" translate="DESCRIPTION"></div>
-                            <div id="tdData" class="col-md-10">{{data.description}}</div>
+                            <div id="tdData" class="col-md-10">{{idea.description}}</div>
                         </div>
                         <!-- author -->
                         <div id="divData" class="row">
                             <div id="tdCaptionDetails" class="col-md-2" translate="AUTHOR"></div>
-                            <div id="tdData" class="col-md-10">{{data.author.username}}</div>
+                            <div id="tdData" class="col-md-10">{{idea.author.username}}</div>
                         </div>
                         <!-- created -->
                         <div id="divData" class="row">
                             <div id="tdCaptionDetails" class="col-md-2" translate="CREATED"></div>
-                            <div id="tdData" class="col-md-10">{{data.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
+                            <div id="tdData" class="col-md-10">{{idea.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</div>
                         </div>
                         <div id="divData" class="row">
                             <div id="divRating" class="col-md-12">
                                 <span content="{{likedUsersList}}" container="#divRating" hover-popover>
-	                            <span id="rating">{{data.rating}}</span>
+	                            <span id="rating">{{idea.rating}}</span>
                                 <span class="btn btn-thumbs font-cenralbig" ng-click="changeLike();" ng-show="authenticated">
-				                    <i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="data.liked"></i>
-				                    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="data.liked"></i>
+				                    <i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="idea.liked"></i>
+				                    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="idea.liked"></i>
 			                    </span>
                                 </span>
                             </div>
@@ -46,7 +55,7 @@
                 </div>
             </div>
 
-            <div id="bottomButtonsBar" class="container" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(data)">
+            <div id="bottomButtonsBar" class="container" ng-show="sessionCtrl.hasRole('ROLE_ADMIN') || isAuthor(idea)">
                 <div id="divRightAlignRight">
                     <button id="btnUpdate" class="btn btn-warning" ng-click="edit()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <span translate="CHANGE" /></button>
                     <button id="btnDelete" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span translate="DELETE" /></button>

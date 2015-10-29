@@ -164,7 +164,8 @@ public class IdeaControllerTest {
                 .andDo(print()).andExpect(status().isCreated()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
                 .andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
-                .andExpect(jsonPath("$.links", hasSize(2))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(2)))
+                .andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())));
 
         final ArgumentCaptor<Idea> userCaptor = ArgumentCaptor.forClass(Idea.class);
@@ -238,7 +239,7 @@ public class IdeaControllerTest {
         final long ideaId = 10L;
         final IdeaResource source = TestIdeaResourceBuilder.anIdeaResource().build();
         final Idea updatedIdea = new TestIdeaBuilder().withId(ideaId).withTitle(source.getTitle())
-                .withDescription(source.getDescription()).build();
+                .withDescription(source.getDescription()).withState(source.getState()).build();
 
         when(this.ideaServiceMock.update(eq(ideaId), any(Idea.class))).thenReturn(updatedIdea);
 
@@ -248,7 +249,8 @@ public class IdeaControllerTest {
                 .andDo(print()).andExpect(status().isOk()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.title").value(updatedIdea.getTitle()))
                 .andExpect(jsonPath("$.description").value(updatedIdea.getDescription()))
-                .andExpect(jsonPath("$.links", hasSize(2))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(2)))
+                .andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + updatedIdea.getId())));
 
         final ArgumentCaptor<Idea> ideaCaptor = ArgumentCaptor.forClass(Idea.class);

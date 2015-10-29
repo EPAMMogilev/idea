@@ -53,5 +53,12 @@
 				changeLike: {method: 'POST', params: {id: '@id'}, url: 'api/v1/comments/:id/like/'}
 			});
 		}
+		
+		function ideaStates() {
+			return $resource('api/v1/states/', {}, {
+				get:  {method:'GET', isArray:true}
+			
+			});
+		}
 	}
 })();

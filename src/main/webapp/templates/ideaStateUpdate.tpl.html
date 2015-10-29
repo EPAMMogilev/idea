@@ -1,0 +1,13 @@
+<div id="divData" class="form-group" ng-class="{ 'has-error' : ideaForm.edtState.$invalid && (submitted || ideaForm.edtState.$dirty)}">
+    <div id="tdCaption" class="requiredField">
+        <label>{{ 'Idea_State' | translate }}</label>
+    </div>
+
+    <div id="tdDataInsert" class="controls form-inline">
+        <select class="form-control" ng-model="data.state" ng-options="state.title for state in states track by state.name"></select>
+
+        <span class="text-danger ng-scope ng-active" ng-show="submitted || ideaForm.edtState.$dirty" ng-messages="ideaForm.edtState.$error">
+                            <span ng-message="required"><span id="ideaRequiredMessage" translate="STATE_REQUIRED"/></span>
+        </span>
+    </div>
+</div>
