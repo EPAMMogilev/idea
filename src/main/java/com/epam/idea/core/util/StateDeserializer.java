@@ -22,7 +22,7 @@ public class StateDeserializer extends JsonDeserializer<State> {
         if (type != null) {
             return type;
         }
-        throw new JsonMappingException("invalid value for type, must be 'one' or 'two'");
+        throw new JsonMappingException("invalid value for type State");
     }
 
 }
