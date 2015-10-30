@@ -20,6 +20,7 @@ HomePage.prototype = Object.create({}, {
 	authors:        { get: function() { return element.all(by.id('author')); }},
 	ideaTags:       { get: function() { return element.all(by.id('tag')); }},
 
+	states:        { get: function() { return element.all(by.id('state')); }},
 	titles:        { get: function() { return element.all(by.id('title')); }},
 	descriptions:  { get: function() { return element.all(by.id('description')); }},
 
@@ -35,6 +36,7 @@ HomePage.prototype = Object.create({}, {
 
 	getTagText: { value: function(id) { return this.tagButtons.get(id).getText(); }},
 
+	getState:       { value: function(id) { return this.states.get(id).getInnerHtml(); }},
 	getTitle:       { value: function(id) { return this.titles.get(id).getInnerHtml(); }},
 	getDescription: { value: function(id) { return this.descriptions.get(id).getInnerHtml(); }},
 
