@@ -13,12 +13,13 @@ describe('details idea page test', function() {
 	var homePage = new HomePage();
 	var loginPage = new LoginPage();
 
-	var title, desc, author, rating;
+	var state, title, desc, author, rating;
 
 	beforeAll(function() {
 		loginPage.getPage();
 		loginPage.login("admin", "admin");
 		homePage.getPage();
+		state = homePage.getState(0);
 		title = homePage.getTitle(0);
 		desc = homePage.getDescription(0);
 		author = homePage.getAuthor(0);
@@ -39,6 +40,7 @@ describe('details idea page test', function() {
 	});
 
 	it('should open idea details page with correct data', function() {
+		expect(detailsPage.getState()).toBe(state);
 		expect(detailsPage.getTitle()).toBe(title);
 		expect(detailsPage.getDesc()).toBe(desc);
 		expect(detailsPage.getAuthor()).toBe(author);

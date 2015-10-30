@@ -5,9 +5,10 @@ var DetailsPage = function() {comments = new CommentList()};
 DetailsPage.prototype = Object.create({}, {
 	updateButton: { get: function() { return element(by.id('btnUpdate')); }},
 
-	title:   { get: function() { return element.all(by.id('tdData')).get(0); }},
-	desc:    { get: function() { return element.all(by.id('tdData')).get(1); }},
-	author:  { get: function() { return element.all(by.id('tdData')).get(2); }},
+	state:   { get: function() { return element.all(by.id('tdData')).get(0); }},
+	title:   { get: function() { return element.all(by.id('tdData')).get(1); }},
+	desc:    { get: function() { return element.all(by.id('tdData')).get(2); }},
+	author:  { get: function() { return element.all(by.id('tdData')).get(3); }},
 	rating:  { get: function() { return element(by.id('rating')); }},
 
 	commentField:   { get: function() { return element(by.id('newComment')); }},
@@ -15,6 +16,7 @@ DetailsPage.prototype = Object.create({}, {
 
 	comments: { get: function() { return comments; }},
 
+	getState:   { value: function() { return this.state.getText(); }},
 	getTitle:   { value: function() { return this.title.getText(); }},
 	getDesc:    { value: function() { return this.desc.getText(); }},
 	getAuthor:  { value: function() { return this.author.getText(); }},
