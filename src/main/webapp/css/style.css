@@ -37,6 +37,7 @@ button {
 .head-container {
     height: 100px;
     width: 100%;
+    min-width: 1900px;
     background: url(images/header.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -98,15 +99,12 @@ button {
 }
 
 .latestIdeas {
-    width: 600px;
+    width: 30%;
     height:auto;
     display:inline-block;
-    /*padding-right: 15px;*/
-    vertical-align: top;
-    padding-right: 15px;
-    padding-left: 15px;
-    min-width: 450px;
-    /*srolls*/
+    /*vertical-align: top;
+    padding-right: 50px;
+    padding-left: 15px;*/
     max-height: 640px;
     overflow-y: auto;
 }
@@ -115,10 +113,23 @@ button {
     list-style-type: none;
     margin-bottom: 10px;
     border-bottom: 1px solid #DDD;
-    width: 450px;
+    width: 100%;
 }
 
 .latestIdeas .font-cenralbig {
+  text-align: center;
+  font-size: 30;
+  width: 50px;
+}
+
+.popularIdeas ul{
+    list-style-type: none;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #DDD;
+    width: 100%;
+}
+
+.popularIdeas .font-cenralbig {
   text-align: center;
   font-size: 30;
   width: 50px;
@@ -140,7 +151,7 @@ button {
 }
 
 .idea {
-	width: 500px;
+	width: 100%;
 	height: 100%;
 	overflow: hidden;
 	max-height: 130px;
@@ -159,7 +170,8 @@ button {
 }
 
 .middle{
-    max-width: 300px;
+    width: 65%;
+    /*max-width: 300px;*/
 	height: 100% auto;
 	vertical-align: middle;
 	/*min-height: 135px;*/
@@ -173,7 +185,7 @@ button {
 	text-align: center;
 
     vertical-align: middle;
-    width: 100px;
+    width: 19% auto;
 	height: 100px;
 }
 
@@ -191,10 +203,8 @@ button {
  }
 
 .right {
-    width: 50px;
-	max-width: 350px;
-	/*height: 80px;*/
-    display:inline-block;
+    width: 16% auto;
+	display:inline-block;
 	text-align: center;
 	float: right;
 	position: relative;
@@ -314,14 +324,13 @@ button {
 
 .mapMainPage{
     width: 37%;
-    height: 550px;
-    /*height: 400px;*/
+    height: 640px;
     display: inline-block;
     vertical-align: top;
-    min-width:450px;
-    /*padding-left: 150px;*/
-    position: relative;
-    float: right;
+    min-width:650px;
+    max-width:auto;
+    position: realative;
+    float: top;
 }
 
 .map{
@@ -375,6 +384,7 @@ button {
    text-transform: uppercase;
 }
 .navbar {
+   min-width:1900px;
    margin-bottom: 20px;
    background-color: #69a5d6;
 }
@@ -501,6 +511,7 @@ button {
 
 .idea-li
 {
+    width: 100%;
     margin-right: 20px;
     list-style-type: none;
 }
@@ -571,6 +582,7 @@ button {
 
 .popularIdeas
 {
+    width: 30%;
     display: inline-block;
     /*border: 1px solid red;*/
     max-height: 640px;
