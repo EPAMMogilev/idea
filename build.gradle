@@ -1,32 +1,316 @@
-allprojects {
-    group = 'com.epam.idea'
-    version = '0.1-SNAPSHOT'
-}
-
-subprojects {
-    apply plugin: 'java'
-
-    // Uses JDK 8
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    // Spring version
-    ext.springVersion = '4.0.6.RELEASE'
-    ext.hibernateVersion = '4.3.8.Final'
-
+buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.eveoh.nl/content/repositories/releases'
+        }
     }
 
-    dependencies { 
-        testCompile 'junit:junit:4.11'
-        compile "org.springframework:spring-core:$springVersion"
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
+        classpath 'nl.eveoh:gradle-aspectj:1.6'
     }
-
 }
+
+plugins {
+    id 'io.spring.dependency-management' version '0.4.0.RELEASE'
+    id 'com.github.kt3k.coveralls' version '2.0.1'
+    id "com.moowork.grunt" version "0.9"
+}
+
+project.ext {
+    aspectjVersion = '1.8.4'
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'com.moowork.grunt'
+apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'aspectj'
+apply from: "$rootDir/gradle/jacoco.gradle"
+apply from: "$rootDir/gradle/pmd.gradle"
+apply from: "$rootDir/gradle/findbugs.gradle"
+apply from: "$rootDir/gradle/checkstyle.gradle"
+
+group = 'com.epam.idea'
+version = '0.1-SNAPSHOT'
+
+// Uses JDK 8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+httpPort = 9090
+war.archiveName = 'idea.war'
+
+compileJava { 
+	options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'http://repo.spring.io/libs-snapshot' }
+    maven { url 'http://fugru.com/archiva/repository/snapshots'}
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:2.0.0.BUILD-SNAPSHOT'
+    }
+}
+
+ext {
+    hikariVersion = '2.3.2'
+    jadiraVersion = '3.2.0.GA'
+    jsonPathVesrion = '1.2.0'
+    sl4jVersion = '1.7.10'
+    assertJVersion = '1.7.1'
+    mockitoVersion = '1.10.19'
+    springTestDbUnitVersion = '1.2.1'
+    dbUnitVersion = '2.5.0'
+    guavaCollectionsVersion = 'r03'
+    mySqlDriverVersion = '5.1.34'
+}
+
+dependencies {
+    compile 'org.springframework:spring-core'
+    compile "org.springframework:spring-web"
+    compile 'org.springframework:spring-webmvc'
+    compile 'org.springframework.hateoas:spring-hateoas'
+    compile 'org.springframework.data:spring-data-jpa'
+
+    // JPA Provider (Hibernate)
+    compile 'org.hibernate:hibernate-core'
+    compile 'org.hibernate:hibernate-validator'
+
+    // Database (H2)
+    compile 'com.h2database:h2'
+
+    // DataSource (HikariCP)
+    compile "com.zaxxer:HikariCP:$hikariVersion"
+
+    // MySql driver
+    compile "mysql:mysql-connector-java:$mySqlDriverVersion"
+
+
+    // Adds support for Java 8 dates
+    compile "org.jadira.usertype:usertype.extended:$jadiraVersion"
+
+    compile "org.slf4j:slf4j-simple:$sl4jVersion"
+
+    // JSON processing
+    compile 'com.fasterxml.jackson.core:jackson-core'
+    compile 'com.fasterxml.jackson.core:jackson-annotations'
+    compile 'com.fasterxml.jackson.core:jackson-databind'
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+    // Guava
+    compile "com.google.guava:guava-collections:$guavaCollectionsVersion"
+
+
+    //Spring-Secutity
+    compile 'org.springframework.security:spring-security-core:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-web:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-config:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-data:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-test:4.0.1.RELEASE'
+
+    //Spring-social
+    compile 'org.springframework.social:spring-social-core'
+    compile 'org.springframework.social:spring-social-config'
+    compile 'org.springframework.social:spring-social-web'
+    compile 'org.springframework.social:spring-social-facebook'
+    compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
+    compile 'org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-SNAPSHOT'
+
+    compile 'org.springframework.social:spring-social-security'
+
+    compile 'org.springframework.boot:spring-boot-starter-security'
+
+
+    //Logging
+    compile 'log4j:log4j:1.2.17'
+
+    //AspectJ
+    //aspectpath 'org.springframework:spring-aspects'
+    compile 'org.springframework:spring-aspects'
+
+
+    // Test dependencies
+    testCompile 'junit:junit'
+    testCompile 'org.springframework:spring-test'
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "org.assertj:assertj-core:$assertJVersion"
+    testCompile "com.github.springtestdbunit:spring-test-dbunit:$springTestDbUnitVersion"
+    testCompile "org.dbunit:dbunit:$dbUnitVersion"
+    //testCompile "org.springframework:spring-orm"
+
+    // Adds a simple way to extract parts of a given document.
+    testCompile "com.jayway.jsonpath:json-path:$jsonPathVesrion"
+    testCompile "com.jayway.jsonpath:json-path-assert:$jsonPathVesrion"
+
+    //Hibernate Validator requires an implementation of the Unified Expression Language for
+    //evaluating dynamic expressions in constraint violation messages.
+    testCompile 'javax.el:javax.el-api'
+    testCompile 'org.glassfish:javax.el'
+
+    providedCompile 'javax.servlet:javax.servlet-api'
+
+
+    def tomcatVersion = '7.0.59'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+test {
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    maxHeapSize = "1g"
+
+    reports.html.destination = file("$reports.html.destination/unit")
+    reports.junitXml.destination = file("$reports.junitXml.destination/unit")
+
+    jacoco {
+        destinationFile = file("$buildDir/reports/jacoco/unit/jacocoUnit.exec")
+        classDumpFile = file("$buildDir/reports/jacoco/unit/classpathdumps")
+    }
+}
+
+test.outputs.upToDateWhen { false }
+
+//---------------------------Integration tests setup-----------------------------------------//
+
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integrationtest/java')
+        resources.srcDir file('src/integrationtest/resources')
+        compileClasspath = sourceSets.main.output + configurations.testRuntime + sourceSets.test.output
+        runtimeClasspath = output + compileClasspath
+    }
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs the integration tests.'
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    reports.html.destination = file("$reports.html.destination/integration")
+    reports.junitXml.destination = file("$reports.junitXml.destination/integration")
+
+    jacoco {
+        destinationFile = file("$buildDir/reports/jacoco/integration/jacocoIntegration.exec")
+        classDumpFile = file("$buildDir/reports/jacoco/integration/classpathdumps")
+    }
+}
+
+check.dependsOn integrationTest
+
+//--------------------------- Select Runway --------------------------------------------------//
+
+war { 
+	webXml = file("src/main/webapp/webxml-templates/" + "web-" + getRunway() + ".xml")
+	excludes = ['webxml-templates', 'css', 'fonts','images','js', 'languages', 'pages', 'templates']
+} 
+
+def getRunway() {
+	def runway = System.getProperty("runway") ?: 'dev'; //available: dev, test, prod, local
+	println "-----------------\n[Runway: " + runway + "]\n-----------------";
+	return runway;
+}
+//---------------------------Gradle wrapper--------------------------------------------------//
 
 // The Gradle Wrapper is the preferred way of starting a Gradle build
 // Run the following command to download and initialize the wrapper scripts: gradle wrapper
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
 }
+
+// makes sure on each build that grunt is installed
+grunt_build.dependsOn 'installGrunt'
+
+// processes your package.json before running grunt build
+grunt_build.dependsOn 'npmInstall'
+
+// runs "grunt build" as part of your gradle build
+war.dependsOn grunt_build
+
+//---------------------------Deploy in local Tomcat--------------------------------------------------//
+
+task tom << {
+    def tomcat_home = System.getenv('CATALINA_HOME')
+    def tomcat_bin = "$tomcat_home/bin"
+    def tomcat_base = System.getenv('CATALINA_BASE')
+    def tomcat_webapps = tomcat_base ? "$tomcat_base/webapps" : "$tomcat_home/webapps"
+    if (project.hasProperty('start')) {
+        startTom(tomcat_bin)
+    } else if (project.hasProperty('stop')) {
+        stopTom(tomcat_bin)
+    } else if (project.hasProperty('deployNstart')) {
+        stopTom(tomcat_bin)
+        webappsCopy(tomcat_webapps)
+        startTom(tomcat_bin)
+    } else {
+        throw new RuntimeException('unrecognized option')
+    }
+}
+
+def startTom(tomcat_bin) {
+    println 'Starting Tomcat...'
+    exec {
+        workingDir tomcat_bin
+        commandLine 'cmd', '/c', 'startup.bat'
+    }
+}
+
+def stopTom(tomcat_bin) {
+    println 'Stopping Tomcat...'
+    exec {
+        workingDir tomcat_bin
+        commandLine 'cmd', '/c', 'shutdown.bat'
+    }
+}
+
+def webappsCopy(tomcat_webapps) {
+    println "Start copying war into $tomcat_webapps"
+    copy {
+        from 'build/libs'
+        into tomcat_webapps
+        include '*.war'
+    }
+    println 'Finish copying war'
+}
+
+tomcat {
+    httpPort = 9090
+}
+
+/*
+//---------------------------- Open Shift - Old -----------------------------------------/
+task openShiftRelease <<{
+	println 'Release from OpenShift ready';
+}
+
+task prepeareOpenShift {
+	println '!!!prepeareOpenShift!!!';
+    def someFile = 'src\\main\\webapp\\index.html';
+	String contents = new File(someFile).getText('UTF-8');
+	contents = contents.replace('src=\"bower_components/', 'src=\"build/bower_components/');
+	//println contents;
+	new File(someFile).write(contents, 'UTF-8');
+
+}
+
+openShiftRelease.dependsOn prepeareOpenShift, build;*/
+
+//--- Server in Eclipse ---
+/*apply plugin: "eclipse-wtp"
+eclipse {
+    wtp {
+        facet {
+            facet name: 'jst.web', version: '2.5'
+            facet name: 'java', version: '1.8'
+            facet name: 'wst.jsdt.web', version: '1.0'
+        }
+    }
+}
+*/
