@@ -167,44 +167,45 @@ angular.module('ideaFactories', ['ngResource']); // set Factories
 
 
 
-    run.$inject = ['$rootScope', '$location', 'authorizationService', 'stateService', '$q', '$cookies'];
+    run.$inject = ['$rootScope', '$location', 'authorizationService', 'stateService', '$q', 'authentificationService', '$window'];
 
-    function run($rootScope, $location, authorizationService, stateService, $q, $cookies) {
+    function run($rootScope, $location, authorizationService, stateService, $q, authentificationService, $window) {
 
         stateService.init().then(function () {
             $q.defer().resolve();
         });
 
-        $rootScope.previousPage;
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            var restrictedPage;
-            $rootScope.previousPage = current;
-            if (($rootScope.authenticated === false) || ($cookies.authenticated === false)) {
-                restrictedPage = $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
-                if (restrictedPage) {
-                    $rootScope.previousPage = next;
-                    $location.path("/login");
-                }
-            } else {
-                restrictedPage = $.inArrayRegEx($location.path(), ['/ideaUpdate']) !== -1;
-                if (restrictedPage) {
-                    var idea = getIdeaParamFromUrl($location.path());
-                    authorizationService.redirectFromEditToAccessDeniedIfNeeded(idea);
-                } else {
-                    restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+        authentificationService.init().then(function () {
+            rightsControll();
+        });
+
+
+        function rightsControll() {
+            $rootScope.previousPage;
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                var restrictedPage;
+                $rootScope.previousPage = current;
+                if ($rootScope.authenticated !== true) {
+                    restrictedPage = $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
                     if (restrictedPage) {
-                        $location.path("/home");
+                        $rootScope.previousPage = next;
+                        $location.path("/login");
+                    }
+                } else {
+                    restrictedPage = $.inArrayRegEx($location.path(), ['/ideaUpdate']) !== -1;
+                    if (restrictedPage) {
+                        var idea = getIdeaParamFromUrl($location.path());
+                        authorizationService.redirectFromEditToAccessDeniedIfNeeded(idea);
+                    } else {
+                        restrictedPage = $.inArray($location.path(), ['/login']) !== -1;
+                        if (restrictedPage) {
+                            $location.path("/home");
+                        }
                     }
                 }
-            }
+            });
+        };
 
-            //                    if (restrictedPage && !loggedIn) {
-            //                        $location.path('/login');
-            //                    }
-            //                    var loginPage = $.inArray($location.path(), ['/login']) !== -1;
-            //                    if (loginPage && loggedIn) {
-            //                        $location.path('/home');
-        });
 
     }
 
