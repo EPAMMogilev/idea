@@ -176,11 +176,11 @@ angular.module('ideaFactories', ['ngResource']); // set Factories
         });
 
         authentificationService.init().then(function () {
-            rightsControll();
+            initRightsControl();
         });
 
 
-        function rightsControll() {
+        function initRightsControl() {
             $rootScope.previousPage;
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 var restrictedPage;
