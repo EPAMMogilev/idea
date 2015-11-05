@@ -52,7 +52,7 @@
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 </head>
 
-<body>
+<body ng-controller="sessionCtrl as sessionCtrl">
     <header>
         <div class="head-container">
             <div class="head-title title-font" id="IHaveIdeaDiv">
@@ -60,7 +60,7 @@
             </div>
         </div>
         <nav class="navbar navbar-default">
-            <div ng-controller="sessionCtrl as sessionCtrl">
+            <div>
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="#/home" translate="HOME"></a>
@@ -109,7 +109,7 @@
             </div>
         </nav>
     </header>
-    <div class="container" ng-controller="sessionCtrl as sessionCtrl">
+    <div class="container">
         <div data-ui-view='main' autoscroll='false'></div>
     </div>
     <footer class="copyright">&copy; EPAM Systems 2015</footer>

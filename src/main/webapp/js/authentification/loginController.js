@@ -4,7 +4,6 @@
     angular
         .module('app.controllers')
         .controller('LoginController', LoginController);
-
     LoginController.$inject = ['$scope', '$http', '$location', '$rootScope', '$cookies', 'authentificationService'];
 
     function LoginController($scope, $http, $location, $rootScope, $cookies, authentificationService) {
@@ -15,7 +14,7 @@
         function login() {
             authentificationService.authenticate(vm.credentials, function () {
                 if ($rootScope.authenticated) {
-                    $location.path("home");
+                    $location.path($rootScope.previousPage);
                     vm.error = false;
                 } else {
                     $location.path("login");
