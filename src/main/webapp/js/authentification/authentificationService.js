@@ -19,7 +19,6 @@
 
         function init() {
             var deffered = $q.defer();
-            console.log("init 1"); /*RemoveLogging:skip*/
             $http.get('user', {
                 headers: $cookies
             }).success(function (data) {
@@ -34,7 +33,6 @@
                 $rootScope.authenticated = false;
                 deffered.resolve();
             });
-            console.log("init 2"); /*RemoveLogging:skip*/
 
             return deffered.promise;
         };
