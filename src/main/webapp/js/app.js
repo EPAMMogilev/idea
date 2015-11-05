@@ -167,28 +167,24 @@ angular.module('ideaFactories', ['ngResource']); // set Factories
 
 
 
-    run.$inject = ['$rootScope', '$location', 'authorizationService', 'stateService', '$q', 'authentificationService', '$window'];
+    run.$inject = ['$rootScope', '$location', 'authorizationService', 'stateService', '$q', 'authentificationService'];
 
-    function run($rootScope, $location, authorizationService, stateService, $q, authentificationService, $window) {
+    function run($rootScope, $location, authorizationService, stateService, $q, authentificationService) {
 
-        stateService.init().then(function () {
-            $q.defer().resolve();
-        });
-
+        stateService.init();
         authentificationService.init().then(function () {
             initRightsControl();
         });
-
 
         function initRightsControl() {
             $rootScope.previousPage;
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 var restrictedPage;
-                $rootScope.previousPage = current;
-                if ($rootScope.authenticated !== true) {
+                $rootScope.previousPage = getStateNameFromUrl(current);
+                if ($rootScope.authenticated === false) {
                     restrictedPage = $.inArrayRegEx($location.path(), ['/login', '/register', '/home', '/ideaDetails', '^$']) === -1;
                     if (restrictedPage) {
-                        $rootScope.previousPage = next;
+                        $rootScope.previousPage = getStateNameFromUrl(next);
                         $location.path("/login");
                     }
                 } else {
@@ -206,7 +202,6 @@ angular.module('ideaFactories', ['ngResource']); // set Factories
             });
         };
 
-
     }
 
     $.inArrayRegEx = function (address, array) {
@@ -223,7 +218,10 @@ angular.module('ideaFactories', ['ngResource']); // set Factories
         return angular.fromJson(stringIdea);
     }
 
-
+    function getStateNameFromUrl(url) {
+        var stateName = url.substring(url.indexOf("#") + 1);
+        return stateName;
+    }
 
 
 

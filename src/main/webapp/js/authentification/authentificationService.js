@@ -18,6 +18,8 @@
         return publicMethod;
 
         function init() {
+            var deffered = $q.defer();
+            console.log("init 1"); /*RemoveLogging:skip*/
             $http.get('user', {
                 headers: $cookies
             }).success(function (data) {
@@ -27,11 +29,14 @@
                 } else {
                     $rootScope.authenticated = false;
                 }
+                deffered.resolve();
             }).error(function () {
                 $rootScope.authenticated = false;
+                deffered.resolve();
             });
+            console.log("init 2"); /*RemoveLogging:skip*/
 
-            return $q.defer().promise;
+            return deffered.promise;
         };
 
         function authenticate(credentials, callback) {

@@ -4,16 +4,18 @@
         .module('app.controllers')
         .controller('sessionCtrl', sessionCtrl);
 
-    sessionCtrl.$inject = ['$rootScope', '$http', '$window', '$translate', 'sessionService', 'authentificationService'];
+    sessionCtrl.$inject = ['$rootScope', '$http', '$location', '$translate', 'sessionService', 'authentificationService'];
 
-    function sessionCtrl($rootScope, $http, $window, $translate, sessionService, authentificationService) {
+    function sessionCtrl($rootScope, $http, $location, $translate, sessionService, authentificationService) {
 
         var vm = this;
         vm.logout = logout;
 
         function logout() {
             $http.post("logout", {}).success(function () {
-                $window.location.reload();
+                $rootScope.authenticated = false;
+                $rootScope.currentUser = {};
+                $location.path("/home");
             }).error(function (data) {
                 console.log("Logout failed");
             });
