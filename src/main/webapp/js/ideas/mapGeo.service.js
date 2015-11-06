@@ -1,54 +1,58 @@
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	angular
-		.module('app.services')
-		.service('mapGeoService', mapGeoService);
-	function mapGeoService() {
+    angular
+        .module('app.services')
+        .service('mapGeoService', mapGeoService);
 
-		return{
-			setGeoCoordsDirective:function(map, coords){
-				if(coords){
-					var coords = [coords.longitude, coords.latitude];
-					map.balloon.open(coords, 'Моя идея');
-				}//if
-			},//setGeoCoordsDirective
-			setGeoCoordsSimpleMap:function(map, coords){
-				if(coords){
-					var geoPoint = new ymaps.Placemark([coords.longitude, coords.latitude], null,{
-						preset: "islands#greenStretchyIcon"
-					});
+    function mapGeoService() {
 
-					map.geoObjects.add(geoPoint);
-				}//if
-			},//setGeoCoordsSimpleMap
-			generateGeoObjects:function(ideas){
-				var geoObjects = new Array();
-				if(ideas){
-					for(var i=0; i<ideas.length; i++){
-						var oldObject = ideas[i];
+        return {
+            setGeoCoordsDirective: function (map, coords) {
+                if (coords) {
+                    var coords = [coords.longitude, coords.latitude];
+                    map.balloon.open(coords, 'Моя идея');
+                } //if
+            }, //setGeoCoordsDirective
+            setGeoCoordsSimpleMap: function (map, coords) {
+                if (coords) {
+                    var geoPoint = new ymaps.Placemark([coords.longitude, coords.latitude], null, {
+                        preset: "islands#greenStretchyIcon"
+                    });
 
-						if(oldObject && oldObject.longitude && oldObject.latitude){
-							var newGeoObject = {
-								geometry: {
-									type: 'Point',
-									coordinates: [oldObject.longitude,oldObject.latitude]
-								},
-								properties: {
-									balloonContent: oldObject.title,
-									clusterCaption: 'идея #' + oldObject.id
-								}
-							};
-							//add 2 array
-							geoObjects.push(newGeoObject);
-						}//if
-					}//for
-				}//if
-				return geoObjects;
-			},//generateGeoObjects
-			getMapCenter:function(){
-				return [30.331014, 53.894617];
-			},//getMapCenter
-		};
-	};
+                    map.geoObjects.add(geoPoint);
+                } //if
+            }, //setGeoCoordsSimpleMap
+            generateGeoObjects: function (ideas) {
+                var geoObjects = new Array();
+                if (ideas) {
+                    for (var i = 0; i < ideas.length; i++) {
+                        var oldObject = ideas[i];
+
+                        if (oldObject && oldObject.longitude && oldObject.latitude) {
+                            var newGeoObject = {
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: [oldObject.longitude, oldObject.latitude]
+                                },
+                                properties: {
+                                    balloonContent: oldObject.title,
+                                    clusterCaption: 'идея #' + oldObject.id
+                                }
+                            };
+                            //add 2 array
+                            geoObjects.push(newGeoObject);
+                        } //if
+                    } //for
+                } //if
+                return geoObjects;
+            }, //generateGeoObjects
+            getMapCenter: function () {
+                return [30.331014, 53.894617];
+            }, //getMapCenter
+            getMapDefaultZoom: function () {
+                    return 11;
+                } //getMapDefaultZoom
+        };
+    };
 })();

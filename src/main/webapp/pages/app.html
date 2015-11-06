@@ -2,7 +2,7 @@
 <div class="ideas-container">
     <div id="tag-buttons" class="btn-group" ng-controller="tagsCtrl as tagsCtrl">
         <tag-button identifier="all" ng-click="ideasCtrl.selectByCategory(null)" active="true">{{ ideasCtrl.tabAll | translate }}</tag-button>
-        <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag)">{{tag.name}}</tag-button>
+        <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag); ">{{tag.name}}</tag-button>
     </div>
     <div class="dataContainer">
         <div id="lstMostRating" class="popularIdeas" scrollable-list update-function="ideasCtrl.loadPageForPopular()">
@@ -21,7 +21,7 @@
         </div>
         <!--div id="map" class="mapMainPage" -->
         <!--/div-->
-        <ya-map ya-zoom="11" ya-center="{{mapCenter}}" ya-controls="smallMapDefaultSet" class="mapMainPage">
+        <ya-map ya-zoom="{{mapZoom}}" ya-center="{{mapCenter}}" ya-controls="smallMapDefaultSet" ya-after-init="afterMapInit($target)" class="mapMainPage">
             <ya-toolbar ya-name="zoomControl"></ya-toolbar>
             <ya-toolbar ya-name="scaleLine"></ya-toolbar>
             <ya-toolbar ya-name="typeSelector"></ya-toolbar>
