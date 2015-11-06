@@ -1,0 +1,36 @@
+<meta charset="utf-8" />
+<div class="ideas-container">
+    <div id="tag-buttons" class="btn-group" ng-controller="tagsCtrl as tagsCtrl">
+        <tag-button identifier="all" ng-click="ideasCtrl.selectByCategory(null)" active="true">{{ ideasCtrl.tabAll | translate }}</tag-button>
+        <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag); ">{{tag.name}}</tag-button>
+    </div>
+    <div class="dataContainer">
+        <div id="lstMostRating" class="popularIdeas" scrollable-list update-function="ideasCtrl.loadPageForPopular()">
+            <ul>
+                <li ng-repeat="idea in ideasCtrl.popular" class="idea-li">
+                    <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
+                </li>
+            </ul>
+        </div>
+        <div id="lstNewIdeas" class="latestIdeas" scrollable-list update-function="ideasCtrl.loadPageForLatest()">
+            <ul>
+                <li ng-repeat="idea in ideasCtrl.latest" class="idea-li">
+                    <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
+                </li>
+            </ul>
+        </div>
+        <!--div id="map" class="mapMainPage" -->
+        <!--/div-->
+        <ya-map ya-zoom="{{mapZoom}}" ya-center="{{mapCenter}}" ya-controls="smallMapDefaultSet" ya-after-init="afterMapInit($target)" class="mapMainPage">
+            <ya-toolbar ya-name="zoomControl"></ya-toolbar>
+            <ya-toolbar ya-name="scaleLine"></ya-toolbar>
+            <ya-toolbar ya-name="typeSelector"></ya-toolbar>
+            <!-- list gps coords -->
+            <ya-collection ya-options="{preset:'twirl#blueIcon'}">
+                <ya-cluster ya-options="{preset:'islands#invertedLightblueClusterIcons'}">
+                    <ya-geo-object ng-repeat="item in geoObjects" ya-source="item"></ya-geo-object>
+                </ya-cluster>
+            </ya-collection>
+        </ya-map>
+    </div>
+</div>

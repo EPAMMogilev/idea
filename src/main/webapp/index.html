@@ -1,0 +1,118 @@
+<html ng-app="ideaApp">
+
+<head>
+    <title>Idea lab </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/ideaDetails.css" />
+    <link rel="stylesheet" type="text/css" href="css/accessDenied.css" />
+    <link rel="stylesheet" type="text/css" href="css/images.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/logo.png">
+
+    <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
+
+    <script type="text/javascript" src="bower_components/bootstrap/bootstrap.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-ui-router/angular-ui-router.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-md5/angular-md5.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-yandex-map/ya-map.min.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
+    <!-- Imgur -->
+    <script type="text/javascript" src="bower_components/ng-imgur/ng-imgur.js"></script>
+
+    <!-- File upload -->
+    <script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+
+    <script src="js/min/script.min.js"></script>
+
+    <!-- Yandex maps scripts -->
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+</head>
+
+<body ng-controller="sessionCtrl as sessionCtrl">
+    <header>
+        <div class="head-container">
+            <div class="head-title title-font" id="IHaveIdeaDiv">
+                <p> <a href="#ideaAddNew"><i class="fa fa-child"></i> <span translate="I_HAVE_IDEA"></span></a></p>
+            </div>
+        </div>
+        <nav class="navbar navbar-default">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#/home" translate="HOME"></a>
+                    </li>
+                    <li ng-controller="ideasSearchCtrl as ideasSearchCtrl" ng-show="ideasSearchCtrl.isSearchVisible()">
+                        <input placeholder="&#57347; {{ 'FIND' | translate }}..." ng-model="query" ng-change="ideasSearchCtrl.changeQuery()" class="form-control input-lg searcher glyphicon" type="search" />
+                    </li>
+                    <li ng-if="authenticated">
+                        <a id="ideaAddNew" href="#ideaAddNew" translate="I_HAVE_IDEA"></a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a id="username" ng-if="authenticated" href="" class="dropdown-toggle ng-binding" data-toggle="dropdown" aria-haspopup="true">
+                            <i class="{{sessionCtrl.getIconClassForCurrentUser()}}"></i> {{currentUser.username}}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#/account" translate="PROFILE"></a>
+                            </li>
+                            <li><a id="myideas" href="#/myideas" translate="MY_IDEAS">Мои идеи</a></li>
+                            <li>
+                                <a id="myideas" href="" ng-click="sessionCtrl.logout()" translate="LOGOUT"></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-if="!authenticated">
+                        <a id="words" class="words" href="#login" translate="LOGIN"></a>
+                    </li>
+                    <li ng-if="!authenticated">
+                        <a href="#/register" translate="REGISTER"></a>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle ng-binding uppercase" data-toggle="dropdown" aria-haspopup="true" href="">
+			                {{sessionCtrl.getCurrentLang()}}
+			                <b class="caret"></b>
+			            </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="" class="uppercase" ng-click="sessionCtrl.useLang('en')">en</a></li>
+                            <li><a href="" class="uppercase" ng-click="sessionCtrl.useLang('ru')">ru</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div data-ui-view='main' autoscroll='false'></div>
+    </div>
+    <footer class="copyright">&copy; EPAM Systems 2015</footer>
+</body>
+
+</html>

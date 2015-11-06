@@ -1,0 +1,10 @@
+apply plugin: 'checkstyle'
+
+ext.checkstyleConfigDir = "$rootDir/config/checkstyle"
+
+checkstyle {
+	configFile = new File(checkstyleConfigDir, "checkstyle.xml")
+	configProperties.checkstyleConfigDir = checkstyleConfigDir
+	
+	ignoreFailures = true
+}
