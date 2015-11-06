@@ -5,13 +5,18 @@
         .module('app.services')
         .service('mapGeoService', mapGeoService);
 
-    function mapGeoService() {
+    mapGeoService.$inject = ['$translate'];
+
+    function mapGeoService($translate) {
+
+        var myIdea = $translate.instant('MY_IDEA');
+        var idea = $translate.instant('IDEA');
 
         return {
             setGeoCoordsDirective: function (map, coords) {
                 if (coords) {
                     var coords = [coords.longitude, coords.latitude];
-                    map.balloon.open(coords, 'Моя идея');
+                    map.balloon.open(coords, myIdea);
                 } //if
             }, //setGeoCoordsDirective
             setGeoCoordsSimpleMap: function (map, coords) {
@@ -37,7 +42,7 @@
                                 },
                                 properties: {
                                     balloonContent: oldObject.title,
-                                    clusterCaption: 'идея #' + oldObject.id
+                                    clusterCaption: idea + ' #' + oldObject.id
                                 }
                             };
                             //add 2 array

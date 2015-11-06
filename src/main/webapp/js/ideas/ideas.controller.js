@@ -106,9 +106,11 @@
                 vm.latest = ideas;
             });
 
-            mapObject.setZoom(mapGeoService.getMapDefaultZoom(), {
+            mapObject.setCenter(mapGeoService.getMapCenter(), mapGeoService.getMapDefaultZoom(), {
+                checkZoomRange: false,
                 duration: 1000
             });
+
         }
 
         vm.selectByQuery = function () {
