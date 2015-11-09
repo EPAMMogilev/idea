@@ -70,8 +70,6 @@
             getList(vm.popular);
             getList(vm.latest);
 
-            //$scope.geoObjects = mapGeoService.generateGeoObjects(vm.popular.list);
-
             vm.query = null;
             changeTabAllIdeas();
             $rootScope.$broadcast('query-clean');
@@ -79,44 +77,41 @@
 
         }
 
-        function getList(listObj) {
+        function getList(listObj, update) {
+            if (update)
+                listObj.params.page++;
+
             var promise = ideasFactory.getPage(listObj.params, vm.userId, vm.tag, vm.query).then(function (ideas) {
                 if (ideas && ideas[ideas.length - 1]) {
-                    console.log('true first   ' + ideas.length); /*RemoveLogging:skip*/
-                    listObj.list = ideas;
+                    listObj.list = listObj.list.concat(ideas);
+                    $scope.geoObjects = mapGeoService.generateGeoObjects(listObj.list);
+                } else {
+                    //if (update)
+                    //  listObj.params.page--;
+
+                    if (vm.tag != null)
+                        listObj.list = ideas;
                 }
             });
 
             return promise;
+
         }
 
-        vm.updateList = function (listObj) {
-            listObj.params.page++;
-            var promise = getList(listObj);
-            promise.then(function (ideas) {
-                if (ideas) {
-                    console.log('true second'); /*RemoveLogging:skip*/
-                    listObj.list = listObj.list.concat(ideas);
-                }
-                $scope.geoObjects = mapGeoService.generateGeoObjects(listObj.list);
-            });
-            return promise;
-        };
+        vm.update = function (listObj) {
+            return getList(listObj, true);
+        }
+
+
 
         vm.selectByCategory = function (tag) {
             vm.tag = tag;
 
-            vm.paramsForLatest.page = 0;
-            vm.paramsForPopular.page = 0;
+            vm.latest.params.page = 0;
+            vm.popular.params.page = 0;
 
-            ideasFactory.getPage(vm.paramsForPopular, vm.userId, vm.tag, null).then(function (ideas) {
-                vm.popular = ideas;
-                $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
-            });
-
-            ideasFactory.getPage(vm.paramsForLatest, vm.userId, vm.tag, null).then(function (ideas) {
-                vm.latest = ideas;
-            });
+            getList(vm.popular);
+            getList(vm.latest);
 
             mapObject.setCenter(mapGeoService.getMapCenter(), mapGeoService.getMapDefaultZoom(), {
                 checkZoomRange: false,
@@ -126,17 +121,11 @@
         }
 
         vm.selectByQuery = function () {
-            vm.paramsForLatest.page = 0;
-            vm.paramsForPopular.page = 0;
+            vm.latest.params.page = 0;
+            vm.popular.params.page = 0;
 
-            ideasFactory.getPage(vm.paramsForPopular, vm.userId, vm.tag, vm.query).then(function (ideas) {
-                vm.popular = ideas;
-                $scope.geoObjects = mapGeoService.generateGeoObjects(ideas);
-            });
-
-            ideasFactory.getPage(vm.paramsForLatest, vm.userId, vm.tag, vm.query).then(function (ideas) {
-                vm.latest = ideas;
-            });
+            getList(vm.popular);
+            getList(vm.latest);
         }
 
         $scope.$on('query-update', function (event, query) {

@@ -5,14 +5,14 @@
         <tag-button identifier="tag{{tag.id}}" ng-repeat="tag in tagsCtrl.tagsTop" ng-model="tag" ng-click="ideasCtrl.selectByCategory(tag); ">{{tag.name}}</tag-button>
     </div>
     <div class="dataContainer">
-        <div id="lstMostRating" class="popularIdeas" scrollable-list update-function="ideasCtrl.updateList(ideasCtrl.popular)">
+        <div id="lstMostRating" class="popularIdeas" scrollable-list update-function="ideasCtrl.update(ideasCtrl.popular)">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.popular.list" class="idea-li">
                     <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
                 </li>
             </ul>
         </div>
-        <div id="lstNewIdeas" class="latestIdeas" scrollable-list update-function="ideasCtrl.updateList(ideasCtrl.latest)">
+        <div id="lstNewIdeas" class="latestIdeas" scrollable-list update-function="ideasCtrl.update(ideasCtrl.latest)">
             <ul>
                 <li ng-repeat="idea in ideasCtrl.latest.list" class="idea-li">
                     <show-idea idea="idea" is-authenticated="authenticated"></show-idea>
