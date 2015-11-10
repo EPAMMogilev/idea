@@ -388,7 +388,7 @@ button {
     right: 10px;
     margin-right: 10px;
     position: fixed;
-    z-index: auto;
+    z-index: 101;
 }
 
 #imageLoader {
