@@ -10,20 +10,11 @@
 
 
         var vm = this;
-        vm.userId = null;
         var mapObject;
-        $scope.geoObjects = null;
-        $scope.criteria = null;
-        $scope.mapCenter = mapGeoService.getMapCenter();
-        $scope.mapZoom = mapGeoService.getMapDefaultZoom();
-
-        $scope.afterMapInit = function (map) {
-            mapObject = map;
-        };
-
+        vm.userId = null;
         vm.tabAll = 'TAB_ALL';
         vm.query = null;
-
+        vm.tag = null;
         vm.popular = {
             list: [],
             params: {
@@ -32,7 +23,6 @@
                 sort: 'rating,desc'
             }
         };
-
         vm.latest = {
             list: [],
             params: {
@@ -42,9 +32,27 @@
             }
         };
 
-        vm.tag = null;
+        $scope.geoObjects = null;
+        $scope.criteria = null;
+        $scope.mapCenter = mapGeoService.getMapCenter();
+        $scope.mapZoom = mapGeoService.getMapDefaultZoom();
 
-        activate();
+        $scope.afterMapInit = function (map) {
+            mapObject = map;
+        };
+
+        $scope.$on('query-update', function (event, query) {
+            vm.query = query;
+            vm.selectByQuery();
+        });
+
+        $scope.mouseenter = function (e) {
+            e.get('target').options.set('preset', 'islands#greenIcon');
+        };
+
+        $scope.mouseleave = function (e) {
+            e.get('target').options.unset('preset');
+        };
 
         function onMyIdeasPage() {
             var result = false;
@@ -70,68 +78,46 @@
             getList(vm.popular);
             getList(vm.latest);
 
+
+
             vm.query = null;
             changeTabAllIdeas();
             $rootScope.$broadcast('query-clean');
-
-
         }
 
-        function getList(listObj, update) {
-            if (update)
-                listObj.params.page++;
 
-            var promise = ideasFactory.getPage(listObj.params, vm.userId, vm.tag, vm.query).then(function (ideas) {
-                if (ideas && ideas[ideas.length - 1]) {
-                    listObj.list = listObj.list.concat(ideas);
-                    $scope.geoObjects = mapGeoService.generateGeoObjects(listObj.list);
+        function getList(listObject, update) {
+            return ideasFactory.getPage(listObject.params, vm.userId, vm.tag, vm.query).then(function (ideas) {
+                if (ideas && update) {
+                    listObject.list = listObject.list.concat(ideas);
                 } else {
-                    //if (update)
-                    //  listObj.params.page--;
-
-                    if (vm.tag != null)
-                        listObj.list = ideas;
+                    listObject.list = ideas;
                 }
+                $scope.geoObjects = mapGeoService.generateGeoObjects(listObject.list);
             });
-
-            return promise;
-
         }
 
-        vm.update = function (listObj) {
-            return getList(listObj, true);
+        vm.update = function (listObject) {
+            listObject.params.page++;
+            return getList(listObject, true);
         }
-
-
 
         vm.selectByCategory = function (tag) {
             vm.tag = tag;
-
-            vm.latest.params.page = 0;
             vm.popular.params.page = 0;
+            vm.latest.params.page = 0;
 
             getList(vm.popular);
             getList(vm.latest);
-
-            mapObject.setCenter(mapGeoService.getMapCenter(), mapGeoService.getMapDefaultZoom(), {
-                checkZoomRange: false,
-                duration: 1000
-            });
-
         }
 
         vm.selectByQuery = function () {
-            vm.latest.params.page = 0;
             vm.popular.params.page = 0;
+            vm.latest.params.page = 0;
 
             getList(vm.popular);
             getList(vm.latest);
         }
-
-        $scope.$on('query-update', function (event, query) {
-            vm.query = query;
-            vm.selectByQuery();
-        });
 
         vm.details = function (idea) {
             var ideaDetail = {
@@ -144,12 +130,8 @@
             });
         };
 
-        $scope.mouseenter = function (e) {
-            e.get('target').options.set('preset', 'islands#greenIcon');
-        };
-        $scope.mouseleave = function (e) {
-            e.get('target').options.unset('preset');
-        };
+        activate();
+
     }
 
 })();
