@@ -61,6 +61,7 @@
     "Idea_State": "State",
 
     "USER_PROFILE": "User's Profile",
-    "USER_EMAIL": "Email"
+    "USER_EMAIL": "Email",
+    "USER_PASSWORD": "Password"
 }
 

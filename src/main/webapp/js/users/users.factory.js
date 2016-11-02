@@ -13,7 +13,8 @@
             get: get,
             getOne: getOne,
             createUser: createUser,
-            getOneRegisteredByEmail: getOneRegisteredByEmail
+            getOneRegisteredByEmail: getOneRegisteredByEmail,
+            updateUser: updateUser
         };
         return publicMethod;
 
@@ -32,6 +33,11 @@
 
         function getOneRegisteredByEmail(email) {
             var promise = restFactory.users().getOneRegisteredByEmail({email: email}).$promise;
+            return promise;
+        };
+
+        function updateUser(user) {
+            var promise = restFactory.users().update(user).$promise;
             return promise;
         };
     }

@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
 	public User update(final long userId, final User source) {
 		final User target = findOne(userId);
 		target.updateWith(source);
+		target.setPassword(PasswordHasher.md5(target.getPassword()));
 		return target;
 	}
 

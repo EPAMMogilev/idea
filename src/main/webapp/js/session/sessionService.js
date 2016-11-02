@@ -5,9 +5,9 @@
         .module('app.services')
         .service('sessionService',sessionService);
 
-         sessionService.$inject = ['$rootScope'];
+         sessionService.$inject = ['$rootScope', '$http', '$location'];
 
-        function sessionService($rootScope) {
+        function sessionService($rootScope, $http, $location) {
             var sessionID = '';
             var user = {};
             var publicMethod = {
@@ -16,9 +16,20 @@
                 getUser: getUser,
                 setUser: setUser,
                 hasRole: hasRole,
-                getIconClassForCurrentUser: getIconClassForCurrentUser
+                getIconClassForCurrentUser: getIconClassForCurrentUser,
+                logout: logout
             };
             return publicMethod;
+
+            function logout() {
+                $http.post("logout", {}).success(function () {
+                    $rootScope.authenticated = false;
+                    $rootScope.currentUser = {};
+                    $location.path("/home");
+                }).error(function (data) {
+                    console.log("Logout failed");
+                });
+            }
 
             function getSessionId() {
                 if(sessionID=='' || sessionID==null)

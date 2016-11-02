@@ -583,6 +583,21 @@ button {
 }
 
 /* Profile */
-.profile-image {
-	padding-bottom: 15px;
+.profile-container .profile-image {
+    padding-bottom: 15px;
+}
+
+.profile-container .profile-data {
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.profile-container .profile-label {
+    font-weight: bold;
+}
+
+.profile-container .user-name {
+    padding-bottom: 15px;
+    font-size: 15px;
 }

@@ -10,6 +10,7 @@ import com.epam.idea.core.repository.UserRepository;
 import com.epam.idea.core.service.UserService;
 import com.epam.idea.core.service.exception.DuplicateUserException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
+import com.epam.idea.core.social.util.PasswordHasher;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -166,7 +167,7 @@ public class UserServiceImplTest {
 		assertThat(actual.getId()).isEqualTo(target.getId());
 		assertThat(actual.getUsername()).isEqualTo(source.getUsername());
 		assertThat(actual.getEmail()).isEqualTo(source.getEmail());
-		assertThat(actual.getPassword()).isEqualTo(source.getPassword());
+		assertThat(actual.getPassword()).isEqualTo(PasswordHasher.md5(source.getPassword()));
 		verify(this.userRepositoryMock, times(1)).findOne(target.getId());
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}

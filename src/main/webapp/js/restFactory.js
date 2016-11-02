@@ -43,8 +43,8 @@
 				get: {method: 'GET', isArray: true},
 				getOne: {method: 'GET', params: {id: '@id'}, url: 'api/v1/users/:id/'},
 				create: {method: 'POST', url: 'user/register/'},
-				getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'}
-
+				getOneRegisteredByEmail: {method: 'GET', params: {email: '@email'}, url: 'api/v1/users/:email/email'},
+				update: {method: 'PUT', params: {id: '@id'}, url: 'api/v1/users/:id/'},
 			});
 		}
 

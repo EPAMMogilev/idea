@@ -84,11 +84,14 @@ public class User implements Serializable {
 	public void updateWith(final User source) {
 		this.email = source.email;
 		this.password = source.password;
-		this.username = source.username;
 
-        if (source.imageUrl != null) {
-            this.imageUrl = source.imageUrl;
-        }
+		if (source.username != null) {
+			this.username = source.username;
+		}
+
+		if (source.imageUrl != null) {
+			this.imageUrl = source.imageUrl;
+		}
 	}
 
 	public long getId() {

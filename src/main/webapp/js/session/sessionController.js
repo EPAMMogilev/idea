@@ -9,17 +9,7 @@
     function sessionCtrl($rootScope, $http, $location, $translate, sessionService, authentificationService) {
 
         var vm = this;
-        vm.logout = logout;
-
-        function logout() {
-            $http.post("logout", {}).success(function () {
-                $rootScope.authenticated = false;
-                $rootScope.currentUser = {};
-                $location.path("/home");
-            }).error(function (data) {
-                console.log("Logout failed");
-            });
-        }
+        vm.logout = sessionService.logout;
 
         vm.useLang = function (lang) {
             $translate.use(lang);

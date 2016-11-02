@@ -60,6 +60,7 @@
     "Idea_State": "Статус",
 
     "USER_PROFILE": "Профиль Пользователя",
-    "USER_EMAIL": "Email"
+    "USER_EMAIL": "Email",
+    "USER_PASSWORD": "Пароль"
 }
 
