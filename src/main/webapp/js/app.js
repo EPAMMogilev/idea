@@ -154,6 +154,16 @@ angular.module('ideaFactories', ['ngResource']); // set Factories
             /*
                         onEnter:  function(){ ymaps.ready(mapInit)},*/
             parent: 'root'
+        }).
+         state('profile', {
+            url: '/account',
+            views: {
+                'main@': {
+                    templateUrl: 'pages/profile.html',
+                    controller: 'profileCtrl as ctrl'
+                }
+            },
+            parent: 'root'
         });
 
         $translateProvider.useStaticFilesLoader({

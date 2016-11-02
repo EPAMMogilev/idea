@@ -57,6 +57,9 @@
     "TAB_ALL": "Все",
     "TAB_ALL_MY": "Все мои",
     "Img_Load_Progress_msg": "Идет загрузка изображения. Дождитесь окончания...",
-    "Idea_State": "Статус"
+    "Idea_State": "Статус",
+
+    "USER_PROFILE": "Профиль Пользователя",
+    "USER_EMAIL": "Email"
 }
 

@@ -58,6 +58,9 @@
     "TAB_ALL": "All",
     "TAB_ALL_MY": "All my",
     "Img_Load_Progress_msg": "Loading image. Please wait ...",
-    "Idea_State": "State"
+    "Idea_State": "State",
+
+    "USER_PROFILE": "User's Profile",
+    "USER_EMAIL": "Email"
 }
 

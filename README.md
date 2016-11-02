@@ -36,3 +36,10 @@ $ git clone [git-repo-url] idea
 $ cd idea
 $ gradle jettyRun
 ```
+
+
+
+e2e:
+
+gradle grunt_e2e
+
