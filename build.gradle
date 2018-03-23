@@ -15,7 +15,7 @@ buildscript {
 plugins {
     id 'io.spring.dependency-management' version '0.4.0.RELEASE'
     id 'com.github.kt3k.coveralls' version '2.0.1'
-    id "com.moowork.grunt" version "0.9"
+	id "com.moowork.node" version "1.2.0"
 }
 
 project.ext {
@@ -25,7 +25,7 @@ project.ext {
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'jetty'
-apply plugin: 'com.moowork.grunt'
+apply plugin: 'com.moowork.node'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'aspectj'
 apply from: "$rootDir/gradle/jacoco.gradle"
@@ -226,13 +226,13 @@ task wrapper(type: Wrapper) {
 }
 
 // makes sure on each build that grunt is installed
-grunt_build.dependsOn 'installGrunt'
+//grunt_build.dependsOn 'installGrunt'
 
 // processes your package.json before running grunt build
-grunt_build.dependsOn 'npmInstall'
+//grunt_build.dependsOn 'npmInstall'
 
 // runs "grunt build" as part of your gradle build
-war.dependsOn grunt_build
+war.dependsOn yarn
 
 //---------------------------Deploy in local Tomcat--------------------------------------------------//
 
@@ -284,33 +284,8 @@ tomcat {
     httpPort = 9090
 }
 
-/*
-//---------------------------- Open Shift - Old -----------------------------------------/
-task openShiftRelease <<{
-	println 'Release from OpenShift ready';
+/* ---------------------- Heroku ---------------------- */
+
+task stage {
+  dependsOn build
 }
-
-task prepeareOpenShift {
-	println '!!!prepeareOpenShift!!!';
-    def someFile = 'src\\main\\webapp\\index.html';
-	String contents = new File(someFile).getText('UTF-8');
-	contents = contents.replace('src=\"bower_components/', 'src=\"build/bower_components/');
-	//println contents;
-	new File(someFile).write(contents, 'UTF-8');
-
-}
-
-openShiftRelease.dependsOn prepeareOpenShift, build;*/
-
-//--- Server in Eclipse ---
-/*apply plugin: "eclipse-wtp"
-eclipse {
-    wtp {
-        facet {
-            facet name: 'jst.web', version: '2.5'
-            facet name: 'java', version: '1.8'
-            facet name: 'wst.jsdt.web', version: '1.0'
-        }
-    }
-}
-*/

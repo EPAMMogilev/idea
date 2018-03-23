@@ -13,13 +13,32 @@
     "url": "git@github.com:ngbp/ngbp.git"
   },
   "scripts": {
-    "postinstall": "webdriver-manager update"
+    "postinstall": "webdriver-manager update && node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'bower_components', 'junction') } catch (e) { }\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "@bower_components/angular": "angular/bower-angular#1.2.32",
+    "@bower_components/angular-animate": "angular/bower-angular-animate#~1.2.x",
+    "@bower_components/angular-bootstrap": "angular-ui/bootstrap-bower#~0.12.0",
+    "@bower_components/angular-cookies": "angular/bower-angular-cookies#~1.2.x",
+    "@bower_components/angular-md5": "gdi2290/angular-md5#0.1.7",
+    "@bower_components/angular-messages": "angular/bower-angular-messages#1.4.1",
+    "@bower_components/angular-mocks": "angular/bower-angular-mocks#~1.2.x",
+    "@bower_components/angular-resource": "angular/bower-angular-resource#~1.2.x",
+    "@bower_components/angular-route": "angular/bower-angular-route#~1.2.x",
+    "@bower_components/angular-sanitize": "angular/bower-angular-sanitize#~1.2.x",
+    "@bower_components/angular-translate": "PascalPrecht/bower-angular-translate#2.5.2",
+    "@bower_components/angular-translate-loader-static-files": "PascalPrecht/bower-angular-translate-loader-static-files#2.5.2",
+    "@bower_components/angular-ui-router": "angular-ui/angular-ui-router-bower#0.2.9",
+    "@bower_components/angular-yandex-map": "tulov/angular-yandex-map#1.0.4",
+    "@bower_components/bootstrap": "twbs/bootstrap#~3.1.1",
+    "@bower_components/jquery": "jquery/jquery-dist#1.10.2",
+    "@bower_components/ng-file-upload": "danialfarid/angular-file-upload-bower#5.0.6",
+    "@bower_components/ng-imgur": "Wildhoney/ngImgur#0.1.5",
+    "@bower_components/ng-tags-input": "mbenford/ngTagsInput-bower#2.0.1",
+    "@bower_components/swagger-ui": "wordnik/swagger-ui#2.0.24"
+  },
   "devDependencies": {
-    "bower": "^1.3.1",
     "grunt": "^0.4.5",
-    "grunt-bower-task": "latest",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-concat": "latest",
@@ -38,7 +57,7 @@
     "grunt-remove-logging": "^0.2.0",
     "jasmine-reporters": "^2.0.0",
     "jshint-stylish": "^1.0.2",
-    "karma":"~0.12.0",
+    "karma": "~0.12.0",
     "karma-coverage": "~0.2.4",
     "karma-firefox-launcher": "^0.1.3",
     "karma-htmlfile-reporter": "~0.1",
@@ -48,5 +67,8 @@
     "protractor": "latest",
     "protractor-html-screenshot-reporter": "0.0.10",
     "protractor-jasmine2-screenshot-reporter": "^0.1.4"
+  },
+  "engines": {
+    "yarn": ">= 1.0.0"
   }
 }

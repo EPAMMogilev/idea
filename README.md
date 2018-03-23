@@ -34,7 +34,6 @@ You need Gradle installed:
 ```sh
 $ git clone [git-repo-url] idea
 $ cd idea
-$ gradle jettyRun
 ```
 
 
@@ -42,4 +41,17 @@ $ gradle jettyRun
 e2e:
 
 gradle grunt_e2e
+
+
+-------------------
+### Version
+0.0.2
+
+Build: 
+gradlew clean build -Drunway=dev
+
+Local Run with H2 database:
+gradlew tomcatRunWar
+
+http://localhost:9090/Idea
 
