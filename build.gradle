@@ -1,30 +1,51 @@
 buildscript {
     repositories {
-        jcenter()
-        maven {
-            url 'https://maven.eveoh.nl/content/repositories/releases'
-        }
+	    jcenter()
+	    mavenCentral()        
+        maven { url "http://repo.spring.io/plugins-release" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://maven.eveoh.nl/content/repositories/releases' }
     }
 
     dependencies {
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
-        classpath 'nl.eveoh:gradle-aspectj:1.6'
+        classpath 'nl.eveoh:gradle-aspectj:2.0'
+		classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
     }
 }
 
 plugins {
-    id 'io.spring.dependency-management' version '0.4.0.RELEASE'
     id 'com.github.kt3k.coveralls' version '2.0.1'
 	id "com.moowork.node" version "1.2.0"
+	id "io.spring.dependency-management" version "1.0.4.RELEASE"
 }
 
 project.ext {
     aspectjVersion = '1.8.4'
 }
 
+//"com.moowork.node" plugin configuration
+node {
+
+   // Version of node to use.
+  version = '8.9.4'
+  
+  // Version of npm to use.
+  npmVersion = '5.6.0'
+
+  // Version of Yarn to use.
+  yarnVersion = "1.3.2"
+  
+  download = true
+	
+  distBaseUrl = 'https://nodejs.org/dist'
+  
+  nodeModulesDir = file("${project.projectDir}")
+}
+
+
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'jetty'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'aspectj'
@@ -33,6 +54,8 @@ apply from: "$rootDir/gradle/pmd.gradle"
 apply from: "$rootDir/gradle/findbugs.gradle"
 apply from: "$rootDir/gradle/checkstyle.gradle"
 
+
+
 group = 'com.epam.idea'
 version = '0.1-SNAPSHOT'
 
@@ -40,7 +63,6 @@ version = '0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-httpPort = 9090
 war.archiveName = 'idea.war'
 
 compileJava { 
@@ -69,7 +91,7 @@ ext {
     mockitoVersion = '1.10.19'
     springTestDbUnitVersion = '1.2.1'
     dbUnitVersion = '2.5.0'
-    guavaCollectionsVersion = 'r03'
+	guavaVersion = '19.0'
     mySqlDriverVersion = '5.1.34'
 }
 
@@ -106,7 +128,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
 
     // Guava
-    compile "com.google.guava:guava-collections:$guavaCollectionsVersion"
+	compile "com.google.guava:guava:$guavaVersion"
 
 
     //Spring-Secutity
@@ -144,7 +166,6 @@ dependencies {
     testCompile "org.assertj:assertj-core:$assertJVersion"
     testCompile "com.github.springtestdbunit:spring-test-dbunit:$springTestDbUnitVersion"
     testCompile "org.dbunit:dbunit:$dbUnitVersion"
-    //testCompile "org.springframework:spring-orm"
 
     // Adds a simple way to extract parts of a given document.
     testCompile "com.jayway.jsonpath:json-path:$jsonPathVesrion"
@@ -164,6 +185,18 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
 
+//---------------------------Gradle wrapper--------------------------------------------------//
+
+//https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:upgrading_wrapper
+//gradlew wrapper --gradle-version 4.2.1
+// The Gradle Wrapper is the preferred way of starting a Gradle build
+// Run the following command to download and initialize the wrapper scripts: gradle wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4'
+}
+
+//---------------------------Tests setup-----------------------------------------//
+
 test {
     maxParallelForks = Runtime.runtime.availableProcessors()
     maxHeapSize = "1g"
@@ -173,7 +206,6 @@ test {
 
     jacoco {
         destinationFile = file("$buildDir/reports/jacoco/unit/jacocoUnit.exec")
-        classDumpFile = file("$buildDir/reports/jacoco/unit/classpathdumps")
     }
 }
 
@@ -199,7 +231,6 @@ task integrationTest(type: Test) {
 
     jacoco {
         destinationFile = file("$buildDir/reports/jacoco/integration/jacocoIntegration.exec")
-        classDumpFile = file("$buildDir/reports/jacoco/integration/classpathdumps")
     }
 }
 
@@ -217,22 +248,6 @@ def getRunway() {
 	println "-----------------\n[Runway: " + runway + "]\n-----------------";
 	return runway;
 }
-//---------------------------Gradle wrapper--------------------------------------------------//
-
-// The Gradle Wrapper is the preferred way of starting a Gradle build
-// Run the following command to download and initialize the wrapper scripts: gradle wrapper
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
-}
-
-// makes sure on each build that grunt is installed
-//grunt_build.dependsOn 'installGrunt'
-
-// processes your package.json before running grunt build
-//grunt_build.dependsOn 'npmInstall'
-
-// runs "grunt build" as part of your gradle build
-war.dependsOn yarn
 
 //---------------------------Deploy in local Tomcat--------------------------------------------------//
 
@@ -283,6 +298,11 @@ def webappsCopy(tomcat_webapps) {
 tomcat {
     httpPort = 9090
 }
+
+
+
+
+war.dependsOn yarn
 
 /* ---------------------- Heroku ---------------------- */
 

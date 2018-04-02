@@ -21,7 +21,7 @@ Single Web page application:
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - great UI boilerplate for modern web apps
 * [jQuery](http://jquery.com) - duh
 
-Easy installation of new JavaScript libraries with [Bower](http://bower.io/).
+Easy installation of new JavaScript libraries with [Yarn](https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md).
 Build, optimization and live reload with [Grunt](http://gruntjs.com/). Testing with [Karma](http://karma-runner.github.io/0.12/index.html)
 
 ### Version
@@ -37,18 +37,16 @@ $ cd idea
 ```
 
 
-
 e2e:
 
 gradle grunt_e2e
 
 
--------------------
-### Version
-0.0.2
 
 Build: 
+
 gradlew clean build -Drunway=dev
+gradlew clean build -Drunway=dev --stacktrace
 
 Local Run with H2 database:
 gradlew tomcatRunWar

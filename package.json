@@ -66,7 +66,8 @@
     "karma-ng-html2js-preprocessor": "^0.1.2",
     "protractor": "latest",
     "protractor-html-screenshot-reporter": "0.0.10",
-    "protractor-jasmine2-screenshot-reporter": "^0.1.4"
+    "protractor-jasmine2-screenshot-reporter": "^0.1.4",
+	"phantomjs-prebuilt": "^2.1.8"
   },
   "engines": {
     "yarn": ">= 1.0.0"
