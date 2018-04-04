@@ -2,25 +2,28 @@ var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
 exports.config = {
 	allScriptsTimeout: 300000,
-	
+
 	rootElement: "[ng-app]",
 
 	specs: ['e2e/**/*.spec.js'],
 
 	capabilities: {
-		//'browserName': 'firefox',
-		'browserName': process.env.BROWSER_NAME || 'firefox',
+		//'browserName': 'firefox', //'chrome'
+		'browserName': process.env.BROWSER_NAME || 'phantomjs',
 		'firefox_binary': process.env.FF_PORTABLE,
 		'chromeOptions': {
 			//'binary': process.env.CHROME_PORTABLE || 'D:\\_inst\\GoogleChromePortable\\GoogleChromePortable.exe'
-			'binary': process.env.CHROME_PORTABLE
-		}
+			//'binary': process.env.CHROME_PORTABLE
+			//args: [ "--headless", "--disable-gpu", "--window-size=800,600" ]
+		},
+
+		'phantomjs.binary.path': require('phantomjs-prebuilt').path,
+		'phantomjs.cli.args': ['--web-security=false', '--ignore-ssl-errors=true', '--webdriver-loglevel=DEBUG'],
+
 	},
 
-	//baseUrl: 'http://localhost:8282/',
-
 	framework: 'jasmine2',
-	
+
 	onPrepare: function() {
 		jasmine.getEnv().addReporter(new HtmlScreenshotReporter({
 			dest: 'src/main/webapp/build/e2eresultshtml',

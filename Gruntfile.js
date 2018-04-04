@@ -151,7 +151,6 @@ module.exports = function (grunt) {
 		karma: {
 			unit: {
 				configFile: 'src/test/javascript/karma.conf.js',
-				browsers: ['Firefox'],
 				singleRun: true
 			}
 		},
@@ -173,28 +172,20 @@ module.exports = function (grunt) {
             }
 		},
 
-        protractor : {
-            options : {
+		protractor : {
+			options : {
 				configFile : 'src/test/javascript/protractor.conf.js',
-                noColor : false,
-            },
+				noColor : false,
+			},
 			e2e: {
 				options: {
 					keepAlive: false,
-	                args: {
-	                	baseUrl: '<%= protractor_base_url %>'
-	                }
+					args: {
+						baseUrl: '<%= protractor_base_url %>'
+					}
 				}
 			}
-        },
-
-     bower: {
-            install: {
-               options: {
-                    targetDir: '<%= build_dir %>/bower_components'
-               }
-            }
-         }
+		}
     };
 
     grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
@@ -217,7 +208,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-bower-task');
 
 
     //grunt.registerTask('build', [ 'clean','removelogging', 'uglify',

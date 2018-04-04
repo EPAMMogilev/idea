@@ -11,9 +11,8 @@ module.exports = {
   compile_dir: 'src/main/webapp/bin',
   resource_dir: "src/main/webapp/",
 
-  //protractor_base_url: 'http://localhost:9090/Idea/',
+  protractor_base_url: 'http://localhost:9090/Idea/',
   //protractor_base_url: 'http://evbymogsd0030.minsk.epam.com:7080/idea/',
-  protractor_base_url: 'http://localhost:8080/idea/',
 
   /**
    * This is a collection of file patterns that refer to our app code (the

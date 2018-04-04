@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-	    jcenter()
-	    mavenCentral()        
+        jcenter()
+        mavenCentral()
         maven { url "http://repo.spring.io/plugins-release" }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://maven.eveoh.nl/content/repositories/releases' }
@@ -10,14 +10,15 @@ buildscript {
     dependencies {
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
         classpath 'nl.eveoh:gradle-aspectj:2.0'
-		classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
     }
 }
 
 plugins {
     id 'com.github.kt3k.coveralls' version '2.0.1'
-	id "com.moowork.node" version "1.2.0"
-	id "io.spring.dependency-management" version "1.0.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.4.RELEASE"
+    id "com.moowork.node" version "1.2.0"
+    id "com.moowork.grunt" version "0.13"
 }
 
 project.ext {
@@ -27,20 +28,20 @@ project.ext {
 //"com.moowork.node" plugin configuration
 node {
 
-   // Version of node to use.
-  version = '8.9.4'
-  
-  // Version of npm to use.
-  npmVersion = '5.6.0'
+    // Version of node to use.
+    version = '8.9.4'
 
-  // Version of Yarn to use.
-  yarnVersion = "1.3.2"
-  
-  download = true
-	
-  distBaseUrl = 'https://nodejs.org/dist'
-  
-  nodeModulesDir = file("${project.projectDir}")
+    // Version of npm to use.
+    npmVersion = '5.6.0'
+
+    // Version of Yarn to use.
+    yarnVersion = "1.3.2"
+
+    download = true
+
+    distBaseUrl = 'https://nodejs.org/dist'
+
+    nodeModulesDir = file("${project.projectDir}")
 }
 
 
@@ -66,7 +67,7 @@ targetCompatibility = 1.8
 war.archiveName = 'idea.war'
 
 compileJava { 
-	options.encoding = "UTF-8"
+    options.encoding = "UTF-8"
 }
 
 repositories {
@@ -307,5 +308,5 @@ war.dependsOn yarn
 /* ---------------------- Heroku ---------------------- */
 
 task stage {
-  dependsOn build
+  dependsOn tomcatRunWar
 }

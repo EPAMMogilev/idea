@@ -36,20 +36,25 @@ $ git clone [git-repo-url] idea
 $ cd idea
 ```
 
-
-e2e:
-
-gradle grunt_e2e
-
-
+--------------------------------------------------------
 
 Build: 
 
 gradlew clean build -Drunway=dev
-gradlew clean build -Drunway=dev --stacktrace
+
 
 Local Run with H2 database:
+
 gradlew tomcatRunWar
 
 http://localhost:9090/Idea
+
+
+e2e-tests (after app is run):
+
+in another console window:
+
+gradlew grunt_e2e
+
+
 
