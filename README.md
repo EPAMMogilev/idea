@@ -48,6 +48,7 @@ Local Run with H2 database:
 gradlew tomcatRunWar
 
 http://localhost:9090/Idea
+first@idea.com / 1234
 
 
 e2e-tests (after app is run):
@@ -57,4 +58,10 @@ in another console window:
 gradlew grunt_e2e
 
 
+
+Note:
+
+to stop hanging PhantomJS process:
+
+taskkill /f /im phantomjs.exe
 

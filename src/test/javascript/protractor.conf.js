@@ -18,7 +18,7 @@ exports.config = {
 		},
 
 		'phantomjs.binary.path': require('phantomjs-prebuilt').path,
-		'phantomjs.cli.args': ['--web-security=false', '--ignore-ssl-errors=true', '--webdriver-loglevel=DEBUG'],
+		//'phantomjs.cli.args': ['--web-security=false', '--ignore-ssl-errors=true', '--webdriver-loglevel=DEBUG'],
 
 	},
 

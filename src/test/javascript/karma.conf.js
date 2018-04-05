@@ -1,3 +1,4 @@
+
 module.exports = function (config) {
     config.set({
 
@@ -37,7 +38,8 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-coverage',
             'karma-junit-reporter',
-			'karma-ng-html2js-preprocessor'
+			'karma-ng-html2js-preprocessor',
+			'karma-phantomjs-launcher'
         ],
 
         singleRun: true,
