@@ -145,7 +145,8 @@ dependencies {
     compile 'org.springframework.social:spring-social-web'
     compile 'org.springframework.social:spring-social-facebook'
     compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
-    compile 'org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-SNAPSHOT'
+    //compile 'org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-SNAPSHOT'
+	compile 'com.github.weekens:spring-social-vkontakte:1.0.0.RELEASE'
 
     compile 'org.springframework.social:spring-social-security'
 
@@ -310,7 +311,3 @@ yarn {
 war.dependsOn yarn
 
 /* ---------------------- Heroku ---------------------- */
-
-task stage {
-  dependsOn build
-}

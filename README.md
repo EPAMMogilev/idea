@@ -51,9 +51,7 @@ http://localhost:9090/Idea
 first@idea.com / 1234
 
 
-e2e-tests (after app is run):
-
-in another console window:
+e2e-tests (after app is run, in another console window):
 
 gradlew grunt_e2e
 
