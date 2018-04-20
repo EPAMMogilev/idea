@@ -63,3 +63,11 @@ to stop hanging PhantomJS process:
 
 taskkill /f /im phantomjs.exe
 
+-------------------------------------------
+
+Jenkins:
+
+gradlew stage
+
+java -jar build/server/webapp-runner.jar build/libs/*.war
+
