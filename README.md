@@ -106,11 +106,11 @@ heroku restart -a idea-app-3
 
 ---------------
 
-Jenkins
+Verify locally Jenkins deploy:
 
 gradlew stage
 
-BUILD_ID=dontKillMe nohup java -jar -Dserver.port=9090 -Dspring.profiles.active=dev build/libs/idea-boot.war &
+java -jar -Dserver.port=9090 -Dspring.profiles.active=dev build/libs/idea-boot.war
 
 
 
