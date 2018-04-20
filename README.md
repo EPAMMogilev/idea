@@ -110,7 +110,7 @@ Jenkins
 
 gradlew stage
 
-java -jar -Dserver.port=9090 -Dspring.profiles.active=dev build/libs/idea-boot.war
+BUILD_ID=dontKillMe nohup java -jar -Dserver.port=9090 -Dspring.profiles.active=dev build/libs/idea-boot.war &
 
 
 
