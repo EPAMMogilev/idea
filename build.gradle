@@ -185,6 +185,8 @@ dependencies {
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+			
+	compile 'com.github.jsimone:webapp-runner:8.5.11.3'
 }
 
 //---------------------------Gradle wrapper--------------------------------------------------//
@@ -311,3 +313,28 @@ yarn {
 war.dependsOn yarn
 
 /* ---------------------- Heroku ---------------------- */
+
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+    rename { fileName ->
+      stripVersion(fileName)
+   }
+}
+
+String stripVersion(String fileNameWithVersion) {
+  String ext = fileNameWithVersion.substring(fileNameWithVersion.lastIndexOf("."),fileNameWithVersion.length())
+  int end = fileNameWithVersion.lastIndexOf("-"); //assumes that: name-version.ext. Will not work with name-version-SNAPSHOT.ext
+  String fileNameWithoutVersion = fileNameWithVersion.substring(0, end) + ext
+   return fileNameWithoutVersion
+}
+
+task stage() {
+    dependsOn clean, build
+}
+
+stage.dependsOn(copyToLib)
