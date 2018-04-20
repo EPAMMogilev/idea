@@ -1,18 +1,10 @@
-# Build Artifacts
-.gradle
-build
-target
-gradle
-classes
-out/
-
-# IDEA artifacts and output dirs
-*.iml
-*.ipr
-*.iws
-*.idea
-
-# Eclipse artifacts
+/.gradle/
+/bin/
 .classpath
 .project
-.settings/
+.gradle
+.settings
+bin
+build
+node_modules
+target

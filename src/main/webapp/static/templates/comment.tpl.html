@@ -1,0 +1,18 @@
+<p class="pull-right"><small>{{comment.createdAt | date:'MMM dd, yyyy hh:mm:ss a'}}</small></p>
+<p class="media-left">
+    <img class="smallImage" src="{{photo}}">
+</p>
+<div class="media-body">
+    <h4 class="media-heading userName">{{comment.author.username}}</h4>
+        <span id="commentBody">{{comment.body}}</span>
+
+    <p>
+        <span content="{{likedUsersList}}" container=".media" hover-popover>
+	        <span id="commentRating" ng-show="comment.rating != 0"><small>{{comment.rating}}</small></span>
+		    <span id="likeButton" class="btn btn-thumbs btn-xs" ng-click="changeLike();" ng-show="isAuthenticated">
+		        <small><i class="fa fa-thumbs-o-up fa-2x color-thumbs" ng-hide="comment.liked"></i>
+			    <i class="fa fa-thumbs-up fa-2x color-thumbs" ng-show="comment.liked"></i></small>
+		    </span>
+	    </span>
+	</p>
+</div>

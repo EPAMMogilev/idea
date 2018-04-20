@@ -1,0 +1,1 @@
+web: java -jar -Dserver.port=$PORT -Dspring.profiles.active=dev build/libs/idea-boot.war

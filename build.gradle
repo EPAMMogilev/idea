@@ -1,32 +1,350 @@
-allprojects {
-    group = 'com.epam.idea'
-    version = '0.1-SNAPSHOT'
-}
-
-subprojects {
-    apply plugin: 'java'
-
-    // Uses JDK 8
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    // Spring version
-    ext.springVersion = '4.0.6.RELEASE'
-    ext.hibernateVersion = '4.3.8.Final'
-
+buildscript {
     repositories {
         jcenter()
+        mavenCentral()
+        maven { url "http://repo.spring.io/plugins-release" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://maven.eveoh.nl/content/repositories/releases' }
     }
 
-    dependencies { 
-        testCompile 'junit:junit:4.11'
-        compile "org.springframework:spring-core:$springVersion"
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
+        classpath 'nl.eveoh:gradle-aspectj:2.0'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
     }
-
 }
 
-// The Gradle Wrapper is the preferred way of starting a Gradle build
-// Run the following command to download and initialize the wrapper scripts: gradle wrapper
+plugins {
+    id 'com.github.kt3k.coveralls' version '2.0.1'
+    id "io.spring.dependency-management" version "1.0.4.RELEASE"
+    id "com.moowork.node" version "1.2.0"
+    id "com.moowork.grunt" version "0.13"
+}
+
+project.ext {
+    aspectjVersion = '1.8.4'
+}
+
+node {
+
+    // Version of node to use.
+    version = '8.9.4'
+
+    npmVersion = '5.6.0'
+
+    yarnVersion = "1.3.2"
+
+    download = true
+
+    distBaseUrl = 'https://nodejs.org/dist'
+
+    nodeModulesDir = file("${project.projectDir}")
+}
+
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'com.moowork.node'
+apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'aspectj'
+apply from: "$rootDir/gradle/jacoco.gradle"
+apply from: "$rootDir/gradle/pmd.gradle"
+apply from: "$rootDir/gradle/findbugs.gradle"
+apply from: "$rootDir/gradle/checkstyle.gradle"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.epam.idea'
+version = '0.1-SNAPSHOT'
+
+// Uses JDK 8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava { 
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'http://repo.spring.io/libs-snapshot' }
+    maven { url 'http://fugru.com/archiva/repository/snapshots'}
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:2.0.0.BUILD-SNAPSHOT'
+    }
+}
+
+ext {
+    hikariVersion = '2.3.2'
+    jadiraVersion = '3.2.0.GA'
+    jsonPathVesrion = '1.2.0'
+    sl4jVersion = '1.7.10'
+    assertJVersion = '1.7.1'
+    mockitoVersion = '1.10.19'
+    springTestDbUnitVersion = '1.2.1'
+    dbUnitVersion = '2.5.0'
+	guavaVersion = '19.0'
+    mySqlDriverVersion = '5.1.34'
+}
+
+dependencies {
+    compile 'org.springframework:spring-core'
+    compile "org.springframework:spring-web"
+    compile 'org.springframework:spring-webmvc'
+    compile 'org.springframework.hateoas:spring-hateoas'
+    compile 'org.springframework.data:spring-data-jpa'
+
+    // JPA Provider (Hibernate)
+    compile 'org.hibernate:hibernate-core'
+    compile 'org.hibernate:hibernate-validator'
+
+    // Database (H2)
+    compile 'com.h2database:h2'
+
+    // DataSource (HikariCP)
+    compile "com.zaxxer:HikariCP:$hikariVersion"
+
+    // MySql driver
+    compile "mysql:mysql-connector-java:$mySqlDriverVersion"
+
+
+    // Adds support for Java 8 dates
+    compile "org.jadira.usertype:usertype.extended:$jadiraVersion"
+
+    compile "org.slf4j:slf4j-simple:$sl4jVersion"
+
+    // JSON processing
+    compile 'com.fasterxml.jackson.core:jackson-core'
+    compile 'com.fasterxml.jackson.core:jackson-annotations'
+    compile 'com.fasterxml.jackson.core:jackson-databind'
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+    // Guava
+	compile "com.google.guava:guava:$guavaVersion"
+
+
+    //Spring-Secutity
+    compile 'org.springframework.security:spring-security-core:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-web:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-config:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-data:4.0.1.RELEASE'
+    compile 'org.springframework.security:spring-security-test:4.0.1.RELEASE'
+
+    //Spring-social
+    compile 'org.springframework.social:spring-social-core'
+    compile 'org.springframework.social:spring-social-config'
+    compile 'org.springframework.social:spring-social-web'
+    compile 'org.springframework.social:spring-social-facebook'
+    compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
+    //compile 'org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-SNAPSHOT'
+    //compile 'org.springframework.social:spring-social-vkontakte:2.0.0.BUILD-SNAPSHOT'
+    compile 'com.github.weekens:spring-social-vkontakte:1.0.0.RELEASE'
+
+    compile 'org.springframework.social:spring-social-security'
+
+    compile 'org.springframework.boot:spring-boot-starter-security'
+
+
+    //Logging
+    compile 'log4j:log4j:1.2.17'
+
+    //AspectJ
+    //aspectpath 'org.springframework:spring-aspects'
+    compile 'org.springframework:spring-aspects'
+
+
+    // Test dependencies
+    testCompile 'junit:junit'
+    testCompile 'org.springframework:spring-test'
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "org.assertj:assertj-core:$assertJVersion"
+    testCompile "com.github.springtestdbunit:spring-test-dbunit:$springTestDbUnitVersion"
+    testCompile "org.dbunit:dbunit:$dbUnitVersion"
+
+    // Adds a simple way to extract parts of a given document.
+    testCompile "com.jayway.jsonpath:json-path:$jsonPathVesrion"
+    testCompile "com.jayway.jsonpath:json-path-assert:$jsonPathVesrion"
+
+    //Hibernate Validator requires an implementation of the Unified Expression Language for evaluating dynamic expressions in constraint violation messages.
+    testCompile 'javax.el:javax.el-api'
+    testCompile 'org.glassfish:javax.el'
+
+    providedCompile 'javax.servlet:javax.servlet-api'
+
+
+    def tomcatVersion = '7.0.59'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
+
+     // to run our App on Heroku
+     compile 'org.springframework.boot:spring-boot-starter-web'
+	 providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+configurations {
+    providedRuntime
+    compile.exclude(group: 'ch.qos.logback')
+}
+
+//---------------------------Gradle wrapper--------------------------------------------------//
+
+/*https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:upgrading_wrapper
+  gradlew wrapper --gradle-version 4.2.1
+  The Gradle Wrapper is the preferred way of starting a Gradle build
+  Run the following command to download and initialize the wrapper scripts: gradle wrapper
+*/
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '4.4'
 }
+
+//---------------------------Tests setup-----------------------------------------//
+
+test {
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    maxHeapSize = "1g"
+
+    reports.html.destination = file("$reports.html.destination/unit")
+    reports.junitXml.destination = file("$reports.junitXml.destination/unit")
+
+    jacoco {
+        destinationFile = file("$buildDir/reports/jacoco/unit/jacocoUnit.exec")
+    }
+}
+
+test.outputs.upToDateWhen { false }
+
+//---------------------------Integration tests setup-----------------------------------------//
+
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integrationtest/java')
+        resources.srcDir file('src/integrationtest/resources')
+        compileClasspath = sourceSets.main.output + configurations.testRuntime + sourceSets.test.output
+        runtimeClasspath = output + compileClasspath
+    }
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs the integration tests.'
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    reports.html.destination = file("$reports.html.destination/integration")
+    reports.junitXml.destination = file("$reports.junitXml.destination/integration")
+
+    jacoco {
+        destinationFile = file("$buildDir/reports/jacoco/integration/jacocoIntegration.exec")
+    }
+}
+
+check.dependsOn integrationTest
+
+//--------------------------- Packaging --------------------------------------------------//
+
+yarn.mustRunAfter clean
+
+build.dependsOn yarn
+
+/*
+war { 
+	webXml = file("src/main/webapp/webxml-templates/" + "web-" + getRunway() + ".xml")
+	excludes = ['webxml-templates', 'css', 'fonts','images','js', 'languages', 'pages', 'templates']
+}*/
+
+war.archiveName = 'idea.war'
+
+war {
+	enabled = true
+
+	/*from('node_modules/@bower_components') {
+		into 'static/bower_components'
+	}*/
+}
+
+bootWar {
+	classifier = 'boot'
+	mainClassName = 'com.epam.idea.Application'
+	baseName = 'idea'
+	version =  ''
+
+	launchScript()
+
+	/*from('node_modules/@bower_components') {
+		into 'static/bower_components'
+	}*/
+}
+
+//--------------------------- Select Runway --------------------------------------------------//
+def getRunway() {
+	def runway = System.getProperty("runway") ?: 'dev'; //available: dev, test, prod, local
+	println "-----------------\n[Runway: " + runway + "]\n-----------------";
+	return runway;
+}
+
+//---------------------------Deploy in local Tomcat--------------------------------------------------//
+
+task tom << {
+    def tomcat_home = System.getenv('CATALINA_HOME')
+    def tomcat_bin = "$tomcat_home/bin"
+    def tomcat_base = System.getenv('CATALINA_BASE')
+    def tomcat_webapps = tomcat_base ? "$tomcat_base/webapps" : "$tomcat_home/webapps"
+    if (project.hasProperty('start')) {
+        startTom(tomcat_bin)
+    } else if (project.hasProperty('stop')) {
+        stopTom(tomcat_bin)
+    } else if (project.hasProperty('deployNstart')) {
+        stopTom(tomcat_bin)
+        webappsCopy(tomcat_webapps)
+        startTom(tomcat_bin)
+    } else {
+        throw new RuntimeException('unrecognized option')
+    }
+}
+
+def startTom(tomcat_bin) {
+    println 'Starting Tomcat...'
+    exec {
+        workingDir tomcat_bin
+        commandLine 'cmd', '/c', 'startup.bat'
+    }
+}
+
+def stopTom(tomcat_bin) {
+    println 'Stopping Tomcat...'
+    exec {
+        workingDir tomcat_bin
+        commandLine 'cmd', '/c', 'shutdown.bat'
+    }
+}
+
+def webappsCopy(tomcat_webapps) {
+    println "Start copying war into $tomcat_webapps"
+    copy {
+        from 'build/libs'
+        into tomcat_webapps
+        include '*.war'
+    }
+    println 'Finish copying war'
+}
+
+tomcat {
+    httpPort = 9090
+}
+
+/* ---------------------- Heroku ---------------------- */
+
+yarn {
+  environment = [
+    'TMPDIR': './TMP',
+    'PORT': System.getenv('PORT') || 9090
+  ]
+}
+
+task stage(dependsOn: ["build"])
+

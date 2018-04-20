@@ -1,0 +1,32 @@
+#accessDeniedBox {
+  margin: 10% auto;
+  width: 30%;
+  border: 1px solid #ff0000;
+  border-radius: 3px;
+}
+
+#accessDeniedMsg {
+  margin-top: 40px;
+  margin-top: 20px;
+  font-family: Lobster,cursive;
+  font-weight:bold;
+  color: #ff0000;
+  text-decoration: none;
+  font-size: 2em;
+  text-align: center;
+}
+
+#accessDeniedDesc {
+  margin-bottom: 30px;
+  font-family: Lobster,cursive;
+  color: #ff0000;
+  text-decoration: none;
+  text-align: center;
+}
+
+#divCenter
+{
+	height: 100%;
+	width: 100%;
+	text-align:center;
+}
