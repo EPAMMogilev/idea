@@ -23,6 +23,8 @@ first@idea.com / 1234
 
 ### Centos
 
+sudo yum -y install bzip2
+
 cd /home/admin/IDEA
 git clone https://github.com/JavaMahileu/idea.git
 cd idea
