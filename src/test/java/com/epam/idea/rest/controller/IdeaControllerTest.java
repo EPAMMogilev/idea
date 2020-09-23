@@ -337,7 +337,7 @@ public class IdeaControllerTest {
 
         this.mockMvc.perform(get("/api/v1/ideas/{ideaId}/comments", ideaId).accept(APPLICATION_JSON_UTF8))
                 .andDo(print()).andExpect(status().isOk()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]." + ID).value((int) comment.getId()))
+                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]." + ID).value(comment.getId()))
                 .andExpect(jsonPath("$[0].body").value(comment.getBody()))
                 .andExpect(jsonPath("$[0].rating").value(comment.getRating()))
                 .andExpect(jsonPath("$[0].links", hasSize(3)));

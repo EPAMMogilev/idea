@@ -17,18 +17,22 @@ Run:
 com.epam.idea.Application
 or gradlew bootRun
 
+localhost:9090
+first@idea.com / 1234
 
-### From Jenkins:
 
-cd
+### Centos
+
+cd /home/admin/IDEA
 git clone https://github.com/JavaMahileu/idea.git
 cd idea
 git checkout jenkins
 
-cd 
-kill $(cat ./idea-pid.file)
-gradlew stage
-nohup gradlew bootRun & echo $! > ./idea-pid.file &
+cd /home/admin/IDEA/idea
+//kill $(cat ./idea-pid.file)
+gradle wrapper
+./gradlew stage
+nohup ./gradlew bootRun & echo $! > ./idea-pid.file &
 
 
 
