@@ -22,7 +22,7 @@ public class Tag implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	private long id;
+	private Long id;
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
@@ -43,7 +43,7 @@ public class Tag implements Serializable {
 		this.ideasWithTag = new ArrayList<>();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

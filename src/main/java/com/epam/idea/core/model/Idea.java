@@ -38,7 +38,7 @@ public class Idea implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
-    private long id;
+    private Long id;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
@@ -47,11 +47,11 @@ public class Idea implements Serializable {
     private String description;
 
     @Column(name = "CREATION_TIME", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+    //@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
     private ZonedDateTime creationTime;
 
     @Column(name = "MODIFICATION_TIME", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+    //@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
     private ZonedDateTime modificationTime;
 
     @Column(name = "RATING", nullable = false)
@@ -93,7 +93,7 @@ public class Idea implements Serializable {
         this.likedUsers = new ArrayList<>();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

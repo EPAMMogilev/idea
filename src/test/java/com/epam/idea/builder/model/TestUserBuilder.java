@@ -21,9 +21,12 @@ public class TestUserBuilder {
 	public static final String DEFAULT_EMAIL = "test@email.com";
 	public static final String DEFAULT_PASSWORD = "password";
 	public static final long DEFAULT_USER_ID = 1L;
+	public static final String DEFAULT_SOCIAL_ID = "123";
+	public static final SocialMediaService DEFAULT_SOCIAL_SERVICE = SocialMediaService.GOOGLE;
 	public static final ZonedDateTime DEFAULT_CREATION_TIME = ZonedDateTime.of(2015, 1, 12, 0, 0, 0, 0, ZoneOffset.UTC);
 
 	private long id;
+	private String socialId;
 	private String username;
 	private String email;
 	private String password;
@@ -45,7 +48,9 @@ public class TestUserBuilder {
 				.withUsername(DEFAULT_USERNAME)
 				.withEmail(DEFAULT_EMAIL)
 				.withPassword(DEFAULT_PASSWORD)
-				.withCreationTime(DEFAULT_CREATION_TIME);
+				.withCreationTime(DEFAULT_CREATION_TIME)
+				.withSocialId(DEFAULT_SOCIAL_ID)
+				.withSocialMediaService(DEFAULT_SOCIAL_SERVICE);
 	}
 
 	public static TestUserBuilder aUser() {
@@ -60,6 +65,11 @@ public class TestUserBuilder {
 
 	public TestUserBuilder withId(final long id) {
 		this.id = id;
+		return this;
+	}
+
+	public TestUserBuilder withSocialId(final String socialId) {
+		this.socialId = socialId;
 		return this;
 	}
 
@@ -150,6 +160,7 @@ public class TestUserBuilder {
 		user.setComments(comments);
 		user.setIdeas(ideas);
 		user.setRoles(roles);
+		user.setSocialId(socialId);
 		user.setSocialMediaService(socialMediaService);
 		return user;
 	}

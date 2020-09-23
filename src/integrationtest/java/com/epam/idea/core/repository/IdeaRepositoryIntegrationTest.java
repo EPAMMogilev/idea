@@ -39,7 +39,7 @@ public class IdeaRepositoryIntegrationTest {
     @DatabaseSetup(value = "ideaRepository-ideas.xml")
     public void shouldFindAllIdeasByUserId() throws Exception {
         // When:
-        final List<Idea> ideas = this.ideaRepository.findAllByUserId(new PageRequest(0, 500, null), USER_ID);
+        final List<Idea> ideas = this.ideaRepository.findAllByUserId(PageRequest.of(0, 500), USER_ID);
 
         // Then:
         assertThat(ideas).hasSize(1);
@@ -52,7 +52,7 @@ public class IdeaRepositoryIntegrationTest {
     @DatabaseSetup(value = "ideaRepository-ideas.xml")
     public void shouldFindAllIdeasByTagId() throws Exception {
         // When:
-        final List<Idea> ideas = this.ideaRepository.findAllVisibleByTagId(new PageRequest(0, 500, null), TAG_ID);
+        final List<Idea> ideas = this.ideaRepository.findAllVisibleByTagId(PageRequest.of(0, 500), TAG_ID);
 
         // Then:
         assertThat(ideas).hasSize(1);
@@ -65,7 +65,7 @@ public class IdeaRepositoryIntegrationTest {
     @DatabaseSetup(value = "ideaRepository-ideas.xml")
     public void shouldFindAllIdeasByUserIdAndByTagId() throws Exception {
         // When:
-        final List<Idea> ideas = this.ideaRepository.findAllByUserIdAndByTagId(new PageRequest(0, 500, null), USER_ID,
+        final List<Idea> ideas = this.ideaRepository.findAllByUserIdAndByTagId(PageRequest.of(0, 500), USER_ID,
                 TAG_ID);
 
         // Then:
@@ -79,7 +79,7 @@ public class IdeaRepositoryIntegrationTest {
     @DatabaseSetup(value = "ideaRepository-ideas.xml")
     public void shouldFindAllIdeasByUserIdByTagIdAndByQuery() throws Exception {
         // When:
-        final List<Idea> ideas = this.ideaRepository.findAllByUserIdByTagIdAndByQuery(new PageRequest(0, 500, null),
+        final List<Idea> ideas = this.ideaRepository.findAllByUserIdByTagIdAndByQuery(PageRequest.of(0, 500),
                 USER_ID, TAG_ID, "TEST");
 
         // Then:

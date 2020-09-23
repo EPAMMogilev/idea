@@ -97,3 +97,5 @@ create table UserConnection (userId varchar(255) not null,
     expireTime bigint,
     primary key (userId, providerId, providerUserId));
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
+
+CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 100 INCREMENT BY 1;

@@ -10,11 +10,11 @@ import org.springframework.data.repository.Repository;
 @NoRepositoryBean
 interface BaseRepository<T, ID extends Serializable> extends Repository<T, ID> {
 
-	void delete(T deleted);
-
 	List<T> findAll();
 
-	Optional<T> findOne(ID id);
+	<S extends T> S save(S entity);
 
-	T save(T persisted);
+	Optional<T> findById(ID primaryKey);
+
+	void delete(T entity);
 }

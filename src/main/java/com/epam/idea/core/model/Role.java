@@ -21,7 +21,7 @@ public class Role implements Serializable, GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	private long id;
+	private Long id;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "NAME", nullable = false)
@@ -35,7 +35,7 @@ public class Role implements Serializable, GrantedAuthority {
 		this.name = name;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

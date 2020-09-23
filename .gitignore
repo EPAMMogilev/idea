@@ -8,3 +8,4 @@ bin
 build
 node_modules
 target
+/.idea

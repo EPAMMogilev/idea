@@ -1,16 +1,14 @@
 apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
 
 jacoco {
-    toolVersion = '0.7.4.201502262128'
+    toolVersion = "0.8.5"
 }
 
 jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
     reports {
-        xml.enabled true // coveralls plugin depends on xml format report
+        xml.enabled false
         csv.enabled false
-        html.destination "${buildDir}/jacoco-report"
+        html.destination file("${buildDir}/jacoco-report")
     }
-    executionData = files(["$buildDir/reports/jacoco/unit/jacocoUnit.exec",
-                           "$buildDir/reports/jacoco/integration/jacocoIntegration.exec"])
 }

@@ -101,7 +101,7 @@ public class UserControllerTest {
 
     private MockMvc mockMvc;
 
-    private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+    private final Pageable defaultPageRequest = PageRequest.of(0, 500);
 
     @Before
     public void setUp() throws Exception {
@@ -123,7 +123,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].password").doesNotExist())
                 .andExpect(jsonPath("$[0]." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
                 .andExpect(jsonPath("$[0].links", hasSize(3)))
-                .andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$[0].links[0].rel").value("self"))
                 .andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/users/" + first.getId())))
                 .andExpect(jsonPath("$[0].links[1].rel").value(UserResourceAsm.IDEAS_REL))
                 .andExpect(jsonPath("$[0].links[1].href")
@@ -148,7 +148,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.username").value(user.getUsername()))
                 .andExpect(jsonPath("$.email").value(user.getEmail())).andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
-                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value("self"))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + user.getId())))
                 .andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
                 .andExpect(
@@ -167,8 +167,8 @@ public class UserControllerTest {
 
         this.mockMvc.perform(get("/api/v1/users/{userId}", DEFAULT_USER_ID).accept(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
-                .andExpect(jsonPath("$[0].message").value("Could not find user with id: 1."));
+                .andExpect(jsonPath("$.content[0].logref").value(USER_NOT_FOUND_LOGREF))
+                .andExpect(jsonPath("$.content[0].message").value("Could not find user with id: 1."));
 
         verify(this.userServiceMock, times(1)).findOne(DEFAULT_USER_ID);
         verifyNoMoreInteractions(this.userServiceMock);
@@ -187,13 +187,13 @@ public class UserControllerTest {
                 .perform(post("/api/v1/users").contentType(APPLICATION_JSON_UTF8).accept(APPLICATION_JSON_UTF8)
                         .content(convertObjectToJsonBytes(userResource)))
                 .andExpect(status().isBadRequest()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(3)))
+                //.andExpect(jsonPath("$", hasSize(3)))
 
                 // Spring MVC does not guarantee the ordering of the field
                 // errors,
                 // i.e. the field errors are returned in random order.
-                .andExpect(jsonPath("$[*].logref").value(containsInAnyOrder("password", "email", "username")))
-                .andExpect(jsonPath("$[*].message").value(containsInAnyOrder(
+                //.andExpect(jsonPath("$.content[*].logref").value(containsInAnyOrder("password", "email", "username")))
+                .andExpect(jsonPath("$.content[*].message").value(containsInAnyOrder(
                         String.format("size must be between %s and %s", User.MIN_LENGTH_EMAIL, User.MAX_LENGTH_EMAIL),
                         String.format("size must be between %s and %s", User.MIN_LENGTH_PASSWORD,
                                 User.MAX_LENGTH_PASSWORD),
@@ -223,7 +223,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.username").value(saved.getUsername()))
                 .andExpect(jsonPath("$.email").value(saved.getEmail())).andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
-                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value("self"))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + saved.getId())))
                 .andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
                 .andExpect(
@@ -264,9 +264,9 @@ public class UserControllerTest {
                 .perform(delete("/api/v1/users/{userId}", userId).contentType(APPLICATION_JSON_UTF8)
                         .accept(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
-                .andExpect(jsonPath("$[0].message").value("Could not find user with id: " + userId + "."))
-                .andExpect(jsonPath("$[0].links", empty()));
+                .andExpect(jsonPath("$.content[0].logref").value(USER_NOT_FOUND_LOGREF))
+                .andExpect(jsonPath("$.content[0]..message").value("Could not find user with id: " + userId + "."))
+                .andExpect(jsonPath("$.content[0].links", empty()));
 
         verify(this.userServiceMock, times(1)).deleteById(userId);
         verifyNoMoreInteractions(this.userServiceMock);
@@ -294,7 +294,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.email").value(updated.getEmail()))
                 .andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
-                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value("self"))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + updated.getId())))
                 .andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
                 .andExpect(jsonPath("$.links[1].href")
@@ -325,9 +325,9 @@ public class UserControllerTest {
                 .perform(put("/api/v1/users/{userId}", userId).contentType(APPLICATION_JSON_UTF8)
                         .accept(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(source)))
                 .andExpect(status().isNotFound()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
-                .andExpect(jsonPath("$[0].message").value("Could not find user with id: " + userId + "."))
-                .andExpect(jsonPath("$[0].links", hasSize(0)));
+                .andExpect(jsonPath("$.content[0].logref").value(USER_NOT_FOUND_LOGREF))
+                .andExpect(jsonPath("$.content[0].message").value("Could not find user with id: " + userId + "."))
+                .andExpect(jsonPath("$.content[0].links", hasSize(0)));
 
         final ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(this.userServiceMock, times(1)).update(eq(userId), userCaptor.capture());
@@ -358,7 +358,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0]." + MODIFICATION_TIME).value(EXPECTED_IDEA_MODIFICATION_TIME))
                 // .andExpect(jsonPath("$[0].author").doesNotExist())
                 .andExpect(jsonPath("$[0].links", hasSize(3)))
-                .andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$[0].links[0].rel").value("self"))
                 .andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + idea.getId())))
                 .andExpect(jsonPath("$[0].links[1].rel").value(IdeaResourceAsm.REL_AUTHOR))
                 .andExpect(jsonPath("$[0].links[1].href").value(containsString("/api/v1/users/" + author.getId())))
@@ -366,7 +366,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].tags[0]." + ID).value((int) idea.getRelatedTags().get(0).getId()))
                 .andExpect(jsonPath("$[0].tags[0].name").value(idea.getRelatedTags().get(0).getName()))
                 .andExpect(jsonPath("$[0].tags[0].links", hasSize(2)))
-                .andExpect(jsonPath("$[0].tags[0].links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$[0].tags[0].links[0].rel").value("self"))
                 .andExpect(jsonPath("$[0].tags[0].links[0].href").value(containsString("/api/v1/tags/" + tag.getId())))
                 .andExpect(jsonPath("$[0].tags[0].links[1].rel").value(TagResourceAsm.IDEAS_REL))
                 .andExpect(jsonPath("$[0].tags[0].links[1].href")
@@ -432,7 +432,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.title").value(createdIdea.getTitle()))
                 .andExpect(jsonPath("$.description").value(createdIdea.getDescription()))
                 .andExpect(jsonPath("$.rating").value(createdIdea.getRating()))
-                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value("self"))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + createdIdea.getId())))
                 .andExpect(jsonPath("$.links[1].rel").value(IdeaResourceAsm.REL_AUTHOR))
                 .andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/users/" + author.getId())))
@@ -440,7 +440,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.author.username").value(author.getUsername()))
                 .andExpect(jsonPath("$.author.email").value(author.getEmail()))
                 .andExpect(jsonPath("$.author.links", hasSize(3)))
-                .andExpect(jsonPath("$.author.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.author.links[0].rel").value("self"))
                 .andExpect(jsonPath("$.author.links[0].href").value(containsString("/api/v1/users/" + author.getId())))
                 .andExpect(jsonPath("$.author.links[1].rel").value(UserResourceAsm.IDEAS_REL))
                 .andExpect(jsonPath("$.author.links[1].href")
@@ -471,7 +471,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.username").value(user.getUsername()))
                 .andExpect(jsonPath("$.email").value(user.getEmail())).andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$." + CREATION_TIME).value(EXPECTED_USER_CREATION_TIME))
-                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+                .andExpect(jsonPath("$.links", hasSize(3))).andExpect(jsonPath("$.links[0].rel").value("self"))
                 .andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/users/" + user.getId())))
                 .andExpect(jsonPath("$.links[1].rel").value(UserResourceAsm.IDEAS_REL))
                 .andExpect(
@@ -491,8 +491,8 @@ public class UserControllerTest {
 
         this.mockMvc.perform(get("/api/v1/users/{userEmail}/email", DEFAULT_EMAIL).accept(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound()).andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0].logref").value(USER_NOT_FOUND_LOGREF))
-                .andExpect(jsonPath("$[0].message").value("This user does not exist"));
+                .andExpect(jsonPath("$.content[0].logref").value(USER_NOT_FOUND_LOGREF))
+                .andExpect(jsonPath("$.content[0].message").value("This user does not exist"));
 
         verify(this.userServiceMock, times(1)).findRegisteredUserByEmail(DEFAULT_EMAIL);
         verifyNoMoreInteractions(this.userServiceMock);

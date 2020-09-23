@@ -59,8 +59,6 @@ public class CommentServiceImplTest {
     public void shouldSaveOneComment(){
         Comment comment = TestCommentBuilder.aComment().build();
 
-        given(this.commentRepositoryMock.findOne(eq(comment.getId()))).willReturn(Optional.of(comment));
-
         this.commentService.save(comment);
 
         ArgumentCaptor<Comment> userComment = ArgumentCaptor.forClass(Comment.class);
@@ -77,7 +75,7 @@ public class CommentServiceImplTest {
     public void shouldFindOneComment(){
         Comment comment = TestCommentBuilder.aComment().build();
 
-        given(this.commentRepositoryMock.findOne(eq(comment.getId()))).willReturn(Optional.of(comment));
+        given(this.commentRepositoryMock.findById(eq(comment.getId()))).willReturn(Optional.of(comment));
 
         Comment actual = this.commentService.findOne(comment.getId());
 
@@ -103,7 +101,7 @@ public class CommentServiceImplTest {
         Idea ideaToFind = TestIdeaBuilder.anIdea().build();
 
         //findCommentsByIdeaId
-        Pageable defaultPageRequest = new PageRequest(0, 500, null);
+        Pageable defaultPageRequest = PageRequest.of(0, 500);
         List<Comment> comments = this.commentService.findCommentsByIdeaId(defaultPageRequest, ideaToFind.getId());
         assertThat(comments).isNotNull();
     }//shouldfindCommentsByIdeaIdComment
@@ -119,7 +117,7 @@ public class CommentServiceImplTest {
 
         given(commentRepositoryMock.findByIdAndLikedByCurrentUser(commentId)).willReturn(null);
         given(userRepositoryMock.findCurrentUser()).willReturn(user);
-        given(commentRepositoryMock.findOne(commentId)).willReturn(Optional.of(comment));
+        given(commentRepositoryMock.findById(commentId)).willReturn(Optional.of(comment));
         given(commentRepositoryMock.save(comment)).willReturn(comment);
 
         final Comment changedLikeComment = this.commentService.changeCommentLike(commentId);
@@ -156,7 +154,7 @@ public class CommentServiceImplTest {
 
         given(this.commentRepositoryMock.save(comment)).willReturn(comment);
         given(userRepositoryMock.findCurrentUser()).willReturn(user);
-        given(ideaRepositoryMock.findOne(ideaId)).willReturn(subject);
+        given(ideaRepositoryMock.findById(ideaId)).willReturn(subject);
 
         Comment actualComment = this.commentService.create(comment, ideaId);
 

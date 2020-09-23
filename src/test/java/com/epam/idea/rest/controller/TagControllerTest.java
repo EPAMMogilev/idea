@@ -58,7 +58,7 @@ public class TagControllerTest {
 
 	private MockMvc mockMvc;
 
-	private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+	private final Pageable defaultPageRequest = PageRequest.of(0, 500);
 
 	@Before
 	public void setUp() throws Exception {
@@ -79,7 +79,7 @@ public class TagControllerTest {
 				.andExpect(jsonPath("$[0]." + ID).value(((int) foundTag.getId())))
 				.andExpect(jsonPath("$[0].name").value(foundTag.getName()))
 				.andExpect(jsonPath("$[0].links", hasSize(2)))
-				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$[0].links[0].rel").value("self"))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/tags/" + foundTag.getId())))
 				.andExpect(jsonPath("$[0].links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$[0].links[1].href").value(containsString("/api/v1/tags/" + foundTag.getId() + "/ideas")));
@@ -101,7 +101,7 @@ public class TagControllerTest {
 				.andExpect(jsonPath("$." + ID).value(((int) foundTag.getId())))
 				.andExpect(jsonPath("$.name").value(foundTag.getName()))
 				.andExpect(jsonPath("$.links", hasSize(2)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].rel").value("self"))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/tags/" + foundTag.getId())))
 				.andExpect(jsonPath("$.links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/tags/" + foundTag.getId() + "/ideas")));
@@ -148,12 +148,12 @@ public class TagControllerTest {
 				.andExpect(jsonPath("$[0].tags[0]." + ID).value(((int) tag.getId())))
 				.andExpect(jsonPath("$[0].tags[0].name").value(tag.getName()))
 				.andExpect(jsonPath("$[0].tags[0].links", hasSize(2)))
-				.andExpect(jsonPath("$[0].tags[0].links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$[0].tags[0].links[0].rel").value("self"))
 				.andExpect(jsonPath("$[0].tags[0].links[0].href").value(containsString("/api/v1/tags/" + tag.getId())))
 				.andExpect(jsonPath("$[0].tags[0].links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$[0].tags[0].links[1].href").value(containsString("/api/v1/tags/" + tag.getId() + "/ideas")))
 				.andExpect(jsonPath("$[0].links", hasSize(2)))
-				.andExpect(jsonPath("$[0].links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$[0].links[0].rel").value("self"))
 				.andExpect(jsonPath("$[0].links[0].href").value(containsString("/api/v1/ideas/" + idea.getId())));
 
 		verify(this.ideaServiceMock, times(1)).findAllByTagId(defaultPageRequest, tag.getId());

@@ -12,9 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import org.hibernate.validator.constraints.Email;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
-public class UserResource extends ResourceSupport {
+public class UserResource extends RepresentationModel<UserResource> {
 
 	@JsonProperty(JsonPropertyName.ID)
 	private long userId;

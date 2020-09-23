@@ -3,9 +3,9 @@ package com.epam.idea.rest.resource;
 import com.epam.idea.core.model.Tag;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
-public class TagResource extends ResourceSupport {
+public class TagResource extends RepresentationModel<TagResource> {
 
 	@JsonProperty(JsonPropertyName.ID)
 	private long tagId;

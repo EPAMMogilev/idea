@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional(readOnly = true)
 	public Comment findOne(Long id) {
-		final Optional<Comment> commentOptional = commentRepository.findOne(id);
+		final Optional<Comment> commentOptional = commentRepository.findById(id);
 		return commentOptional.map(comment -> {
 			comment.setLiked(isCurrentUserLikedComment(id));
 			return comment;
@@ -104,7 +104,7 @@ public class CommentServiceImpl implements CommentService {
 		User currentUser = userRepository.findCurrentUser();
 
 		if (comment == null) {
-			comment = commentRepository.findOne(commentId).orElseThrow(() -> new CommentDoesNotExistException());
+			comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentDoesNotExistException());
 			comment.getLikedUsers().add(currentUser);
 			comment.setRating(comment.getRating() + 1);
 		} else {
@@ -119,7 +119,7 @@ public class CommentServiceImpl implements CommentService {
 	public Comment create(Comment source, Long ideaId) {
 	    final User author = userRepository.findCurrentUser();
 	    source.setAuthor(author);
-	    final Idea subject = ideaRepository.findOne(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
+	    final Idea subject = ideaRepository.findById(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
 	    source.setSubject(subject);
 		return this.save(source);
 	}

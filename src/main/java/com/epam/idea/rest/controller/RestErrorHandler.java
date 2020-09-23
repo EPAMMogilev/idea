@@ -7,7 +7,7 @@ import com.epam.idea.core.service.exception.DuplicateUserException;
 import com.epam.idea.core.service.exception.IdeaNotFoundException;
 import com.epam.idea.core.service.exception.TagDoesNotExistException;
 import com.epam.idea.core.service.exception.UserNotFoundException;
-import org.springframework.hateoas.VndErrors;
+import org.springframework.hateoas.mediatype.vnderrors.VndErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class RestErrorHandler {
 
-	public static final String USER_NOT_FOUND_LOGREF = "error";
-	public static final String TAG_NOT_FOUND_LOGREF = "error";
-	public static final String IDEA_NOT_FOUND_LOGREF = "error";
+	public static final String USER_NOT_FOUND_LOGREF = "1";
+	public static final String TAG_NOT_FOUND_LOGREF = "2";
+	public static final String IDEA_NOT_FOUND_LOGREF = "3";
 
 	@ResponseBody
 	@ExceptionHandler(UserNotFoundException.class)
@@ -58,8 +58,8 @@ public class RestErrorHandler {
 		final BindingResult result = ex.getBindingResult();
 		final List<VndErrors.VndError> vndErrorList = result.getFieldErrors()
 				.stream()
-				.map(error -> new VndErrors.VndError(error.getField(), error.getDefaultMessage()))
+				.map(error -> new VndErrors.VndError(String.valueOf(error.hashCode()), error.getDefaultMessage()))
 				.collect(Collectors.toList());
-		return new VndErrors(vndErrorList);
+		return new VndErrors().withErrors(vndErrorList);
 	}
 }

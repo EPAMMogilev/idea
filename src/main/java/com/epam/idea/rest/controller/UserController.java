@@ -1,5 +1,6 @@
 package com.epam.idea.rest.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import com.epam.idea.rest.resource.support.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,28 +49,28 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST)
 	public HttpEntity<UserResource> createUser(@Valid @RequestBody final UserResource userRes) {
 		final User savedUser = this.userService.save(userRes.toUser());
-		return new ResponseEntity<>(new UserResourceAsm().toResource(savedUser), HttpStatus.CREATED);
+		return new ResponseEntity<>(new UserResourceAsm().toModel(savedUser), HttpStatus.CREATED);
 	}
 
 	@JsonView(View.Basic.class)
 	@RequestMapping(method = RequestMethod.GET)
 	public HttpEntity<List<UserResource>> showAllUsers() {
 		final List<User> userList = this.userService.findAll();
-		return new ResponseEntity<>(new UserResourceAsm().toResources(userList), HttpStatus.OK);
+		return new ResponseEntity<>(new ArrayList<>(new UserResourceAsm().toCollectionModel(userList).getContent()), HttpStatus.OK);
 	}
 
 	@JsonView(View.Basic.class)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public HttpEntity<UserResource> getUser(@PathVariable final long userId) {
 		final User user = this.userService.findOne(userId);
-		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
+		return new ResponseEntity<>(new UserResourceAsm().toModel(user), HttpStatus.OK);
 	}
 
 	@JsonView(View.Basic.class)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	public HttpEntity<UserResource> updateUser(@Valid @RequestBody final UserResource userRes, @PathVariable final long userId) {
 		final User updated = this.userService.update(userId, userRes.toUser());
-		return new ResponseEntity<>(new UserResourceAsm().toResource(updated), HttpStatus.OK);
+		return new ResponseEntity<>(new UserResourceAsm().toModel(updated), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
@@ -79,26 +81,27 @@ public class UserController {
 
 	@RequestMapping(value = "/{userId}/ideas", method = RequestMethod.GET)
 	public HttpEntity<List<IdeaResource>> getUserIdeas(@PathVariable final long userId) {
-		final List<Idea> userIdeas = this.ideaService.findAllByUserId(new PageRequest(0, 500), userId);
-		return new ResponseEntity<>(new IdeaResourceAsm().toResources(userIdeas), HttpStatus.OK);
+		final List<Idea> userIdeas = this.ideaService.findAllByUserId(PageRequest.of(0, 500), userId);
+		CollectionModel<IdeaResource> model = new IdeaResourceAsm().toCollectionModel(userIdeas);
+		return new ResponseEntity<>(new ArrayList<>(model.getContent()), HttpStatus.OK);
 	}
 
 	@JsonView(View.Basic.class)
 	@RequestMapping(value = "/{userId}/ideas", method = RequestMethod.POST)
 	public HttpEntity<IdeaResource> createIdeaOfUser(@PathVariable final long userId, @Valid @RequestBody final IdeaResource ideaRes) {
 		final Idea savedIdea = this.ideaService.saveForUser(userId, ideaRes.toIdea());
-		return new ResponseEntity<>(new IdeaResourceAsm().toResource(savedIdea), HttpStatus.CREATED);
+		return new ResponseEntity<>(new IdeaResourceAsm().toModel(savedIdea), HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{userId}/comments", method = RequestMethod.GET)
 	public HttpEntity<List<CommentResource>> getUserComments(@PathVariable final long userId) {
 		final List<Comment> comments = this.commentService.findCommentsByUserId(userId);
-		return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
+		return new ResponseEntity<>(new ArrayList<>(new CommentResourceAsm().toCollectionModel(comments).getContent()), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{userEmail}/email", method = RequestMethod.GET)
 	public HttpEntity<UserResource> getRegisteredUserByEmail(@PathVariable String userEmail) {
 		User user = this.userService.findRegisteredUserByEmail(userEmail);
-		return new ResponseEntity<>(new UserResourceAsm().toResource(user), HttpStatus.OK);
+		return new ResponseEntity<>(new UserResourceAsm().toModel(user), HttpStatus.OK);
 	}
 }

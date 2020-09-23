@@ -37,7 +37,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	private long id;
+	private Long id;
 
 	@Column(name = "USERNAME", nullable = false)
 	private String username;
@@ -49,7 +49,7 @@ public class User implements Serializable {
 	private String password;
 
 	@Column(name = "CREATION_TIME", nullable = false)
-	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+	//@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
 	private ZonedDateTime creationTime;
 
 	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
@@ -94,7 +94,7 @@ public class User implements Serializable {
 		}
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

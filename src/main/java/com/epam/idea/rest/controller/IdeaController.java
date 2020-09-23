@@ -1,6 +1,7 @@
 package com.epam.idea.rest.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -41,7 +42,7 @@ public class IdeaController {
     @RequestMapping(value = "/{ideaId}", method = RequestMethod.GET)
     public HttpEntity<IdeaResource> show(@PathVariable final long ideaId) {
         final Idea foundIdea = this.ideaService.findOne(ideaId);
-        return new ResponseEntity<>(new IdeaResourceAsm().toResource(foundIdea), HttpStatus.OK);
+        return new ResponseEntity<>(new IdeaResourceAsm().toModel(foundIdea), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -49,13 +50,13 @@ public class IdeaController {
             @RequestParam(required = false) final Long userId, @RequestParam(required = false) final String query,
             @RequestParam(required = false) final Long tagId) {
         final List<Idea> foundIdeas = ideaService.findAllByUserIdQueryAndTagId(pageable, userId, query, tagId);
-        return new ResponseEntity<>(new IdeaResourceAsm().toResources(foundIdeas), HttpStatus.OK);
+        return new ResponseEntity<>(new ArrayList<>(new IdeaResourceAsm().toCollectionModel(foundIdeas).getContent()), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<IdeaResource> create(@Valid @RequestBody final IdeaResource ideaRes) {
         final Idea createdIdea = this.ideaService.create(ideaRes.toIdea());
-        return new ResponseEntity<>(new IdeaResourceAsm().toResource(createdIdea), HttpStatus.CREATED);
+        return new ResponseEntity<>(new IdeaResourceAsm().toModel(createdIdea), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{ideaId}", method = RequestMethod.DELETE)
@@ -68,27 +69,27 @@ public class IdeaController {
     public HttpEntity<IdeaResource> update(@Valid @RequestBody final IdeaResource ideaResource,
             @PathVariable final long ideaId) {
         final Idea updatedIdea = this.ideaService.update(ideaId, ideaResource.toIdea());
-        return new ResponseEntity<>(new IdeaResourceAsm().toResource(updatedIdea), HttpStatus.OK);
+        return new ResponseEntity<>(new IdeaResourceAsm().toModel(updatedIdea), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{ideaId}/like", method = RequestMethod.POST)
     public HttpEntity<IdeaResource> changeLike(@PathVariable final long ideaId) {
         final Idea updatedIdea = this.ideaService.changeIdeaLike(ideaId);
-        return new ResponseEntity<>(new IdeaResourceAsm().toResource(updatedIdea), HttpStatus.OK);
+        return new ResponseEntity<>(new IdeaResourceAsm().toModel(updatedIdea), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{ideaId}/comments", method = RequestMethod.GET)
     public HttpEntity<List<CommentResource>> getIdeaComments(
             @PageableDefault(page = 0, size = 500) final Pageable pageable, @PathVariable final long ideaId) {
         final List<Comment> comments = this.commentService.findCommentsByIdeaId(pageable, ideaId);
-        return new ResponseEntity<>(new CommentResourceAsm().toResources(comments), HttpStatus.OK);
+        return new ResponseEntity<>(new ArrayList<>(new CommentResourceAsm().toCollectionModel(comments).getContent()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{ideaId}/comments", method = RequestMethod.POST)
     public HttpEntity<CommentResource> create(@Valid @RequestBody final CommentResource commentRes,
             @PathVariable final long ideaId) {
         final Comment createdComment = this.commentService.create(commentRes.toComment(), ideaId);
-        return new ResponseEntity<>(new CommentResourceAsm().toResource(createdComment), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CommentResourceAsm().toModel(createdComment), HttpStatus.CREATED);
     }
 
 }

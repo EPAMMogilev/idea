@@ -74,7 +74,7 @@ public class CommentControllerTest {
 				.andExpect(jsonPath("$.rating").value(foundComment.getRating()))
 				.andExpect(jsonPath("$.author").value(foundComment.getAuthor()))
 				.andExpect(jsonPath("$.links", hasSize(1)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].rel").value("self"))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/comments/" + foundComment.getId())));
 
 		verify(this.commentServiceMock, times(1)).findOne(foundComment.getId());
@@ -103,7 +103,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.subject").value(changedLikeComment.getSubject()))
                 .andExpect(jsonPath("$.liked").value(true))
                 .andExpect(jsonPath("$.links", hasSize(1)))
-                .andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF));
+                .andExpect(jsonPath("$.links[0].rel").value("self"));
 
         verify(this.commentServiceMock, times(1)).changeCommentLike(eq(commentId));
         verifyNoMoreInteractions(this.commentServiceMock);

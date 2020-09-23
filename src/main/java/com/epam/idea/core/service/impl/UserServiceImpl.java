@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(readOnly = true)
 	public User findOne(final Long id) {
-		return userRepository.findOne(id).orElseThrow(() -> new UserNotFoundException(id));
+		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 	}
 
 	@Override

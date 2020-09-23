@@ -12,15 +12,16 @@ import com.epam.idea.rest.resource.TagResource;
 import com.epam.idea.rest.resource.UserResource;
 
 import org.springframework.data.domain.PageRequest;
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+
 
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.hibernate.Hibernate.isInitialized;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource> {
+public class IdeaResourceAsm extends RepresentationModelAssemblerSupport<Idea, IdeaResource> {
 
     public static final String REL_AUTHOR = "author";
     public static final String COMMENTS_REL = "comments";
@@ -30,13 +31,13 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
     }
 
     @Override
-    public IdeaResource toResource(final Idea original) {
+    public IdeaResource toModel(final Idea original) {
         requireNonNull(original, "Idea cannot be null");
         final IdeaResource ideaResource = new IdeaResource();
         ideaResource.setIdeaId(original.getId());
         ideaResource.setTitle(original.getTitle());
         if (original.getAuthor() != null && isInitialized(original.getAuthor())) {
-            ideaResource.setAuthor(new UserResourceAsm().toResource(original.getAuthor()));
+            ideaResource.setAuthor(new UserResourceAsm().toModel(original.getAuthor()));
         }
         ideaResource.setDescription(original.getDescription());
         ideaResource.setCreationTime(original.getCreationTime());
@@ -48,14 +49,14 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
         ideaResource.setImageUrl(original.getImageUrl());
         if (isInitialized(original.getRelatedTags())) {
             final List<TagResource> tagResources = original.getRelatedTags().parallelStream()
-                    .map(tag -> new TagResourceAsm().toResource(tag)).collect(Collectors.toList());
+                    .map(tag -> new TagResourceAsm().toModel(tag)).collect(Collectors.toList());
             ideaResource.setTags(tagResources);
         } else {
             ideaResource.setTags(emptyList());
         }
         if (isInitialized(original.getLikedUsers())) {
             final List<UserResource> userNames = original.getLikedUsers().stream()
-                    .map(user -> new UserResourceAsm().toResource(user)).collect(Collectors.toList());
+                    .map(user -> new UserResourceAsm().toModel(user)).collect(Collectors.toList());
             ideaResource.setLikedUsers(userNames);
         } else {
             ideaResource.setLikedUsers(emptyList());
@@ -65,7 +66,7 @@ public class IdeaResourceAsm extends ResourceAssemblerSupport<Idea, IdeaResource
         Optional.ofNullable(original.getAuthor()).ifPresent(author -> ideaResource
                 .add(linkTo(methodOn(UserController.class).getUser(author.getId())).withRel(REL_AUTHOR)));
         ideaResource
-                .add(linkTo(methodOn(IdeaController.class).getIdeaComments(new PageRequest(0, 500), original.getId()))
+                .add(linkTo(methodOn(IdeaController.class).getIdeaComments(PageRequest.of(0, 500), original.getId()))
                         .withRel(COMMENTS_REL));
         return ideaResource;
     }

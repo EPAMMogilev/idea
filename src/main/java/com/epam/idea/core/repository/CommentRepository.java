@@ -1,9 +1,7 @@
 package com.epam.idea.core.repository;
 
-import java.util.List;
-
 import com.epam.idea.core.model.Comment;
-
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 

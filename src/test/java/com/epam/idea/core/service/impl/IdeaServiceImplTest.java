@@ -56,7 +56,7 @@ public class IdeaServiceImplTest {
     @InjectMocks
     private final IdeaService sut = new IdeaServiceImpl();
 
-    private final Pageable defaultPageRequest = new PageRequest(0, 500, null);
+    private final Pageable defaultPageRequest = PageRequest.of(0, 500);
 
     @Before
     public void setUp() throws Exception {
@@ -74,8 +74,8 @@ public class IdeaServiceImplTest {
         final Optional<User> user = Optional.of(new User());
 
         given(securityContextMock.getAuthentication()).willReturn(authenticationMock);
-        given(authenticationMock.getPrincipal()).willReturn(principal);
-        given(userRepositoryMock.findOne(id)).willReturn(user);
+        //given(authenticationMock.getPrincipal()).willReturn(principal);
+        //given(userRepositoryMock.findById(id)).willReturn(user);
 
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -96,21 +96,21 @@ public class IdeaServiceImplTest {
     public void shouldReturnFoundIdea() throws Exception {
         // Given:
         final Idea foundIdea = TestIdeaBuilder.anIdea().build();
-        given(this.ideaRepositoryMock.findOne(eq(foundIdea.getId()))).willReturn(Optional.of(foundIdea));
+        given(this.ideaRepositoryMock.findById(eq(foundIdea.getId()))).willReturn(Optional.of(foundIdea));
 
         // When:
         final Idea actual = this.sut.findOne(foundIdea.getId());
 
         // Then:
         assertThat(actual).isEqualTo(foundIdea);
-        verify(this.ideaRepositoryMock, times(1)).findOne(foundIdea.getId());
+        verify(this.ideaRepositoryMock, times(1)).findById(foundIdea.getId());
     }
 
     @Test
     public void shouldThrowExceptionWhenTryFindIdeaWhichDoesNotExist() throws Exception {
         // Given:
         final long ideaId = 3L;
-        given(this.ideaRepositoryMock.findOne(eq(ideaId))).willReturn(Optional.empty());
+        given(this.ideaRepositoryMock.findById(eq(ideaId))).willReturn(Optional.empty());
 
         // When:
         try {
@@ -119,7 +119,7 @@ public class IdeaServiceImplTest {
 
             // Then:
         } catch (final IdeaNotFoundException e) {
-            verify(this.ideaRepositoryMock, times(1)).findOne(ideaId);
+            verify(this.ideaRepositoryMock, times(1)).findById(ideaId);
             verifyNoMoreInteractions(this.ideaRepositoryMock);
         }
     }
@@ -128,14 +128,14 @@ public class IdeaServiceImplTest {
     public void shouldDeleteIdeaAndReturnIt() throws Exception {
         // Given:
         final Idea deletedIdea = TestIdeaBuilder.anIdea().build();
-        given(this.ideaRepositoryMock.findOne(eq(deletedIdea.getId()))).willReturn(Optional.of(deletedIdea));
+        given(this.ideaRepositoryMock.findById(eq(deletedIdea.getId()))).willReturn(Optional.of(deletedIdea));
 
         // When:
         final Idea actual = this.sut.deleteById(deletedIdea.getId());
 
         // Then:
         assertThat(actual).isEqualTo(deletedIdea);
-        verify(this.ideaRepositoryMock, times(1)).findOne(deletedIdea.getId());
+        verify(this.ideaRepositoryMock, times(1)).findById(deletedIdea.getId());
         verify(this.ideaRepositoryMock, times(1)).delete(deletedIdea);
     }
 
@@ -143,7 +143,7 @@ public class IdeaServiceImplTest {
     public void shouldThrowExceptionWhenTryDeleteIdeaWhichDoesNotExist() throws Exception {
         // Given:
         final long fakeIdeaId = 2L;
-        given(this.ideaRepositoryMock.findOne(eq(fakeIdeaId))).willReturn(Optional.empty());
+        given(this.ideaRepositoryMock.findById(eq(fakeIdeaId))).willReturn(Optional.empty());
 
         // When:
         try {
@@ -152,7 +152,7 @@ public class IdeaServiceImplTest {
 
             // Then:
         } catch (final IdeaNotFoundException e) {
-            verify(this.ideaRepositoryMock, times(1)).findOne(fakeIdeaId);
+            verify(this.ideaRepositoryMock, times(1)).findById(fakeIdeaId);
             verifyNoMoreInteractions(this.ideaRepositoryMock);
         }
     }
@@ -175,7 +175,7 @@ public class IdeaServiceImplTest {
         // Given:
         final Idea source = new TestIdeaBuilder().withTitle("New title").withDescription("New description").build();
         final Idea target = new TestIdeaBuilder().withId(1L).withTitle("Title").withDescription("Description").build();
-        given(this.ideaRepositoryMock.findOne(eq(target.getId()))).willReturn(Optional.of(target));
+        given(this.ideaRepositoryMock.findById(eq(target.getId()))).willReturn(Optional.of(target));
 
         // When:
         final Idea actual = this.sut.update(target.getId(), source);
@@ -187,7 +187,7 @@ public class IdeaServiceImplTest {
         assertThat(actual.getRating()).isEqualTo(source.getRating());
         assertThat(actual.getLikedUsers()).isEqualTo(source.getLikedUsers());
         assertThat(actual.getLiked()).isEqualTo(source.getLiked());
-        verify(this.ideaRepositoryMock, times(1)).findOne(target.getId());
+        verify(this.ideaRepositoryMock, times(1)).findById(target.getId());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class IdeaServiceImplTest {
         // Given:
         final long fakeIdeaId = 3L;
         final Idea source = new TestIdeaBuilder().withTitle("New title").withDescription("New description").build();
-        given(this.ideaRepositoryMock.findOne(eq(fakeIdeaId))).willReturn(Optional.empty());
+        given(this.ideaRepositoryMock.findById(eq(fakeIdeaId))).willReturn(Optional.empty());
 
         // When
         try {
@@ -204,7 +204,7 @@ public class IdeaServiceImplTest {
 
             // Then:
         } catch (final IdeaNotFoundException ex) {
-            verify(this.ideaRepositoryMock, times(1)).findOne(fakeIdeaId);
+            verify(this.ideaRepositoryMock, times(1)).findById(fakeIdeaId);
             verifyNoMoreInteractions(this.ideaRepositoryMock);
         }
     }
@@ -214,7 +214,7 @@ public class IdeaServiceImplTest {
         // Given:
         final List<Idea> ideas = Lists.newArrayList(TestIdeaBuilder.anIdea().build(), TestIdeaBuilder.anIdea().build());
         given(this.ideaRepositoryMock.findAll()).willReturn(ideas);
-        given(this.securityContextMock.getAuthentication()).willReturn(authenticationMock);
+        //given(this.securityContextMock.getAuthentication()).willReturn(authenticationMock);
 
         // When:
         final List<Idea> actual = this.sut.findAll();
@@ -380,7 +380,7 @@ public class IdeaServiceImplTest {
         final Optional<User> user = Optional.of(new User());
 
         given(this.ideaRepositoryMock.save(foundIdea)).willReturn(foundIdea);
-        given(userRepositoryMock.findOne(1l)).willReturn(user);
+        given(userRepositoryMock.findById(1l)).willReturn(user);
 
         // When:
         final Idea actual = this.sut.saveForUser(1, foundIdea);
@@ -399,7 +399,7 @@ public class IdeaServiceImplTest {
 
         given(ideaRepositoryMock.findByIdAndLikedByCurrentUser(ideaId)).willReturn(null);
         given(userRepositoryMock.findCurrentUser()).willReturn(user);
-        given(ideaRepositoryMock.findOne(ideaId)).willReturn(Optional.of(idea));
+        given(ideaRepositoryMock.findById(ideaId)).willReturn(Optional.of(idea));
         given(ideaRepositoryMock.save(idea)).willReturn(idea);
 
         final Idea changedLikeIdea = this.sut.changeIdeaLike(ideaId);

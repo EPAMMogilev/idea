@@ -10,10 +10,9 @@ import com.epam.idea.core.model.Comment;
 import com.epam.idea.rest.resource.support.JsonPropertyName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.RepresentationModel;
 
-import org.springframework.hateoas.ResourceSupport;
-
-public class CommentResource extends ResourceSupport {
+public class CommentResource extends RepresentationModel<CommentResource> {
 
 	@JsonProperty(JsonPropertyName.ID)
 	private long commentId;

@@ -58,7 +58,7 @@ public class IdeaServiceImpl implements IdeaService {
     @Override
     @Transactional(readOnly = true)
     public Idea findOne(final Long ideaId) {
-        final Optional<Idea> ideaOptional = ideaRepository.findOne(ideaId);
+        final Optional<Idea> ideaOptional = ideaRepository.findById(ideaId);
         return ideaOptional.map(idea -> {
             Hibernate.initialize(idea.getRelatedTags());
             Hibernate.initialize(idea.getLikedUsers());
@@ -132,7 +132,7 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     public Idea saveForUser(final long userId, final Idea idea) {
-        final User user = userRepository.findOne(userId).get();
+        final User user = userRepository.findById(userId).get();
         final List<Idea> ideas = user.getIdeas();
         ideas.add(idea);
         idea.setAuthor(user);
@@ -146,7 +146,7 @@ public class IdeaServiceImpl implements IdeaService {
         final User currentUser = userRepository.findCurrentUser();
 
         if (idea == null) {
-            idea = ideaRepository.findOne(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
+            idea = ideaRepository.findById(ideaId).orElseThrow(() -> new IdeaNotFoundException(ideaId));
             idea.getLikedUsers().add(currentUser);
             idea.setRating(idea.getRating() + 1);
         } else {

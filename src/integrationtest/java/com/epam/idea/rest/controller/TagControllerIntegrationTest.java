@@ -51,7 +51,7 @@ public class TagControllerIntegrationTest {
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.name").value(TAG_NAME))
 				.andExpect(jsonPath("$.links", hasSize(2)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].rel").value("self"))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/tags/" + TAG_ID)))
 				.andExpect(jsonPath("$.links[1].rel").value(TagResourceAsm.IDEAS_REL))
 				.andExpect(jsonPath("$.links[1].href").value(containsString("/api/v1/tags/" + TAG_ID + "/ideas")));
@@ -65,10 +65,9 @@ public class TagControllerIntegrationTest {
 				.andExpect(status().isNotFound())
 				.andDo(print())
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].logref").value(RestErrorHandler.TAG_NOT_FOUND_LOGREF))
-				.andExpect(jsonPath("$[0].message").value("Could not find tag"))
-				.andExpect(jsonPath("$[0].links", empty()));
+				.andExpect(jsonPath("$.content[0].logref").value(RestErrorHandler.TAG_NOT_FOUND_LOGREF))
+				.andExpect(jsonPath("$.content[0].message").value("Could not find tag"))
+				.andExpect(jsonPath("$.content[0].links", empty()));
 	}
 }
 

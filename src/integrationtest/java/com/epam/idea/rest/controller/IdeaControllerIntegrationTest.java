@@ -87,10 +87,10 @@ public class IdeaControllerIntegrationTest {
 				.andExpect(jsonPath("$.tags", hasSize(1)))
 				.andExpect(jsonPath("$.tags[0].name").value(TAG_NAME))
 				.andExpect(jsonPath("$.tags[0].links", hasSize(2)))
-				.andExpect(jsonPath("$.tags[0].links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.tags[0].links[0].rel").value("self"))
 				.andExpect(jsonPath("$.tags[0].links[0].href").value(containsString("/api/v1/tags/" + TAG_ID)))
 				.andExpect(jsonPath("$.links", hasSize(2)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].rel").value("self"))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + IDEA_ID)));
 	}
 
@@ -103,10 +103,9 @@ public class IdeaControllerIntegrationTest {
 				.andDo(print())
 				.andExpect(status().isNotFound())
 				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].logref").value(IDEA_NOT_FOUND_LOGREF))
-				.andExpect(jsonPath("$[0].message").value("Could not find idea with id: " + IDEA_ID + "."))
-				.andExpect(jsonPath("$[0].links", empty()));
+				.andExpect(jsonPath("$.content[0].logref").value(IDEA_NOT_FOUND_LOGREF))
+				.andExpect(jsonPath("$.content[0].message").value("Could not find idea with id: " + IDEA_ID + "."))
+				.andExpect(jsonPath("$.content[0].links", empty()));
 	}
 
 	@Ignore
@@ -140,7 +139,7 @@ public class IdeaControllerIntegrationTest {
 				.andExpect(jsonPath("$.title").value(IDEA_TITLE))
 				.andExpect(jsonPath("$.description").value(IDEA_DESCRIPTION))
 				.andExpect(jsonPath("$.links", hasSize(1)))
-				.andExpect(jsonPath("$.links[0].rel").value(Link.REL_SELF))
+				.andExpect(jsonPath("$.links[0].rel").value("self"))
 				.andExpect(jsonPath("$.links[0].href").value(containsString("/api/v1/ideas/" + IDEA_ID)));
 	}
 }

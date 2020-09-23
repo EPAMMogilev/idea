@@ -68,14 +68,14 @@ public class UserServiceImplTest {
 	public void shouldReturnFoundUser() throws Exception {
 		//Given:
 		User found = TestUserBuilder.aUser().build();
-		given(this.userRepositoryMock.findOne(eq(found.getId()))).willReturn(Optional.of(found));
+		given(this.userRepositoryMock.findById(eq(found.getId()))).willReturn(Optional.of(found));
 
 		//When:
 		User actual = this.sut.findOne(found.getId());
 
 		//Then:
 		assertThat(actual).isEqualTo(found);
-		verify(this.userRepositoryMock, times(1)).findOne(found.getId());
+		verify(this.userRepositoryMock, times(1)).findById(found.getId());
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
 
@@ -83,7 +83,7 @@ public class UserServiceImplTest {
 	public void shouldThrowExceptionWhenTryFindUserWhichDoesNotExist() throws Exception {
 		//Given:
 		long fakeUserId = 4L;
-		given(this.userRepositoryMock.findOne(eq(fakeUserId))).willReturn(Optional.empty());
+		given(this.userRepositoryMock.findById(eq(fakeUserId))).willReturn(Optional.empty());
 
 		//When:
 		try {
@@ -92,7 +92,7 @@ public class UserServiceImplTest {
 
 			//Then:
 		} catch (UserNotFoundException e) {
-			verify(this.userRepositoryMock, times(1)).findOne(fakeUserId);
+			verify(this.userRepositoryMock, times(1)).findById(fakeUserId);
 			verifyNoMoreInteractions(this.userRepositoryMock);
 		}
 	}
@@ -101,14 +101,14 @@ public class UserServiceImplTest {
 	public void shouldDeleteUseByIdrAndReturnIt() throws Exception {
 		//Given:
 		User deletedUser = TestUserBuilder.aUser().build();
-		given(this.userRepositoryMock.findOne(anyLong())).willReturn(Optional.of(deletedUser));
+		given(this.userRepositoryMock.findById(anyLong())).willReturn(Optional.of(deletedUser));
 
 		//When:
 		User actual = this.sut.deleteById(deletedUser.getId());
 
 		//Then:
 		assertThat(actual).isEqualTo(deletedUser);
-		verify(this.userRepositoryMock, times(1)).findOne(deletedUser.getId());
+		verify(this.userRepositoryMock, times(1)).findById(deletedUser.getId());
 		verify(this.userRepositoryMock, times(1)).delete(deletedUser);
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
@@ -117,7 +117,7 @@ public class UserServiceImplTest {
 	public void shouldThrowExceptionWhenTryDeleteUserByIdWhichDoesNotExist() throws Exception {
 		//Given:
 		long fakeUserId = 2L;
-		given(this.userRepositoryMock.findOne(eq(fakeUserId))).willReturn(Optional.empty());
+		given(this.userRepositoryMock.findById(eq(fakeUserId))).willReturn(Optional.empty());
 
 		//When:
 		try {
@@ -126,7 +126,7 @@ public class UserServiceImplTest {
 
 			//Then:
 		} catch (UserNotFoundException e) {
-			verify(this.userRepositoryMock, times(1)).findOne(fakeUserId);
+			verify(this.userRepositoryMock, times(1)).findById(fakeUserId);
 			verifyNoMoreInteractions(this.userRepositoryMock);
 		}
 	}
@@ -158,7 +158,7 @@ public class UserServiceImplTest {
 				.withEmail("email@test.com")
 				.withPassword("password")
 				.build();
-		given(this.userRepositoryMock.findOne(eq(target.getId()))).willReturn(Optional.of(target));
+		given(this.userRepositoryMock.findById(eq(target.getId()))).willReturn(Optional.of(target));
 
 		//When:
 		User actual = this.sut.update(target.getId(), source);
@@ -168,7 +168,7 @@ public class UserServiceImplTest {
 		assertThat(actual.getUsername()).isEqualTo(source.getUsername());
 		assertThat(actual.getEmail()).isEqualTo(source.getEmail());
 		assertThat(actual.getPassword()).isEqualTo(PasswordHasher.md5(source.getPassword()));
-		verify(this.userRepositoryMock, times(1)).findOne(target.getId());
+		verify(this.userRepositoryMock, times(1)).findById(target.getId());
 		verifyNoMoreInteractions(this.userRepositoryMock);
 	}
 
@@ -181,7 +181,7 @@ public class UserServiceImplTest {
 				.withEmail("new_email@test.com")
 				.withPassword("new_password")
 				.build();
-		given(this.userRepositoryMock.findOne(eq(fakeUserId))).willReturn(Optional.empty());
+		given(this.userRepositoryMock.findById(eq(fakeUserId))).willReturn(Optional.empty());
 
 		//When
 		try {
@@ -190,7 +190,7 @@ public class UserServiceImplTest {
 
 			//Then:
 		} catch (UserNotFoundException ex) {
-			verify(this.userRepositoryMock, times(1)).findOne(fakeUserId);
+			verify(this.userRepositoryMock, times(1)).findById(fakeUserId);
 			verifyNoMoreInteractions(this.userRepositoryMock);
 		}
 	}

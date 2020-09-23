@@ -61,14 +61,14 @@ public class TagServiceImplTest {
 	public void shouldReturnFoundTag() throws Exception {
 		//Given:
 		Tag foundTag = TestTagBuilder.aTag().build();
-		given(this.tagRepositoryMock.findOne(eq(foundTag.getId()))).willReturn(Optional.of(foundTag));
+		given(this.tagRepositoryMock.findById(eq(foundTag.getId()))).willReturn(Optional.of(foundTag));
 
 		//When:
 		Tag actualTag = this.sut.findOne(foundTag.getId());
 
 		//Then:
 		assertThat(actualTag).isEqualTo(foundTag);
-		verify(this.tagRepositoryMock, times(1)).findOne(foundTag.getId());
+		verify(this.tagRepositoryMock, times(1)).findById(foundTag.getId());
 		verifyNoMoreInteractions(this.tagRepositoryMock);
 	}
 
@@ -76,7 +76,7 @@ public class TagServiceImplTest {
 	public void shouldThrowExceptionWhenTryFindTagWhichDoesNotExist() throws Exception {
 		//Given:
 		long tagId = 3L;
-		given(this.tagRepositoryMock.findOne(eq(tagId))).willReturn(Optional.empty());
+		given(this.tagRepositoryMock.findById(eq(tagId))).willReturn(Optional.empty());
 
 		//When:
 		try {
@@ -85,7 +85,7 @@ public class TagServiceImplTest {
 
 			//Then:
 		} catch (TagDoesNotExistException e) {
-			verify(this.tagRepositoryMock, times(1)).findOne(tagId);
+			verify(this.tagRepositoryMock, times(1)).findById(tagId);
 			verifyNoMoreInteractions(this.tagRepositoryMock);
 		}
 	}
@@ -109,7 +109,6 @@ public class TagServiceImplTest {
 	public void shouldDeleteNewIdea() throws Exception {
 		//Given:
 		Tag deletedTag = TestTagBuilder.aTag().build();
-		given(this.tagRepositoryMock.findOne(eq(deletedTag.getId()))).willReturn(Optional.of(deletedTag));
 
 		//When:
 		this.sut.delete(deletedTag);

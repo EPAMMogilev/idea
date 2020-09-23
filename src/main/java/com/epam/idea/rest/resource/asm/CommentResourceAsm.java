@@ -13,15 +13,16 @@ import com.epam.idea.rest.controller.UserController;
 import com.epam.idea.rest.resource.CommentResource;
 import com.epam.idea.rest.resource.UserResource;
 
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+
 
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.hibernate.Hibernate.isInitialized;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-public class CommentResourceAsm extends ResourceAssemblerSupport<Comment, CommentResource> {
+public class CommentResourceAsm extends RepresentationModelAssemblerSupport<Comment, CommentResource> {
 
 	public static final String REL_AUTHOR = "author";
 	public static final String REL_SUBJECT = "subject";
@@ -31,7 +32,7 @@ public class CommentResourceAsm extends ResourceAssemblerSupport<Comment, Commen
 	}
 
 	@Override
-	public CommentResource toResource(final Comment original) {
+	public CommentResource toModel(final Comment original) {
 		requireNonNull(original, "Comment cannot be null");
 		final CommentResource commentResource = new CommentResource();
 		commentResource.setCommentId(original.getId());
@@ -41,15 +42,15 @@ public class CommentResourceAsm extends ResourceAssemblerSupport<Comment, Commen
 		commentResource.setRating(original.getRating());
 		final User author = original.getAuthor();
 		if (author != null && isInitialized(author)) {
-			commentResource.setAuthor(new UserResourceAsm().toResource(author));
+			commentResource.setAuthor(new UserResourceAsm().toModel(author));
 		}
 		final Idea subject = original.getSubject();
 		if (subject != null && isInitialized(subject)) {
-			commentResource.setSubject(new IdeaResourceAsm().toResource(subject));
+			commentResource.setSubject(new IdeaResourceAsm().toModel(subject));
 		}
 		if (isInitialized(original.getLikedUsers())) {
 			List<UserResource> userNames = original.getLikedUsers().stream()
-					.map(user-> new UserResourceAsm().toResource(user))
+					.map(user-> new UserResourceAsm().toModel(user))
 					.collect(Collectors.toList());
 			commentResource.setLikedUsers(userNames);
 		} else {

@@ -3,13 +3,14 @@ package com.epam.idea.rest.resource.asm;
 import com.epam.idea.core.model.User;
 import com.epam.idea.rest.controller.UserController;
 import com.epam.idea.rest.resource.UserResource;
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+
 
 import static java.util.Objects.requireNonNull;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-public class UserResourceAsm extends ResourceAssemblerSupport<User, UserResource> {
+public class UserResourceAsm extends RepresentationModelAssemblerSupport<User, UserResource> {
 
 	public static final String IDEAS_REL = "ideas";
 	public static final String COMMENTS_REL = "comments";
@@ -19,7 +20,7 @@ public class UserResourceAsm extends ResourceAssemblerSupport<User, UserResource
 	}
 
 	@Override
-	public UserResource toResource(final User original) {
+	public UserResource toModel(final User original) {
 		requireNonNull(original, "User cannot be null");
 		final UserResource userResource = new UserResource();
 		userResource.setUserId(original.getId());
