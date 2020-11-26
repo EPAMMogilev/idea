@@ -55,6 +55,39 @@ cd /home/admin/IDEA/idea
 nohup ./gradlew bootRun & echo $! > ./idea-pid.file &
 
 
+### Ubuntu
+
+# install jdk 11
+sudo apt-get install -y openjdk-11-jdk
+java –version
+
+# install gradle 5.6.4:
+
+wget https://services.gradle.org/distributions/gradle-5.6.4-bin.zip -P /tmp
+
+sudo apt-get install -y zip unzip
+
+sudo unzip -d /opt/gradle /tmp/gradle-5.6.4-bin.zip
+
+sudo ln -s /opt/gradle/gradle-5.6.4 /opt/gradle/latest
+
+# execute to open text editor:
+sudo nano /etc/profile.d/gradle.sh
+# add lines:
+export GRADLE_HOME=/opt/gradle/latest
+export PATH=$GRADLE_HOME/bin:$PATH
+
+sudo chmod +x /etc/profile.d/gradle.sh
+source /etc/profile.d/gradle.sh
+
+
+gradle -v
+
+
+sudo apt-get install -y bzip2
+
+# Build and run - the same as for Centos
+
 --------------------------------------------------------
 
 localhost:9090
