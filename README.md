@@ -55,7 +55,7 @@ cd /home/admin/IDEA/idea
 nohup ./gradlew bootRun & echo $! > ./idea-pid.file &
 
 
-### Ubuntu
+#### Ubuntu
 
 # install jdk 11
 sudo apt-get install -y openjdk-11-jdk
