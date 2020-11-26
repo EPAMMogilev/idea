@@ -23,7 +23,20 @@ first@idea.com / 1234
 
 ### Centos
 
+#### Pre-requirements:
+install jdk 11:
+sudo yum -y install java-11-openjdk-devel
+java –version
+
+install gradle 5.6.4:
+wget https://services.gradle.org/distributions/gradle-5.6.4-bin.zip
+export PATH=$PATH:/opt/gradle/gradle-5.6.4/bin
+gradle -v
+
 sudo yum -y install bzip2
+
+
+#### Build and run:
 
 cd /home/admin/IDEA
 git clone https://github.com/JavaMahileu/idea.git
@@ -36,6 +49,10 @@ gradle wrapper
 ./gradlew stage
 nohup ./gradlew bootRun & echo $! > ./idea-pid.file &
 
+
+#### Re-run after system restart:
+cd /home/admin/IDEA/idea
+nohup ./gradlew bootRun & echo $! > ./idea-pid.file &
 
 
 --------------------------------------------------------
